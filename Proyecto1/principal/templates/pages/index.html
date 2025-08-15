@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sendal – Inicio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-head">
+      <h1>Invierte en un espacio que crecerá contigo<br>y construye el futuro que mereces.</h1>
+      <h2>TU PROYECTO, TU COMIENZO</h2>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-note">
+        Sendal es el punto de partida para quienes buscan<br>
+        invertir de manera consciente y segura.
+      </p>
+      <a class="cta" href="{% url 'index' %}#proyectos">CONOCE LOS PROYECTOS</a>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO & FILTROS -->
+<section class="intro container">
+  <h2>El futuro se siembra en tierra firme</h2>
+  <h3>Encuentra el proyecto perfecto según zona, tipo y precio.</h3>
+
+  <div class="filters">
+    <div class="select">
+      <label for="ubicacion">Ubicación</label>
+      <select id="ubicacion">
+        <option>Mérida</option>
+        <option>Campeche</option>
+        <option>Valladolid</option>
+      </select>
+    </div>
+
+    <div class="select">
+      <label for="tipo">Proyecto / Propiedad</label>
+      <select id="tipo">
+        <option>Terreno</option>
+        <option>Casa</option>
+        <option>Lote</option>
+      </select>
+    </div>
+
+    <div class="range">
+      <label for="precio">Rango de Precio</label>
+      <div class="range-wrap">
+        <span class="min">30</span>
+        <input id="precio" type="range" min="30" max="100" value="80"/>
+        <span class="max">100</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREENCIAS / EQUIPO -->
+<section class="beliefs container">
+  <figure class="beliefs-media">
+    <img src="{% static 'resources/images/home/equipo.jpg' %}" alt="Equipo Sendal"/>
+  </figure>
+
+  <div class="beliefs-content">
+    <h2><span>Creencias firmes</span><br/>caminos claros</h2>
+    <ul class="beliefs-list">
+      <li>
+        <img src="{% static 'resources/images/home/confianza.png' %}" alt="" class="icon"/>
+        <div>
+          <h3>Confianza y transparencia</h3>
+          <p>Inversiones claras, procesos sencillos y seguridad jurídica garantizada.</p>
+        </div>
+      </li>
+      <li>
+        <img src="{% static 'resources/images/home/accesibilidad.png' %}" alt="" class="icon"/>
+        <div>
+          <h3>Accesibilidad real</h3>
+          <p>Terrenos bien planeados a precios alcanzables, sin sacrificar calidad.</p>
+        </div>
+      </li>
+      <li>
+        <img src="{% static 'resources/images/home/acompañamiento.png' %}" alt="" class="icon"/>
+        <div>
+          <h3>Acompañamiento personalizado</h3>
+          <p>Atención cercana, profesional y un compromiso auténtico con tu proyecto.</p>
+        </div>
+      </li>
+    </ul>
+
+    <p class="blurb">
+      Más que vender tierra, ayudamos a construir historias. Porque sabemos que se trata de
+      <strong>tu futuro, tu legado, tu tranquilidad.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- PROYECTOS GRID -->
+<section id="proyectos" class="projects container">
+  <h2 class="projects-title">PROYECTOS</h2>
+
+  <div class="projects-search">
+    <img src="{% static 'resources/images/general/hamburger_menu.png' %}" alt="">
+    <input type="text" placeholder="Busca por zona">
+    <button type="button"><img src="{% static 'resources/images/general/search.png' %}" alt="Buscar"></button>
+  </div>
+
+  <div class="projects-grid">
+    <article>
+      <img src="{% static 'resources/images/places/Komchén/Komchén.png' %}" alt="Komchén">
+      <h3>Komchén</h3>
+      <p>Zona con alta plusvalía y acceso rápido a la ciudad.</p>
+    </article>
+
+    <article>
+      <img src="{% static 'resources/images/places/Sac-Nikté/Sac-Nikté.png' %}" alt="Sac Nikté">
+      <h3>Sac Nikté</h3>
+      <p>Ubicación emergente, precios accesibles y excelente desarrollo.</p>
+    </article>
+
+    <a href="{% url 'valladolid' %}">
+      <article>
+        <img src="{% static 'resources/images/places/Valladolid/Valladolid.png' %}" alt="Valladolid">
+        <h3>Valladolid</h3>
+        <p>Ciudad en crecimiento con alto potencial turístico e inmobiliario.</p>
+      </article>
+    </a>
+
+    <a href="{% url 'tulum' %}">
+      <article>
+        <img src="{% static 'resources/images/places/Tulum/Tulum.jpg' %}" alt="Tulum">
+        <h3>Tulum</h3>
+        <p>Destino icónico con gran plusvalía, naturaleza y proyección internacional.</p>
+      </article>
+    </a>
+
+    <article>
+      <img src="{% static 'resources/images/places/Mérida/Mérida.png' %}" alt="Mérida">
+      <h3>Mérida</h3>
+      <p>Capital segura y en crecimiento, con alta calidad de vida y plusvalía.</p>
+    </article>
+  </div>
+</section>
+
+<!-- TEXTO CORPORATIVO -->
+<section class="corporate">
+  <div class="container">
+    <p class="subtitle">INMOBILIARIA</p>
+    <h2>SENDAL</h2>
+    <p class="tagline">DONDE TU FUTURO TOMA RAÍZ</p>
+    <blockquote>
+      “Lo que te ofrecemos no es solo tierra, es un espacio con potencial, una inversión segura y el respaldo de un equipo que cree en la honestidad, la cercanía y la claridad.”
+    </blockquote>
+    <img src="{% static 'resources/images/home/logo.png' %}" alt="Logotipo Sendal">
+  </div>
+</section>
+
+<!-- COTIZA TU PROPIEDAD -->
+<section class="quote-section">
+  <div class="quote-grid">
+    <figure class="quote-media">
+      <img src="{% static 'resources/images/home/formulario.jpg' %}" alt="Terreno" />
+    </figure>
+
+    <form class="quote-form" action="#" method="post" novalidate>
+      <h2>Cotiza tu propiedad</h2>
+
+      <div class="q-row">
+        <label>
+          <span>Nombre</span>
+          <input type="text" name="nombre" placeholder="Jane" required>
+        </label>
+        <label>
+          <span>Apellido</span>
+          <input type="text" name="apellido" placeholder="Smitherton" required>
+        </label>
+      </div>
+
+      <label class="q-full">
+        <span>Email</span>
+        <input type="email" name="correo" placeholder="email@contacto.com" required>
+      </label>
+
+      <label class="q-full">
+        <span>Número de contacto</span>
+        <input type="tel" name="telefono" placeholder="+52 9999 99 99 99" required>
+      </label>
+
+      <div class="q-row">
+        <label>
+          <span>Tipo del terreno o propiedad</span>
+          <input type="text" name="tipo" placeholder="Terreno" required>
+        </label>
+        <label>
+          <span>Ubicación</span>
+          <input type="text" name="ubicacion" placeholder="Valladolid" required>
+        </label>
+      </div>
+
+      <button type="submit" class="q-cta"><b>COTIZA AHORA</b></button>
+
+      <p class="q-note">
+        Tu información es 100% confidencial. Uno de nuestros asesores te contactará
+        para darte todos los detalles del terreno.
+      </p>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
