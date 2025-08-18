@@ -1,7 +1,5 @@
-/* Tipografías para esta página */
 h1, h2, h3, .projects-title { font-family: var(--font-articulat); }
 
-/* Color y línea base SOLO para el home */
 body { color: var(--color-ink-dark); line-height: 1.35; }
 
 /* ===== Hero ===== */
@@ -27,11 +25,11 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
 }
 .hero h1{
   margin-top: 50px;
-  font-family: var(--font-articulat); /* Título principal: Articulat */
+  font-family: var(--font-articulat); 
   font-size:46px; font-weight:600; line-height:1.16;
 }
 .hero h2{
-  font-family: var(--font-ezra);    /* “TU PROYECTO, TU COMIENZO”: Ezra */  
+  font-family: var(--font-ezra);    /* “TU PROYECTO, TU COMIENZO”*/  
   font-size:36px; letter-spacing:-2%; font-weight:400; text-transform:uppercase;
 }
 .hero-bottom{
@@ -42,7 +40,7 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
   font-size: 20px;
 }
 .hero-note{
-  font-family: var(--font-articulat); /* Nota del hero: Articulat */
+  font-family: var(--font-articulat); 
   max-width:520px; text-align:left;
   opacity: 70%;
 }
@@ -95,19 +93,21 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
   display:grid; grid-template-columns:1.05fr .95fr; gap:36px; align-items:start;
   padding:48px var(--gutter);
 }
-.beliefs-media img{border-radius:12px; box-shadow:var(--shadow)}
-.beliefs-content h2{font-size:36px; line-height:1.05; margin-bottom:18px; text-transform:capitalize}
-.beliefs-content h2 span{font-weight:700}
-.beliefs-list{list-style:none; display:grid; gap:18px; margin:14px 0 10px}
+.beliefs-media img{border-radius:8px; box-shadow:var(--shadow); width: auto; height: 500px; object-fit: cover;  }
+.beliefs-content h2{font-size:36px; line-height:1.1; margin-bottom:18px;}
+.beliefs-content h2 span{font-weight:600}
+.beliefs-list{list-style:none; display:grid; gap:40px; margin:14px 0 10px;}
 .beliefs-list li{display:grid; grid-template-columns:40px 1fr; gap:14px; align-items:start}
 .beliefs-list .icon{width:36px; height:36px; object-fit:contain}
-.beliefs-list h3{font-size:16px; margin-bottom:4px}
-.beliefs-list p{font-size:14px; opacity:.85; font-family: var(--font-inter)}
-.blurb{margin-top:8px; font-size:14px; font-family: var(--font-inter)}
+.beliefs-list h3{font-size:20px; margin-bottom:4px; font: weight 500;}
+.beliefs-list p{font-size:16px; opacity:.85; font-family: var(--font-inter);}
+.blurb{margin-top:45px; font-size:16px; font-family: var(--font-articulat)}
 .blurb strong{font-weight:700; font-family: var(--font-cambay)}
 
 /* ===== Proyectos ===== */
-.projects{background:var(--color-ivory-soft); padding:48px 0 72px}
+.projects{
+  background:var(--color-ivory-soft); 
+  padding:0px 0 0px}
 .projects-title{
   text-align:center; font-size:54px; letter-spacing:.02em; font-weight:800;
   color:var(--color-ink-dark); margin-bottom:18px
@@ -127,7 +127,7 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
   display:grid; place-items:center; cursor:pointer;
 }
 .projects-search button img{width:18px; height:18px}
-.projects-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px}
+.projects-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px;}
 .projects-grid article{background:var(--color-ivory-soft)}
 .projects-grid article>img{
   width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px; margin-bottom:8px;
@@ -137,7 +137,7 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
 
 
 /* ===== Corporativo ===== */
-.corporate{text-align:center; padding:64px var(--gutter);}
+.corporate{text-align:center; padding:100px var(--gutter);}
 .corporate .subtitle{
   font-size:14px; letter-spacing:.15em; margin-bottom:4px;
   font-family: var(--font-inter);
@@ -147,17 +147,23 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
   font-family: var(--font-articulat);
 }
 .corporate .tagline{
-  font-size:29px; letter-spacing:.12em; margin-bottom:18px;
-  font-family: var(--font-ezra); /* Ezra */
+  font-size:29px; letter-spacing:.12em; margin:20px auto 18px;
+  font-family: var(--font-ezra); 
   color: var(--color-olive-dark);
 }
 .corporate blockquote{
   font-size:30px; max-width:720px; margin:0 auto 28px;
-  font-family: var(--font-articulat); /* Articulat */
-  font-weight: 400; 
+  font-family: var(--font-articulat); 
 }
 .corporate img{
   width:71px; height:71px; margin:0 auto;
+}
+
+#logo-inmobiliaria {
+  width: 300px;
+  height: auto;
+  margin: 0 auto 0;
+  padding: 0;
 }
 
 
@@ -170,14 +176,14 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
 }
 .quote-section .quote-form{
   background:var(--color-olive-dark); color:var(--vall-white); padding:24px 28px;
-  display:flex; flex-direction:column; gap:18px;
+  display:flex; flex-direction:column; gap:18px;;
 }
 .quote-form h2{
-  font-size:48px; font-weight:500; color:var(--color-cream-light); margin-bottom:8px;
+  font-size:48px; font-weight:500; color:var(--color-cream-light);  margin:8px 30px;;
   font-family: var(--font-articulat);
 }
-.q-row{display:grid; grid-template-columns:1fr 1fr; gap:30px}
-.q-full{display:block}
+.q-row{display:grid; grid-template-columns:1fr 1fr; gap:32px; margin:0 30px;}
+.q-full{display:block;  margin:0 30px;}
 .q-full + .q-full{margin-top:2px}
 .quote-form label{display:flex; flex-direction:column; gap:8px; font-size:16px; color:#eee9d7; font-family: var(--font-inter)}
 .quote-form input{
@@ -186,15 +192,15 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
   font-family: var(--font-inter);
 }
 .q-cta{
-  margin-top:10px; height:56px; border-radius:8px; border:none;
+  margin:10px 30px;; height:56px; border-radius:8px; border:none;
   background:var(--color-cream-light); color:var(--color-ink-dark);
   font-weight:600; letter-spacing:.12em; cursor:pointer; font-family: var(--font-articulat);
   font-size: 22px;
 }
 .q-cta:hover{filter:brightness(.96)}
-.q-note{font-size:12px; color:var(--color-sand); font-family: var(--font-inter)}
+.q-note{font-size:12px; color:var(--color-sand); font-family: var(--font-inter);  margin:0 30px;}
 
-/* ===== Responsivo mínimo del home ===== */
+
 @media (max-width: 980px){
   .beliefs{grid-template-columns:1fr}
   .filters{flex-wrap:wrap}

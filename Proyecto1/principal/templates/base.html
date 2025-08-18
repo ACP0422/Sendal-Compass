@@ -21,7 +21,6 @@
     </div>
 
     <nav class="nav-center">
-        <a href="{% url 'index' %}">Inicio</a>
         <a href="{% url 'index' %}#proyectos">Proyectos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="cotizador.html">Cotizador</a>
@@ -45,10 +44,12 @@
 <footer class="site-footer">
     <div class="footer-inner container">
         <div class="footer-brand">
+            <a href="{% url 'index' %}" class="brand" aria-label="Inicio">
             <img src="{% static 'resources/images/general/Sendal.png' %}" alt="Logotipo Sendal" class="brand-word"/>
+            </a>
             <div class="f-social">
-                <a href="#" aria-label="Facebook"><img src="{% static 'resources/images/general/facebook.png' %}" alt=""></a>
-                <a href="#" aria-label="Instagram"><img src="{% static 'resources/images/general/instagram.png' %}" alt=""></a>
+                <a href="https://www.facebook.com/profile.php?id=61575546881257" aria-label="Facebook"><img src="{% static 'resources/images/general/facebook.png' %}" alt=""></a>
+                <a href="https://www.instagram.com/inmobiliaria_sendal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"><img src="{% static 'resources/images/general/instagram.png' %}" alt=""></a>
             </div>
             <p class="f-slogan">LA RAÍZ DE TU FUTURO</p>
         </div>
@@ -56,12 +57,14 @@
         <nav class="footer-nav">
             <a href="{% url 'index' %}#proyectos">Proyectos</a>
             <a href="nosotros.html">Nosotros</a>
-            <a href="{% url 'contact' %}">Contacto</a>
             <a href="cotizador.html">Cotizador</a>
+            <a href="{% url 'contact' %}">Contacto</a>
         </nav>
 
         <div class="footer-logo">
+            <a href="{% url 'index' %}" class="brand" aria-label="Inicio">
             <img src="{% static 'resources/images/general/logo.png' %}" alt="Isotipo Sendal" class="brand-mark">
+            </a>
         </div>
     </div>
 </footer>
