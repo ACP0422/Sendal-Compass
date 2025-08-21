@@ -30,7 +30,7 @@ html body.contact-page {
   }
   
   /* Formulario */
-  .contact-form{margin-top:12px; max-width:620px}
+  .contact-form{margin-top:12px; max-width:620px;}
   .grid-2{
     display:grid; grid-template-columns:1fr 1fr; gap:14px;
   }
@@ -55,9 +55,9 @@ html body.contact-page {
   }
 
 
-  /* ===== formulario ===== */
+  /* ===== forms ===== */
 
-/* Etiquetas */
+
 .contact-form label span {
     display: block;
     font-size: 14px;
@@ -66,7 +66,6 @@ html body.contact-page {
     color: var(--ink);
   }
   
-  /* Inputs y textarea */
   .contact-form input,
   .contact-form textarea {
     resize: none;  
@@ -76,12 +75,11 @@ html body.contact-page {
     padding: 12px 14px;
     font-size: 15px;
     font-family: inherit;
-    background-color: #fff;
+    background-color: var(--color-ivory-soft);
     color: #333;
     transition: border-color 0.25s, box-shadow 0.25s;
   }
   
-  /* Enfoque (focus) */
   .contact-form input:focus,
   .contact-form textarea:focus {
     outline: none;
@@ -95,7 +93,6 @@ html body.contact-page {
     margin-bottom: 14px;
   }
   
-  /* Botón */
   .contact-form .btn-primary {
     margin-top: 8px;
     width: 180px;

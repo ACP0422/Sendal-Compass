@@ -35,10 +35,10 @@
 
     <div class="desc-row">
       <p>
-        Tularum ofrece una gran oportunidad para adquirir un patrimonio en armonía con <br>el ecosistema
-        en un exclusivo destino. Su fase de preventa con precios privilegiados<br> y cómodos planes de pago
-        hacen posible que hoy adquieras un terreno de inversión,<br> y en un par de años duplique su valor
-        cuando cuente con accesos, servicios y la <br>plusvalía siga en aumento.
+        Tularum ofrece una gran oportunidad para adquirir un patrimonio en armonía con el ecosistema
+        en un exclusivo destino. Su fase de preventa con precios privilegiados y cómodos planes de pago
+        hacen posible que hoy adquieras un terreno de inversión, y en un par de años duplique su valor
+        cuando cuente con accesos, servicios y la plusvalía siga en aumento.
       </p>
 
       <div class="more-box">
@@ -48,23 +48,30 @@
     </div>
   </section>
 
-  <!-- Doble CTA inferior -->
-  <section class="cta-duo">
-    <div class="cta-card">
-      <h3>Invierte con certeza,<br>crece con Sendal.</h3>
-      <p>
-        Creamos oportunidades reales, sin comprometer calidad, diseño ni servicio.
-        Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado.
-      </p>
-      <div class="cta-actions">
-        <a class="cta-btn" href="#">Whatsapp</a>
-        <a class="cta-btn alt" href="#">Correo electrónico</a>
+   <!-- ===== SECCIÓN MÁS INFORMACIÓN (REUTILIZAR DE VALLADOLID)===== -->
+   <section class="cta-duo" style="padding: 0px 0px 50px 0px; background-color: var(--gutter);">
+    <div style="max-width:var(--max); margin:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch;">
+      
+      <div style="background:#F8F4E3; border-radius:12px; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:40px;">
+        <h3 style="font-size:36px; font-weight:600; margin-bottom:8px; color:#3B0C0C;">
+          Invierte con certeza,<br>crece con Sendal.
+        </h3>
+        <p style="font-size:20px; margin-bottom:18px; color:#8F5600;">
+          Creamos oportunidades reales, sin comprometer calidad, diseño ni servicio.
+          Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado.
+        </p>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+          <a href="#" style="background:#F2BB57; color:#41070A; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:24px;">Whatsapp</a>
+          <a href="#" style="background:#8F5600; color:#F2BB57; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:24px;">Correo electrónico</a>
+        </div>
       </div>
-    </div>
 
-    <div class="cta-illustration">
-      <img src="{% static 'resources/images/places/Tulum/invierte.png' %}" alt="Oferta accesible y acompañada">
+      <div>
+        <img src="{% static 'resources/images/places/Tulum/invierte.png' %}" alt="Oferta accesible y acompañada" style="width:100%; height:100%; border-radius:12px; object-fit:cover;">
+      </div>
+  
     </div>
   </section>
+  
 </main>
 {% endblock %}

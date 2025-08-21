@@ -65,7 +65,9 @@
 <!-- CREENCIAS / EQUIPO -->
 <section class="beliefs container">
   <figure class="beliefs-media">
-    <img src="{% static 'resources/images/home/equipo.jpg' %}" alt="Equipo Sendal"/>
+    <img class="team-photo" src="{% static 'resources/images/home/equipo.jpg' %}" alt="Equipo Sendal" />
+    <!-- Sello superpuesto -->
+    <img class="seal" src="{% static 'resources/images/home/sello.png' %}" alt="Sello Sendal" />
   </figure>
 
   <div class="beliefs-content">
@@ -113,36 +115,41 @@
 
   <div class="projects-grid">
     <article>
+      <a href="{% url 'index' %}#proyectos">
       <img src="{% static 'resources/images/places/Komchén/Komchén.png' %}" alt="Komchén">
-      <h3>Komchén</h3>
+      <h3>Komchén</h3></a>
       <p>Zona con alta plusvalía y acceso rápido a la ciudad.</p>
     </article>
 
     <article>
+      <a href="{% url 'index' %}#proyectos">
       <img src="{% static 'resources/images/places/Sac-Nikté/Sac-Nikté.png' %}" alt="Sac Nikté">
-      <h3>Sac Nikté</h3>
+      <h3>Sac Nikté</h3></a>
       <p>Ubicación emergente, precios accesibles y excelente desarrollo.</p>
     </article>
 
-    <a href="{% url 'valladolid' %}">
+    
       <article>
+        <a href="{% url 'valladolid' %}">
         <img src="{% static 'resources/images/places/Valladolid/Valladolid.png' %}" alt="Valladolid">
-        <h3>Valladolid</h3>
+        <h3>Valladolid</h3></a>
         <p>Ciudad en crecimiento con alto potencial turístico e inmobiliario.</p>
       </article>
-    </a>
+  
 
-    <a href="{% url 'tulum' %}">
+    
       <article>
+        <a href="{% url 'tulum' %}">
         <img src="{% static 'resources/images/places/Tulum/Tulum.jpg' %}" alt="Tulum">
-        <h3>Tulum</h3>
+        <h3>Tulum</h3> </a>
         <p>Destino icónico con gran plusvalía, naturaleza y proyección internacional.</p>
       </article>
-    </a>
+   
 
     <article>
+      <a href="{% url 'index' %}#proyectos">
       <img src="{% static 'resources/images/places/Mérida/Mérida.png' %}" alt="Mérida">
-      <h3>Mérida</h3>
+      <h3>Mérida</h3></a>
       <p>Capital segura y en crecimiento, con alta calidad de vida y plusvalía.</p>
     </article>
   </div>

@@ -32,7 +32,7 @@
 }
 @font-face {
   font-family: "CambayLocal";
-  src: url("/static/resources/fonts/cammbay/Cambay-Bold.ttf") format("truetype");
+  src: url("/static/resources/fonts/cambay/Cambay-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

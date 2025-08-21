@@ -31,7 +31,7 @@
   </section>
 
   <section class="listing" aria-label="Propiedades en Valladolid">
-    <!-- Card 1 -->
+    
     <article>
       <img src="{% static 'resources/images/places/Valladolid/hacienda_residencial.png' %}" alt="Entrada estilo hacienda">
       <header>
@@ -41,7 +41,6 @@
       <a class="more" href="#">Ver más</a>
     </article>
 
-    <!-- Card 2 -->
     <article>
       <img src="{% static 'resources/images/places/Valladolid/predio1.png' %}" alt="Predio vallado en Valladolid">
       <header>
@@ -51,7 +50,6 @@
       <a class="more" href="#">Ver más</a>
     </article>
 
-    <!-- Card 3 -->
     <article>
       <img src="{% static 'resources/images/places/Valladolid/predio2.png' %}" alt="Edificio de esquina en Valladolid">
       <header>
@@ -104,10 +102,10 @@
 </section>
 
 <!-- ===== SECCIÓN MÁS INFORMACIÓN ===== -->
-<section class="more-info" style="background:#FFFFFF; padding:50px var(--gutter);">
-  <div style="max-width:var(--max); margin:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
+<section class="more-info" style="padding:50px var(--gutter);">
+  <div style="max-width:var(--max); margin:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch;">
     
-    <div style="background:#F8F4E3; padding:50px; border-radius:8px; text-align:center">
+    <div style="background:#F8F4E3; border-radius:12px; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:40px;">
       <h3 style="font-size:36px; font-weight:600; margin-bottom:8px; color:#3B0C0C;">¿Quieres más información?</h3>
       <p style="font-size:20px; margin-bottom:18px; color:#8F5600;">
         Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado.
@@ -119,9 +117,10 @@
     </div>
 
     <div>
-      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}" alt="Agente de ventas" style="width:100%; border-radius:12px; object-fit:cover;">
+      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}" alt="Agente de ventas" style="width:100%; height:100%; border-radius:12px; object-fit:cover;">
     </div>
   </div>
 </section>
+
 
 {% endblock %}

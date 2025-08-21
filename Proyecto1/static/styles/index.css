@@ -90,10 +90,40 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
 
 /* ===== Creencias / Equipo ===== */
 .beliefs{
-  display:grid; grid-template-columns:1.05fr .95fr; gap:36px; align-items:start;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:36px;
+  align-items:start;
   padding:48px var(--gutter);
 }
-.beliefs-media img{border-radius:8px; box-shadow:var(--shadow); width: auto; height: 500px; object-fit: cover;  }
+
+.beliefs-media{
+  position: relative;          
+}
+
+/* foto principal */
+.beliefs-media .team-photo{
+  display:block;
+  width:100%;
+  height:500px;
+  object-fit:cover;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+}
+
+/* sello*/
+.beliefs-media .seal{
+  position:absolute;
+  right:22px;                  
+  bottom:22px;
+  width:130px;                 
+  height:auto;
+  transform: rotate(-10deg);   
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
+  pointer-events:none;         /* evita que “tape” clics sobre la imagen */
+  z-index: 2;                  
+}
+
 .beliefs-content h2{font-size:36px; line-height:1.1; margin-bottom:18px;}
 .beliefs-content h2 span{font-weight:600}
 .beliefs-list{list-style:none; display:grid; gap:40px; margin:14px 0 10px;}
@@ -122,6 +152,7 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
   width:100%; border:none; background:transparent; outline:none; font-size:14px; color:var(--color-ink-dark);
   font-family: var(--font-inter);
 }
+
 .projects-search button{
   width:36px; height:36px; border-radius:50%; border:none; background:#dfd4b7;
   display:grid; place-items:center; cursor:pointer;
@@ -129,11 +160,12 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
 .projects-search button img{width:18px; height:18px}
 .projects-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px;}
 .projects-grid article{background:var(--color-ivory-soft)}
-.projects-grid article>img{
+
+.projects article a img{
   width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px; margin-bottom:8px;
 }
-.projects-grid h3{font-size:16px; font-weight:700}
-.projects-grid p{font-size:14px; opacity:.85; font-family: var(--font-inter)}
+.projects-grid h3{font-size:20px; font-weight:500; font-family: var(--font-inter); color: #3B0C0C;}
+.projects-grid p{font-size:16px; opacity:.85; font-family: var(--font-inter); color: #3B0C0CB2; margin-top: 4px;}
 
 
 /* ===== Corporativo ===== */

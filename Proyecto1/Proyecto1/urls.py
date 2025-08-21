@@ -21,8 +21,10 @@ from principal import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),  
-    path('contacto/', views.contact, name='contact'),
+    path('contacto/', views.contacto, name='contacto'),
+    path('cotizador/', views.cotizador, name='cotizador'),
     path('proyectos/valladolid/', views.valladolid, name='valladolid'),
     path('proyectos/tulum/', views.tulum, name='tulum'), 
+    
     
 ]
