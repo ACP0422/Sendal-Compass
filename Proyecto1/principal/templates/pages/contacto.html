@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}   
+{% load static i18n %}
 
-{% block title %}Contacto – Sendal{% endblock %}
+{% block title %}{% trans "Contacto – Sendal" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/contact.css' %}">
@@ -11,49 +11,50 @@
 <main class="page container">
   <section class="col-left">
     <h1 class="brand-title">SENDAL</h1>
+
     <div class="taglines">
-      <p><strong>Donde crece tu historia.</strong></p>
-      <p><strong>Es momento de echar raíces.</strong></p>
+      <p><strong>{% trans "Donde crece tu historia." %}</strong></p>
+      <p><strong>{% trans "Es momento de echar raíces." %}</strong></p>
     </div>
+
     <p class="lead">
-      En Sendal, creemos que tener un espacio propio no debería ser un lujo, sino el comienzo de tu propio camino.
-      Más que vender terrenos, ayudamos a construir historias. Porque sabemos que no se trata solo de tierra: se trata de tu 
-      futuro, tu legado, tu tranquilidad.
+      {% blocktrans %}En Sendal, creemos que tener un espacio propio no debería ser un lujo, sino el comienzo de tu propio camino.
+      Más que vender terrenos, ayudamos a construir historias. Porque sabemos que no se trata solo de tierra: se trata de tu
+      futuro, tu legado, tu tranquilidad.{% endblocktrans %}
     </p>
 
-    <h2 class="contact-title">Contáctanos</h2>
+    <h2 class="contact-title">{% trans "Contáctanos" %}</h2>
 
     <form class="contact-form" action="#" method="post" novalidate>
       {% csrf_token %}
       <div class="grid-2">
         <label>
-          <span>Nombre</span>
-          <input type="text" name="nombre" placeholder="Jane" required>
+          <span>{% trans "Nombre" %}</span>
+          <input type="text" name="nombre" placeholder="{% trans 'Jane' %}" required>
         </label>
         <label>
-          <span>Apellido</span>
-          <input type="text" name="apellido" placeholder="Smitherton" required>
+          <span>{% trans "Apellido" %}</span>
+          <input type="text" name="apellido" placeholder="{% trans 'Smitherton' %}" required>
         </label>
       </div>
-    
+
       <label>
-        <span>Email</span>
-        <input type="email" name="email" placeholder="email@janesfakedomain.net" required>
+        <span>{% trans "Email" %}</span>
+        <input type="email" name="email" placeholder="{% trans 'email@janesfakedomain.net' %}" required>
       </label>
-    
+
       <label>
-        <span>Mensaje</span>
-        <textarea name="mensaje" rows="5" placeholder="Enter your question or message"></textarea>
+        <span>{% trans "Mensaje" %}</span>
+        <textarea name="mensaje" rows="5" placeholder="{% trans 'Escribe tu pregunta o mensaje' %}"></textarea>
       </label>
-    
-      <button type="submit" class="btn-primary">Enviar</button>
+
+      <button type="submit" class="btn-primary">{% trans "Enviar" %}</button>
     </form>
 
   </section>
 
   <aside class="col-right">
-    <img src="{% static 'resources/images/alt/contacto.jpg' %}" alt="Niñas corriendo" class="hero-photo">
+    <img src="{% static 'resources/images/alt/contacto.jpg' %}" alt="{% trans 'Niñas corriendo' %}" class="hero-photo">
   </aside>
 </main>
 {% endblock %}
-

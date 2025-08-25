@@ -1,6 +1,7 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="es">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,62 +15,70 @@
 <!-- ===== NAVBAR ===== -->
 <header class="navbar">
     <div class="nav-left">
-        <a href="{% url 'index' %}" class="brand" aria-label="Inicio">
-            <img src="{% static 'resources/images/general/logo.png' %}" alt="Isotipo Sendal" class="brand-mark">
-            <img src="{% static 'resources/images/general/Sendal.png' %}" alt="Logotipo Sendal" class="brand-word">
+        <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
+            <img src="{% static 'resources/images/general/logo.png' %}" alt="{% trans 'Isotipo Sendal' %}" class="brand-mark">
+            <img src="{% static 'resources/images/general/Sendal.png' %}" alt="{% trans 'Logotipo Sendal' %}" class="brand-word">
         </a>
     </div>
 
     <nav class="nav-center">
-        <a href="{% url 'index' %}#proyectos">Proyectos</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="{% url 'cotizador' %}">Cotizador</a>
-        <a href="{% url 'contacto' %}">Contacto</a>
+        <a href="{% url 'index' %}#proyectos">{% trans 'Proyectos' %}</a>
+        <a href="nosotros.html">{% trans 'Nosotros' %}</a>
+        <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a>
+        <a href="{% url 'contacto' %}">{% trans 'Contacto' %}</a>
     </nav>
 
     <div class="nav-right">
-        <a href="tel:+52XXXXXXXXXX" class="phone" aria-label="Llamar">
-            <img src="{% static 'resources/images/general/telefono.png' %}" alt="Teléfono">
+        <a href="tel:+52XXXXXXXXXX" class="phone" aria-label="{% trans 'Llamar' %}">
+            <img src="{% static 'resources/images/general/telefono.png' %}" alt="{% trans 'Teléfono' %}">
         </a>
-        <a href="#" class="lang">ENG</a>
+
+        {% load i18n %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <form action="{% url 'set_language' %}" method="post" style="display:inline">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    {# Si estás en ES, cambia a EN; si estás en EN, cambia a ES #}
+    <input type="hidden" name="language" value="{% if LANGUAGE_CODE == 'es' %}en{% else %}es{% endif %}">
+    <button type="submit" class="lang">
+        {% if LANGUAGE_CODE == 'es' %}EN{% else %}ES{% endif %}
+    </button>
+    </form>
     </div>
 </header>
 
-<!-- ===== CONTENIDO ESPECÍFICO DE CADA PÁGINA ===== -->
 <main>
     {% block content %}{% endblock %}
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer class="site-footer">
     <div class="footer-inner container">
         <div class="footer-brand">
-            <a href="{% url 'index' %}" class="brand" aria-label="Inicio">
-            <img src="{% static 'resources/images/general/Sendal.png' %}" alt="Logotipo Sendal" class="brand-word"/>
+            <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
+                <img src="{% static 'resources/images/general/Sendal.png' %}" alt="{% trans 'Logotipo Sendal' %}" class="brand-word"/>
             </a>
             <div class="f-social">
                 <a href="https://www.facebook.com/profile.php?id=61575546881257" aria-label="Facebook"><img src="{% static 'resources/images/general/facebook.png' %}" alt=""></a>
                 <a href="https://www.instagram.com/inmobiliaria_sendal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"><img src="{% static 'resources/images/general/instagram.png' %}" alt=""></a>
             </div>
-            <p class="f-slogan">LA RAÍZ DE TU FUTURO</p>
+            <p class="f-slogan">{% trans 'LA RAÍZ DE TU FUTURO' %}</p>
         </div>
 
         <nav class="footer-nav">
-            <a href="{% url 'index' %}#proyectos">Proyectos</a>
-            <a href="nosotros.html">Nosotros</a>
-            <a href="{% url 'cotizador' %}">Cotizador</a>
-            <a href="{% url 'contacto' %}">Contacto</a>
+            <a href="{% url 'index' %}#proyectos">{% trans 'Proyectos' %}</a>
+            <a href="nosotros.html">{% trans 'Nosotros' %}</a>
+            <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a>
+            <a href="{% url 'contacto' %}">{% trans 'Contacto' %}</a>
         </nav>
 
         <div class="footer-logo">
-            <a href="{% url 'index' %}" class="brand" aria-label="Inicio">
-            <img src="{% static 'resources/images/general/logo.png' %}" alt="Isotipo Sendal" class="brand-mark">
+            <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
+                <img src="{% static 'resources/images/general/logo.png' %}" alt="{% trans 'Isotipo Sendal' %}" class="brand-mark">
             </a>
         </div>
     </div>
 </footer>
 
-<!-- Scripts globales -->
 {% block extra_js %}{% endblock %}
 </body>
 </html>

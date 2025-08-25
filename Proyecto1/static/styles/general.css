@@ -144,7 +144,7 @@ a { text-decoration: none; }
 
 .nav-center {
   display: flex;
-  gap: 70px;
+  gap: 70px; /*50? */
   justify-self: center;
   align-items: center;
 }
@@ -234,6 +234,9 @@ a { text-decoration: none; }
 }
 
 .footer-nav a {
+  white-space: nowrap;
+  flex-shrink: 0;       /* no se encoja */
+  display: inline-block;/* opcional, ayuda en algunos navegadores */
   color: var(--color-ink-dark);
   font-family: var(--font-inter);
 }

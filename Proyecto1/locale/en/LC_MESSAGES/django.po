@@ -1,0 +1,344 @@
+# English translations for Sendal site.
+# This file is distributed under the same license as the project.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-25 10:36-0600\n"
+"PO-Revision-Date: 2025-08-25 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Proyecto1/settings.py:122
+msgid "Español"
+msgstr "Spanish"
+
+#: Proyecto1/settings.py:123
+msgid "Inglés"
+msgstr "English"
+
+#: principal/templates/base.html:18 principal/templates/base.html:57
+#: principal/templates/base.html:75
+msgid "Inicio"
+msgstr "Home"
+
+#: principal/templates/base.html:19 principal/templates/base.html:76
+msgid "Isotipo Sendal"
+msgstr "Sendal Isotype"
+
+#: principal/templates/base.html:20 principal/templates/base.html:58
+#: principal/templates/pages/index.html:167
+msgid "Logotipo Sendal"
+msgstr "Sendal Logo"
+
+#: principal/templates/base.html:25 principal/templates/base.html:68
+msgid "Proyectos"
+msgstr "Projects"
+
+#: principal/templates/base.html:26 principal/templates/base.html:69
+msgid "Nosotros"
+msgstr "About us"
+
+#: principal/templates/base.html:27 principal/templates/base.html:70
+msgid "Cotizador"
+msgstr "Estimator"
+
+#: principal/templates/base.html:28 principal/templates/base.html:71
+msgid "Contacto"
+msgstr "Contact"
+
+#: principal/templates/base.html:32
+msgid "Llamar"
+msgstr "Call"
+
+#: principal/templates/base.html:33
+msgid "Teléfono"
+msgstr "Phone"
+
+#: principal/templates/base.html:64
+msgid "LA RAÍZ DE TU FUTURO"
+msgstr "THE ROOT OF YOUR FUTURE"
+
+#: principal/templates/pages/contacto.html:4
+msgid "Contacto – Sendal"
+msgstr "Contact – Sendal"
+
+#: principal/templates/pages/contacto.html:16
+msgid "Donde crece tu historia."
+msgstr "Where your story grows."
+
+#: principal/templates/pages/contacto.html:17
+msgid "Es momento de echar raíces."
+msgstr "It's time to put down roots."
+
+#: principal/templates/pages/contacto.html:21
+msgid ""
+"En Sendal, creemos que tener un espacio propio no debería ser un lujo, sino "
+"el comienzo de tu propio camino.\n"
+"      Más que vender terrenos, ayudamos a construir historias. Porque "
+"sabemos que no se trata solo de tierra: se trata de tu\n"
+"      futuro, tu legado, tu tranquilidad."
+msgstr ""
+"At Sendal, we believe having your own space shouldn’t be a luxury, but the "
+"start of your own path.\n"
+"More than selling land, we help build stories. Because we know it’s not just "
+"about land: it’s about your\n"
+"future, your legacy, your peace of mind."
+
+#: principal/templates/pages/contacto.html:26
+msgid "Contáctanos"
+msgstr "Contact us"
+
+#: principal/templates/pages/contacto.html:32
+#: principal/templates/pages/index.html:183
+msgid "Nombre"
+msgstr "First name"
+
+#: principal/templates/pages/contacto.html:33
+#: principal/templates/pages/index.html:184
+msgid "Jane"
+msgstr "Jane"
+
+#: principal/templates/pages/contacto.html:36
+#: principal/templates/pages/index.html:187
+msgid "Apellido"
+msgstr "Last name"
+
+#: principal/templates/pages/contacto.html:37
+#: principal/templates/pages/index.html:188
+msgid "Smitherton"
+msgstr "Smitherton"
+
+#: principal/templates/pages/contacto.html:42
+#: principal/templates/pages/index.html:193
+msgid "Email"
+msgstr "Email"
+
+#: principal/templates/pages/contacto.html:43
+msgid "email@janesfakedomain.net"
+msgstr "email@janesfakedomain.net"
+
+#: principal/templates/pages/contacto.html:47
+msgid "Mensaje"
+msgstr "Message"
+
+#: principal/templates/pages/contacto.html:48
+msgid "Escribe tu pregunta o mensaje"
+msgstr "Enter your question or message"
+
+#: principal/templates/pages/contacto.html:51
+msgid "Enviar"
+msgstr "Send"
+
+#: principal/templates/pages/contacto.html:57
+msgid "Niñas corriendo"
+msgstr "Girls running"
+
+#: principal/templates/pages/index.html:4
+msgid "Sendal – Inicio"
+msgstr "Sendal – Home"
+
+#: principal/templates/pages/index.html:16
+msgid ""
+"Invierte en un espacio que crecerá contigo y construye el futuro que mereces."
+msgstr "Invest in a space that grows with you and build the future you deserve."
+
+#: principal/templates/pages/index.html:17
+msgid "TU PROYECTO, TU COMIENZO"
+msgstr "YOUR PROJECT, YOUR START"
+
+#: principal/templates/pages/index.html:22
+msgid ""
+"Sendal es el punto de partida para quienes buscan invertir de manera "
+"consciente y segura."
+msgstr "Sendal is the starting point for those who seek to invest consciously and safely."
+
+#: principal/templates/pages/index.html:24
+msgid "CONOCE LOS PROYECTOS"
+msgstr "SEE PROJECTS"
+
+#: principal/templates/pages/index.html:31
+msgid "El futuro se siembra en tierra firme"
+msgstr "The future is sown on solid ground"
+
+#: principal/templates/pages/index.html:32
+msgid "Encuentra el proyecto perfecto según zona, tipo y precio."
+msgstr "Find the perfect project by area, type, and price."
+
+#: principal/templates/pages/index.html:36
+#: principal/templates/pages/index.html:208
+msgid "Ubicación"
+msgstr "Location"
+
+#: principal/templates/pages/index.html:38
+msgid "Mérida"
+msgstr "Mérida"
+
+#: principal/templates/pages/index.html:39
+msgid "Campeche"
+msgstr "Campeche"
+
+#: principal/templates/pages/index.html:40
+#: principal/templates/pages/index.html:209
+msgid "Valladolid"
+msgstr "Valladolid"
+
+#: principal/templates/pages/index.html:45
+msgid "Proyecto / Propiedad"
+msgstr "Project / Property"
+
+#: principal/templates/pages/index.html:47
+#: principal/templates/pages/index.html:175
+#: principal/templates/pages/index.html:205
+msgid "Terreno"
+msgstr "Land"
+
+#: principal/templates/pages/index.html:48
+msgid "Casa"
+msgstr "House"
+
+#: principal/templates/pages/index.html:49
+msgid "Lote"
+msgstr "Lot"
+
+#: principal/templates/pages/index.html:54
+msgid "Rango de Precio"
+msgstr "Price Range"
+
+#: principal/templates/pages/index.html:67
+msgid "Equipo Sendal"
+msgstr "Sendal Team"
+
+#: principal/templates/pages/index.html:69
+msgid "Sello Sendal"
+msgstr "Sendal Seal"
+
+#: principal/templates/pages/index.html:73
+msgid "Creencias firmes"
+msgstr "Firm beliefs"
+
+#: principal/templates/pages/index.html:73
+msgid "caminos claros"
+msgstr "clear paths"
+
+#: principal/templates/pages/index.html:78
+msgid "Confianza y transparencia"
+msgstr "Trust and transparency"
+
+#: principal/templates/pages/index.html:79
+msgid ""
+"Inversiones claras, procesos sencillos y seguridad jurídica garantizada."
+msgstr "Clear investments, simple processes, and guaranteed legal certainty."
+
+#: principal/templates/pages/index.html:85
+msgid "Accesibilidad real"
+msgstr "Real accessibility"
+
+#: principal/templates/pages/index.html:86
+msgid "Terrenos bien planeados a precios alcanzables, sin sacrificar calidad."
+msgstr "Well-planned plots at affordable prices, without sacrificing quality."
+
+#: principal/templates/pages/index.html:92
+msgid "Acompañamiento personalizado"
+msgstr "Personalized guidance"
+
+#: principal/templates/pages/index.html:93
+msgid ""
+"Atención cercana, profesional y un compromiso auténtico con tu proyecto."
+msgstr "Close, professional attention and an authentic commitment to your project."
+
+#: principal/templates/pages/index.html:99
+msgid ""
+"Más que vender tierra, ayudamos a construir historias. Porque sabemos que se "
+"trata de <strong>tu futuro, tu legado, tu tranquilidad.</strong>"
+msgstr "More than selling land, we help build stories. Because we know it’s about "
+"<strong>your future, your legacy, your peace of mind.</strong>"
+
+#: principal/templates/pages/index.html:106
+msgid "PROYECTOS"
+msgstr "PROJECTS"
+
+#: principal/templates/pages/index.html:110
+msgid "Busca por zona"
+msgstr "Search by area"
+
+#: principal/templates/pages/index.html:112
+msgid "Buscar"
+msgstr "Search"
+
+#: principal/templates/pages/index.html:122
+msgid "Zona con alta plusvalía y acceso rápido a la ciudad."
+msgstr "High-value area with quick access to the city."
+
+#: principal/templates/pages/index.html:130
+msgid "Ubicación emergente, precios accesibles y excelente desarrollo."
+msgstr "Emerging location, affordable prices, and excellent development."
+
+#: principal/templates/pages/index.html:138
+msgid "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
+msgstr "Growing city with strong tourism and real-estate potential."
+
+#: principal/templates/pages/index.html:146
+msgid ""
+"Destino icónico con gran plusvalía, naturaleza y proyección internacional."
+msgstr "Iconic destination with strong value growth, nature, and international outlook."
+
+#: principal/templates/pages/index.html:154
+msgid "Capital segura y en crecimiento, con alta calidad de vida y plusvalía."
+msgstr "Safe and growing capital, with high quality of life and strong value growth."
+
+#: principal/templates/pages/index.html:162
+msgid "Logotipo Inmobiliaria"
+msgstr "Real estate logo"
+
+#: principal/templates/pages/index.html:163
+msgid "DONDE TU FUTURO TOMA RAÍZ"
+msgstr "WHERE YOUR FUTURE TAKES ROOT"
+
+#: principal/templates/pages/index.html:165
+msgid ""
+"“Lo que te ofrecemos no es solo tierra, es un espacio con potencial, una "
+"inversión segura y el respaldo de un equipo que cree en la honestidad, la "
+"cercanía y la claridad.”"
+msgstr ""
+"“What we offer isn’t just land; it’s a space with potential, a safe "
+"investment, and the support of a team that believes in honesty, closeness, "
+"and clarity.”"
+
+#: principal/templates/pages/index.html:179
+msgid "Cotiza tu propiedad"
+msgstr "Get a quote for your property"
+
+#: principal/templates/pages/index.html:194
+msgid "email@contacto.com"
+msgstr "email@contacto.com"
+
+#: principal/templates/pages/index.html:198
+msgid "Número de contacto"
+msgstr "Contact number"
+
+#: principal/templates/pages/index.html:199
+msgid "+52 9999 99 99 99"
+msgstr "+52 9999 99 99 99"
+
+#: principal/templates/pages/index.html:204
+msgid "Tipo del terreno o propiedad"
+msgstr "Property or land type"
+
+#: principal/templates/pages/index.html:213
+msgid "COTIZA AHORA"
+msgstr "GET A QUOTE NOW"
+
+#: principal/templates/pages/index.html:216
+#, python-format
+msgid ""
+"Tu información es 100%% confidencial. Uno de nuestros asesores te contactará "
+"para darte todos los detalles del terreno."
+msgstr "Your information is 100%% confidential. One of our advisors will contact you "
+"to give you all the details about the land."

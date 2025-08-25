@@ -200,6 +200,7 @@ body { color: var(--color-ink-dark); line-height: 1.35; }
 
 
 /* ===== Cotiza tu propiedad ===== */
+
 .quote-section .quote-grid{
   display:grid; grid-template-columns:45% 55%; align-items:stretch;
 }
