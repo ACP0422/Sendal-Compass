@@ -1,242 +1,266 @@
-h1, h2, h3, .projects-title { font-family: var(--font-articulat); }
+/* ===================== BASE (mobile-first) ===================== */
+body{ line-height:1.35; color:var(--color-ink-dark); }
 
-body { color: var(--color-ink-dark); line-height: 1.35; }
-
-/* ===== Hero ===== */
+/* ---------- HERO ---------- */
 .hero{
   position:relative;
   min-height:calc(100vh - var(--nav-h));
   padding-top:var(--nav-h);
-  color:var(--vall-white);
-  background:url("/static/resources/images/home/hero.jpg") center/cover no-repeat;
-  display:flex; flex-direction:column; justify-content:space-between;
+  color:var(--white);
+  background:url("/static/resources/images/home/hero.jpg") center 22%/cover no-repeat;
 }
 .hero::after{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
   background:
-    radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%),
-    linear-gradient(to bottom, rgba(0,0,0,0) 55%, rgba(0,0,0,0.75) 100%);
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(0,0,0,.85) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0) 55%, rgba(0,0,0,.75) 100%);
 }
-.hero > *{position:relative; z-index:1}
+.hero > *{ position:relative; z-index:1; }
 .hero-head{
-  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:0 16px;
-  row-gap: 70px;
+  min-height:52vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; row-gap:1rem;
+  transform:translateY(2vh);
 }
-.hero h1{
-  margin-top: 50px;
-  font-family: var(--font-articulat); 
-  font-size:46px; font-weight:600; line-height:1.16;
-}
-.hero h2{
-  font-family: var(--font-ezra);    /* “TU PROYECTO, TU COMIENZO”*/  
-  font-size:36px; letter-spacing:-2%; font-weight:400; text-transform:uppercase;
-}
+.hero h1{ font-weight:700; font-size:clamp(1.625rem,6vw,2.875rem); line-height:1.18; }
+.hero h2{ font-family:var(--font-ezra); text-transform:uppercase; font-size:clamp(1rem,3.2vw,2.25rem); margin-top:1.25rem; }
 .hero-bottom{
-  display:flex; align-items:center; justify-content:center;
-  margin-bottom:clamp(16px,4vh,40px);
-  padding-top: 150px;
-  gap: 400px;
-  font-size: 20px;
+  display:flex; flex-direction:column; gap:.875rem; align-items:center; justify-content:center;
+  margin-bottom:3.125rem; padding-inline:1rem;
 }
-.hero-note{
-  font-family: var(--font-articulat); 
-  max-width:520px; text-align:left;
-  opacity: 70%;
-}
+.hero-note{ font-size:.8125rem; opacity:.75; max-width:38ch; text-align:center; }
 .cta{
-  display:inline-block; padding:14px 24px; border-radius:999px;
-  border:1px solid rgba(255,255,255,.65); background:rgba(255,255,255,.06);
-  color:var(--vall-white); font-weight:500;
-  box-shadow:0 12px 28px rgba(0,0,0,.28);
-  font-family: var(--font-articulat); 
+  display:inline-block; padding:.625rem 1.125rem; border-radius:999px;
+  border:.0625rem solid rgba(255,255,255,.65); background:rgba(255,255,255,.06);
+  color:var(--white); box-shadow:0 .75rem 1.75rem rgba(0,0,0,.28);
 }
-.cta:hover{background:rgba(255,255,255,.14)}
+.cta:hover{ background:rgba(255,255,255,.14); }
 
-/* ===== Intro & Filtros ===== */
-.intro{padding:64px var(--gutter) 24px; text-align:center}
-.intro h2{font-size:50px; margin-bottom:6px}
-.intro h3{font-size:24px; font-weight:500; opacity:.85; font-family: var(--font-inter)}
+/* ---------- CREENCIAS / EQUIPO ---------- */
+.beliefs{
+  --gap:2rem; --radius:1rem;
+  display:grid; grid-template-columns:1fr; gap:var(--gap);
+  align-items:stretch; padding:1.75rem var(--gutter) .5rem;
+}
+.beliefs-media{ position:relative; }
+.beliefs-media .team-photo{
+  width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:var(--radius); box-shadow:var(--shadow);
+}
+.beliefs-media .seal{
+  position:absolute; right:.9rem; bottom:.9rem; width:4.875rem; transform:rotate(-10deg);
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.25)); pointer-events:none; z-index:2;
+}
+.beliefs-content{ display:flex; flex-direction:column; min-height:100%; }
+.beliefs-content h2{ font-size:clamp(1.625rem,5.2vw,2.25rem); line-height:1.12; margin:0 0 .5rem; }
+.beliefs-list{ list-style:none; display:grid; gap:1rem; margin:.5rem 0 0; padding:0; flex-grow:1; }
+.beliefs-list li{ display:grid; grid-template-columns:2rem 1fr; gap:.625rem; align-items:start; }
+.beliefs-list .icon{ width:1.75rem; height:1.75rem; object-fit:contain; }
+.beliefs-list h3{ font-size:.95rem; }
+.beliefs-list p{ font-size:.9rem; opacity:.9; margin-bottom:1.25rem; }
+.blurb{ margin-top:auto; font-style:italic; font-size:.9rem; }
+
+/* ---------- PROYECTOS (título + intro + filtros + tarjetas) ---------- */
+.projects{
+  background:var(--color-ivory-soft);
+  padding:.625rem 0 0;
+  margin-top:clamp(1.5rem,6vw,4rem);
+}
+.projects-title{
+  text-align:center; font-weight:800; letter-spacing:.02em; color:var(--color-ink-dark);
+  font-size:2rem; margin-bottom:1rem;
+}
+.intro{ text-align:center; margin:0 0 clamp(1rem,3vw,1.75rem); }
+.intro h3{ font-size:clamp(1rem,1.6vw,1.125rem); color:var(--color-ink-dark); }
 
 .filters{
-  margin:28px auto 0; max-width:880px;
-  background:var(--color-sand); border-radius:999px; padding:12px 16px;
-  display:flex; gap:18px; align-items:center; justify-content:center; box-shadow:var(--shadow);
-}
-.select{display:flex; flex-direction:column; gap:4px; min-width:210px}
-.select label{font-size:12px; opacity:.7; text-align:left; padding-left:10px; font-family: var(--font-inter)}
-.select select{
-  appearance:none; -webkit-appearance:none;
-  padding:10px 34px 10px 14px; border-radius:999px; border:1px solid #d0c5a8;
-  background:var(--vall-white); font-size:14px; color:var(--color-ink-dark);
-  font-family: var(--font-inter);
-}
-.range{display:flex; flex-direction:column; gap:4px; min-width:320px}
-.range label{font-size:12px; opacity:.7; padding-left:10px; text-align:left; font-family: var(--font-inter)}
-.range-wrap{display:flex; align-items:center; gap:12px}
-.range .min,.range .max{font-size:12px; opacity:.7; font-family: var(--font-inter)}
-.range input[type="range"]{
-  width:220px; height:8px; border-radius:999px; outline:none; appearance:none;
-  background:linear-gradient(90deg, var(--color-olive) 0%, #b7c29f 100%);
-}
-.range input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
-  background:var(--vall-white); border:2px solid var(--color-olive);
-}
-.range input[type="range"]::-moz-range-thumb{
-  width:18px; height:18px; border-radius:50%;
-  background:var(--vall-white); border:2px solid var(--color-olive);
-}
-
-/* ===== Creencias / Equipo ===== */
-.beliefs{
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:36px;
-  align-items:start;
-  padding:48px var(--gutter);
-}
-
-.beliefs-media{
-  position: relative;          
-}
-
-/* foto principal */
-.beliefs-media .team-photo{
-  display:block;
+  --pill-bg:var(--color-sand); --pill-br:2.5rem; --gap:.75rem;
   width:100%;
-  height:500px;
-  object-fit:cover;
-  border-radius:12px;
+  margin:.75rem 0 clamp(1.125rem,3vw,2rem);
+  padding:.75rem;
+  background:var(--pill-bg);
+  border-radius:var(--pill-br);
   box-shadow:var(--shadow);
+  display:grid; grid-template-columns:1fr; gap:var(--gap);
+}
+.select,.range{ display:flex; flex-direction:column; gap:.375rem; }
+.select label,.range label{ font-size:.75rem; opacity:.8; text-align:left; padding-left:.5rem; }
+.select{ position:relative; }
+.select select{
+  width:100%; padding:.75rem 2.25rem .75rem 1rem; border-radius:999px;
+  border:.0625rem solid #d0c5a8; background:#fff; color:var(--color-ink-dark);
+  font-size:1rem; line-height:1.2; -webkit-appearance:none; appearance:none;
+}
+.select::after{
+  content:""; position:absolute; right:1rem; top:50%; width:1.5rem; height:1.5rem; transform:translateY(-50%);
+  pointer-events:none; background:currentColor; color:var(--color-ink-dark);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23000' d='M6.23 8.81a1 1 0 0 1 1.41 0L12 13.17l4.36-4.36a1 1 0 0 1 1.41 1.41l-5.06 5.07a1 1 0 0 1-1.41 0L6.23 10.22a1 1 0 0 1 0-1.41z'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23000' d='M6.23 8.81a1 1 0 0 1 1.41 0L12 13.17l4.36-4.36a1 1 0 0 1 1.41 1.41l-5.06 5.07a1 1 0 0 1-1.41 0L6.23 10.22a1 1 0 0 1 0-1.41z'/></svg>") center/contain no-repeat;
+}
+.select select:focus-visible{
+  outline:.125rem solid color-mix(in srgb, var(--color-olive), white 30%);
+  outline-offset:.125rem; border-color:var(--color-olive);
 }
 
-/* sello*/
-.beliefs-media .seal{
-  position:absolute;
-  right:22px;                  
-  bottom:22px;
-  width:130px;                 
-  height:auto;
-  transform: rotate(-10deg);   
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
-  pointer-events:none;         /* evita que “tape” clics sobre la imagen */
-  z-index: 2;                  
+/* slider */
+.range-wrap{ display:flex; align-items:center; gap:.625rem; }
+.range .min,.range .max{ font-size:.75rem; opacity:.8; }
+.range input[type="range"]{
+  --min:0; --max:100; --val:50;
+  width:100%; height:.5rem; border-radius:999px; background:var(--color-olive);
+  -webkit-appearance:none; appearance:none; outline:none;
+}
+.range input[type="range"]::-webkit-slider-runnable-track{ height:.5rem; border-radius:999px; background:transparent; }
+.range input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:1.125rem; height:1.125rem; border-radius:50%;
+  background:#fff; border:.125rem solid var(--color-olive); box-shadow:0 .0625rem .1875rem rgba(0,0,0,.18);
+  margin-top:calc((.5rem - 1.125rem)/2);
+}
+.range input[type="range"]::-moz-range-track{ height:.5rem; border-radius:999px; background:transparent; }
+.range input[type="range"]::-moz-range-progress{ height:.5rem; border-radius:999px; background:var(--color-olive); }
+.range input[type="range"]::-moz-range-thumb{
+  width:1.125rem; height:1.125rem; border-radius:50%; background:#fff; border:.125rem solid var(--color-olive);
+  box-shadow:0 .0625rem .1875rem rgba(0,0,0,.18);
 }
 
-.beliefs-content h2{font-size:36px; line-height:1.1; margin-bottom:18px;}
-.beliefs-content h2 span{font-weight:600}
-.beliefs-list{list-style:none; display:grid; gap:40px; margin:14px 0 10px;}
-.beliefs-list li{display:grid; grid-template-columns:40px 1fr; gap:14px; align-items:start}
-.beliefs-list .icon{width:36px; height:36px; object-fit:contain}
-.beliefs-list h3{font-size:20px; margin-bottom:4px; font: weight 500;}
-.beliefs-list p{font-size:16px; opacity:.85; font-family: var(--font-inter);}
-.blurb{margin-top:45px; font-size:16px; font-family: var(--font-articulat)}
-.blurb strong{font-weight:700; font-family: var(--font-cambay)}
+/* tarjetas */
+.projects-grid{
+  display:grid; gap:1.125rem; grid-template-columns:1fr; padding:0 var(--gutter) 1rem;
+}
+.projects article a img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:.75rem; margin-bottom:.5rem; }
+.projects-grid h3{ font-size:1.125rem; font-weight:600; color:#3B0C0C; }
+.projects-grid p{ font-size:1rem; opacity:.85; color:#3B0C0CB2; margin-top:.25rem; }
 
-/* ===== Proyectos ===== */
-.projects{
-  background:var(--color-ivory-soft); 
-  padding:0px 0 0px}
-.projects-title{
-  text-align:center; font-size:54px; letter-spacing:.02em; font-weight:800;
-  color:var(--color-ink-dark); margin-bottom:18px
-}
-.projects-search{
-  max-width:520px; margin:0 auto 40px; height:44px; background:var(--color-sand);
-  border-radius:999px; box-shadow:var(--shadow);
-  display:grid; grid-template-columns:40px 1fr 44px; align-items:center; gap:8px; padding:0 8px;
-}
-.projects-search img:first-child{width:20px; height:20px; margin-left:10px; opacity:.8}
-.projects-search input{
-  width:100%; border:none; background:transparent; outline:none; font-size:14px; color:var(--color-ink-dark);
-  font-family: var(--font-inter);
+/* ---------- CORPORATIVO ---------- */
+.corporate{ text-align:center; padding:1.375rem var(--gutter) 1.75rem; }
+#logo-inmobiliaria{ width:11.25rem; height:auto; margin:0 auto; }
+.corporate .tagline{ font-size:.75rem; letter-spacing:.12em; margin:.75rem auto .625rem; font-family:var(--font-ezra); color:var(--color-olive-dark); }
+.corporate blockquote{ font-size:.8125rem; max-width:38ch; margin:0 auto .875rem; }
+.corporate img{ width:2.75rem; height:2.75rem; margin:0 auto; }
+
+/* ---------- COTIZA TU PROPIEDAD (Safari-safe) ---------- */
+.quote-section{ margin-top:0; }
+
+.quote-grid{
+  display:grid;
+  grid-template-columns:1fr;
 }
 
-.projects-search button{
-  width:36px; height:36px; border-radius:50%; border:none; background:#dfd4b7;
-  display:grid; place-items:center; cursor:pointer;
-}
-.projects-search button img{width:18px; height:18px}
-.projects-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px;}
-.projects-grid article{background:var(--color-ivory-soft)}
-
-.projects article a img{
-  width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px; margin-bottom:8px;
-}
-.projects-grid h3{font-size:20px; font-weight:500; font-family: var(--font-inter); color: #3B0C0C;}
-.projects-grid p{font-size:16px; opacity:.85; font-family: var(--font-inter); color: #3B0C0CB2; margin-top: 4px;}
-
-
-/* ===== Corporativo ===== */
-.corporate{text-align:center; padding:100px var(--gutter);}
-.corporate .subtitle{
-  font-size:14px; letter-spacing:.15em; margin-bottom:4px;
-  font-family: var(--font-inter);
-}
-.corporate h2{
-  font-size:32px; letter-spacing:.08em; margin-bottom:4px;
-  font-family: var(--font-articulat);
-}
-.corporate .tagline{
-  font-size:29px; letter-spacing:.12em; margin:20px auto 18px;
-  font-family: var(--font-ezra); 
-  color: var(--color-olive-dark);
-}
-.corporate blockquote{
-  font-size:30px; max-width:720px; margin:0 auto 28px;
-  font-family: var(--font-articulat); 
-}
-.corporate img{
-  width:71px; height:71px; margin:0 auto;
+/* El contenedor define la altura; la imagen rellena con object-fit */
+.quote-media{
+  position: relative;
+  min-height: 15rem;                 /* ~240px en mobile */
 }
 
-#logo-inmobiliaria {
-  width: 300px;
-  height: auto;
-  margin: 0 auto 0;
-  padding: 0;
+.quote-media img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
-
-/* ===== Cotiza tu propiedad ===== */
-
-.quote-section .quote-grid{
-  display:grid; grid-template-columns:45% 55%; align-items:stretch;
+.quote-form{
+  background:var(--color-olive-dark); color:var(--white);
+  padding:1.125rem 1rem 1.375rem; display:flex; flex-direction:column; gap:.875rem;
 }
-.quote-section .quote-media img{
-  width:100%; height:100%; max-height:650px; object-fit:cover;
-}
-.quote-section .quote-form{
-  background:var(--color-olive-dark); color:var(--vall-white); padding:24px 28px;
-  display:flex; flex-direction:column; gap:18px;;
-}
-.quote-form h2{
-  font-size:48px; font-weight:500; color:var(--color-cream-light);  margin:8px 30px;;
-  font-family: var(--font-articulat);
-}
-.q-row{display:grid; grid-template-columns:1fr 1fr; gap:32px; margin:0 30px;}
-.q-full{display:block;  margin:0 30px;}
-.q-full + .q-full{margin-top:2px}
-.quote-form label{display:flex; flex-direction:column; gap:8px; font-size:16px; color:#eee9d7; font-family: var(--font-inter)}
+.quote-form h2{ font-size:1.125rem; font-weight:600; color:var(--color-cream-light); }
+.q-row{ display:grid; grid-template-columns:1fr; gap:.75rem; }
+.q-full{ display:block; }
+.quote-form label{ display:flex; flex-direction:column; gap:.5rem; font-size:.75rem; color:#eee9d7; }
 .quote-form input{
-  height:48px; border-radius:8px; border:1px solid rgba(255,255,255,.25);
-  background:var(--vall-white); color:var(--color-ink-dark); padding:0 14px; font-size:14px; outline:none;
-  font-family: var(--font-inter);
+  height:2.75rem; border-radius:.5rem; border:.0625rem solid rgba(255,255,255,.25);
+  background:var(--white); color:var(--color-ink-dark); padding:0 .75rem; font-size:.875rem;
 }
 .q-cta{
-  margin:10px 30px;; height:56px; border-radius:8px; border:none;
+  height:3rem; border-radius:.5rem; border:none; cursor:pointer;
   background:var(--color-cream-light); color:var(--color-ink-dark);
-  font-weight:600; letter-spacing:.12em; cursor:pointer; font-family: var(--font-articulat);
-  font-size: 22px;
+  font-weight:700; letter-spacing:.12em; font-family:var(--font-articulat); font-size:1rem;
 }
-.q-cta:hover{filter:brightness(.96)}
-.q-note{font-size:12px; color:var(--color-sand); font-family: var(--font-inter);  margin:0 30px;}
+.q-cta:hover{ filter:brightness(.96); }
+.q-note{ font-size:.625rem; color:var(--color-sand); }
 
+/* ===================== ≥420px ===================== */
+@media (min-width:26.25rem){
+  .filters{ grid-template-columns:1fr 1fr; }
+  .filters .range{ grid-column:1 / -1; }
+}
 
-@media (max-width: 980px){
-  .beliefs{grid-template-columns:1fr}
-  .filters{flex-wrap:wrap}
-  .q-row{grid-template-columns:1fr}
-  .quote-section .quote-grid{grid-template-columns:1fr}
+/* ===================== ≥768px (tablet) ===================== */
+@media (min-width:48rem){
+  /* HERO */
+  .hero{ background-position:center 30%; }
+  .hero-note{ font-size:1.25rem; }
+  .hero-inner{ display:grid; place-items:center; margin:3.125rem 5rem 0; }
+
+  /* CREENCIAS */
+  .beliefs{ grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); }
+  .beliefs-media, .beliefs-content{ height:100%; }
+  .beliefs-media{ display:flex; }
+  .beliefs-media .team-photo{ height:100%; width:100%; aspect-ratio:auto; object-fit:cover; }
+  .beliefs-media .seal{ right:1rem; bottom:1rem; width:6rem; }
+
+  /* PROYECTOS */
+  .projects-title{ font-size:2rem; margin-bottom:.75rem; }
+  .projects-grid{ grid-template-columns:repeat(2,1fr); gap:1.375rem; }
+}
+
+/* ===================== ≥1024px (desktop) ===================== */
+@media (min-width:64rem){
+  /* HERO */
+  .hero{ background-position:center 42%; }
+  .hero-head{ min-height:50vh; transform:translateY(2.5vh); }
+  .hero-bottom{ flex-direction:row; gap:25rem; margin-bottom:clamp(2.5rem,5vh,5rem); padding-top:3.125rem; }
+  .hero-note{ font-size:1.125rem; max-width:32.5rem; text-align:left; }
+
+  /* CREENCIAS */
+  .beliefs{ gap:2.25rem; padding:3rem var(--gutter); }
+  .beliefs-media .team-photo{ aspect-ratio:auto; height:31.25rem; }
+  .beliefs-media .seal{ right:1.375rem; bottom:1.375rem; width:8.125rem; }
+  .beliefs-list{ gap:1.75rem; }
+  .beliefs-list li{ grid-template-columns:2.5rem 1fr; gap:.875rem; }
+  .beliefs-list .icon{ width:2.25rem; height:2.25rem; }
+  .beliefs-list h3{ font-size:1.25rem; }
+  .beliefs-list p{ font-size:1rem; }
+
+  /* PROYECTOS: pill centrado, 3 columnas en una fila */
+  .filters{
+    width:min(100% - 2*var(--gutter), 55rem);
+    margin:.75rem auto 1.75rem;
+    gap:1.125rem;
+    grid-template-columns:1fr 1fr 1fr;
+  }
+  .filters > *{ min-width:0; }
+  .filters .range{ grid-column:auto; }
+  .select{ min-width:12.5rem; }
+  .range{ min-width:18.5rem; }
+
+  .projects-title{ font-size:3.375rem; margin-bottom:1.125rem; }
+  .projects-grid{
+    grid-template-columns:repeat(3,1fr); gap:1.75rem;
+    width:min(100%,var(--max)); margin:0 auto; padding-inline:var(--gutter); padding-bottom:0;
+  }
+  .projects-grid article:nth-child(n+4){ margin-top:.375rem; }
+
+  /* CORPORATIVO */
+  .corporate{ padding:6.25rem var(--gutter); }
+  #logo-inmobiliaria{ width:18.75rem; }
+  .corporate .tagline{ font-size:1.8125rem; }
+  .corporate blockquote{ font-size:1.875rem; max-width:45rem; margin-bottom:1.75rem; }
+  .corporate img{ width:4.4375rem; height:4.4375rem; }
+
+  /* COTIZA (el grid estira la columna; la img rellena el contenedor) */
+  .quote-grid{ grid-template-columns:45% 55%; align-items:stretch; }
+
+  .quote-form{ padding:1.5rem 1.75rem; gap:1.125rem; }
+  .quote-form h2{ font-size:3rem; margin:.5rem 1.875rem; }
+  .q-row{ grid-template-columns:1fr 1fr; gap:2rem; margin:0 1.875rem; }
+  .q-full{ margin:0 1.875rem; }
+  .quote-form label{ font-size:1rem; }
+  .q-cta{ margin:.625rem 1.875rem; height:3.5rem; font-size:1.375rem; }
+  .q-note{ margin:0 1.875rem; font-size:.75rem; }
+}
+
+/* ===================== ≤768px (móvil-solo) ===================== */
+@media (max-width:47.99rem){
+  .blurb{ text-align:center; font-size:.875rem; }
 }
