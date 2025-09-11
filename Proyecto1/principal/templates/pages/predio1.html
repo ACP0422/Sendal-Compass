@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Predio 1" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/predio.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="predio container">
+
+ <!-- Encabezado -->
+<header class="head">
+  <h1 class="title">{% trans "Predio 1" %}</h1>
+  <p class="meta">
+    {% trans "Valladolid, Yucatán" %}<br>
+    {% trans "Superficie: 528 m²" %}
+  </p>
+
+  <!-- Flechas navegación -->
+  <nav class="nav-arrows">
+    <a href="{% url 'hacienda' %}" class="arrow prev" aria-label="{% trans 'Volver a Hacienda' %}">←</a>
+    <a href="{% url 'predio2' %}" class="arrow next" aria-label="{% trans 'Ir a Predio 2' %}">→</a>
+  </nav>
+</header>
+
+  <!-- Hero -->
+  <figure class="hero">
+    <img src="{% static 'resources/images/places/Valladolid/predio1/hero.png' %}" alt="{% trans 'Portón del predio' %}">
+  </figure>
+
+  <!-- Precio + info -->
+  <h2>{% trans "Precio: $2,904,000 mxn" %}</h2>
+
+  <section class="info">
+    <dl class="facts">
+      <div class="f"><dt>{% trans "Calle 35 # 198 F" %}</dt><dd>{% trans "Propiedad Privada" %}</dd></div>
+      <div class="f"><dt>$5,500m²</dt><dd>{% trans "Precio por m²" %}</dd></div>
+
+      <div class="f"><dt>{% trans "Colonia:" %}</dt><dd>{% trans "Centro" %}</dd></div>
+      <div class="f"><dt>{% trans "Municipio:" %}</dt><dd>{% trans "Valladolid" %}</dd></div>
+    </dl>
+
+    <aside class="features">
+      <h3>{% trans "Características:" %}</h3>
+      <ul>
+        <li>{% trans "Barda Perimetral" %}</li>
+        <li>{% trans "Puerta de Acceso" %}</li>
+        <li>{% trans "Uso de Suelo Comercial" %}</li>
+        <li>{% trans "A 2 calles de Catedral" %}</li>
+      </ul>
+
+      <a class="btn map" href="#" target="_blank" rel="noopener">{% trans "Ubicación Google maps" %}</a>
+    </aside>
+  </section>
+
+  <!-- Subgalería -->
+  <section class="subgallery">
+    <figure>
+      <figcaption>{% trans "Vista Fachada" %}</figcaption>
+      <img src="{% static 'resources/images/places/Valladolid/predio1/fachada.png' %}" alt="{% trans 'Vista fachada' %}">
+    </figure>
+    <figure>
+      <figcaption>{% trans "Vista Satelital" %}</figcaption>
+      <img src="{% static 'resources/images/places/Valladolid/predio1/satelite.png' %}" alt="{% trans 'Vista satelital' %}">
+    </figure>
+  </section>
+
+  <!-- Ubicación: franja full-bleed con wrapper -->
+  <section class="where-section">
+    <div class="where">
+      <div class="where-card">
+        <h3>{% trans "¿Dónde está ubicado?" %}</h3>
+        <p>{% trans "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán." %}</p>
+        <a class="btn ghost" href="#" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
+      </div>
+
+      <figure class="map">
+        <img src="{% static 'resources/images/places/Valladolid/predio1/mapa.png' %}" alt="{% trans 'Mapa de ubicación' %}">
+      </figure>
+    </div>
+  </section>
+
+</main>
+{% endblock %}

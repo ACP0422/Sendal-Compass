@@ -25,7 +25,14 @@ urlpatterns = [
     path('', views.index, name='index'),  
     path('contacto/', views.contacto, name='contacto'),
     path('cotizador/', views.cotizador, name='cotizador'),
+    path('cotizador/cotizador-komchen', views.cotizadorKomchen, name='cotizador-komchen'),
     path('proyectos/valladolid/', views.valladolid, name='valladolid'),
     path('proyectos/tulum/', views.tulum, name='tulum'), 
+    path('proyectos/valladolid/hacienda/', views.hacienda, name='hacienda'),
+    path('proyectos/valladolid/predio1/', views.predio1, name='predio1'),
+    path('proyectos/valladolid/predio2/', views.predio2, name='predio2'),
+    path('proyectos/komchen/', views.komchen, name='komchen'),
+    
+
 ]
 

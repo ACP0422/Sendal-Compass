@@ -9,9 +9,8 @@
 
 {% block content %}
 
-<!-- ===== CONTENIDO VALLADOLID ===== -->
 <main>
-
+  <!-- ===== ENCABEZADO ===== -->
   <section class="city-header">
     <h1 class="city-title">VALLADOLID</h1>
     <p class="city-kicker">
@@ -20,25 +19,28 @@
     </p>
   </section>
 
+  <!-- ===== HERO: FOTO + PROMO ===== -->
   <section class="city-feature">
     <figure class="big-photo">
-      <img src="{% static 'resources/images/places/Valladolid/Valladolid.png' %}" alt="Templo principal de Valladolid, Yucatán">
+      <img src="{% static 'resources/images/places/Valladolid/Valladolid.png' %}"
+           alt="Templo principal de Valladolid, Yucatán">
     </figure>
 
     <aside class="promo">
-      <img src="{% static 'resources/images/places/Valladolid/valladolid_sendal.png' %}" alt="Inmobiliaria Sendal – Tu tranquilidad es nuestra mejor inversión">
+      <img id="imagen-promocional" src="{% static 'resources/images/places/Valladolid/valladolid_sendal.png' %}"
+           alt="Inmobiliaria Sendal – Tu tranquilidad es nuestra mejor inversión">
     </aside>
   </section>
 
+  <!-- ===== LISTADO ===== -->
   <section class="listing" aria-label="Propiedades en Valladolid">
-    
     <article>
       <img src="{% static 'resources/images/places/Valladolid/hacienda_residencial.png' %}" alt="Entrada estilo hacienda">
       <header>
         <h3>Hacienda Residencial</h3>
         <p>Lotes o Hacienda para residencia</p>
       </header>
-      <a class="more" href="#">Ver más</a>
+      <a class="more" href="{% url 'hacienda' %}">Ver más</a>
     </article>
 
     <article>
@@ -47,7 +49,7 @@
         <h3>Predio 1</h3>
         <p>Propiedad Privada</p>
       </header>
-      <a class="more" href="#">Ver más</a>
+      <a class="more" href="{% url 'predio1' %}">Ver más</a>
     </article>
 
     <article>
@@ -56,13 +58,12 @@
         <h3>Predio 2</h3>
         <p>Propiedad Privada</p>
       </header>
-      <a class="more" href="#">Ver más</a>
+      <a class="more" href="{% url 'predio2' %}">Ver más</a>
     </article>
   </section>
-
 </main>
 
-<!-- ===== SECCIÓN DE SERVICIOS ===== -->
+<!-- ===== SERVICIOS ===== -->
 <section class="services-cover full-bleed">
   <h2>Cubrimos todos tus requerimientos</h2>
 
@@ -99,28 +100,28 @@
       </div>
     </article>
   </div>
+
 </section>
 
-<!-- ===== SECCIÓN MÁS INFORMACIÓN ===== -->
-<section class="more-info" style="padding:50px var(--gutter);">
-  <div style="max-width:var(--max); margin:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch;">
-    
-    <div style="background:#F8F4E3; border-radius:12px; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:40px;">
-      <h3 style="font-size:36px; font-weight:600; margin-bottom:8px; color:#3B0C0C;">¿Quieres más información?</h3>
-      <p style="font-size:20px; margin-bottom:18px; color:#8F5600;">
-        Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado.
+<!-- ===== MÁS INFORMACIÓN ===== -->
+<section class="more-info">
+  <div class="mi-grid">
+    <div class="mi-card">
+      <h3>¿Quieres más información?</h3>
+      <p>
+        Contáctanos y te enviaremos toda la información que necesitas
+        sobre el proyecto de tu agrado.
       </p>
-      <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
-        <a href="#" style="background:#F2BB57; color:#41070A; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:24px;">Whatsapp</a>
-        <a href="#" style="background:#8F5600; color:#F2BB57; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:24px;">Correo electrónico</a>
+      <div class="mi-actions">
+        <a class="btn btn-wsp" href="#">Whatsapp</a>
+        <a class="btn btn-mail" href="#">Correo electrónico</a>
       </div>
     </div>
 
-    <div>
-      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}" alt="Agente de ventas" style="width:100%; height:100%; border-radius:12px; object-fit:cover;">
-    </div>
+    <figure class="mi-agent">
+      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}" alt="Agente de ventas">
+    </figure>
   </div>
 </section>
-
 
 {% endblock %}

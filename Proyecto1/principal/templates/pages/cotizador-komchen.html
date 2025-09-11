@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Proyecto Komchén" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/cotizador.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="quote quote--komchen"> 
+
+   <!-- Hero contenido (NO fullbleed) -->
+   <figure class="hero">
+    <img src="{% static 'resources/images/cotizador/hero.png' %}"
+         alt="{% trans 'Asesoría personalizada para cotizar tu proyecto' %}">
+  </figure>
+
+  <!-- Banner -->
+  <section class="banner">
+    <div class="banner-inner">
+      <p class="kicker">{% trans "Cotiza nuestros proyectos" %}</p>
+      <h1 class="title" style="color:#FCBB99;">{% trans "Proyecto Komchén" %}</h1>
+
+      
+
+      <!-- Botón toggle -->
+      <button id="toggle-projects" class="btn-toggle" type="button">
+        {% trans "Ver menos" %}
+      </button>
+
+      <!-- Otros proyectos -->
+      <nav class="actions" aria-label="{% trans 'Proyectos disponibles para cotizar' %}">
+        <a class="btn btn-tularum"   href="#">{% trans "Tularum" %}</a>
+        <a class="btn btn-hacienda" href="#">{% trans "Hacienda Residencial" %}</a>
+      </nav>
+    </div>
+
+    <!-- Mapa -->
+    <div class="map-card">
+      <img src="{% static 'resources/images/places/Komchén/masterplan.png' %}" alt="">
+    </div>
+  </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const actions   = document.querySelector('.quote--komchen .actions');
+  const toggleBtn = document.getElementById('toggle-projects');
+  const mqPhone   = window.matchMedia('(max-width: 767px)');
+  const mqTablet  = window.matchMedia('(min-width:768px) and (max-width:1024px)');
+
+  function setLabel () {
+    if (actions.classList.contains('is-hidden')) {
+      toggleBtn.textContent = "{{ _('Otros proyectos') }}";
+    } else {
+      toggleBtn.textContent = "{{ _('Ocultar proyectos') }}";
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    actions.classList.toggle('is-hidden');
+    setLabel();
+  });
+
+  // estado inicial
+  actions.classList.add('is-hidden');
+  setLabel();
+  window.addEventListener('resize', setLabel);
+});
+</script>
+{% endblock %}

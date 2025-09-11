@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Hacienda Residencial" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/hacienda.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="page container">
+
+  <!-- Encabezado + breadcrumbs/controls (si los tienes en base, se heredan) -->
+  <header class="head">
+    <h1 class="title">{% trans "Hacienda Residencial" %}</h1>
+    <p class="meta">
+      {% trans "Valladolid, Yucatán" %}<br>
+      {% trans "Superficie: 109,344 m²" %}
+    </p>
+
+      <!-- Flechas navegación -->
+      <nav class="nav-arrows">
+        <span class="arrow next disabled">←</span>
+        <a href="{% url 'predio1' %}" class="arrow next" aria-label="{% trans 'Ir a Predio 2' %}">→</a>
+      </nav>
+  </header>
+
+
+  <!-- Hero -->
+  <figure class="hero">
+    <img src="{% static 'resources/images/places/Valladolid/hacienda/hero.png' %}" alt="{% trans 'Fachada tipo hacienda' %}">
+  </figure>
+
+  <!-- Intro: datos + descripción + botón -->
+  <section class="intro">
+    <div class="pitch">
+      <h2 class="section-title">{% trans "Vive el lujo de lo natural." %}</h2>
+
+      <div class="facts">
+        <div><strong>$900m²</strong><span>{% trans "Precio más bajo" %}</span></div>
+        <div><strong>110 {% trans "Terrenos" %}</strong><span>{% trans "Con 550m²" %}</span></div>
+        <div><strong>{% trans "Tribu Easter" %}</strong><span>{% trans "Mayores de 50 años" %}</span></div>
+
+        <div><strong>{% trans "Ubicación" %}</strong><span>{% trans "Sobre periférico" %}</span></div>
+        <div><strong>24,048.39m²</strong><span>{% trans "Vialidades" %}</span></div>
+        <div><strong>1,207.17m²</strong><span>{% trans "Áreas verdes" %}</span></div>
+      </div>
+    </div>
+
+    <div class="desc">
+      <p>{% blocktrans %}
+        Este desarrollo residencial, con entrega a partir de junio de 2026, ofrece haciendas y
+        terrenos residenciales desde 448 m² hasta 915 m² en una comunidad exclusiva de baja densidad (solo 10 viviendas por hectárea).
+        Con fachada estilo hacienda y rodeado de paisajes de agave, integra instalaciones subterráneas, aprovechamiento de aguas y un 
+        reglamento de construcción con normas ambientales. El proyecto cuenta con certificación sustentable EDGE o LEED.
+      {% endblocktrans %}</p>
+
+      <a class="btn map" href="#" target="_blank" rel="noopener">{% trans "Ubicación Google maps" %}</a>
+    </div>
+  </section>
+
+  <!-- Amenidades (grid de imágenes) -->
+  <section class="amenities">
+    <h2 class="section-title">{% trans "Amenidades" %}</h2>
+
+    <div class="amenities-grid">
+      <figure class="amenity amenity-lg">
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/amenidad-piscina.png' %}" alt="{% trans 'Piscina' %}">
+      </figure>
+
+      <figure class="amenity">
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/amenidad-casaclub.png' %}" alt="{% trans 'Casa Club' %}">
+      </figure>
+     
+      <figure class="amenity">
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/amenidad-canchas.png' %}" alt="{% trans 'Canchas de pádel, tenis y básquetbol' %}">
+      </figure>
+    </div>
+
+
+    <!-- Lista de amenidades en texto -->
+    <div class="amen-list">
+      <article>
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/icono-nadar.svg' %}" alt="{% trans 'ícono de piscina con canal de nado' %}">
+        <h3 class="amen-icon"></h3>
+        <h4>{% trans "Piscina con canal de nado" %}</h4>
+        <p>{% trans "Alberca amplia con área de relajación y canal de nado para ejercicio diario." %}</p>
+      </article>
+      <article>
+
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/icono-tenis.svg' %}" alt="{% trans 'ícono de canchas deportivas' %}">
+        <h3 class="amen-icon"></h3>
+        <h4>{% trans "Canchas Deportivas" %}</h4>
+        <p>{% trans "Canchas de pádel, tenis y básquet disponibles para que disfrutes del deporte sin salir de casa." %}</p>
+      </article>
+      <article>
+
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/icono-casa-club.svg' %}" alt="{% trans 'ícono de casa club' %}">
+        <h3 class="amen-icon"></h3>
+        <h4>{% trans "Casa Club" %}</h4>
+        <p>{% trans "Zona común con espacios para reuniones, actividades y descanso para residentes." %}</p>
+      </article>
+      <article>
+
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/icono-destileria.svg' %}" alt="{% trans 'ícono destileria y bar' %}">
+        <h3 class="amen-icon"></h3>
+        <h4>{% trans "Destilería y Bar" %}</h4>
+        <p>{% trans "Espacio equipado para eventos, reuniones y degustaciones con producción local." %}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Galería / OJO PONER CARRUSEL DE IMAGENES-->
+  <section class="gallery">
+    <h2 class="section-title">{% trans "Galería" %}</h2>
+
+    <div class="gallery-grid">
+      <img src="{% static 'resources/images/places/Valladolid/hacienda/galeria-1.png' %}" alt="">
+      <img src="{% static 'resources/images/places/Valladolid/hacienda/galeria-2.png' %}" alt="">
+    </div>
+
+  </section>
+
+  <section class="explora">
+    <div class="explora__inner">
+      <h2 class="explora__title">Explora y Elige</h2>
+  
+      <div class="map-container">
+      <div class="explora__chips">
+        <span class="chip chip-hold">Apartado</span>
+        <span class="chip chip-ok">Disponible</span>
+        <span class="chip chip-sold">Vendido</span>
+        <a class="cta" href="#">{% trans "Quiero saber más" %}</a>
+      </div>
+  
+      
+      <figure class="explora__plan">
+        <img class="fluid" src="{% static 'resources/images/places/Valladolid/hacienda/masterplan.png' %}"
+             alt="Masterplan Hacienda Residencial">
+      </figure>
+  
+      <ul class="explora__legend">
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-tenis.svg' %}" alt="" aria-hidden="true"> Amenidades</li>
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-casa-club.svg' %}" alt="" aria-hidden="true"> Zona Comercial</li>
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-destileria.svg' %}" alt="" aria-hidden="true"> Siembra de Agave</li>
+      </ul>
+    </div>
+  
+      <div class="explora__grid">
+        <article class="explora__card">
+          <h3>¿Dónde está ubicado?</h3>
+          <p>Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el periférico.</p>
+          <a class="btn ghost" href="#" target="_blank" rel="noopener">Ir a la ubicación</a>
+        </article>
+  
+        <figure class="explora__map">
+          <img class="fluid" src="{% static 'resources/images/places/Valladolid/hacienda/mapa.png' %}"
+               alt="Mapa de ubicación">
+        </figure>
+      </div>
+    </div>
+  </section>
+  
+
+
+</main>
+{% endblock %}

@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Komchén" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/komchen.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="kom container">
+
+  <!-- Header -->
+  <header class="head">
+    <h1 class="title">KOMCHÉN</h1>
+    <p class="kicker">
+      {% trans "Rodeada por desarrollos residenciales de alto nivel, cerca de las mejores zonas comerciales de Mérida y a unos minutos de increíbles atractivos naturales." %}
+    </p>
+  </header>
+
+  <!-- Hero -->
+  <figure class="hero">
+    <img src="{% static 'resources/images/places/Komchén/hero.png' %}" alt="{% trans 'Alberca con palmeras al atardecer' %}">
+  </figure>
+
+  <!-- Proyecto -->
+  <section class="project">
+    <h2 class="section-title" id="project-title">{% trans "Proyecto Komchén" %}</h2>
+    <p class="location">{% trans "Komchén, Yucatán" %}</p>
+    <figure class="map-hero">
+      <img src="{% static 'resources/images/places/Komchén/mapa.png' %}" alt="{% trans 'Mapa de Komchén' %}">
+    </figure>
+  </section>
+
+  <!-- Lotes + descripción -->
+  <section class="lots">
+    <h3 id = "lots-title">{% trans "Lotes Residenciales" %}</h3>
+    <div class="lots-grid">
+      <article><h4>{% trans "Norte-Sur" %}</h4><p>{% trans "Lotes con la mejor orientación" %}</p></article>
+      <article><h4>{% trans "Parque central" %}</h4><p>{% trans "con amenidades frente a los lotes" %}</p></article>
+      <article><h4>{% trans "Acceso" %}</h4><p>{% trans "con seguridad avanzada" %}</p></article>
+      <article><h4>{% trans "Internet" %}</h4><p>{% trans "de fibra óptica de alta velocidad" %}</p></article>
+      <article><h4>{% trans "Instalaciones" %}</h4><p>{% trans "Subterráneas, drenaje y sistema de agua" %}</p></article>
+      <article><h4>{% trans "Estacionamiento" %}</h4><p>{% trans "para visitantes" %}</p></article>
+    </div>
+    <div class="lots-desc">
+      <p>
+        {% blocktrans %}
+        Un proyecto pensado para ofrecer comodidad, seguridad y conexión. Con lotes de orientación ideal, un parque central frente a casa y amenidades que elevan el día a día, este desarrollo combina infraestructura moderna, acceso controlado y tecnología para vivir en equilibrio y con visión a futuro. Es el lugar perfecto para quienes desean vivir tranquilos, sin el bullicio de la urbe, pero muy cerca de todo lo que necesitas.
+        {% endblocktrans %}
+      </p>
+      <a class="btn map" href="#" target="_blank" rel="noopener">{% trans "Ubicación Google maps" %}</a>
+    </div>
+  </section>
+
+  <!-- Amenidades (galería principal de fotos) -->
+  <section class="amenities">
+    <h2 class="section-title">{% trans "Amenidades" %}</h2>
+    <div class="amen-grid">
+      <figure class="amen amen-lg">
+        <img src="{% static 'resources/images/places/Komchén/amenidad-piscina.png' %}" alt="{% trans 'Piscina' %}">
+      </figure>
+      <figure class="amen">
+        <img src="{% static 'resources/images/places/Komchén/amenidad-grill.png' %}" alt="{% trans 'Zona Grill' %}">
+      </figure>
+      <figure class="amen">
+        <img src="{% static 'resources/images/places/Komchén/amenidad-canchas.png' %}" alt="{% trans 'Cancha de Fut-Basquet' %}">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Amenidades (lista con íconos) -->
+  <section class="amenities-list">
+    <div class="amenlist">
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/jogging.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Pista de Jogging</h3>
+          <p>Construye tu historia con espacios ideales para la recreación y el deporte.</p>
+        </div>
+      </article>
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/grill.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Zona Grill</h3>
+          <p>Espacios que enriquecen tu vida.</p>
+        </div>
+      </article>
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/court.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Cancha de Fut-Basquet</h3>
+          <p>Practica tu deporte favorito en cualquier momento del día.</p>
+        </div>
+      </article>
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/business.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Business Center con Wifi</h3>
+          <p>Trabaja desde el Business Center con el mejor internet de fibra óptica.</p>
+        </div>
+      </article>
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/pool.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Casa Club con Alberca</h3>
+          <p>Disfruta de los días de sol y de un sin fin de eventos en comunidad.</p>
+        </div>
+      </article>
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/kids.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Ludoteca con circuito cerrado</h3>
+          <p>Un espacio ideal para los pequeños del hogar.</p>
+        </div>
+      </article>
+      <article class="amenitem">
+        <img src="{% static 'resources/images/icons/camera.svg' %}" alt="" aria-hidden="true">
+        <div>
+          <h3>Kids Park Cámara+Wifi</h3>
+          <p>Seguridad y tranquilidad mientras los pequeños se divierten.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+<!--CARRUSEL -->
+
+<section class="galeria">
+  <h2 class="section-title">{% trans "Galería" %}</h2>
+      
+<div class="carousel" aria-roledescription="carousel" data-autoplay="0">
+  <div class="carousel__viewport">
+    <div class="carousel__track">
+      <div class="carousel__slide is-active">
+        <img src="{% static 'resources/images/places/Komchén/gal-1.png' %}" alt="Imagen 1">
+      </div>
+      <div class="carousel__slide">
+        <img src="{% static 'resources/images/places/Komchén/gal-2.png' %}" alt="Imagen 2">
+      </div>
+      <div class="carousel__slide">
+        <img src="{% static 'resources/images/places/Komchén/gal-3.png' %}" alt="Imagen 3">
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel__btn prev" aria-label="Anterior" data-dir="-1">❮</button>
+  <button class="carousel__btn next" aria-label="Siguiente" data-dir="1">❯</button>
+
+  <div class="carousel__dots" aria-label="Paginación"></div>
+</div>
+</section>
+
+
+  <!-- Banda ROSA: Explora y Dónde -->
+  <div class="section-container">
+    <div class="peach-wrap">
+      <!-- Explora y Elige -->
+      <section class="explora">
+        <h2 class="section-title">{% trans "Explora y Elige" %}</h2>
+
+        <div class="legend">
+          <span class="chip chip-hold">{% trans "Apartado" %}</span>
+          <span class="chip chip-ok">{% trans "Disponible" %}</span>
+          <span class="chip chip-sold">{% trans "Vendido" %}</span>
+          <span class="chip chip-estimator">{% trans "Cotizador" %}</span>
+          <span class="chip chip-outline">{% trans "Quiero saber más" %}</span>
+        </div>
+
+        <figure class="masterplan">
+          <img src="{% static 'resources/images/places/Komchén/masterplan.png' %}" alt="{% trans 'Masterplan' %}">
+        </figure>
+
+        <ul class="amen-legend">
+          <li><span class="amen-badge">A</span><span class="amen-label">Casa Club con alberca</span></li>
+          <li><span class="amen-badge">B</span><span class="amen-label">Ludoteca</span></li>
+          <li><span class="amen-badge">C</span><span class="amen-label">Zona Grill</span></li>
+          <li><span class="amen-badge">D</span><span class="amen-label">Kids Park<br>Caseta de vigilancia</span></li>
+          <li><span class="amen-badge">E</span><span class="amen-label">Business Center</span></li>
+          <li><span class="amen-badge">F</span><span class="amen-label">Pista de Jogging</span></li>
+          <li><span class="amen-badge">G</span><span class="amen-label">Cancha de Fut-Basquet</span></li>
+          <li><span class="amen-badge">H</span><span class="amen-label">Estacionamiento visitantes</span></li>
+        </ul>
+
+        <div class="benefits-card">
+          <h3>{% trans "Beneficios" %}</h3>
+          <ul>
+            <li>{% trans "Lotes con orientación Norte–Sur." %}</li>
+            <li>{% trans "Parque Central con todas las amenidades frente a tu casa." %}</li>
+            <li>{% trans "Internet de alta velocidad con fibra óptica." %}</li>
+            <li>{% trans "Sistema de acceso con seguridad avanzada." %}</li>
+            <li>{% trans "Sistema de agua." %}</li>
+            <li>{% trans "Instalaciones subterráneas." %}</li>
+            <li>{% trans "Estacionamiento de visitantes." %} </li>
+            <li>{% trans "Drenaje con sistema de biodigestor." %}</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ¿Dónde está ubicado? (sin tarjeta blanca alrededor) -->
+      <section class="donde">
+        <div class="donde-card">
+          <h3>{% trans "¿Dónde está ubicado?" %}</h3>
+          <p>{% trans "Se extiende más allá de los límites de la ciudad, hacia las comisarías cercanas, lo que amplía la oferta inmobiliaria." %}</p>
+          <a class="btn ghost" href="https://maps.app.goo.gl/SjQfRkzehHEXuQ8u9" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
+        </div>
+        <figure class="donde-mapa">
+          <div class="map-frame">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26836.702060301668!2d-89.68090223533434!3d21.10668524753544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f56759c4603cc97%3A0xa2579fe8bff5b990!2s97302%20Komch%C3%A9n%2C%20Yuc.!5e0!3m2!1ses-419!2smx!4v1757438037014!5m2!1ses-419!2smx"
+              style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </figure>
+      </section>
+    </div>
+  </div>
+
+  <!-- Banda BEIGE: ¿Por qué elegir Mérida? -->
+  <section class="merida-section">
+    <div class="merida">
+      <h2 class="section-title">{% trans "¿Por qué elegir Mérida?" %}</h2>
+      <div class="merida-grid">
+        <article class="merida-text">
+          <p>{% trans "Mérida es considerada como la capital del sureste mexicano gracias a su creciente popularidad entre las ciudades más seguras del país, donde se respira paz y tranquilidad." %}</p>
+          <br>
+          <p>{% trans "A esto se suma su belleza natural y arquitectónica, su exquisita gastronomía, el trato amable de su gente y la amplia variedad de servicios, zonas comerciales y oferta cultural." %}</p>
+          <br>
+          <p>{% trans "Hay muchos motivos para elegir vivir en la zona norte de Mérida, sin embargo, estos son los principales:" %}</p>
+          <br>
+          <ul>
+            <li>Galardonada en varias ocaciones como la ciudad más segura de México, siendo la zona norte la que cuenta con la mejor tecnología en sistemas de seguridad.</li>
+            <li>Reúne lo mejor de la ciudad: plazas comerciales de primer nivel, hospitales de vanguardia y centros educativos de alta calidad.</li>
+            <li>Vialidades que facilitan la conexión entre los desarrollos inmobiliarios y las principales avenidas y vialidades de la ciudad.</li>
+            <li>Cuenta con una alta calidad de vida, pues se concentran las privadas más prestigiosas y con amenidades exclusivas.</li>
+            <li>Plusvalía garantizada y alto retorno de inversión (ROI) gracias al constante desarrollo económico de la zona.</li>
+          </ul>
+        </article>
+        <figure class="merida-photo">
+          <img src="{% static 'resources/images/places/Komchén/monumento.png' %}" alt="{% trans 'Monumento a la Patria' %}">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+
+<script>
+  // ==== JS (sin dependencias) ====
+(function(){
+  const root = document.querySelector('.carousel');
+  if(!root) return;
+
+  const track = root.querySelector('.carousel__track');
+  const slides = [...root.querySelectorAll('.carousel__slide')];
+  const btnPrev = root.querySelector('.carousel__btn.prev');
+  const btnNext = root.querySelector('.carousel__btn.next');
+  const dotsWrap = root.querySelector('.carousel__dots');
+  const autoplayMs = parseInt(root.dataset.autoplay || '0', 10);
+
+  let index = 0;
+  let x0 = null, x = 0, isDragging = false, raf = null, autoTimer = null;
+
+  // Dots
+  slides.forEach((_, i)=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Ir a la imagen ${i+1}`);
+    b.addEventListener('click', ()=> goTo(i));
+    dotsWrap.appendChild(b);
+  });
+
+  function update(){
+    const offset = -index * 100;
+    track.style.transform = `translate3d(${offset}%,0,0)`;
+    slides.forEach((s,i)=> s.classList.toggle('is-active', i===index));
+    [...dotsWrap.children].forEach((d,i)=> d.setAttribute('aria-current', i===index ? 'true' : 'false'));
+    // Deshabilitar flechas en extremos (opcional)
+    btnPrev.disabled = (index === 0);
+    btnNext.disabled = (index === slides.length - 1);
+  }
+
+  function goTo(i){
+    index = Math.max(0, Math.min(slides.length-1, i));
+    update();
+    restartAutoplay();
+  }
+  function move(dir){ goTo(index + dir); }
+
+  // Botones
+  btnPrev.addEventListener('click', ()=> move(-1));
+  btnNext.addEventListener('click', ()=> move(1));
+
+  // Teclado
+  root.tabIndex = 0;
+  root.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowLeft') move(-1);
+    if(e.key === 'ArrowRight') move(1);
+  });
+
+  // Táctil / Drag
+  function onDown(clientX){
+    isDragging = true; x0 = clientX; x = 0;
+    track.style.transition = 'none';
+    cancelAnimationFrame(raf);
+  }
+  function onMove(clientX){
+    if(!isDragging) return;
+    x = clientX - x0;
+    const pct = (x / root.clientWidth) * 100;
+    track.style.transform = `translate3d(${(-index*100)+pct}%,0,0)`;
+  }
+  function onUp(){
+    if(!isDragging) return;
+    isDragging = false;
+    track.style.transition = '';
+    const threshold = root.clientWidth * 0.15;
+    if (x > threshold) move(-1);
+    else if (x < -threshold) move(1);
+    else update();
+  }
+
+  // Eventos puntero
+  track.addEventListener('pointerdown', e=> { track.setPointerCapture(e.pointerId); onDown(e.clientX); });
+  track.addEventListener('pointermove',  e=> onMove(e.clientX));
+  track.addEventListener('pointerup',    onUp);
+  track.addEventListener('pointercancel',onUp);
+  track.addEventListener('pointerleave', onUp);
+
+  // Autoplay (0 = apagado)
+  function startAutoplay(){
+    if(!autoplayMs) return;
+    stopAutoplay();
+    autoTimer = setInterval(()=>{
+      if(index === slides.length - 1) goTo(0);
+      else move(1);
+    }, autoplayMs);
+  }
+  function stopAutoplay(){ if(autoTimer){ clearInterval(autoTimer); autoTimer = null; } }
+  function restartAutoplay(){ stopAutoplay(); startAutoplay(); }
+
+  // Pausa al pasar el mouse (desktop)
+  root.addEventListener('mouseenter', stopAutoplay);
+  root.addEventListener('mouseleave', startAutoplay);
+  window.addEventListener('resize', update);
+
+  // Init
+  update();
+  startAutoplay();
+})();
+
+</script>
+{% endblock %}
+
+
+
+

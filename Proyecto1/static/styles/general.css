@@ -2,7 +2,13 @@
    FUENTES
 ============================== */
 @font-face{font-family:"InterLocal";src:url("/static/resources/fonts/Inter/static/Inter_18pt-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap;}
-/*@font-face{font-family:"ArticulatLocal";src:url("/static/resources/fonts/articulat/Fontspring-DEMO-articulatcf-demibold-BF64a38d8aeae4a.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap;}*/
+@font-face{font-family:"ArticulatDemibold";src:url("/static/resources/fonts/articulat/Fontspring-DEMO-articulatcf-demibold-BF64a38d8aeae4a.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap;}
+@font-face {
+  font-family: "OutfitLocal";
+  src: url("/static/resources/fonts/outfit/static/Outfit-Light.ttf")
+  format("truetype");font-weight:400;font-style:normal;font-display:swap;
+}
+
 @font-face{
   font-family:"ArticulatLocal";
   src:url("/static/resources/fonts/articulat/Fontspring-DEMO-articulatcf-regular-BF64a38d8b1d671.otf") format("opentype");
@@ -24,11 +30,13 @@
 ============================== */
 :root{
   --font-inter:"InterLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  
+  --font-outfit: "OutfitLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
     /* Inter quedará como fallback para números y signos (%, –, •, etc.) */
   --font-articulat: "ArticulatLocal", "InterLocal", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-articulatDemibold: "ArticulatDemibold", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  
   --font-ezra:"EzraLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  --font-cambay:"CambayLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  /*--font-cambay:"CambayLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;*/
 
   --nav-h:96px;            /* mobile */
   --nav-h-tablet:104px;    /* tablet */
@@ -47,6 +55,7 @@
   --color-brown: #8F5600;
   --color-blue-light: #B9CBFF;
   --color-sangria: #3B0C0CB2;
+  
 
   --white:#FFFFFF;
 }
@@ -63,7 +72,17 @@ a{text-decoration:none;color:inherit}
 .container{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
 .full-bleed{width:100%}
 .no-scroll{overflow:hidden}
-h1,h2,h3 { font-family: var(--font-inter); }
+
+
+h1{
+  font-family: var(--font-articulatDemibold);
+}
+
+h2 {
+  font-family: var(--font-outfit);
+}
+
+h3 { font-family: var(--font-inter); }
 p, blockquote{
   font-family: var(--font-articulat);
 }

@@ -11,7 +11,7 @@
     .city-title{
       font-weight: 900;
       letter-spacing: .02em;
-      font-size: clamp(44px, 7vw, 72px);
+      font-size: 80px;
       color: var(--accent-blue);
       margin-bottom: 10px;
       text-transform: uppercase;
@@ -20,7 +20,7 @@
       font-size: 18px;
       color: var(--accent-blue);
       opacity: .9;
-      max-width: 740px;
+      max-width: 740px; 
       line-height: 1.5;
     }
 
@@ -47,7 +47,7 @@
     .proj h2{
       font-weight: 700;
       color: var(--accent-blue);
-      font-size: 72px;
+      font-size: 56px;
       margin-bottom: 6px;
     }
     .proj .place{
@@ -101,3 +101,165 @@
       box-shadow: var(--shadow);
       white-space: nowrap;
     }
+
+
+    /* ===================== RESPONISVE OVERRIDES ===================== */
+/* -------- Mobile: ≤ 767px -------- */
+@media (max-width: 767px){
+  .city-header{
+    margin: 20px auto 12px;
+    padding: 0 var(--gutter);
+  }
+  .city-title{
+    font-size: 48px;       /* más compacto como el mock */
+    letter-spacing: .02em;
+    margin-bottom: 10px;
+  }
+  .city-lead{
+    font-size: 14px;
+    line-height: 1.45;
+    max-width: 100%;
+  }
+
+  .city-hero{ margin: 14px auto 22px; }
+  .city-hero img{
+    height: 240px;         /* altura como la 1ª imagen */
+    border-radius: 8px;
+  }
+
+  .proj{
+    margin-bottom: 24px;
+  }
+  .proj h2{
+    font-size: 56px;
+    margin-bottom: 4px;
+  }
+  .proj .place{
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .proj .shot{ margin-bottom: 12px; }
+  .proj .shot img{
+    height: 260px;         /* relación similar al mock */
+    border-radius: 8px;
+  }
+
+  /* Texto y CTA del proyecto apilados y centrados */
+  .proj .desc-row{
+    display: block;
+    margin: 14px 0 0;
+    gap: 0;
+  }
+  .proj p{
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 14px 0;
+    max-width: 100%;
+  }
+  .proj .more-box{
+    justify-items: center;
+    text-align: center;
+  }
+  .proj .more-box small{
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .proj .pill{
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  /* Sección “Invierte…” apilada y aireada (override a inline) */
+  .cta-duo > div{
+    grid-template-columns: 1fr !important; /* vence el inline */
+    gap: 16px !important;
+  }
+  .cta-duo > div > div:first-child{
+    padding: 24px !important;
+    border-radius: 12px !important;
+  }
+  .cta-duo h3{
+    font-size: 20px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 8px !important;
+  }
+  .cta-duo p{
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 14px !important;
+  }
+  .cta-duo a{
+    font-size: 16px !important;
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+  }
+  .cta-duo img{
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    object-fit: cover !important;
+  }
+}
+
+/* -------- Tablet: 768–1024px -------- */
+@media (min-width: 768px) and (max-width: 1024px){
+  .city-header{
+    margin: 26px auto 16px;
+  }
+  .city-title{
+    font-size: 44px;       /* similar al mock 2 */
+  }
+  .city-lead{
+    font-size: 16px;
+    max-width: 90ch;
+  }
+
+  .city-hero{ margin-bottom: 28px; }
+  .city-hero img{
+    height: 420px;         /* hero más alto en tablet */
+  }
+
+  .proj h2{
+    font-size: 56px;
+    margin-bottom: 6px;
+  }
+  .proj .place{
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  .proj .shot img{
+    height: 340px;
+  }
+
+  /* Centrar bloque de texto y CTA como en el mock 2 */
+  .proj .desc-row{
+    display: block;        /* apilado en tablet */
+    margin: 18px 0 0;
+    text-align: center;
+  }
+  .proj p{
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 auto 16px;
+    max-width: 70ch;
+  }
+  .proj .more-box{
+    justify-items: center;
+  }
+  .proj .pill{
+    font-size: 15px;
+    padding: 9px 16px;
+  }
+
+  /* La dupla de CTA también en una columna en tablet */
+  .cta-duo > div{
+    grid-template-columns: 1fr !important; /* vence el inline */
+    gap: 20px !important;
+  }
+  .cta-duo > div > div:first-child{
+    padding: 32px !important;
+  }
+  .cta-duo h3{ font-size: 24px !important; }
+  .cta-duo p{ font-size: 15px !important; }
+}
+

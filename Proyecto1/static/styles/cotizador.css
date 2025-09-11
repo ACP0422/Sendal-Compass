@@ -1,0 +1,129 @@
+/* ===== BASE COMPARTIDA ===== */
+.quote{
+  min-height:100vh;
+  background:#5b5747;
+  display:flex;
+  flex-direction:column;
+}
+
+/* utilitario fullbleed */
+.quote .fullbleed{
+  width:100vw;
+  position:relative;
+  left:50%; right:50%;
+  margin-left:-50vw; margin-right:-50vw;
+}
+
+/* ----- HERO (default = contenido) ----- */
+.hero{
+  max-width:calc(var(--max) + 2*var(--gutter));
+  margin:0 auto;
+  padding:0 var(--gutter);
+}
+.hero img{
+  width:100%;
+  height:clamp(220px, 40vw, 440px);
+  object-fit:cover;
+  display:block;
+}
+
+.banner{ background:#5b5747; }
+.banner-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:28px var(--gutter) 24px;
+  text-align:center;
+  color:#f4efe7;
+}
+.title{
+  font-size:clamp(28px, 7.2vw, 52px);
+  font-weight:800;
+  letter-spacing:.01em;
+  margin:6px 0 10px;
+}
+.kicker{ margin:0 0 10px; opacity:.9; font-weight:700; font-size:clamp(16px,3.8vw,20px); }
+
+/* Botonera (mobile first) */
+.actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  justify-items:center;
+  padding:18px 0 22px;
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:56px; width:min(520px, 100%);
+  padding:0 18px; border-radius:12px;
+  font-weight:700; text-decoration:none; color:#3B0C0C;
+  box-shadow:0 2px 0 rgba(0,0,0,.08);
+  transition:transform .08s ease, filter .15s ease;
+}
+.btn:hover{ filter:brightness(.97); transform:translateY(-1px); }
+.btn:active{ transform:translateY(0); }
+
+/* Colores */
+.btn-komchen{ background:#f5b197; }
+.btn-hacienda{ background:#f0c160; }
+.btn-tularum{  background:#bfcdfa; color:#1f2a44; }
+
+/* ===== DEFAULT: Cotizador general ===== */
+@media (min-width:768px){
+  .quote:not(.quote--komchen) .actions{
+    grid-template-columns:repeat(3, minmax(220px, 1fr));
+    gap:20px;
+  }
+  .quote:not(.quote--komchen) .btn{ width:100%; }
+}
+
+/* ================== KOMCHÉN ================== */
+.quote.quote--komchen .hero, .quote .hero{ padding:0; max-width:none; }
+.quote--komchen .feature-chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  margin:6px auto 12px; padding:14px 26px;
+  background:#f5b197; color:#3B0C0C;
+  border-radius:14px; font-weight:800;
+  font-size:clamp(16px,4vw,20px);
+}
+.quote--komchen .btn-toggle{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:42px; padding:0 16px;
+  background:#fff; color:#3B0C0C;
+  font-weight:700; border:none; border-radius:10px;
+  box-shadow:0 2px 0 rgba(0,0,0,.08); cursor:pointer;
+}
+.quote--komchen .actions.is-hidden{ display:none; }
+
+/* Orden mobile (Komchén): Hacienda arriba */
+.quote--komchen .btn-hacienda{ order:2; }
+.quote--komchen .btn-tularum{  order:1; }
+
+/* Tablet Komchén */
+@media (min-width:768px) and (max-width:1024px){
+  .quote--komchen .actions{
+    grid-template-columns:repeat(2, minmax(240px, 1fr));
+    gap:16px; justify-items:center;
+  }
+  .quote--komchen .btn{ width:100%; }
+}
+
+/* Desktop Komchén */
+@media (min-width:1025px){
+  .quote--komchen .actions{
+    grid-template-columns:repeat(2, minmax(260px, 1fr));
+    gap:20px; justify-items:center;
+  }
+  .quote--komchen .btn{ height:46px; width:100%; border-radius:10px; }
+}
+
+/* Mapa Komchén */
+.map-card{
+  max-width:calc(var(--max) + 2*var(--gutter));
+  margin:18px auto 38px;
+  padding:0 var(--gutter);
+}
+.map-card img{
+  width:100%; height:auto; display:block;
+  border-radius:14px; background:#f4efe7;
+  box-shadow:0 2px 0 rgba(0,0,0,.08);
+}
