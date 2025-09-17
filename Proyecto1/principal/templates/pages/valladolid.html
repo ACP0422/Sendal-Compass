@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Sendal – Valladolid{% endblock %}
+{% block title %}{% trans "Sendal – Valladolid" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/valladolid.css' %}">
@@ -14,8 +14,8 @@
   <section class="city-header">
     <h1 class="city-title">VALLADOLID</h1>
     <p class="city-kicker">
-      Pueblo mágico con gran crecimiento turístico y urbano.<br>
-      Es una zona estratégica para invertir en tierra con alta plusvalía.
+      {% trans "Pueblo mágico con gran crecimiento turístico y urbano." %}<br>
+      {% trans "Es una zona estratégica para invertir en tierra con alta plusvalía." %}
     </p>
   </section>
 
@@ -23,80 +23,87 @@
   <section class="city-feature">
     <figure class="big-photo">
       <img src="{% static 'resources/images/places/Valladolid/Valladolid.png' %}"
-           alt="Templo principal de Valladolid, Yucatán">
+           alt="{% trans 'Templo principal de Valladolid, Yucatán' %}">
     </figure>
 
     <aside class="promo">
       <img id="imagen-promocional" src="{% static 'resources/images/places/Valladolid/valladolid_sendal.png' %}"
-           alt="Inmobiliaria Sendal – Tu tranquilidad es nuestra mejor inversión">
+           alt="{% trans 'Inmobiliaria Sendal – Tu tranquilidad es nuestra mejor inversión' %}">
     </aside>
   </section>
 
   <!-- ===== LISTADO ===== -->
-  <section class="listing" aria-label="Propiedades en Valladolid">
+  <section class="listing" aria-label="{% trans 'Propiedades en Valladolid' %}">
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/hacienda_residencial.png' %}" alt="Entrada estilo hacienda">
+      <img src="{% static 'resources/images/places/Valladolid/hacienda_residencial.png' %}"
+           alt="{% trans 'Entrada estilo hacienda' %}">
       <header>
-        <h3>Hacienda Residencial</h3>
-        <p>Lotes o Hacienda para residencia</p>
+        <h3>{% trans "Hacienda Residencial" %}</h3>
+        <p>{% trans "Lotes o Hacienda para residencia" %}</p>
       </header>
-      <a class="more" href="{% url 'hacienda' %}">Ver más</a>
+      <a class="more" href="{% url 'hacienda' %}">{% trans "Ver más" %}</a>
     </article>
 
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/predio1.png' %}" alt="Predio vallado en Valladolid">
+      <img src="{% static 'resources/images/places/Valladolid/predio1.png' %}"
+           alt="{% trans 'Predio vallado en Valladolid' %}">
       <header>
-        <h3>Predio 1</h3>
-        <p>Propiedad Privada</p>
+        <h3>{% trans "Predio 1" %}</h3>
+        <p>{% trans "Propiedad Privada" %}</p>
       </header>
-      <a class="more" href="{% url 'predio1' %}">Ver más</a>
+      <a class="more" href="{% url 'predio1' %}">{% trans "Ver más" %}</a>
     </article>
 
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/predio2.png' %}" alt="Edificio de esquina en Valladolid">
+      <img src="{% static 'resources/images/places/Valladolid/predio2.png' %}"
+           alt="{% trans 'Edificio de esquina en Valladolid' %}">
       <header>
-        <h3>Predio 2</h3>
-        <p>Propiedad Privada</p>
+        <h3>{% trans "Predio 2" %}</h3>
+        <p>{% trans "Propiedad Privada" %}</p>
       </header>
-      <a class="more" href="{% url 'predio2' %}">Ver más</a>
+      <a class="more" href="{% url 'predio2' %}">{% trans "Ver más" %}</a>
     </article>
   </section>
 </main>
 
 <!-- ===== SERVICIOS ===== -->
 <section class="services-cover full-bleed">
-  <h2>Cubrimos todos tus requerimientos</h2>
+  <h2>{% trans "Cubrimos todos tus requerimientos" %}</h2>
 
   <div class="services-grid">
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/análisis.jpg' %}" alt="Análisis de plusvalía">
+      <img src="{% static 'resources/images/places/Valladolid/análisis.jpg' %}"
+           alt="{% trans 'Análisis de plusvalía' %}">
       <div class="service-text">
-        <h3>Análisis de plusvalía</h3>
-        <p>Detectamos dónde tu inversión crece más.</p>
+        <h3>{% trans "Análisis de plusvalía" %}</h3>
+        <p>{% trans "Detectamos dónde tu inversión crece más." %}</p>
       </div>
     </article>
 
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/asesoría.jpg' %}" alt="Asesoría legal y financiera">
+      <img src="{% static 'resources/images/places/Valladolid/asesoría.jpg' %}"
+           alt="{% trans 'Asesoría legal y financiera' %}">
       <div class="service-text">
-        <h3>Asesoría legal y financiera</h3>
-        <p>Todo claro, seguro y en regla.</p>
+        <h3>{% trans "Asesoría legal y financiera" %}</h3>
+        <p>{% trans "Todo claro, seguro y en regla." %}</p>
       </div>
     </article>
 
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/acompañamiento.jpg' %}" alt="Acompañamiento">
+      <img src="{% static 'resources/images/places/Valladolid/acompañamiento.jpg' %}"
+           alt="{% trans 'Acompañamiento' %}">
       <div class="service-text">
-        <h3>Acompañamiento</h3>
-        <p>Te guiamos de principio a fin.</p>
+        <h3>{% trans "Acompañamiento" %}</h3>
+        <p>{% trans "Te guiamos de principio a fin." %}</p>
       </div>
     </article>
 
     <article>
-      <img src="{% static 'resources/images/places/Valladolid/recomendaciones.jpg' %}" alt="Recomendaciones a futuro">
+      <img src="{% static 'resources/images/places/Valladolid/recomendaciones.jpg' %}"
+           alt="{% trans 'Recomendaciones a futuro' %}">
       <div class="service-text">
-        <h3>Recomendaciones a futuro</h3>
-        <p>Pensamos en hoy y en lo que viene.</p>
+        <h3>{% trans "Recomendaciones a futuro" %}</h3>
+        <p>{% trans "Pensamos en hoy y en lo que viene." %}</p>
       </div>
     </article>
   </div>
@@ -107,19 +114,19 @@
 <section class="more-info">
   <div class="mi-grid">
     <div class="mi-card">
-      <h3>¿Quieres más información?</h3>
+      <h3>{% trans "¿Quieres más información?" %}</h3>
       <p>
-        Contáctanos y te enviaremos toda la información que necesitas
-        sobre el proyecto de tu agrado.
+        {% trans "Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado." %}
       </p>
       <div class="mi-actions">
-        <a class="btn btn-wsp" href="#">Whatsapp</a>
-        <a class="btn btn-mail" href="#">Correo electrónico</a>
+        <a class="btn btn-wsp" href="#">{% trans "Whatsapp" %}</a>
+        <a class="btn btn-mail" href="#">{% trans "Correo electrónico" %}</a>
       </div>
     </div>
 
     <figure class="mi-agent">
-      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}" alt="Agente de ventas">
+      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}"
+           alt="{% trans 'Agente de ventas' %}">
     </figure>
   </div>
 </section>

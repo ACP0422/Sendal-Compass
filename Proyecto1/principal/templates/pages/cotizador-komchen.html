@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block content %}
-<main class="quote quote--komchen"> 
+<main class="quote quote--komchen">
 
-   <!-- Hero contenido (NO fullbleed) -->
-   <figure class="hero">
+  <!-- Hero contenido (NO fullbleed) -->
+  <figure class="hero">
     <img src="{% static 'resources/images/cotizador/hero.png' %}"
          alt="{% trans 'Asesoría personalizada para cotizar tu proyecto' %}">
   </figure>
@@ -22,12 +22,15 @@
       <p class="kicker">{% trans "Cotiza nuestros proyectos" %}</p>
       <h1 class="title" style="color:#FCBB99;">{% trans "Proyecto Komchén" %}</h1>
 
-      
-
       <!-- Botón toggle -->
-      <button id="toggle-projects" class="btn-toggle" type="button">
-        {% trans "Ver menos" %}
+      <button id="toggle-projects"
+        class="btn-toggle"
+        type="button"
+        data-label-show="{% trans 'Otros proyectos' %}"
+        data-label-hide="{% trans 'Ocultar proyectos' %}">
+        {% trans 'Otros proyectos' %}
       </button>
+
 
       <!-- Otros proyectos -->
       <nav class="actions" aria-label="{% trans 'Proyectos disponibles para cotizar' %}">
@@ -47,29 +50,26 @@
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const actions   = document.querySelector('.quote--komchen .actions');
-  const toggleBtn = document.getElementById('toggle-projects');
-  const mqPhone   = window.matchMedia('(max-width: 767px)');
-  const mqTablet  = window.matchMedia('(min-width:768px) and (max-width:1024px)');
-
-  function setLabel () {
-    if (actions.classList.contains('is-hidden')) {
-      toggleBtn.textContent = "{{ _('Otros proyectos') }}";
-    } else {
-      toggleBtn.textContent = "{{ _('Ocultar proyectos') }}";
+  document.addEventListener('DOMContentLoaded', function () {
+    const actions   = document.querySelector('.quote--komchen .actions');
+    const toggleBtn = document.getElementById('toggle-projects');
+  
+    const LABEL_SHOW = toggleBtn.dataset.labelShow; // i18n desde HTML
+    const LABEL_HIDE = toggleBtn.dataset.labelHide;
+  
+    function setLabel() {
+      toggleBtn.textContent = actions.classList.contains('is-hidden') ? LABEL_SHOW : LABEL_HIDE;
     }
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    actions.classList.toggle('is-hidden');
+  
+    toggleBtn.addEventListener('click', () => {
+      actions.classList.toggle('is-hidden');
+      setLabel();
+    });
+  
+    // estado inicial
+    actions.classList.add('is-hidden');
     setLabel();
   });
-
-  // estado inicial
-  actions.classList.add('is-hidden');
-  setLabel();
-  window.addEventListener('resize', setLabel);
-});
-</script>
+  </script>
+  
 {% endblock %}

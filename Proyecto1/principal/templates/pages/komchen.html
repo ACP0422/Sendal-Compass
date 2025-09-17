@@ -12,7 +12,8 @@
 
   <!-- Header -->
   <header class="head">
-    <h1 class="title">KOMCHÉN</h1>
+    {# Mejor deja el texto “Komchén” y usa text-transform: uppercase en CSS #}
+    <h1 class="title">{% trans "Komchén" %}</h1>
     <p class="kicker">
       {% trans "Rodeada por desarrollos residenciales de alto nivel, cerca de las mejores zonas comerciales de Mérida y a unos minutos de increíbles atractivos naturales." %}
     </p>
@@ -34,7 +35,7 @@
 
   <!-- Lotes + descripción -->
   <section class="lots">
-    <h3 id = "lots-title">{% trans "Lotes Residenciales" %}</h3>
+    <h3 id="lots-title">{% trans "Lotes Residenciales" %}</h3>
     <div class="lots-grid">
       <article><h4>{% trans "Norte-Sur" %}</h4><p>{% trans "Lotes con la mejor orientación" %}</p></article>
       <article><h4>{% trans "Parque central" %}</h4><p>{% trans "con amenidades frente a los lotes" %}</p></article>
@@ -45,8 +46,12 @@
     </div>
     <div class="lots-desc">
       <p>
-        {% blocktrans %}
-        Un proyecto pensado para ofrecer comodidad, seguridad y conexión. Con lotes de orientación ideal, un parque central frente a casa y amenidades que elevan el día a día, este desarrollo combina infraestructura moderna, acceso controlado y tecnología para vivir en equilibrio y con visión a futuro. Es el lugar perfecto para quienes desean vivir tranquilos, sin el bullicio de la urbe, pero muy cerca de todo lo que necesitas.
+        {% blocktrans trimmed %}
+        Un proyecto pensado para ofrecer comodidad, seguridad y conexión. Con lotes de orientación ideal,
+        un parque central frente a casa y amenidades que elevan el día a día, este desarrollo combina
+        infraestructura moderna, acceso controlado y tecnología para vivir en equilibrio y con visión a futuro.
+        Es el lugar perfecto para quienes desean vivir tranquilos, sin el bullicio de la urbe, pero muy cerca
+        de todo lo que necesitas.
         {% endblocktrans %}
       </p>
       <a class="btn map" href="#" target="_blank" rel="noopener">{% trans "Ubicación Google maps" %}</a>
@@ -75,82 +80,79 @@
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/jogging.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Pista de Jogging</h3>
-          <p>Construye tu historia con espacios ideales para la recreación y el deporte.</p>
+          <h3>{% trans "Pista de Jogging" %}</h3>
+          <p>{% trans "Construye tu historia con espacios ideales para la recreación y el deporte." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/grill.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Zona Grill</h3>
-          <p>Espacios que enriquecen tu vida.</p>
+          <h3>{% trans "Zona Grill" %}</h3>
+          <p>{% trans "Espacios que enriquecen tu vida." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/court.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Cancha de Fut-Basquet</h3>
-          <p>Practica tu deporte favorito en cualquier momento del día.</p>
+          <h3>{% trans "Cancha de Fut-Basquet" %}</h3>
+          <p>{% trans "Practica tu deporte favorito en cualquier momento del día." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/business.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Business Center con Wifi</h3>
-          <p>Trabaja desde el Business Center con el mejor internet de fibra óptica.</p>
+          <h3>{% trans "Business Center con Wifi" %}</h3>
+          <p>{% trans "Trabaja desde el Business Center con el mejor internet de fibra óptica." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/pool.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Casa Club con Alberca</h3>
-          <p>Disfruta de los días de sol y de un sin fin de eventos en comunidad.</p>
+          <h3>{% trans "Casa Club con Alberca" %}</h3>
+          <p>{% trans "Disfruta de los días de sol y de un sin fin de eventos en comunidad." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/kids.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Ludoteca con circuito cerrado</h3>
-          <p>Un espacio ideal para los pequeños del hogar.</p>
+          <h3>{% trans "Ludoteca con circuito cerrado" %}</h3>
+          <p>{% trans "Un espacio ideal para los pequeños del hogar." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/camera.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>Kids Park Cámara+Wifi</h3>
-          <p>Seguridad y tranquilidad mientras los pequeños se divierten.</p>
+          <h3>{% trans "Kids Park Cámara+Wifi" %}</h3>
+          <p>{% trans "Seguridad y tranquilidad mientras los pequeños se divierten." %}</p>
         </div>
       </article>
     </div>
   </section>
 
-<!--CARRUSEL -->
+  <!-- CARRUSEL -->
+  <section class="galeria">
+    <h2 class="section-title">{% trans "Galería" %}</h2>
+    <div class="carousel" aria-roledescription="carousel" data-autoplay="0">
+      <div class="carousel__viewport">
+        <div class="carousel__track">
+          <div class="carousel__slide is-active">
+            <img src="{% static 'resources/images/places/Komchén/gal-1.png' %}" alt="{% trans 'Imagen 1' %}">
+          </div>
+          <div class="carousel__slide">
+            <img src="{% static 'resources/images/places/Komchén/gal-2.png' %}" alt="{% trans 'Imagen 2' %}">
+          </div>
+          <div class="carousel__slide">
+            <img src="{% static 'resources/images/places/Komchén/gal-3.png' %}" alt="{% trans 'Imagen 3' %}">
+          </div>
+        </div>
+      </div>
 
-<section class="galeria">
-  <h2 class="section-title">{% trans "Galería" %}</h2>
-      
-<div class="carousel" aria-roledescription="carousel" data-autoplay="0">
-  <div class="carousel__viewport">
-    <div class="carousel__track">
-      <div class="carousel__slide is-active">
-        <img src="{% static 'resources/images/places/Komchén/gal-1.png' %}" alt="Imagen 1">
-      </div>
-      <div class="carousel__slide">
-        <img src="{% static 'resources/images/places/Komchén/gal-2.png' %}" alt="Imagen 2">
-      </div>
-      <div class="carousel__slide">
-        <img src="{% static 'resources/images/places/Komchén/gal-3.png' %}" alt="Imagen 3">
-      </div>
+      <button class="carousel__btn prev" aria-label="{% trans 'Anterior' %}" data-dir="-1">❮</button>
+      <button class="carousel__btn next" aria-label="{% trans 'Siguiente' %}" data-dir="1">❯</button>
+
+      <div class="carousel__dots" aria-label="{% trans 'Paginación' %}"></div>
     </div>
-  </div>
-
-  <button class="carousel__btn prev" aria-label="Anterior" data-dir="-1">❮</button>
-  <button class="carousel__btn next" aria-label="Siguiente" data-dir="1">❯</button>
-
-  <div class="carousel__dots" aria-label="Paginación"></div>
-</div>
-</section>
-
+  </section>
 
   <!-- Banda ROSA: Explora y Dónde -->
   <div class="section-container">
@@ -172,14 +174,14 @@
         </figure>
 
         <ul class="amen-legend">
-          <li><span class="amen-badge">A</span><span class="amen-label">Casa Club con alberca</span></li>
-          <li><span class="amen-badge">B</span><span class="amen-label">Ludoteca</span></li>
-          <li><span class="amen-badge">C</span><span class="amen-label">Zona Grill</span></li>
-          <li><span class="amen-badge">D</span><span class="amen-label">Kids Park<br>Caseta de vigilancia</span></li>
-          <li><span class="amen-badge">E</span><span class="amen-label">Business Center</span></li>
-          <li><span class="amen-badge">F</span><span class="amen-label">Pista de Jogging</span></li>
-          <li><span class="amen-badge">G</span><span class="amen-label">Cancha de Fut-Basquet</span></li>
-          <li><span class="amen-badge">H</span><span class="amen-label">Estacionamiento visitantes</span></li>
+          <li><span class="amen-badge">A</span><span class="amen-label">{% trans "Casa Club con alberca" %}</span></li>
+          <li><span class="amen-badge">B</span><span class="amen-label">{% trans "Ludoteca" %}</span></li>
+          <li><span class="amen-badge">C</span><span class="amen-label">{% trans "Zona Grill" %}</span></li>
+          <li><span class="amen-badge">D</span><span class="amen-label">{% blocktrans %}Kids Park<br>Caseta de vigilancia{% endblocktrans %}</span></li>
+          <li><span class="amen-badge">E</span><span class="amen-label">{% trans "Business Center" %}</span></li>
+          <li><span class="amen-badge">F</span><span class="amen-label">{% trans "Pista de Jogging" %}</span></li>
+          <li><span class="amen-badge">G</span><span class="amen-label">{% trans "Cancha de Fut-Basquet" %}</span></li>
+          <li><span class="amen-badge">H</span><span class="amen-label">{% trans "Estacionamiento visitantes" %}</span></li>
         </ul>
 
         <div class="benefits-card">
@@ -191,13 +193,13 @@
             <li>{% trans "Sistema de acceso con seguridad avanzada." %}</li>
             <li>{% trans "Sistema de agua." %}</li>
             <li>{% trans "Instalaciones subterráneas." %}</li>
-            <li>{% trans "Estacionamiento de visitantes." %} </li>
+            <li>{% trans "Estacionamiento de visitantes." %}</li>
             <li>{% trans "Drenaje con sistema de biodigestor." %}</li>
           </ul>
         </div>
       </section>
 
-      <!-- ¿Dónde está ubicado? (sin tarjeta blanca alrededor) -->
+      <!-- ¿Dónde está ubicado? -->
       <section class="donde">
         <div class="donde-card">
           <h3>{% trans "¿Dónde está ubicado?" %}</h3>
@@ -227,11 +229,11 @@
           <p>{% trans "Hay muchos motivos para elegir vivir en la zona norte de Mérida, sin embargo, estos son los principales:" %}</p>
           <br>
           <ul>
-            <li>Galardonada en varias ocaciones como la ciudad más segura de México, siendo la zona norte la que cuenta con la mejor tecnología en sistemas de seguridad.</li>
-            <li>Reúne lo mejor de la ciudad: plazas comerciales de primer nivel, hospitales de vanguardia y centros educativos de alta calidad.</li>
-            <li>Vialidades que facilitan la conexión entre los desarrollos inmobiliarios y las principales avenidas y vialidades de la ciudad.</li>
-            <li>Cuenta con una alta calidad de vida, pues se concentran las privadas más prestigiosas y con amenidades exclusivas.</li>
-            <li>Plusvalía garantizada y alto retorno de inversión (ROI) gracias al constante desarrollo económico de la zona.</li>
+            <li>{% trans "Galardonada en varias ocaciones como la ciudad más segura de México, siendo la zona norte la que cuenta con la mejor tecnología en sistemas de seguridad." %}</li>
+            <li>{% trans "Reúne lo mejor de la ciudad: plazas comerciales de primer nivel, hospitales de vanguardia y centros educativos de alta calidad." %}</li>
+            <li>{% trans "Vialidades que facilitan la conexión entre los desarrollos inmobiliarios y las principales avenidas y vialidades de la ciudad." %}</li>
+            <li>{% trans "Cuenta con una alta calidad de vida, pues se concentran las privadas más prestigiosas y con amenidades exclusivas." %}</li>
+            <li>{% trans "Plusvalía garantizada y alto retorno de inversión (ROI) gracias al constante desarrollo económico de la zona." %}</li>
           </ul>
         </article>
         <figure class="merida-photo">
@@ -243,29 +245,26 @@
 
 </main>
 
-
-
 <script>
-  // ==== JS (sin dependencias) ====
 (function(){
   const root = document.querySelector('.carousel');
   if(!root) return;
 
-  const track = root.querySelector('.carousel__track');
-  const slides = [...root.querySelectorAll('.carousel__slide')];
-  const btnPrev = root.querySelector('.carousel__btn.prev');
-  const btnNext = root.querySelector('.carousel__btn.next');
+  const track    = root.querySelector('.carousel__track');
+  const slides   = [...root.querySelectorAll('.carousel__slide')];
+  const btnPrev  = root.querySelector('.carousel__btn.prev');
+  const btnNext  = root.querySelector('.carousel__btn.next');
   const dotsWrap = root.querySelector('.carousel__dots');
   const autoplayMs = parseInt(root.dataset.autoplay || '0', 10);
 
   let index = 0;
-  let x0 = null, x = 0, isDragging = false, raf = null, autoTimer = null;
+  let x0 = null, x = 0, isDragging = false, autoTimer = null;
 
   // Dots
   slides.forEach((_, i)=>{
     const b = document.createElement('button');
     b.type = 'button';
-    b.setAttribute('aria-label', `Ir a la imagen ${i+1}`);
+    b.setAttribute('aria-label', "{{ _('Ir a la imagen') }} " + (i+1));
     b.addEventListener('click', ()=> goTo(i));
     dotsWrap.appendChild(b);
   });
@@ -275,83 +274,32 @@
     track.style.transform = `translate3d(${offset}%,0,0)`;
     slides.forEach((s,i)=> s.classList.toggle('is-active', i===index));
     [...dotsWrap.children].forEach((d,i)=> d.setAttribute('aria-current', i===index ? 'true' : 'false'));
-    // Deshabilitar flechas en extremos (opcional)
     btnPrev.disabled = (index === 0);
     btnNext.disabled = (index === slides.length - 1);
   }
 
-  function goTo(i){
-    index = Math.max(0, Math.min(slides.length-1, i));
-    update();
-    restartAutoplay();
-  }
-  function move(dir){ goTo(index + dir); }
+  function goTo(i){ index = Math.max(0, Math.min(slides.length-1, i)); update(); restartAutoplay(); }
+  function move(d){ goTo(index + d); }
 
-  // Botones
   btnPrev.addEventListener('click', ()=> move(-1));
   btnNext.addEventListener('click', ()=> move(1));
 
-  // Teclado
-  root.tabIndex = 0;
-  root.addEventListener('keydown', (e)=>{
-    if(e.key === 'ArrowLeft') move(-1);
-    if(e.key === 'ArrowRight') move(1);
-  });
+  // Drag
+  function onDown(clientX){ isDragging = true; x0 = clientX; x = 0; track.style.transition = 'none'; }
+  function onMove(clientX){ if(!isDragging) return; x = clientX - x0; const pct = (x / root.clientWidth) * 100; track.style.transform = `translate3d(${(-index*100)+pct}%,0,0)`; }
+  function onUp(){ if(!isDragging) return; isDragging = false; track.style.transition = ''; const th = root.clientWidth * 0.15; if (x > th) move(-1); else if (x < -th) move(1); else update(); }
 
-  // Táctil / Drag
-  function onDown(clientX){
-    isDragging = true; x0 = clientX; x = 0;
-    track.style.transition = 'none';
-    cancelAnimationFrame(raf);
-  }
-  function onMove(clientX){
-    if(!isDragging) return;
-    x = clientX - x0;
-    const pct = (x / root.clientWidth) * 100;
-    track.style.transform = `translate3d(${(-index*100)+pct}%,0,0)`;
-  }
-  function onUp(){
-    if(!isDragging) return;
-    isDragging = false;
-    track.style.transition = '';
-    const threshold = root.clientWidth * 0.15;
-    if (x > threshold) move(-1);
-    else if (x < -threshold) move(1);
-    else update();
-  }
-
-  // Eventos puntero
   track.addEventListener('pointerdown', e=> { track.setPointerCapture(e.pointerId); onDown(e.clientX); });
   track.addEventListener('pointermove',  e=> onMove(e.clientX));
   track.addEventListener('pointerup',    onUp);
   track.addEventListener('pointercancel',onUp);
   track.addEventListener('pointerleave', onUp);
 
-  // Autoplay (0 = apagado)
-  function startAutoplay(){
-    if(!autoplayMs) return;
-    stopAutoplay();
-    autoTimer = setInterval(()=>{
-      if(index === slides.length - 1) goTo(0);
-      else move(1);
-    }, autoplayMs);
-  }
+  function startAutoplay(){ if(!autoplayMs) return; stopAutoplay(); autoTimer = setInterval(()=>{ if(index === slides.length - 1) goTo(0); else move(1); }, autoplayMs); }
   function stopAutoplay(){ if(autoTimer){ clearInterval(autoTimer); autoTimer = null; } }
   function restartAutoplay(){ stopAutoplay(); startAutoplay(); }
 
-  // Pausa al pasar el mouse (desktop)
-  root.addEventListener('mouseenter', stopAutoplay);
-  root.addEventListener('mouseleave', startAutoplay);
-  window.addEventListener('resize', update);
-
-  // Init
-  update();
-  startAutoplay();
+  update(); startAutoplay();
 })();
-
 </script>
 {% endblock %}
-
-
-
-
