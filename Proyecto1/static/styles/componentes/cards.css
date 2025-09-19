@@ -1,0 +1,181 @@
+/* =========================================================
+   TARJETAS – BASE
+   ========================================================= */
+   .card{
+    /* tokens base */
+    --card-bg: var(--color-brown, #3B0C0C);
+    --card-fg: #fff;
+    --card-radius: 12px;
+    --card-pad: 18px;
+  
+    /* tipografía base */
+    --card-title-size: clamp(18px, 5.2vw, 24px);
+    --card-text-size: 16px;
+    --card-underline: var(--color-gold, #E1A740);
+  
+    background: var(--card-bg);
+    color: var(--card-fg);
+    border-radius: var(--card-radius);
+    padding: var(--card-pad);
+    text-align: center;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  
+    /* altura sincronizada con media/img del layout (se asigna abajo) */
+    min-height: var(--duo-h, auto);
+  }
+  
+  .card__title{
+    margin: 0;
+    font-size: var(--card-title-size);
+    color: var(--card-underline);
+    text-decoration: underline;
+  }
+  .card__text{
+    margin: 0;
+    font-size: var(--card-text-size);
+  }
+  
+  /* Acciones dentro de la tarjeta */
+  .card__actions{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(12px, 2vw, 20px);
+    margin-top: clamp(8px, 1.2vw, 12px);
+  }
+  
+  /* =========================================================
+     BOTONES – BASE + VARIANTES
+     ========================================================= */
+  .btn{
+    --btn-bg: var(--color-gold, #E1A740);
+    --btn-fg: #000;
+    --btn-radius: 10px;
+    --btn-pad: 10px 20px;
+  
+    display: inline-block;
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    border-radius: var(--btn-radius);
+    padding: var(--btn-pad);
+    text-decoration: none;
+    font-weight: 700;
+    min-width: 140px;
+    text-align: center;
+  }
+  .btn.ghost{ --btn-bg:#fff; --btn-fg:#000; border:0; }
+  
+  /* Colores del mock */
+  .btn--wapp{ --btn-bg:#F2BB57; --btn-fg:#3B0C0C; } /* dorado claro */
+  .btn--mail{ --btn-bg:#8F5600; --btn-fg:#F2BB57; } /* marrón + dorado */
+  
+  /* =========================================================
+     TARJETAS – TEMAS (sobrescriben tokens)
+     ========================================================= */
+  .card--brown{
+    --card-bg: var(--color-brown, #3B0C0C);
+    --card-underline: var(--color-gold, #E1A740);
+    --card-fg: #fff;
+  }
+  .card--pink{
+    --card-bg: var(--color-pink, #D0815B);
+    --card-underline: var(--color-ivory-soft, #FFF0E3);
+    --card-fg: #fff;
+  }
+  .card--ivory{
+    --card-bg: #F8F4E3;     /* beige café */
+    --card-fg: #3B0C0C;     /* texto vino */
+    --card-underline: #3B0C0C;
+  }
+  
+  /* =========================================================
+     LAYOUT – DUO (tarjeta + media/mapa)
+     ========================================================= */
+  .duo-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  
+    /* Altura unificada por breakpoint (usada por card, img y map-frame) */
+    --duo-h: clamp(220px, 48vw, 380px);
+    --duo-radius: 12px;
+  }
+  .duo-media{ margin: 0; }
+  
+  .duo-media img{
+    width: 100%;
+    height: var(--duo-h);
+    object-fit: cover;
+    border-radius: var(--duo-radius);
+    display: block;
+  }
+  
+  /* Si usas mapa incrustado */
+  .duo-media .map-frame{
+    position: relative;
+    width: 100%;
+    height: var(--duo-h);
+    aspect-ratio: auto !important;  /* anula reglas antiguas */
+    overflow: hidden;
+    border-radius: var(--duo-radius);
+    background: #f0f0f0;
+  }
+  .duo-media iframe{
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: 0; display: block;
+    border-radius: var(--duo-radius);
+  }
+  
+  /* Orden invertido cuando pidas --reverse */
+  .duo-grid--reverse .card{ order: 2; }
+  .duo-grid--reverse .duo-media{ order: 1; }
+  
+  /* =========================================================
+     BANDAS (franjas a todo ancho)
+     ========================================================= */
+  .band{
+    position: relative;
+    left: 50%; right: 50%;
+    margin-left: -50vw; margin-right: -50vw;
+    width: 100vw;
+  }
+  .band__inner{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 32px var(--gutter);
+  }
+  .band--peach{ background: var(--color-peach, #FCBB99); }
+  .band--beige{ background: var(--color-ivory-soft, #FFF7EE); }
+  .band--gold { background: var(--color-gold, #E1A740); }
+  
+  /* =========================================================
+     MEDIA QUERIES (ajustan solo variables y pequeños detalles)
+     ========================================================= */
+  
+  /* Tablet */
+  @media (min-width:768px) and (max-width:1024px){
+    .duo-grid{
+      grid-template-columns: .90fr 1.1fr;
+      gap: 18px;
+      --duo-h: min(44vw, 340px);
+    }
+    .card{ padding: calc(var(--card-pad) + 2px); }
+  }
+  
+  /* Desktop */
+  @media (min-width:1025px){
+    .duo-grid{
+      grid-template-columns: .90fr 1.1fr;
+      gap: 20px;
+      --duo-h: 380px;
+    }
+    .duo-grid.duo-grid--reverse{ grid-template-columns: 1.1fr .90fr; }
+    .card{ padding: calc(var(--card-pad) + 4px); }
+  }
+  

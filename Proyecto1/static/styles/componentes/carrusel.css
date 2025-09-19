@@ -1,0 +1,115 @@
+/* ====== Carousel – estilo unificado (discreto y moderno) ====== */
+/* Usa variables existentes si las tienes; caemos a defaults neutros */
+:root{
+    --carousel-h-mobile: clamp(220px, 52vw, 360px);
+    --carousel-h-tablet: clamp(260px, 44vw, 420px);
+    --carousel-h-desktop: clamp(220px, 34vw, 420px);
+  
+    --carousel-btn-size: 42px;
+    --carousel-btn-bg: #00000055;
+    --carousel-btn-bg-hover: #00000088;
+    --carousel-dot: 8px;
+  
+    --carousel-ink: var(--color-ink-dark, #111);
+    --carousel-ink-weak: #ffffffcc;
+    --carousel-accent: var(--color-brown, #3B0C0C);
+  }
+  
+  /* Wrapper */
+  .carousel{
+    position: relative;
+    width: 100%;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Viewport */
+  .carousel__viewport{
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f3f3f3;
+    height: var(--carousel-h-mobile);
+  }
+  @media (min-width: 768px){
+    .carousel__viewport{ height: var(--carousel-h-tablet); }
+  }
+  @media (min-width: 1024px){
+    .carousel__viewport{ height: var(--carousel-h-desktop); }
+  }
+  
+  /* Track & slides */
+  .carousel__track{
+    display: flex;
+    height: 100%;
+    will-change: transform;
+    transition: transform .45s ease;
+  }
+  .carousel__slide{
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .carousel__slide img{
+    width: 100%; height: 100%;
+    display: block; object-fit: cover;
+  }
+  
+  /* Botones (transparentes, redondos, sutiles) */
+  .carousel__btn{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--carousel-btn-size);
+    height: var(--carousel-btn-size);
+    border-radius: 999px;
+    border: none;
+    background: var(--carousel-btn-bg);
+    color: white;
+    display: grid; place-items: center;
+    cursor: pointer; z-index: 2;
+    backdrop-filter: blur(2px);
+    transition: background .15s ease, transform .15s ease, opacity .15s ease;
+  }
+  .carousel__btn:hover{ background: var(--carousel-btn-bg-hover); transform: translateY(-50%) scale(1.04); }
+  .carousel__btn:active{ transform: translateY(-50%) scale(.96); }
+  .carousel__btn.prev{ left: 10px; }
+  .carousel__btn.next{ right: 10px; }
+  
+  /* Dots (centrados, minimal) */
+  .carousel__dots{
+    position: absolute; inset: auto 0 10px 0;
+    display:flex; gap:8px; justify-content:center; align-items:center;
+    z-index: 2;
+  }
+  .carousel__dot,
+  .carousel__dots button{
+    width: var(--carousel-dot);
+    height: var(--carousel-dot);
+    border-radius: 999px; border: 0;
+    background: var(--carousel-ink-weak);
+    opacity: .6; cursor: pointer;
+    transition: transform .15s ease, opacity .15s ease, background .2s ease;
+  }
+  .carousel__dot.is-active,
+  .carousel__dots button[aria-current="true"]{
+    opacity: 1; transform: scale(1.25);
+    background: var(--carousel-accent);
+  }
+  
+  /* Enfoque accesible */
+  .carousel__btn:focus-visible,
+  .carousel__dot:focus-visible,
+  .carousel__dots button:focus-visible{
+    outline: 2px solid var(--color-olive, #7b8a46);
+    outline-offset: 2px;
+  }
+  
+  /* Hover pausa (solo visual: el JS ya pausa) */
+  .carousel:hover .carousel__btn{ opacity: 1; }
+  
+  /* Prefiere menos movimiento: el JS ya respeta, pero hacemos transiciones más suaves */
+  @media (prefers-reduced-motion: reduce){
+    .carousel__track{ transition: none; }
+  }
+  

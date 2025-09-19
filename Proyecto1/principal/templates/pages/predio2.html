@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{% trans "Predio 1" %}{% endblock %}
+{% block title %}{% trans "Predio 2" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/predio.css' %}">
+<link rel="stylesheet" href="{% static 'styles/componentes/cards.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -70,20 +71,27 @@
     </figure>
   </section>
 
-  <!-- Ubicación: franja full-bleed con wrapper -->
-  <section class="where-section">
-    <div class="where">
-      <div class="where-card">
-        <h3>{% trans "¿Dónde está ubicado?" %}</h3>
-        <p>{% trans "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán." %}</p>
-        <a class="btn ghost" href="#" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
+  <!-- Ubicación: franja full-bleed + componente unificado -->
+  <section class="band band--gold">
+    <div class="band__inner">
+      <div class="duo-grid duo-grid">
+        <article class="card card--brown">
+          <h3 class="card__title">{% trans "¿Dónde está ubicado?" %}</h3>
+          <p class="card__text">{% trans "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán." %}</p>
+          <div class="card__actions">
+            <a class="btn" href="#" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
+          </div>
+        </article>
+  
+        <figure class="duo-media">
+          <img src="{% static 'resources/images/places/Valladolid/predio2/mapa.png' %}"
+               alt="{% trans 'Mapa de ubicación' %}">
+        </figure>
       </div>
-
-      <figure class="map">
-        <img src="{% static 'resources/images/places/Valladolid/predio2/mapa.png' %}" alt="{% trans 'Mapa de ubicación' %}">
-      </figure>
     </div>
   </section>
+  
+
 
 </main>
 {% endblock %}

@@ -5,6 +5,10 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/hacienda.css' %}">
+<link rel="stylesheet" href="{% static 'styles/componentes/carrusel.css' %}">
+<link rel="stylesheet" href="{% static 'styles/componentes/cards.css' %}">
+
+
 {% endblock %}
 
 {% block content %}
@@ -126,120 +130,160 @@
       <div class="carousel__dots" aria-label="{% trans 'Indicadores de galería' %}"></div>
     </div>
   </section>
+<!-- ===== Explora y Elige (Hacienda) ===== -->
+<section class="explora explora--tight">
+  <div class="explora__inner">
+    <h2 class="explora__title">{% trans "Explora y Elige" %}</h2>
 
-  <section class="explora">
-    <div class="explora__inner">
-      <h2 class="explora__title">{% trans "Explora y Elige" %}</h2>
-
-      <div class="map-container">
-        <div class="explora__chips">
-          <span class="chip chip-hold">{% trans "Apartado" %}</span>
-          <span class="chip chip-ok">{% trans "Disponible" %}</span>
-          <span class="chip chip-sold">{% trans "Vendido" %}</span>
-          <a class="cta" href="#">{% trans "Quiero saber más" %}</a>
-        </div>
-
-        <figure class="explora__plan">
-          <img class="fluid" src="{% static 'resources/images/places/Valladolid/hacienda/masterplan.png' %}"
-               alt="{% trans 'Masterplan Hacienda Residencial' %}">
-        </figure>
-
-        <ul class="explora__legend">
-          <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-tenis.svg' %}" alt="" aria-hidden="true"> {% trans "Amenidades" %}</li>
-          <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-casa-club.svg' %}" alt="" aria-hidden="true"> {% trans "Zona Comercial" %}</li>
-          <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-destileria.svg' %}" alt="" aria-hidden="true"> {% trans "Siembra de Agave" %}</li>
-        </ul>
+    <div class="map-container">
+      <div class="explora__chips">
+        <span class="chip chip-hold">{% trans "Apartado" %}</span>
+        <span class="chip chip-ok">{% trans "Disponible" %}</span>
+        <span class="chip chip-sold">{% trans "Vendido" %}</span>
+        <a class="cta" href="#">{% trans "Quiero saber más" %}</a>
       </div>
 
-      <div class="explora__grid">
-        <article class="explora__card">
-          <h3>{% trans "¿Dónde está ubicado?" %}</h3>
-          <p>{% trans "Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el periférico." %}</p>
-          <a class="btn ghost" href="#" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
-        </article>
+      <figure class="explora__plan">
+        <img class="fluid"
+             src="{% static 'resources/images/places/Valladolid/hacienda/masterplan.png' %}"
+             alt="{% trans 'Masterplan Hacienda Residencial' %}">
+      </figure>
 
-        <figure class="explora__map">
-          <img class="fluid" src="{% static 'resources/images/places/Valladolid/hacienda/mapa.png' %}"
-               alt="{% trans 'Mapa de ubicación' %}">
-        </figure>
-      </div>
+      <ul class="explora__legend">
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-tenis.svg' %}" alt="" aria-hidden="true"> {% trans "Amenidades" %}</li>
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-casa-club.svg' %}" alt="" aria-hidden="true"> {% trans "Zona Comercial" %}</li>
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-destileria.svg' %}" alt="" aria-hidden="true"> {% trans "Siembra de Agave" %}</li>
+      </ul>
     </div>
-  </section>
+
+    <!-- Dupla tarjeta + mapa (alturas y márgenes unificados) -->
+    <div class="duo-grid">
+      <article class="card card--brown">
+        <h3 class="card__title">{% trans "¿Dónde está ubicado?" %}</h3>
+        <p class="card__text">
+          {% trans "Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el periférico." %}
+        </p>
+        <div class="card__actions">
+          <a class="btn" href="#" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
+        </div>
+      </article>
+
+      <figure class="duo-media">
+        <img src="{% static 'resources/images/places/Valladolid/hacienda/mapa.png' %}"
+             alt="{% trans 'Mapa de ubicación' %}">
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+
 
 </main>
 
 <script>
-(function(){
-  const root = document.getElementById('gallery-carousel');
-  if(!root) return;
-
-  const track  = root.querySelector('.carousel__track');
-  const slides = Array.from(root.querySelectorAll('.carousel__slide'));
-  const prev   = root.querySelector('.carousel__btn.prev');
-  const next   = root.querySelector('.carousel__btn.next');
-  const dots   = Array.from(root.querySelectorAll('.carousel__dot'));
-
-  let index = 0;
-  let isDragging = false, startX = 0, currentX = 0, startTransform = 0;
-
-  function goTo(i){
-    index = (i + slides.length) % slides.length;
-    const x = -index * 100;
-    track.style.transform = `translateX(${x}%)`;
-    dots.forEach((d, k)=> d.classList.toggle('is-active', k === index));
-  }
-
-  // Controles
-  prev.addEventListener('click', ()=> goTo(index - 1));
-  next.addEventListener('click', ()=> goTo(index + 1));
-  dots.forEach((d,k)=> d.addEventListener('click', ()=> goTo(k)));
-
-  // Teclado
-  root.addEventListener('keydown', (e)=>{
-    if (e.key === 'ArrowLeft')  goTo(index - 1);
-    if (e.key === 'ArrowRight') goTo(index + 1);
-  });
-  root.tabIndex = 0; // foco para teclado
-
-  // Arrastre táctil / mouse
-  const vp = root.querySelector('.carousel__viewport');
-
-  function onStart(clientX){
-    isDragging = true;
-    startX = clientX;
-    const m = track.style.transform.match(/-?\d+(\.\d+)?/g);
-    startTransform = m ? parseFloat(m[0]) : -index*100;
-    track.style.transition = 'none';
-  }
-  function onMove(clientX){
-    if(!isDragging) return;
-    currentX = clientX;
-    const delta = (currentX - startX) / vp.clientWidth * 100; // %
-    track.style.transform = `translateX(${startTransform + delta}%)`;
-  }
-  function onEnd(){
-    if(!isDragging) return;
-    isDragging = false;
-    track.style.transition = '';
-    const delta = (currentX - startX);
-    const threshold = vp.clientWidth * 0.15; // 15%
-    if (delta < -threshold)      goTo(index + 1);
-    else if (delta > threshold)  goTo(index - 1);
-    else                         goTo(index);
-  }
-
-  // Eventos mouse
-  vp.addEventListener('mousedown', e => onStart(e.clientX));
-  window.addEventListener('mousemove', e => onMove(e.clientX));
-  window.addEventListener('mouseup', onEnd);
-
-  // Eventos touch
-  vp.addEventListener('touchstart', e => onStart(e.touches[0].clientX), {passive:true});
-  vp.addEventListener('touchmove',  e => onMove(e.touches[0].clientX),  {passive:true});
-  vp.addEventListener('touchend', onEnd);
-
-  // Inicial
-  goTo(0);
-})();
-</script>
+  (function(){
+    const root = document.getElementById('gallery-carousel');
+    if(!root) return;
+  
+    const track   = root.querySelector('.carousel__track');
+    const vp      = root.querySelector('.carousel__viewport');
+    const slides  = Array.from(root.querySelectorAll('.carousel__slide'));
+    const prevBtn = root.querySelector('.carousel__btn.prev');
+    const nextBtn = root.querySelector('.carousel__btn.next');
+    const dotsBox = root.querySelector('.carousel__dots');
+  
+    // Autoplay: si quieres ajustar la velocidad, cambia 3500
+    const autoplayMs = 3500;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+    let index = 0;
+    let isDragging = false, startX = 0, currX = 0, startTransformPct = 0;
+    let autoTimer = null;
+  
+    // --- Dots (creación dinámica) ---
+    dotsBox.innerHTML = '';
+    const dots = slides.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'carousel__dot';
+      b.setAttribute('aria-label', "{{ _('Ir a la imagen') }} " + (i+1));
+      b.addEventListener('click', () => { goTo(i); restartAutoplay(); });
+      dotsBox.appendChild(b);
+      return b;
+    });
+  
+    // --- Navegación principal ---
+    function goTo(i){
+      const n = slides.length;
+      index = ((i % n) + n) % n;         // loop infinito
+      const x = -index * 100;
+      track.style.transform = `translate3d(${x}%,0,0)`;
+      dots.forEach((d,k)=> d.classList.toggle('is-active', k === index));
+    }
+    function move(step){ goTo(index + step); }
+  
+    // Botones
+    if (prevBtn) prevBtn.addEventListener('click', ()=> { move(-1); restartAutoplay(); });
+    if (nextBtn) nextBtn.addEventListener('click', ()=> { move(1);  restartAutoplay(); });
+  
+    // Teclado
+    root.tabIndex = 0;
+    root.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowLeft')  { move(-1); restartAutoplay(); }
+      if (e.key === 'ArrowRight') { move(1);  restartAutoplay(); }
+    });
+  
+    // --- Drag/Swipe ---
+    function onStart(clientX){
+      isDragging = true; startX = clientX; currX = clientX;
+      const m = track.style.transform.match(/-?\d+(\.\d+)?/);
+      startTransformPct = m ? parseFloat(m[0]) : -index * 100;
+      track.style.transition = 'none';
+      stopAutoplay();
+    }
+    function onMove(clientX){
+      if(!isDragging) return;
+      currX = clientX;
+      const deltaPct = ((currX - startX) / vp.clientWidth) * 100;
+      track.style.transform = `translate3d(${startTransformPct + deltaPct}%,0,0)`;
+    }
+    function onEnd(){
+      if(!isDragging) return;
+      isDragging = false; track.style.transition = '';
+      const deltaPx = (currX - startX);
+      const threshold = vp.clientWidth * 0.15; // 15%
+      if (deltaPx < -threshold)      move(1);
+      else if (deltaPx > threshold)  move(-1);
+      else                           goTo(index);
+      restartAutoplay();
+    }
+  
+    vp.addEventListener('pointerdown', e => { vp.setPointerCapture(e.pointerId); onStart(e.clientX); });
+    vp.addEventListener('pointermove',  e => onMove(e.clientX));
+    vp.addEventListener('pointerup',    onEnd);
+    vp.addEventListener('pointercancel',onEnd);
+    vp.addEventListener('pointerleave', onEnd);
+  
+    // --- Autoplay + pausas ---
+    function startAutoplay(){
+      if (reduceMotion || autoplayMs <= 0) return;
+      stopAutoplay();
+      autoTimer = setInterval(()=> move(1), autoplayMs);
+    }
+    function stopAutoplay(){ if (autoTimer){ clearInterval(autoTimer); autoTimer = null; } }
+    function restartAutoplay(){ stopAutoplay(); startAutoplay(); }
+  
+    // Pausar en hover / foco dentro del carrusel
+    root.addEventListener('mouseenter', stopAutoplay);
+    root.addEventListener('mouseleave', startAutoplay);
+    root.addEventListener('focusin',  stopAutoplay);
+    root.addEventListener('focusout', startAutoplay);
+  
+    // Inicial
+    goTo(0);
+    startAutoplay();
+  })();
+  </script>
+  
 {% endblock %}

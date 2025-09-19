@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/valladolid.css' %}">
+<link rel="stylesheet" href="{% static 'styles/componentes/cards.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -110,25 +112,30 @@
 
 </section>
 
-<!-- ===== MÁS INFORMACIÓN ===== -->
-<section class="more-info">
-  <div class="mi-grid">
-    <div class="mi-card">
-      <h3>{% trans "¿Quieres más información?" %}</h3>
-      <p>
-        {% trans "Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado." %}
-      </p>
-      <div class="mi-actions">
-        <a class="btn btn-wsp" href="#">{% trans "Whatsapp" %}</a>
-        <a class="btn btn-mail" href="#">{% trans "Correo electrónico" %}</a>
-      </div>
-    </div>
 
-    <figure class="mi-agent">
-      <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}"
-           alt="{% trans 'Agente de ventas' %}">
-    </figure>
+<!-- Más información -->
+<section class="band">
+  <div class="band__inner">
+    <div class="duo-grid">
+      <article class="card card--ivory">
+        <h3 class="card__title">{% trans "¿Quieres más información?" %}</h3>
+        <p class="card__text">
+          {% trans "Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado." %}
+        </p>
+        <div class="card__actions">
+          <a class="btn btn--wapp" href="#">{% trans "Whatsapp" %}</a>
+          <a class="btn btn--mail" href="#">{% trans "Correo electrónico" %}</a>
+        </div>
+      </article>
+
+      <figure class="duo-media">
+        <img src="{% static 'resources/images/places/Valladolid/asesoría_sendal.png' %}"
+             alt="{% trans 'Agente de ventas' %}">
+      </figure>
+    </div>
   </div>
 </section>
+
+
 
 {% endblock %}

@@ -16,7 +16,7 @@
   border-radius:12px;
   display:block;
   margin-top:10px;
-}
+} 
 
 /* ===== Proyecto ===== */
 .section-title{ font-size: 36px; color:var(--color-pink); margin: 16px 0 8px; }
@@ -107,38 +107,6 @@
   border-radius: 10px;
 }
 
-/* ¿Dónde está ubicado? — sin tarjeta blanca alrededor */
-.donde{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-  align-items:stretch;
-  background: transparent;        /* sin “marco” blanco */
-  padding: 0;                     /* bordes alineados gracias a .peach-wrap */
-}
-.donde-card{
-  background:var(--color-pink);
-  color:#fff;
-  border-radius:18px;
-  padding: 28px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.donde-card h3{ text-decoration: underline; font-size: clamp(18px, 5.2vw, 24px); margin:0 0 8px; }
-.donde .btn.ghost{
-  background:#fff; color:#000; border-radius:10px; padding:10px 20px;
-  display:inline-block; width:auto; min-width:140px; text-align:center; font-weight:700; margin-top:16px;
-}
-.donde-mapa{ margin:0; }
-.map-frame{
-  position:relative; width:100%;
-  aspect-ratio: 1 / 1;           /* cuadrado en mobile */
-  border-radius:18px; overflow:hidden;
-}
-.map-frame iframe{
-  position:absolute; inset:0; width:100% !important; height:100% !important; border:0; display:block;
-}
 
 /* ===== Amenidades (lista con íconos) ===== */
 .amenities-list{ margin-top: 24px; }
@@ -229,9 +197,8 @@
   .masterplan img{ aspect-ratio: 21/9; }
 
   .peach-wrap{ padding: 0 var(--gutter); }
-  .donde{ grid-template-columns: 1fr 1fr; gap: 18px; }
-  .map-frame{ aspect-ratio: 5 / 4; }       /* mapa más alto */
-  .donde-card{ padding: 34px; }
+  
+
 
   .merida-photo img{ height:auto; aspect-ratio: 3/2; }
 
@@ -266,8 +233,6 @@
   .gal-grid figure{ border-radius: 12px; overflow: hidden; }
 
   /* ¿Dónde está ubicado? – 2 cols y mapa ancho; SIN borde blanco */
-  .donde{ grid-template-columns: .92fr 1.08fr; gap: 22px; }
-  .map-frame{ aspect-ratio: 16 / 10; }
 
   .merida-grid{ grid-template-columns: 1.1fr .9fr; gap: 22px; align-items: center; }
   .merida-text ul{ margin:0; padding:0; }
@@ -666,134 +631,8 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-      /* ==== CSS (mobile-first) ==== */
-:root{
-  --carousel-h: clamp(320px, 48vw, 600px);
-
-  --dot: 8px;
-  --btn-size: 40px;
-  --ink: #111;
-  --ink-weak:#ffffffcc;
-}
-
-.carousel{
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  user-select: none;
-}
-.carousel__viewport{
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  height: var(--carousel-h);
-  background: #f3f3f3;
-
-}
-.carousel__track{
-  display: flex;
-  height: 100%;
-  will-change: transform;
-  transition: transform .45s ease;
-}
-.carousel__slide{
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-}
-.carousel__slide img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-/* Botones */
-.carousel__btn{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: var(--btn-size);
-  height: var(--btn-size);
-  border-radius: 999px;
-  border: none;
-  background: #00000055;
-  color: white;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  z-index: 2;
-  backdrop-filter: blur(2px);
-}
-.carousel__btn:hover{ background: #00000088; }
-.carousel__btn.prev{ left: 8px; }
-.carousel__btn.next{ right: 8px; }
-
-/* Puntos */
-.carousel__dots{
-  position: absolute;
-  inset: auto 0 10px 0;
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  z-index: 2;
-}
-.carousel__dots button{
-  width: var(--dot);
-  height: var(--dot);
-  border-radius: 999px;
-  border: 0;
-  background: var(--ink-weak);
-  opacity: .6;
-  cursor: pointer;
-}
-.carousel__dots button[aria-current="true"]{
-  opacity: 1;
-  transform: scale(1.35);
-}
-
-/* Accesibilidad (slide visible) */
-.carousel__slide.is-active img{ outline: 0; }
-
-/* Tablet/desktop pequeños: opcional, “peek” de la siguiente slide */
-@media (min-width: 768px){
-  .carousel__viewport{ --carousel-h: clamp(320px, 48vw, 600px); }
-}
-/* Desktop: mismos estilos; el carrusel sigue siendo 1 imagen por vista para claridad */
-
-
-:root{
-  --carousel-h: clamp(260px, 55vw, 420px); /* altura base: mobile / tablet */
-  --dot: 8px;
-  --btn-size: 40px;
-  --ink: #111;
-  --ink-weak:#ffffffcc;
-}
-
-.carousel__viewport{
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  height: var(--carousel-h);
-  background: #f3f3f3;
-}
-
 /* Desktop */
 @media (min-width: 1024px){
-  .carousel__viewport{ 
-    --carousel-h: clamp(200px, 35vw, 380px); /* más bajo en desktop */
-  }
-
   h3, h4 {
     font-size: 20px;
   }
@@ -803,3 +642,72 @@
 .galeria {
   padding: 40px 0;
 }
+
+
+
+.card--pink {
+  background: var(--color-pink, #D0815B); /* o tu tono rosado */
+  color: #fff; /* texto en blanco */
+}
+
+.card--pink .card__title {
+  color: #fff; /* títulos también en blanco */
+  text-decoration: underline;
+}
+
+
+/* Banda compacta con respiro SIMÉTRICO */
+.section-container--tight{
+  --band-pad: 20px;   /* respiro superior e inferior de la franja */
+  --band-gap: 16px;   /* separación entre bloques dentro del wrapper */
+  padding-block: var(--band-pad);
+}
+
+/* El wrapper organiza el contenido con gap (¡sin márgenes locales!) */
+.section-container--tight .peach-wrap{
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: grid;
+  gap: var(--band-gap);
+}
+
+/* Normaliza márgenes de hijos: la distancia la controla el gap */
+.section-container--tight .peach-wrap > *{ margin: 0 !important; }
+
+/* La dupla no agrega márgenes extra: queda centrada por el gap */
+.section-container--tight .duo-grid{ margin: 0; }
+
+/* (si tenías esto, bórralo)
+.section-container--tight .duo-grid { margin-block: 8px; }
+.section-container--tight .duo-grid:first-child { margin-top: 0; }
+.section-container--tight .explora__legend { margin-bottom: 8px; }
+*/
+
+
+
+/* Mitad del espacio en la banda “durazno” */
+.section-container--tight{
+  --band-pad: 10px;   /* antes 20px */
+}
+
+.section-container--tight .peach-wrap{
+  gap: 8px;           /* antes 16px */
+}
+
+/* Mantén la dupla sin márgenes propios */
+.section-container--tight .duo-grid{ margin: 0; }
+.section-container--tight .peach-wrap > *{ margin: 0 !important; }
+
+/* Opcional: también la mitad en tablet/desktop */
+@media (min-width:768px){
+  .section-container--tight{ --band-pad: 10px; }
+  .section-container--tight .peach-wrap{ gap: 8px; }
+}
+@media (min-width:1025px){
+  .section-container--tight{ --band-pad: 10px; }
+  .section-container--tight .peach-wrap{ gap: 8px; }
+}
+
+
+

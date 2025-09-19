@@ -63,63 +63,6 @@ h2{ font-size: clamp(18px, 5.5vw, 22px); color:var(--color-brown); }
    Sección Ubicación (full-bleed con wrapper)
    ======================================================= */
 
-/* Franja a todo lo ancho con el color de fondo */
-.where-section{
-  background: var(--color-gold);
-  margin-top: 24px;
-
-  /* full-bleed */
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  width: 100vw;
-
-  /* respiración para no pegarse al footer */
-  padding: 28px 0 28px;
-}
-
-/* Contenido centrado y alineado con el resto del layout */
-.where{
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-
-  display: grid;
-  grid-template-columns: 1fr;      /* mobile first */
-  gap: 16px;
-  align-items: stretch;
-}
-
-.where-card{
-  background: var(--color-brown);
-  color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-}
-.where-card h3{
-  margin: 0 0 8px;
-  font-size: clamp(18px, 5.2vw, 24px);
-  color: var(--color-gold);
-  text-decoration: underline;
-}
-.where-card p{ margin: 0 0 12px; }
-.where-card .btn.ghost{
-  background: var(--color-gold);
-  color: #000;
-}
-
-/* Mapa */
-.where .map img{
-  width: 100%;
-  height: clamp(220px, 48vw, 380px);
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-}
-
 /* ================= Tablet (768–1024) ================= */
 @media (min-width:768px) and (max-width:1024px){
   .hero img{ height: min(42vw, 360px); }
@@ -133,16 +76,6 @@ h2{ font-size: clamp(18px, 5.5vw, 22px); color:var(--color-brown); }
 
   .subgallery{ grid-template-columns: 1fr 1fr; gap:16px; }
   .subgallery img{ max-height: 500px; }  /* MÁS altura en tablet */
-
-  /* Ubicación */
-  .where{
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  .where-card{
-    display:flex; flex-direction:column; justify-content:center;
-  }
-  .where .map img{ height: min(44vw, 340px); }
 }
 
 /* ================= Desktop (≥1025) ================= */
@@ -164,38 +97,7 @@ h2{ font-size: clamp(18px, 5.5vw, 22px); color:var(--color-brown); }
   /* subgalería */
   .subgallery{ grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
   .subgallery img{ max-height: 600px; }  /* MÁS altura en desktop */
-
-  /* Ubicación */
-  .where{
-    grid-template-columns: .90fr 1.1fr;
-    gap: 22px;
-  }
-  .where-card{
-    padding: 34px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .where .map img{ height: 380px; }
 }
-
-/* Botón “Ir a la ubicación” más angosto (no ocupa todo el ancho) */
-.where-card .btn.ghost {
-  background: var(--color-gold);
-  color: #000;
-  border-radius: 8px;
-  padding: 10px 20px;
-
-  display: inline-block;   /* ancho al contenido */
-  width: auto;             /* evita que ocupe todo */
-  min-width: 140px;        /* opcional: tamaño mínimo bonito */
-  text-align: center;      /* centra el texto */
-  font-weight: 700;
-  margin: 0 auto;          /* lo centra dentro del contenedor */
-}
-
-
-
 
 /* ===== Flechas de navegación ===== */
 .head {
@@ -227,4 +129,42 @@ h2{ font-size: clamp(18px, 5.5vw, 22px); color:var(--color-brown); }
   opacity: 0.4;
   pointer-events: none; /* no se puede hacer clic */
   cursor: default;
+}
+
+
+
+
+/* ===== Franja full-bleed reutilizable ===== */
+.band{
+  margin-top: 24px;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+}
+.band__inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 24px var(--gutter);
+}
+/* Tema de la franja para Predio 1 */
+.band--gold{ background: var(--color-gold); }
+
+/* ===== Tema de tarjeta para Predio 1 (café + dorado) ===== */
+/* (duo-grid base viene de styles/componentes/duo.css) */
+.duo-grid--brown .card{
+  background: var(--color-brown);   /* café */
+  color: #fff;
+}
+.duo-grid--brown .card__title{
+  color: var(--color-gold);
+  text-decoration-color: var(--color-gold);
+}
+.duo-grid--brown .btn.btn--gold{
+  background: var(--color-gold);
+  color: #000;
+  border-radius: 12px;
+  padding: 10px 20px;
 }

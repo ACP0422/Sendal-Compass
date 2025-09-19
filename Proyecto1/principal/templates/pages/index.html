@@ -78,6 +78,7 @@
       <div class="select">
         <select id="ubicacion">
           <option value="" disabled selected hidden>{% trans "Ubicación" %}</option>
+          <option value="" >{% trans "Todas las ubicaciones" %}</option>
           <option>{% trans "Komchén" %}</option>
           <option>{% trans "Mérida" %}</option>
           <option>{% trans "Sac Nikté" %}</option>
@@ -89,6 +90,7 @@
       <div class="select">
         <select id="tipo">
           <option value="" disabled selected hidden>{% trans "Proyecto / Propiedad" %}</option>
+          <option value="" >{% trans "Todos" %}</option>
           <option>{% trans "Terreno" %}</option>
           <option>{% trans "Lote" %}</option>
         </select>
@@ -212,19 +214,44 @@
   </div>
 </section>
 
-{% endblock %}
+
 
 <script>
   (function () {
+    // === Sincroniza el rango de precio (tu código original) ===
     const r = document.getElementById('precio');
-    if (!r) return;
-    const sync = el => {
-      el.style.setProperty('--min', el.min || '0');
-      el.style.setProperty('--max', el.max || '100');
-      el.style.setProperty('--val', el.value);
-    };
-    sync(r);
-    r.addEventListener('input', () => sync(r));
-    r.addEventListener('change', () => sync(r));
+    if (r) {
+      const sync = el => {
+        el.style.setProperty('--min', el.min || '0');
+        el.style.setProperty('--max', el.max || '100');
+        el.style.setProperty('--val', el.value);
+      };
+      sync(r);
+      r.addEventListener('input', () => sync(r));
+      r.addEventListener('change', () => sync(r));
+    }
+  
+    // === Filtro por nombre de proyecto usando el select #ubicacion ===
+    const selectUbicacion = document.getElementById('ubicacion');
+    const cards = document.querySelectorAll('.projects-grid article');
+  
+    if (selectUbicacion && cards.length) {
+      selectUbicacion.addEventListener('change', () => {
+        const value = selectUbicacion.value.trim().toLowerCase();
+  
+        cards.forEach(card => {
+          const title = card.querySelector('h3');
+          const nombre = title ? title.textContent.trim().toLowerCase() : "";
+  
+          if (!value || nombre.includes(value)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    }
   })();
-</script>
+  </script>
+{% endblock %}
+

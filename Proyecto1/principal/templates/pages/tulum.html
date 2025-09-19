@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/tulum.css' %}">
+<link rel="stylesheet" href="{% static 'styles/componentes/cards.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -55,33 +57,33 @@
   </section>
 
   <!-- Más información -->
-  <section class="cta-duo" style="padding: 32px var(--gutter); background-color: var(--gutter);">
-    <div style="max-width:var(--max); margin:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch;">
-      
-      <div style="background:#F8F4E3; border-radius:12px; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:40px;">
-        <h3 style="font-size:36px; font-weight:600; margin-bottom:8px; color:#3B0C0C;">
+<section class="band">
+  <div class="band__inner">
+    <div class="duo-grid">
+      <article class="card card--ivory">
+        <h3 class="card__title">
           {% blocktrans trimmed %}Invierte con certeza,<br>crece con Sendal.{% endblocktrans %}
         </h3>
-        <p style="font-size:20px; margin-bottom:18px; color:#8F5600;">
+        <p class="card__text">
           {% blocktrans trimmed %}
           Creamos oportunidades reales, sin comprometer calidad, diseño ni servicio.
           Contáctanos y te enviaremos toda la información que necesitas sobre el proyecto de tu agrado.
           {% endblocktrans %}
         </p>
-        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
-          <a href="#" style="background:#F2BB57; color:#41070A; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:24px;">{% trans "Whatsapp" %}</a>
-          <a href="#" style="background:#8F5600; color:#F2BB57; padding:10px 20px; border-radius:8px; text-decoration:none; font-size:24px;">{% trans "Correo electrónico" %}</a>
+        <div class="card__actions">
+          <a class="btn btn--wapp" href="#">{% trans "Whatsapp" %}</a>
+          <a class="btn btn--mail" href="#">{% trans "Correo electrónico" %}</a>
         </div>
-      </div>
+      </article>
 
-      <div>
+      <figure class="duo-media">
         <img src="{% static 'resources/images/places/Tulum/invierte.png' %}"
-             alt="{% trans 'Oferta accesible y acompañada' %}"
-             style="width:100%; height:100%; border-radius:12px; object-fit:cover;">
-      </div>
-  
+             alt="{% trans 'Agente de ventas' %}">
+      </figure>
     </div>
-  </section>
+  </div>
+</section>
+  
   
 </main>
 {% endblock %}
