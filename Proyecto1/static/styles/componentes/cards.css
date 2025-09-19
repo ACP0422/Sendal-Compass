@@ -1,14 +1,14 @@
 /* =========================================================
-   TARJETAS – BASE
+   TARJETAS — BASE
    ========================================================= */
    .card{
-    /* tokens base */
+    /* Tokens */
     --card-bg: var(--color-brown, #3B0C0C);
     --card-fg: #fff;
     --card-radius: 12px;
     --card-pad: 18px;
   
-    /* tipografía base */
+    /* Tipografía */
     --card-title-size: clamp(18px, 5.2vw, 24px);
     --card-text-size: 16px;
     --card-underline: var(--color-gold, #E1A740);
@@ -24,7 +24,7 @@
     justify-content: center;
     gap: 10px;
   
-    /* altura sincronizada con media/img del layout (se asigna abajo) */
+    /* Altura sincronizada con el bloque de media */
     min-height: var(--duo-h, auto);
   }
   
@@ -39,7 +39,7 @@
     font-size: var(--card-text-size);
   }
   
-  /* Acciones dentro de la tarjeta */
+  /* Acciones */
   .card__actions{
     display: flex;
     justify-content: center;
@@ -49,12 +49,12 @@
   }
   
   /* =========================================================
-     BOTONES – BASE + VARIANTES
+     BOTONES — BASE + VARIANTES
      ========================================================= */
   .btn{
     --btn-bg: var(--color-gold, #E1A740);
     --btn-fg: #000;
-    --btn-radius: 10px;
+    --btn-radius: 12px;
     --btn-pad: 10px 20px;
   
     display: inline-block;
@@ -74,7 +74,7 @@
   .btn--mail{ --btn-bg:#8F5600; --btn-fg:#F2BB57; } /* marrón + dorado */
   
   /* =========================================================
-     TARJETAS – TEMAS (sobrescriben tokens)
+     TARJETAS — TEMAS (sobrescriben tokens)
      ========================================================= */
   .card--brown{
     --card-bg: var(--color-brown, #3B0C0C);
@@ -87,13 +87,13 @@
     --card-fg: #fff;
   }
   .card--ivory{
-    --card-bg: #F8F4E3;     /* beige café */
-    --card-fg: #3B0C0C;     /* texto vino */
+    --card-bg: #F8F4E3;  /* beige café */
+    --card-fg: #3B0C0C;  /* vino */
     --card-underline: #3B0C0C;
   }
   
   /* =========================================================
-     LAYOUT – DUO (tarjeta + media/mapa)
+     LAYOUT — DUO (tarjeta + media / mapa)
      ========================================================= */
   .duo-grid{
     display: grid;
@@ -101,10 +101,11 @@
     gap: 16px;
     margin: 16px 0;
   
-    /* Altura unificada por breakpoint (usada por card, img y map-frame) */
+    /* Alturas (se heredan por tarjeta e imagen/mapa) */
     --duo-h: clamp(220px, 48vw, 380px);
     --duo-radius: 12px;
   }
+  
   .duo-media{ margin: 0; }
   
   .duo-media img{
@@ -115,24 +116,27 @@
     display: block;
   }
   
-  /* Si usas mapa incrustado */
+  /* Mapa incrustado */
   .duo-media .map-frame{
     position: relative;
     width: 100%;
     height: var(--duo-h);
-    aspect-ratio: auto !important;  /* anula reglas antiguas */
+    aspect-ratio: auto !important;
     overflow: hidden;
     border-radius: var(--duo-radius);
     background: #f0f0f0;
   }
   .duo-media iframe{
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    border: 0; display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
     border-radius: var(--duo-radius);
   }
   
-  /* Orden invertido cuando pidas --reverse */
+  /* Invertir orden cuando se use --reverse */
   .duo-grid--reverse .card{ order: 2; }
   .duo-grid--reverse .duo-media{ order: 1; }
   
@@ -141,8 +145,10 @@
      ========================================================= */
   .band{
     position: relative;
-    left: 50%; right: 50%;
-    margin-left: -50vw; margin-right: -50vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
     width: 100vw;
   }
   .band__inner{
@@ -155,9 +161,8 @@
   .band--gold { background: var(--color-gold, #E1A740); }
   
   /* =========================================================
-     MEDIA QUERIES (ajustan solo variables y pequeños detalles)
+     MEDIA QUERIES — ajustes mínimos
      ========================================================= */
-  
   /* Tablet */
   @media (min-width:768px) and (max-width:1024px){
     .duo-grid{

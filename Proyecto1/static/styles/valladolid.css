@@ -1,393 +1,196 @@
 /* =========================
    VALLADOLID – BASE DESKTOP
-   (mobile/tablet abajo en media queries)
    ========================= */
 
 /* Encabezado */
-.city-header{
-  max-width: var(--max);
-  margin: 34px auto 18px;
-  padding: 0 var(--gutter);
-}
-.city-title{
-  font-weight: 800;
-  letter-spacing: .02em;
-  font-size: 80px;
-  color: var(--color-gold);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-.city-kicker{
-  font-size: 18px;
-  opacity:.9;
-  max-width: 720px;
-  line-height:1.4;
-  color: var(--color-brown);
-}
+.city-header{ max-width:var(--max); margin:34px auto 18px; padding:0 var(--gutter); }
+.city-title{ font-weight:800; letter-spacing:.02em; font-size:80px; color:var(--color-gold); margin-bottom:6px; text-transform:uppercase; }
+.city-kicker{ font-size:18px; opacity:.9; max-width:720px; line-height:1.4; color:var(--color-brown); }
 
-/* Bloque principal (foto + promo) */
+/* Hero: foto + promo */
 .city-feature{
-  max-width: var(--max);
-  margin: 18px auto 26px;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: 1.1fr .9fr;   /* desktop actual */
-  gap: 24px;
-  align-items: stretch;
+  max-width:var(--max);
+  margin:18px auto 26px;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:24px;
+  align-items:stretch;
 }
 .city-feature .big-photo img,
-.city-feature .promo img{
-  width: 100%;
-  height: 100%;
-  max-width: 700px;
-  max-height: 500px;
-  object-fit: cover;
-  display: block;
-  border-radius: 12px;
-}
+.city-feature .promo img{ width:100%; height:100%; max-width:700px; max-height:500px; object-fit:cover; display:block; border-radius:12px; }
+#imagen-promocional{ border-radius:0; max-width:300px; }
 
-
-#imagen-promocional {
-  border-radius: 0px;
-  max-width: 300px; } /*CAMBIARRR OOJOOO/*
-
-
-/* Listado desktop original */
+/* Listado */
 .listing{
-  max-width: var(--max);
-  margin: 8px auto 60px;
-  padding: 0 var(--gutter);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  max-width:var(--max);
+  margin:8px auto 60px;
+  padding:0 var(--gutter);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
 }
-.listing article{ 
-  /*display: grid; */
-  gap: 10px; }
+.listing article{ gap:10px; }
+.listing article img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; display:block; }
+.listing h3{ font-size:16px; font-weight:700; color:var(--color-brown); }
+.listing p{ font-size:14px; color:#41070A; opacity:.9; }
+.listing .more{ margin-top:4px; display:inline-block; font-size:12px; color:var(--color-brown); background:var(--color-gold); border-radius:8px; padding:8px; text-decoration:none; border:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow); }
 
-.listing article img{
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-}
-.listing h3{ font-size: 16px; font-weight: 700; color: var(--color-brown); }
-.listing p{ font-size: 14px; color:#41070A; opacity:.9; }
-.listing .more{
-  margin-top: 4px;
-  display: inline-block;
-  font-size: 12px;
-  color: var(--color-brown);
-  background-color: var(--color-gold);
-  border-radius: 8px;
-  padding: 8px;
-  text-decoration: none;
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: var(--shadow);
-}
-
-/* Servicios (desktop) */
-.services-cover{
-  background: var(--color-gold);
-  padding: 48px var(--gutter);
-}
-.services-cover h2{
-  font-size: 36px;
-  margin-bottom: 28px;
-  color: #3B0C0C;
-}
-.services-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 18px;
-}
-.services-grid article{
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-}
-.services-grid img{
-  width: 100%;
-  height: 500px;            /* desktop alto grande */
-  object-fit: cover;
-  display: block;
-}
+/* Servicios (desktop: grid) */
+.services-cover{ background:var(--color-gold); padding:48px var(--gutter); }
+.services-cover h2{ font-size:36px; margin-bottom:28px; color:#3B0C0C; }
+.services-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:18px; }
+.services-grid article{ position:relative; overflow:hidden; border-radius:8px; }
+.services-grid img{ width:100%; height:500px; object-fit:cover; display:block; }
 .service-text{
-  text-align: center;
-  position: absolute;
-  inset: 0;
-  /*background: linear-gradient(to top, #0000008c 60%, rgba(0,0,0,0)100%);*/
-  background: linear-gradient(0deg, #0000008c 60%, rgba(0,0,0,0)100%);
-  color: var(--white);
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  position:absolute; inset:0; color:#fff; padding:14px;
+  display:flex; flex-direction:column; justify-content:flex-start;
+  background:linear-gradient(0deg,#0000008c 60%,rgba(0,0,0,0) 100%);
 }
-.service-text h3{ font-size: 22px; font-weight: 700; margin: 20px 40px 4px; }
-.service-text p{ font-size: 18px; margin: 10px 40px 0px 40px; }
-.services-pager{ margin-top: 10px; color:#3B0C0C; display:flex; gap:8px; align-items:center; }
+.service-text h3{ font-size:22px; font-weight:700; margin:20px 40px 4px; }
+.service-text p{ font-size:18px; margin:10px 40px 0 40px; }
 
 /* =========================
    MOBILE (<= 599px)
    ========================= */
-@media (max-width: 599px){
+@media (max-width:599px){
+  .city-title{ font-size:48px; }
+  .city-kicker{ font-size:13.5px; max-width:42ch; }
 
-  .city-title{ font-size: 48px; }
-  .city-kicker{ font-size: 13.5px; max-width: 42ch; }
+  .city-feature{ grid-template-columns:3fr 1.2fr; gap:10px; }
+  .city-feature .big-photo img{ aspect-ratio:4/3; max-height:none; }
+  .city-feature .promo img{ aspect-ratio:9/16; max-height:none; }
 
-  /* 2 columnas desbalanceadas */
-  .city-feature{
-    grid-template-columns: 3fr 1.2fr;
-    gap: 10px;
-  }
-  .city-feature .big-photo img{ aspect-ratio: 4/3; max-height: none; }
-  .city-feature .promo img{ aspect-ratio: 9/16; max-height: none; }
-
-  /* Listado: 1 columna */
-  .listing{
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  .listing article img{ border-radius: 10px; }
-  .listing h3{ font-size: 14px; }
-  .listing p{ font-size: 12px; }
-  .listing .more{ padding: 10px 12px; font-size: 11px; }
-
-  /* Servicios: carrusel horizontal */
-  .services-cover{ padding: 28px var(--gutter); }
-  .services-cover h2{ font-size: clamp(22px, 6vw, 28px); margin-bottom: 16px; }
-
-  .services-grid{
-    grid-template-columns: unset !important;
-    grid-auto-flow: column;
-    grid-auto-columns: 88%;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    margin-inline: calc(var(--gutter) * -1); /* alinea con gutter */
-    padding-inline: var(--gutter);
-    padding-bottom: 8px;
-  }
-  .services-grid::-webkit-scrollbar{ display: none; }
-
-  .services-grid article{
-    scroll-snap-align: start;
-    border-radius: 12px;
-    overflow: hidden;
-    aspect-ratio: 4 / 5;   /* altura consistente */
-    height: auto;
-    min-width: 0;
-  }
-  .services-grid img{
-    width: 100%;
-    height: 100% !important;   /* pisa 500px */
-    object-fit: cover;
-    display: block;
-  }
-  .service-text{
-    padding: 14px;
-    justify-content: flex-start;
-    /*justify-content: flex-end;*/
-    background: linear-gradient(to top, rgba(0,0,0,.55) 25%, rgba(0,0,0,0) 70%);
-  }
-  .service-text h3{ font-size: clamp(14px, 4.2vw, 18px); margin: 0 0 4px; }
-  .service-text p { font-size: clamp(12px, 3.6vw, 14px); margin: 0; }
-
-  /* Más información: 1 columna */
-  .more-info{ padding: 32px var(--gutter); }
-  .mi-grid{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    max-width: var(--max);
-    margin: 0 auto;
-  }
-  .mi-card{
-    background:#F8F4E3; border-radius:12px; text-align:center; padding:24px;
-    color:#3B0C0C;
-  }
-  .mi-card h3{ font-size: 20px; margin: 0 0 6px; }
-  .mi-card p{ font-size: 14px; color:#8F5600; margin: 0 0 12px; }
-  .mi-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-  .btn{ padding:10px 16px; border-radius:8px; text-decoration:none; font-size:14px; display:inline-block; }
-  .btn-wsp{ background:#F2BB57; color:#41070A; }
-  .btn-mail{ background:#8F5600; color:#F2BB57; }
-  .mi-agent img{ width:100%; height:auto; border-radius:12px; object-fit:cover; }
+  .listing{ grid-template-columns:1fr; gap:16px; margin-bottom:32px; }
+  .listing article img{ border-radius:10px; }
+  .listing h3{ font-size:14px; }
+  .listing p{ font-size:12px; }
+  .listing .more{ padding:10px 12px; font-size:11px; }
 }
 
 /* =========================
    TABLET (600–1023px)
    ========================= */
-@media (min-width: 600px) and (max-width: 1023px){
+@media (min-width:600px) and (max-width:1023px){
+  .city-title{ font-size:52px; }
+  .city-kicker{ font-size:15px; }
 
-  .city-title{ font-size: 52px; }
-  .city-kicker{ font-size: 15px; }
+  .city-feature{ grid-template-columns:2fr 1fr; gap:18px; }
+  .city-feature .big-photo img, .city-feature .promo img{ max-height:360px; aspect-ratio:auto; }
 
-  /* foto grande + promo */
-  .city-feature{
-    grid-template-columns: 2fr 1fr;
-    gap: 18px;
-  }
-  .city-feature .big-photo img,
-  .city-feature .promo img{
-    max-height: 360px;
-    aspect-ratio: auto;
-  }
-
-  /* Listado 2 columnas; último a todo el ancho */
-  .listing{
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  /*.listing article:nth-child(3){ grid-column: 1 / -1; }*/
-
-  .services-cover{ padding: 40px var(--gutter); }
-  .services-cover h2{
-    font-size: clamp(26px, 3.6vw, 36px);
-    margin-bottom: 20px;
-  }
-
-  .services-grid{
-    grid-template-columns: unset !important;  /* anula layout de desktop */
-    grid-auto-flow: column;
-    grid-auto-columns: 48%;                   /* 2 tarjetas a la vista aprox. */
-    gap: 16px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-
-    /* que empiece/termine alineado al gutter */
-    margin-inline: calc(var(--gutter) * -1);
-    padding-inline: var(--gutter);
-    padding-bottom: 8px;
-  }
-  .services-grid::-webkit-scrollbar{ display:none; }
-
-  .services-grid article{
-    scroll-snap-align: start;
-    border-radius: 12px;
-    overflow: hidden;
-    height: auto;
-    aspect-ratio: 2 / 3;                     /* altura consistente en tablet */
-  }
-  .services-grid img{
-    width: 100%;
-    height: 100% !important;                 /* pisa el 500px de desktop */
-    object-fit: cover;
-    display: block;
-  }
-
-  .service-text{
-    padding: 16px;
-    justify-content: flex-start;
-    /*justify-content: flex-end;*/
-    background: linear-gradient(to top, rgba(0,0,0,.55) 25%, rgba(0,0,0,0) 70%);
-
-    /*background: linear-gradient(to top, rgba(0,0,0,.55) 25%, rgba(0,0,0,0) 70%);*/
-  }
-  .service-text h3{ font-size: 20px; margin: 0 0 4px; }
-  .service-text p { font-size: 15px; margin: 0; }
-
-  /* Más información: 2 columnas + chips */
-  .more-info{ padding: 40px var(--gutter); }
-  .mi-grid{
-    display: grid;
-    max-width: var(--max);
-    margin: 0 auto;
-    grid-template-columns: 1.05fr .95fr;
-    gap: 24px;
-    align-items: stretch;
-  }
-  .mi-card{
-    background:#F8F4E3; border-radius:12px; padding:40px; text-align:center; color:#3B0C0C;
-  }
-  .mi-card h3{ font-size: 28px; margin:0 0 8px; }
-  .mi-card p{ font-size: 16px; color:#8F5600; margin:0 0 16px; }
-
-  .mi-actions{
-    display:flex; flex-direction:row; justify-content:center; align-items:center;
-    gap:14px; flex-wrap:nowrap; margin-top:8px;
-  }
-  .more-info .btn{
-    display:inline-flex; width:auto; min-width:0;
-    padding:10px 18px; font-size:15px; line-height:1.1; border-radius:8px; text-decoration:none;
-  }
-  .more-info .btn-wsp{ background:#F2BB57; color:#41070A; }
-  .more-info .btn-mail{ background:#8F5600; color:#F2BB57; }
-  .more-info .btn:hover{ filter: brightness(.98); }
-
-  .mi-agent img{ width:100%; height:100%; border-radius:12px; object-fit:cover; }
+  .listing{ grid-template-columns:1fr 1fr; gap:18px; }
 }
 
 /* =========================
    DESKTOP EXTRA (>=1024px)
-   – restaura la tarjeta como estaba originalmente
+   – alinear hero con grid del listado
    ========================= */
-@media (min-width: 1024px){
-  .more-info{ padding: 50px var(--gutter); }
-  .mi-grid{
-    max-width: var(--max);
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    align-items: stretch;
+@media (min-width:1024px){
+  .city-feature{ grid-template-columns:repeat(3,1fr); gap:28px; align-items:stretch; }
+  .city-feature .big-photo{ grid-column:span 2; }
+  .city-feature .promo{ grid-column:span 1; display:flex; }
+  .city-feature .big-photo img, .city-feature .promo img{
+    width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; border-radius:12px; display:block;
   }
-  .mi-card{
-    background: #F8F4E3;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 40px;
-    color: #3B0C0C;
-  }
-  .mi-card h3{ font-size: 36px; font-weight: 600; margin: 0 0 8px; }
-  .mi-card p{ font-size: 20px; margin: 0 0 18px; color: #8F5600; }
-  .mi-actions{ display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-  .btn{ display: inline-block; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 24px; }
-  .btn-wsp{ background:#F2BB57; color:#41070A; }
-  .btn-mail{ background:#8F5600; color:#F2BB57; }
-
-  .mi-agent img{ width: 100%; height: 100%; border-radius: 12px; object-fit: cover; }
+  #imagen-promocional{ max-width:none !important; }
 }
 
 
 
-/* ==== Desktop: alinear hero con el grid del listado ==== */
-@media (min-width: 1024px){
-  /* Usa 3 columnas como el .listing y el mismo gap para que calce */
-  .city-feature{
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px; /* igual que .listing */
-    align-items: stretch;
-  }
-
-  /* La foto grande ocupa 2 columnas; la promo 1 columna */
-  .city-feature .big-photo{ grid-column: span 2; }
-  .city-feature .promo{ grid-column: span 1; display: flex; }
-
-  /* Quita topes y haz que ambas imágenes llenen su celda */
-  .city-feature .big-photo img,
-  .city-feature .promo img{
-    width: 100%;
-    height: 100%;
-    max-width: none;   /* pisa los 700/300px */
-    max-height: none;  /* pisa los 500px */
-    object-fit: cover;
-    border-radius: 12px;
-    display: block;
-  }
-
-  /* Si usas un id con estilos previos, lo neutralizamos aquí */
-  #imagen-promocional{
-    max-width: none !important;
-  }
+/* ====== Servicios: grid en desktop ====== */
+.services-cover{ background: var(--color-gold); padding: 48px var(--gutter); }
+.services-cover h2{ font-size: 36px; margin-bottom: 28px; color: #3B0C0C; }
+.services-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(100px,1fr)); gap:18px;
 }
+.services-grid article{ position:relative; overflow:hidden; border-radius:12px; }
+.services-grid img{ width:100%; height:500px; object-fit:cover; display:block; }
+.service-text{
+  position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-start;
+  padding:14px; color:#fff; background:linear-gradient(0deg,#0000008c 60%,rgba(0,0,0,0) 100%);
+}
+.service-text h3{ font-size:22px; font-weight:700; margin:20px 40px 4px; }
+.service-text p{ font-size:18px; margin:10px 40px 0; }
+
+/* ====== Carrusel activo SOLO ≤1023px ====== */
+#services-carousel{ display:none; }
+@media (max-width:1023px){
+  .services-grid{ display:none !important; }
+  #services-carousel{ display:block; }
+}
+
+/* ------- Layout del carrusel ------- */
+.services-carousel{
+  --slide-gap: 12px;     /* espacio dorado entre tarjetas */
+  --perView: 1;          /* móvil: una tarjeta visible */
+}
+@media (min-width:768px) and (max-width:1023px){
+  .services-carousel{ --slide-gap: 16px; --perView: 2; } /* tablet: dos visibles */
+}
+
+/* Alturas (más “alargado”) */
+:root{
+  --services-h-mobile: clamp(300px, 62vw, 520px);
+  --services-h-tablet: clamp(360px, 50vw, 560px);
+}
+.services-carousel .carousel__viewport{
+  height: var(--services-h-mobile);
+  border-radius: 16px;
+  overflow: hidden;           /* no se asoman bordes */
+  background: transparent;    /* que se vea el gold si aparece el gap */
+}
+@media (min-width:768px) and (max-width:1023px){
+  .services-carousel .carousel__viewport{ height: var(--services-h-tablet); }
+}
+
+/* PISTA y SLIDES */
+.services-carousel .carousel__track{
+  display:flex; height:100%; gap: var(--slide-gap);
+  will-change: transform; transition: transform .45s ease;
+}
+.services-carousel .carousel__slide{
+  /* ancho exacto según perView y gap (sin asomar vecinas) */
+  min-width: calc((100% - (var(--perView) - 1) * var(--slide-gap)) / var(--perView));
+  height:100%;
+}
+.services-carousel .carousel__slide > article{
+  height:100%; border-radius:16px; overflow:hidden; position:relative;
+}
+.services-carousel .carousel__slide img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.services-carousel .service-text{
+  position:absolute; inset:0; padding:14px; color:#fff;
+  display:flex; flex-direction:column; justify-content:flex-start;
+  background:linear-gradient(0deg,#0000008c 60%,rgba(0,0,0,0) 100%);
+}
+
+/* Controles (si ya los tienes globales, puedes omitir este bloque) */
+.carousel{ position:relative; width:100%; user-select:none; -webkit-tap-highlight-color:transparent; }
+.carousel__btn{
+  position:absolute; top:50%; transform:translateY(-50%); width:42px; height:42px;
+  border-radius:999px; border:0; background:#0006; color:#fff; display:grid; place-items:center;
+  cursor:pointer; z-index:2; backdrop-filter:blur(2px); transition:.15s;
+}
+.carousel__btn:hover{ background:#0009; transform:translateY(-50%) scale(1.04); }
+.carousel__btn:active{ transform:translateY(-50%) scale(.96); }
+.carousel__btn.prev{ left:10px; } .carousel__btn.next{ right:10px; }
+
+.carousel__dots{ position:absolute; inset:auto 0 10px 0; display:flex; gap:8px; justify-content:center; z-index:2; }
+.carousel__dot{ width:8px; height:8px; border-radius:999px; border:0; background:#fff9; opacity:.6; }
+.carousel__dot.is-active{ opacity:1; transform:scale(1.2); background:var(--color-brown,#3B0C0C); }
+
+.card__title{
+  text-decoration: none;
+
+}
+
+.card__text{
+  color: #8F5600;
+}
+
+
+
+
 
 
