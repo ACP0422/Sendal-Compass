@@ -1,0 +1,9 @@
+{% load i18n %}
+<button id="{{ id|default:'toggle-projects' }}"
+        class="btn-toggle{% if cls %} {{ cls }}{% endif %}"
+        type="button"
+        data-label-show="{% trans 'Otros proyectos' %}"
+        data-label-hide="{% trans 'Ocultar proyectos' %}"
+        aria-expanded="false">
+  {% trans 'Otros proyectos' %}
+</button>

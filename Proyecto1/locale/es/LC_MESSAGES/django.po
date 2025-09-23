@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-25 10:35-0600\n"
+"POT-Creation-Date: 2025-09-22 16:46-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
+
 #: Proyecto1/settings.py:122
 msgid "Español"
 msgstr ""
@@ -26,46 +27,71 @@ msgstr ""
 msgid "Inglés"
 msgstr ""
 
-#: principal/templates/base.html:18 principal/templates/base.html:57
-#: principal/templates/base.html:75
+#: principal/templates/base.html:21
+msgid "Abrir menú"
+msgstr ""
+
+#: principal/templates/base.html:26 principal/templates/base.html:35
+#: principal/templates/base.html:42 principal/templates/base.html:69
+#: principal/templates/base.html:84 principal/templates/base.html:100
+#: principal/templates/base.html:109
 msgid "Inicio"
 msgstr ""
 
-#: principal/templates/base.html:19 principal/templates/base.html:76
+#: principal/templates/base.html:27 principal/templates/base.html:110
 msgid "Isotipo Sendal"
 msgstr ""
 
-#: principal/templates/base.html:20 principal/templates/base.html:58
-#: principal/templates/pages/index.html:167
+#: principal/templates/base.html:28 principal/templates/base.html:36
+#: principal/templates/base.html:85 principal/templates/pages/index.html:131
 msgid "Logotipo Sendal"
 msgstr ""
 
-#: principal/templates/base.html:25 principal/templates/base.html:68
+#: principal/templates/base.html:43 principal/templates/base.html:70
+#: principal/templates/base.html:101
 msgid "Proyectos"
 msgstr ""
 
-#: principal/templates/base.html:26 principal/templates/base.html:69
-msgid "Nosotros"
-msgstr ""
-
-#: principal/templates/base.html:27 principal/templates/base.html:70
+#: principal/templates/base.html:44 principal/templates/base.html:71
+#: principal/templates/base.html:102
+#: principal/templates/pages/cotizador_base.html:4
+#: principal/templates/pages/komchen.html:171 principal/views.py:55
+#: principal/views.py:56
 msgid "Cotizador"
 msgstr ""
 
-#: principal/templates/base.html:28 principal/templates/base.html:71
+#: principal/templates/base.html:45 principal/templates/base.html:72
+#: principal/templates/base.html:103
 msgid "Contacto"
 msgstr ""
 
-#: principal/templates/base.html:32
-msgid "Llamar"
+#: principal/templates/base.html:51
+msgid "Escríbenos por WhatsApp"
 msgstr ""
 
-#: principal/templates/base.html:33
-msgid "Teléfono"
+#: principal/templates/base.html:52
+msgid "WhatsApp"
 msgstr ""
 
-#: principal/templates/base.html:64
+#: principal/templates/base.html:95
 msgid "LA RAÍZ DE TU FUTURO"
+msgstr ""
+
+#: principal/templates/componentes/_actions.html:4
+msgid "Proyectos disponibles para cotizar"
+msgstr ""
+
+#: principal/templates/componentes/_hero.html:4
+msgid "Asesoría personalizada para cotizar tu proyecto"
+msgstr ""
+
+#: principal/templates/componentes/_toggle.html:5
+#: principal/templates/componentes/_toggle.html:8
+msgid "Otros proyectos"
+msgstr ""
+
+#: principal/templates/componentes/_toggle.html:6
+msgid "Ocultar proyectos"
 msgstr ""
 
 #: principal/templates/pages/contacto.html:4
@@ -94,27 +120,27 @@ msgid "Contáctanos"
 msgstr ""
 
 #: principal/templates/pages/contacto.html:32
-#: principal/templates/pages/index.html:183
+#: principal/templates/pages/index.html:147
 msgid "Nombre"
 msgstr ""
 
 #: principal/templates/pages/contacto.html:33
-#: principal/templates/pages/index.html:184
+#: principal/templates/pages/index.html:148
 msgid "Jane"
 msgstr ""
 
 #: principal/templates/pages/contacto.html:36
-#: principal/templates/pages/index.html:187
+#: principal/templates/pages/index.html:151
 msgid "Apellido"
 msgstr ""
 
 #: principal/templates/pages/contacto.html:37
-#: principal/templates/pages/index.html:188
+#: principal/templates/pages/index.html:152
 msgid "Smitherton"
 msgstr ""
 
 #: principal/templates/pages/contacto.html:42
-#: principal/templates/pages/index.html:193
+#: principal/templates/pages/index.html:157
 msgid "Email"
 msgstr ""
 
@@ -136,6 +162,239 @@ msgstr ""
 
 #: principal/templates/pages/contacto.html:57
 msgid "Niñas corriendo"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:4
+#: principal/templates/pages/hacienda.html:20
+#: principal/templates/pages/valladolid.html:40 principal/views.py:24
+#: principal/views.py:25
+msgid "Hacienda Residencial"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:22
+#: principal/templates/pages/predio1.html:22
+#: principal/templates/pages/predio2.html:20
+msgid "Valladolid, Yucatán"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:23
+msgid "Superficie: 109,344 m²"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:29
+#: principal/templates/pages/predio1.html:29
+msgid "Ir a Predio 2"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:35
+msgid "Fachada tipo hacienda"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:41
+msgid "Vive el lujo de lo natural."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:44
+msgid "Precio más bajo"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:45
+msgid "Terrenos"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:45
+msgid "Con 550m²"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:46
+msgid "Tribu Easter"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:46
+msgid "Mayores de 50 años"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:48
+#: principal/templates/pages/index.html:80
+#: principal/templates/pages/index.html:172
+msgid "Ubicación"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:48
+msgid "Sobre periférico"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:49
+msgid "Vialidades"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:50
+msgid "Áreas verdes"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:55
+msgid ""
+"Este desarrollo residencial, con entrega a partir de junio de 2026, ofrece "
+"haciendas y terrenos residenciales desde 448 m² hasta 915 m² en una "
+"comunidad exclusiva de baja densidad (solo 10 viviendas por hectárea). Con "
+"fachada estilo hacienda y rodeado de paisajes de agave, integra "
+"instalaciones subterráneas, aprovechamiento de aguas y un reglamento de "
+"construcción con normas ambientales. El proyecto cuenta con certificación "
+"sustentable EDGE o LEED."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:62
+#: principal/templates/pages/komchen.html:60
+#: principal/templates/pages/predio1.html:59
+#: principal/templates/pages/predio2.html:60
+msgid "Ubicación Google maps"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:68
+#: principal/templates/pages/hacienda.html:156
+#: principal/templates/pages/komchen.html:66
+msgid "Amenidades"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:72
+#: principal/templates/pages/komchen.html:69
+msgid "Piscina"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:76
+#: principal/templates/pages/hacienda.html:101
+msgid "Casa Club"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:80
+msgid "Canchas de pádel, tenis y básquetbol"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:87
+msgid "ícono de piscina con canal de nado"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:89
+msgid "Piscina con canal de nado"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:90
+msgid ""
+"Alberca amplia con área de relajación y canal de nado para ejercicio diario."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:93
+msgid "ícono de canchas deportivas"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:95
+msgid "Canchas Deportivas"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:96
+msgid ""
+"Canchas de pádel, tenis y básquet disponibles para que disfrutes del deporte "
+"sin salir de casa."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:99
+msgid "ícono de casa club"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:102
+msgid ""
+"Zona común con espacios para reuniones, actividades y descanso para "
+"residentes."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:105
+msgid "ícono destileria y bar"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:107
+msgid "Destilería y Bar"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:108
+msgid ""
+"Espacio equipado para eventos, reuniones y degustaciones con producción "
+"local."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:114
+#: principal/templates/pages/komchen.html:137
+msgid "Galería"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:120
+msgid "Render de área social"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:128
+msgid "Render de amenidades"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:139
+#: principal/templates/pages/komchen.html:162
+msgid "Explora y Elige"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:143
+#: principal/templates/pages/komchen.html:168
+msgid "Apartado"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:144
+#: principal/templates/pages/komchen.html:169
+msgid "Disponible"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:145
+#: principal/templates/pages/komchen.html:170
+msgid "Vendido"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:146
+#: principal/templates/pages/komchen.html:172
+msgid "Quiero saber más"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:152
+msgid "Masterplan Hacienda Residencial"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:157
+msgid "Zona Comercial"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:158
+msgid "Siembra de Agave"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:165
+#: principal/templates/pages/komchen.html:211
+#: principal/templates/pages/predio1.html:81
+#: principal/templates/pages/predio2.html:81
+msgid "¿Dónde está ubicado?"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:167
+msgid ""
+"Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el "
+"periférico."
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:170
+#: principal/templates/pages/komchen.html:215
+#: principal/templates/pages/predio1.html:84
+#: principal/templates/pages/predio2.html:84
+msgid "Ir a la ubicación"
+msgstr ""
+
+#: principal/templates/pages/hacienda.html:176
+#: principal/templates/pages/predio1.html:90
+#: principal/templates/pages/predio2.html:90
+msgid "Mapa de ubicación"
 msgstr ""
 
 #: principal/templates/pages/index.html:4
@@ -161,177 +420,763 @@ msgstr ""
 msgid "CONOCE LOS PROYECTOS"
 msgstr ""
 
-#: principal/templates/pages/index.html:31
-msgid "El futuro se siembra en tierra firme"
-msgstr ""
-
 #: principal/templates/pages/index.html:32
-msgid "Encuentra el proyecto perfecto según zona, tipo y precio."
-msgstr ""
-
-#: principal/templates/pages/index.html:36
-#: principal/templates/pages/index.html:208
-msgid "Ubicación"
-msgstr ""
-
-#: principal/templates/pages/index.html:38
-msgid "Mérida"
-msgstr ""
-
-#: principal/templates/pages/index.html:39
-msgid "Campeche"
-msgstr ""
-
-#: principal/templates/pages/index.html:40
-#: principal/templates/pages/index.html:209
-msgid "Valladolid"
-msgstr ""
-
-#: principal/templates/pages/index.html:45
-msgid "Proyecto / Propiedad"
-msgstr ""
-
-#: principal/templates/pages/index.html:47
-#: principal/templates/pages/index.html:175
-#: principal/templates/pages/index.html:205
-msgid "Terreno"
-msgstr ""
-
-#: principal/templates/pages/index.html:48
-msgid "Casa"
-msgstr ""
-
-#: principal/templates/pages/index.html:49
-msgid "Lote"
-msgstr ""
-
-#: principal/templates/pages/index.html:54
-msgid "Rango de Precio"
-msgstr ""
-
-#: principal/templates/pages/index.html:67
 msgid "Equipo Sendal"
 msgstr ""
 
-#: principal/templates/pages/index.html:69
+#: principal/templates/pages/index.html:33
 msgid "Sello Sendal"
 msgstr ""
 
-#: principal/templates/pages/index.html:73
+#: principal/templates/pages/index.html:37
 msgid "Creencias firmes"
 msgstr ""
 
-#: principal/templates/pages/index.html:73
+#: principal/templates/pages/index.html:37
 msgid "caminos claros"
 msgstr ""
 
-#: principal/templates/pages/index.html:78
+#: principal/templates/pages/index.html:43
 msgid "Confianza y transparencia"
 msgstr ""
 
-#: principal/templates/pages/index.html:79
+#: principal/templates/pages/index.html:44
 msgid ""
 "Inversiones claras, procesos sencillos y seguridad jurídica garantizada."
 msgstr ""
 
-#: principal/templates/pages/index.html:85
+#: principal/templates/pages/index.html:50
 msgid "Accesibilidad real"
 msgstr ""
 
-#: principal/templates/pages/index.html:86
+#: principal/templates/pages/index.html:51
 msgid "Terrenos bien planeados a precios alcanzables, sin sacrificar calidad."
 msgstr ""
 
-#: principal/templates/pages/index.html:92
+#: principal/templates/pages/index.html:57
 msgid "Acompañamiento personalizado"
 msgstr ""
 
-#: principal/templates/pages/index.html:93
+#: principal/templates/pages/index.html:58
 msgid ""
 "Atención cercana, profesional y un compromiso auténtico con tu proyecto."
 msgstr ""
 
-#: principal/templates/pages/index.html:99
+#: principal/templates/pages/index.html:64
 msgid ""
 "Más que vender tierra, ayudamos a construir historias. Porque sabemos que se "
 "trata de <strong>tu futuro, tu legado, tu tranquilidad.</strong>"
 msgstr ""
 
-#: principal/templates/pages/index.html:106
+#: principal/templates/pages/index.html:71
 msgid "PROYECTOS"
 msgstr ""
 
-#: principal/templates/pages/index.html:110
-msgid "Busca por zona"
+#: principal/templates/pages/index.html:75
+msgid "Encuentra el proyecto perfecto según zona, tipo y precio."
 msgstr ""
 
-#: principal/templates/pages/index.html:112
-msgid "Buscar"
+#: principal/templates/pages/index.html:81
+msgid "Todas las ubicaciones"
 msgstr ""
 
-#: principal/templates/pages/index.html:122
-msgid "Zona con alta plusvalía y acceso rápido a la ciudad."
+#: principal/templates/pages/index.html:82
+#: principal/templates/pages/komchen.html:4
+#: principal/templates/pages/komchen.html:19
+msgid "Komchén"
 msgstr ""
 
-#: principal/templates/pages/index.html:130
-msgid "Ubicación emergente, precios accesibles y excelente desarrollo."
+#: principal/templates/pages/index.html:88
+msgid "Tulum"
 msgstr ""
 
-#: principal/templates/pages/index.html:138
-msgid "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
+#: principal/templates/pages/index.html:89
+#: principal/templates/pages/index.html:173
+#: principal/templates/pages/predio1.html:47
+#: principal/templates/pages/predio2.html:46
+msgid "Valladolid"
 msgstr ""
 
-#: principal/templates/pages/index.html:146
-msgid ""
-"Destino icónico con gran plusvalía, naturaleza y proyección internacional."
+#: principal/templates/pages/index.html:95
+msgid "Proyecto / Propiedad"
 msgstr ""
 
-#: principal/templates/pages/index.html:154
-msgid "Capital segura y en crecimiento, con alta calidad de vida y plusvalía."
+#: principal/templates/pages/index.html:96
+msgid "Todos"
 msgstr ""
 
-#: principal/templates/pages/index.html:162
+#: principal/templates/pages/index.html:97
+msgid "Lote"
+msgstr ""
+
+#: principal/templates/pages/index.html:98
+msgid "Otro"
+msgstr ""
+
+#: principal/templates/pages/index.html:103
+msgid "Rango de Precio"
+msgstr ""
+
+#: principal/templates/pages/index.html:126
 msgid "Logotipo Inmobiliaria"
 msgstr ""
 
-#: principal/templates/pages/index.html:163
+#: principal/templates/pages/index.html:127
 msgid "DONDE TU FUTURO TOMA RAÍZ"
 msgstr ""
 
-#: principal/templates/pages/index.html:165
+#: principal/templates/pages/index.html:129
 msgid ""
 "“Lo que te ofrecemos no es solo tierra, es un espacio con potencial, una "
 "inversión segura y el respaldo de un equipo que cree en la honestidad, la "
 "cercanía y la claridad.”"
 msgstr ""
 
-#: principal/templates/pages/index.html:179
+#: principal/templates/pages/index.html:139
+#: principal/templates/pages/index.html:169
+msgid "Terreno"
+msgstr ""
+
+#: principal/templates/pages/index.html:143
 msgid "Cotiza tu propiedad"
 msgstr ""
 
-#: principal/templates/pages/index.html:194
+#: principal/templates/pages/index.html:158
 msgid "email@contacto.com"
 msgstr ""
 
-#: principal/templates/pages/index.html:198
+#: principal/templates/pages/index.html:162
 msgid "Número de contacto"
 msgstr ""
 
-#: principal/templates/pages/index.html:199
+#: principal/templates/pages/index.html:163
 msgid "+52 9999 99 99 99"
 msgstr ""
 
-#: principal/templates/pages/index.html:204
+#: principal/templates/pages/index.html:168
 msgid "Tipo del terreno o propiedad"
 msgstr ""
 
-#: principal/templates/pages/index.html:213
+#: principal/templates/pages/index.html:177
 msgid "COTIZA AHORA"
 msgstr ""
 
-#: principal/templates/pages/index.html:216
+#: principal/templates/pages/index.html:180
 #, python-format
 msgid ""
 "Tu información es 100%% confidencial. Uno de nuestros asesores te contactará "
 "para darte todos los detalles del terreno."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:21
+msgid ""
+"Rodeada por desarrollos residenciales de alto nivel, cerca de las mejores "
+"zonas comerciales de Mérida y a unos minutos de increíbles atractivos "
+"naturales."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:27
+msgid "Alberca con palmeras al atardecer"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:32 principal/views.py:13
+#: principal/views.py:14
+msgid "Proyecto Komchén"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:33
+msgid "Komchén, Yucatán"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:35
+msgid "Mapa de Komchén"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:41
+msgid "Lotes Residenciales"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:43
+msgid "Norte-Sur"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:43
+msgid "Lotes con la mejor orientación"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:44
+msgid "Parque central"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:44
+msgid "con amenidades frente a los lotes"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:45
+msgid "Acceso"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:45
+msgid "con seguridad avanzada"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:46
+msgid "Internet"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:46
+msgid "de fibra óptica de alta velocidad"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:47
+msgid "Instalaciones"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:47
+msgid "Subterráneas, drenaje y sistema de agua"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:48
+msgid "Estacionamiento"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:48
+msgid "para visitantes"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:52
+msgid ""
+"Un proyecto pensado para ofrecer comodidad, seguridad y conexión. Con lotes "
+"de orientación ideal, un parque central frente a casa y amenidades que "
+"elevan el día a día, este desarrollo combina infraestructura moderna, acceso "
+"controlado y tecnología para vivir en equilibrio y con visión a futuro. Es "
+"el lugar perfecto para quienes desean vivir tranquilos, sin el bullicio de "
+"la urbe, pero muy cerca de todo lo que necesitas."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:72
+#: principal/templates/pages/komchen.html:93
+#: principal/templates/pages/komchen.html:182
+msgid "Zona Grill"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:75
+#: principal/templates/pages/komchen.html:100
+#: principal/templates/pages/komchen.html:186
+msgid "Cancha de Fut-Basquet"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:86
+#: principal/templates/pages/komchen.html:185
+msgid "Pista de Jogging"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:87
+msgid ""
+"Construye tu historia con espacios ideales para la recreación y el deporte."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:94
+msgid "Espacios que enriquecen tu vida."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:101
+msgid "Practica tu deporte favorito en cualquier momento del día."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:107
+msgid "Business Center con Wifi"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:108
+msgid "Trabaja desde el Business Center con el mejor internet de fibra óptica."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:114
+msgid "Casa Club con Alberca"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:115
+msgid "Disfruta de los días de sol y de un sin fin de eventos en comunidad."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:121
+msgid "Ludoteca con circuito cerrado"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:122
+msgid "Un espacio ideal para los pequeños del hogar."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:128
+msgid "Kids Park Cámara+Wifi"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:129
+msgid "Seguridad y tranquilidad mientras los pequeños se divierten."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:142
+msgid "Imagen 1"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:145
+msgid "Imagen 2"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:148
+msgid "Imagen 3"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:153
+#: principal/templates/pages/valladolid.html:115
+msgid "Anterior"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:154
+#: principal/templates/pages/valladolid.html:116
+msgid "Siguiente"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:156
+msgid "Paginación"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:176
+msgid "Masterplan"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:180
+msgid "Casa Club con alberca"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:181
+msgid "Ludoteca"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:183
+msgid "Kids Park<br>Caseta de vigilancia"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:184
+msgid "Business Center"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:187
+msgid "Estacionamiento visitantes"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:191
+msgid "Beneficios"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:193
+msgid "Lotes con orientación Norte–Sur."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:194
+msgid "Parque Central con todas las amenidades frente a tu casa."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:195
+msgid "Internet de alta velocidad con fibra óptica."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:196
+msgid "Sistema de acceso con seguridad avanzada."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:197
+msgid "Sistema de agua."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:198
+msgid "Instalaciones subterráneas."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:199
+msgid "Estacionamiento de visitantes."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:200
+msgid "Drenaje con sistema de biodigestor."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:212
+msgid ""
+"Se extiende más allá de los límites de la ciudad, hacia las comisarías "
+"cercanas, lo que amplía la oferta inmobiliaria."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:238
+msgid "¿Por qué elegir Mérida?"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:241
+msgid ""
+"Mérida es considerada como la capital del sureste mexicano gracias a su "
+"creciente popularidad entre las ciudades más seguras del país, donde se "
+"respira paz y tranquilidad."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:243
+msgid ""
+"A esto se suma su belleza natural y arquitectónica, su exquisita "
+"gastronomía, el trato amable de su gente y la amplia variedad de servicios, "
+"zonas comerciales y oferta cultural."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:245
+msgid ""
+"Hay muchos motivos para elegir vivir en la zona norte de Mérida, sin "
+"embargo, estos son los principales:"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:248
+msgid ""
+"Galardonada en varias ocaciones como la ciudad más segura de México, siendo "
+"la zona norte la que cuenta con la mejor tecnología en sistemas de seguridad."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:249
+msgid ""
+"Reúne lo mejor de la ciudad: plazas comerciales de primer nivel, hospitales "
+"de vanguardia y centros educativos de alta calidad."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:250
+msgid ""
+"Vialidades que facilitan la conexión entre los desarrollos inmobiliarios y "
+"las principales avenidas y vialidades de la ciudad."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:251
+msgid ""
+"Cuenta con una alta calidad de vida, pues se concentran las privadas más "
+"prestigiosas y con amenidades exclusivas."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:252
+msgid ""
+"Plusvalía garantizada y alto retorno de inversión (ROI) gracias al constante "
+"desarrollo económico de la zona."
+msgstr ""
+
+#: principal/templates/pages/komchen.html:256
+msgid "Monumento a la Patria"
+msgstr ""
+
+#: principal/templates/pages/komchen.html:293
+msgid "Ir a la imagen"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:4
+#: principal/templates/pages/predio1.html:20
+#: principal/templates/pages/valladolid.html:50
+msgid "Predio 1"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:23
+msgid "Superficie: 528 m²"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:28
+msgid "Volver a Hacienda"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:35
+#: principal/templates/pages/predio2.html:34
+msgid "Portón del predio"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:39
+msgid "Precio: $2,904,000 mxn"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:43
+msgid "Calle 35 # 198 F"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:43
+#: principal/templates/pages/predio2.html:42
+#: principal/templates/pages/valladolid.html:51
+#: principal/templates/pages/valladolid.html:61
+msgid "Propiedad Privada"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:44
+#: principal/templates/pages/predio2.html:43
+msgid "Precio por m²"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:46
+#: principal/templates/pages/predio2.html:45
+msgid "Colonia:"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:46
+#: principal/templates/pages/predio2.html:45
+msgid "Centro"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:47
+#: principal/templates/pages/predio2.html:46
+msgid "Municipio:"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:51
+#: principal/templates/pages/predio2.html:50
+msgid "Características:"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:53
+#: principal/templates/pages/predio2.html:54
+msgid "Barda Perimetral"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:54
+#: principal/templates/pages/predio2.html:55
+msgid "Puerta de Acceso"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:55
+#: principal/templates/pages/predio2.html:56
+msgid "Uso de Suelo Comercial"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:56
+#: principal/templates/pages/predio2.html:57
+msgid "A 2 calles de Catedral"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:66
+#: principal/templates/pages/predio2.html:67
+msgid "Vista Fachada"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:67
+#: principal/templates/pages/predio2.html:68
+msgid "Vista fachada"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:70
+#: principal/templates/pages/predio2.html:71
+msgid "Vista Satelital"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:71
+#: principal/templates/pages/predio2.html:72
+msgid "Vista satelital"
+msgstr ""
+
+#: principal/templates/pages/predio1.html:82
+#: principal/templates/pages/predio2.html:82
+msgid ""
+"Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, "
+"Yucatán."
+msgstr ""
+
+#: principal/templates/pages/predio2.html:4
+#: principal/templates/pages/predio2.html:18
+#: principal/templates/pages/valladolid.html:60
+msgid "Predio 2"
+msgstr ""
+
+#: principal/templates/pages/predio2.html:21
+msgid "Superficie: 520.65 m²"
+msgstr ""
+
+#: principal/templates/pages/predio2.html:26
+msgid "Ir a Predio 1"
+msgstr ""
+
+#: principal/templates/pages/predio2.html:38
+msgid "Precio: $3,644,550 mxn"
+msgstr ""
+
+#: principal/templates/pages/predio2.html:42
+msgid "Calle 39 #205 C"
+msgstr ""
+
+#: principal/templates/pages/predio2.html:52
+msgid "Construcción 321 m²"
+msgstr ""
+
+#: principal/templates/pages/predio2.html:53
+msgid "2 niveles"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:4
+msgid "Sendal – Tulum"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:17
+msgid "TULUM"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:19
+msgid ""
+"El corazón de la Riviera Maya, aquí las aguas color turquesa del mar Caribe "
+"atraen al turismo nacional y extranjero con su estilo ecochic, su cultura "
+"ancestral, conexión con sus zonas arqueológicas, místicos cenotes, y su "
+"vibrante vida nocturna."
+msgstr ""
+
+#: principal/templates/pages/tulum.html:30
+msgid "Vista de la costa y ruinas de Tulum"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:35
+msgid "Tularum"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:36
+msgid "Quintana Roo, México"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:40
+msgid "Entrada del desarrollo Tularum"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:45
+msgid ""
+"Tularum ofrece una gran oportunidad para adquirir un patrimonio en armonía "
+"con el ecosistema en un exclusivo destino. Su fase de preventa con precios "
+"privilegiados y cómodos planes de pago hacen posible que hoy adquieras un "
+"terreno de inversión, y en un par de años duplique su valor cuando cuente "
+"con accesos, servicios y la plusvalía siga en aumento."
+msgstr ""
+
+#: principal/templates/pages/tulum.html:54
+msgid "Conoce más de TULARUM aquí:"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:66
+msgid "Invierte con certeza,<br>crece con Sendal."
+msgstr ""
+
+#: principal/templates/pages/tulum.html:69
+msgid ""
+"Creamos oportunidades reales, sin comprometer calidad, diseño ni servicio. "
+"Contáctanos y te enviaremos toda la información que necesitas sobre el "
+"proyecto de tu agrado."
+msgstr ""
+
+#: principal/templates/pages/tulum.html:75
+#: principal/templates/pages/valladolid.html:133
+msgid "Whatsapp"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:76
+#: principal/templates/pages/valladolid.html:134
+msgid "Correo electrónico"
+msgstr ""
+
+#: principal/templates/pages/tulum.html:82
+#: principal/templates/pages/valladolid.html:140
+msgid "Agente de ventas"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:4
+msgid "Sendal – Valladolid"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:19
+msgid "Pueblo mágico con gran crecimiento turístico y urbano."
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:20
+msgid "Es una zona estratégica para invertir en tierra con alta plusvalía."
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:28
+msgid "Templo principal de Valladolid, Yucatán"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:35
+msgid "Propiedades en Valladolid"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:38
+msgid "Entrada estilo hacienda"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:41
+msgid "Lotes o Hacienda para residencia"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:43
+#: principal/templates/pages/valladolid.html:53
+#: principal/templates/pages/valladolid.html:63
+msgid "Ver más"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:48
+msgid "Predio vallado en Valladolid"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:58
+msgid "Edificio de esquina en Valladolid"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:72
+msgid "Cubrimos todos tus requerimientos"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:77
+#: principal/templates/pages/valladolid.html:79
+msgid "Análisis de plusvalía"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:80
+msgid "Detectamos dónde tu inversión crece más."
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:85
+#: principal/templates/pages/valladolid.html:87
+msgid "Asesoría legal y financiera"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:88
+msgid "Todo claro, seguro y en regla."
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:93
+#: principal/templates/pages/valladolid.html:95
+msgid "Acompañamiento"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:96
+msgid "Te guiamos de principio a fin."
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:101
+#: principal/templates/pages/valladolid.html:103
+msgid "Recomendaciones a futuro"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:104
+msgid "Pensamos en hoy y en lo que viene."
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:110
+msgid "Servicios"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:118
+msgid "Indicadores"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:128
+msgid "¿Quieres más información?"
+msgstr ""
+
+#: principal/templates/pages/valladolid.html:130
+msgid ""
+"Contáctanos y te enviaremos toda la información que necesitas sobre el "
+"proyecto de tu agrado."
+msgstr ""
+
+#: principal/views.py:8
+msgid "Cotiza nuestros proyectos"
 msgstr ""

@@ -1,0 +1,31 @@
+{# Encabezado con flechas y metadatos #}
+{% load i18n %}
+
+<header class="head subpage-head">
+  <h1 class="title">{{ title }}</h1>
+  <p class="meta">
+    {{ municipio }}<br>
+    {% blocktrans with val=superficie_m2 %}Superficie: {{ val }} m²{% endblocktrans %}
+  </p>
+
+  <nav class="nav-arrows">
+    {# ← Primero intentamos ir al predio anterior; si no hay, volvemos a Hacienda; si tampoco hay, deshabilitado #}
+    {% if prev_slug %}
+      <a href="{% url 'predio-detail' prev_slug %}"
+         class="arrow prev"
+         aria-label="{% blocktrans with x=prev_label %}Ir a {{ x }}{% endblocktrans %}">←</a>
+    {% elif back_urlname %}
+      <a href="{% url back_urlname %}" class="arrow prev" aria-label="{% trans 'Volver a Hacienda' %}">←</a>
+    {% else %}
+      <span class="arrow prev disabled">←</span>
+    {% endif %}
+
+    {% if next_slug %}
+      <a href="{% url 'predio-detail' next_slug %}"
+         class="arrow next"
+         aria-label="{% blocktrans with x=next_label %}Ir a {{ x }}{% endblocktrans %}">→</a>
+    {% else %}
+      <span class="arrow next disabled">→</span>
+    {% endif %}
+  </nav>
+</header>

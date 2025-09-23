@@ -1,0 +1,95 @@
+/* =========================================================
+   SUBPÁGINAS (Valladolid): base tipográfica + header/flechas
+   Mobile–first. Escala fluida con clamp().
+   Se aplica en Hacienda y Predios sin romper estilos globales.
+========================================================= */
+:root{
+  /* Escala fluida (≈16–48px) */
+  --fs-step--1: clamp(0.90rem, 0.82rem + 0.40vw, 1.00rem);  /* ~14.4–16 */
+  --fs-step-0 : clamp(1.00rem, 0.94rem + 0.60vw, 1.125rem); /* ~16–18 */
+  --fs-step-1 : clamp(1.125rem, 1.02rem + 0.80vw, 1.3125rem); /* 18–21 */
+  --fs-step-2 : clamp(1.25rem, 1.04rem + 1.20vw, 1.50rem);    /* 20–24 */
+  --fs-step-3 : clamp(1.50rem, 1.10rem + 1.80vw, 2.00rem);    /* 24–32 */
+  --fs-step-4 : clamp(1.75rem, 1.20rem + 2.20vw, 2.50rem);    /* 28–40 */
+  --fs-step-5 : clamp(2.125rem, 1.60rem + 2.80vw, 3.00rem);   /* 34–48 */
+
+  --lh-tight: 1.12;
+  --lh-body : 1.6;
+}
+
+/* Contenedores de subpáginas */
+.page,
+.predio{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 18px var(--gutter) 0;
+}
+
+/* Tipografía base (solo subpáginas) */
+.page p, .predio p, .page li, .predio li{ font-size: var(--fs-step-0); line-height: var(--lh-body); }
+.page h1, .predio h1{ font-size: var(--fs-step-5); line-height: var(--lh-tight); color: var(--color-brown); margin: 0 0 .35em; }
+.page h2, .predio h2{ font-size: var(--fs-step-3); line-height: var(--lh-tight); color: var(--color-brown); margin: .8em 0 .5em; }
+.page h3, .predio h3{ font-size: var(--fs-step-2); line-height: var(--lh-tight); color: var(--color-brown); margin: .8em 0 .4em; }
+.page h4, .predio h4{ font-size: var(--fs-step-1); line-height: var(--lh-tight); margin: .6em 0 .35em; }
+.page h5, .predio h5{ font-size: var(--fs-step-0); margin: .5em 0 .25em; }
+
+/* Encabezado reutilizable con flechas */
+.head{ 
+  position: relative;
+  padding-right: clamp(44px, 5vw, 64px);  /* espacio para flechas */
+}
+.head .title{ color: var(--color-brown); }
+.head .meta{ color: var(--color-ink-dark); opacity: .9; margin-top: 4px; }
+
+.nav-arrows{
+  position: absolute;
+  top: clamp(4px, 0.7vw, 8px);
+  right: 0;
+  display: flex; gap: 10px;
+}
+.nav-arrows .arrow{
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 700;
+  color: var(--color-olive);
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.nav-arrows .arrow:hover{ color: var(--color-brown); }
+.nav-arrows .arrow.disabled{ opacity: .45; pointer-events: none; cursor: default; }
+
+/* Figcaption de subgalería (que parecía chico en desktop) */
+.subgallery figcaption{
+  font-weight: 700;
+  color: #3B0C0C;
+  font-size: var(--fs-step-1);     /* móvil */
+}
+@media (min-width: 1025px){
+  .subgallery figcaption{ font-size: var(--fs-step-2); } /* desktop un poco mayor */
+}
+
+/* Etiquetas/datos de “facts” de predios/hacienda */
+.facts .f dt{ font-size: var(--fs-step-2); font-weight: 800; color: var(--color-brown); }
+.facts .f dd{ font-size: var(--fs-step-0); margin: 2px 0 0; color:#000; }
+
+/* Botón reutilizable */
+.btn{ display:inline-block; text-decoration:none; font-weight:700; border-radius:999px; }
+.btn.map{ background:var(--color-gold); color:var(--color-ink-dark); padding:8px 14px; }
+
+
+/* Tema “brown” para tarjetas de la banda (Hacienda/Predios) */
+.card--brown{
+  background: var(--color-brown);
+  color: #fff;
+  border-radius: 12px;
+  padding: clamp(12px, 2.2vw, 20px);
+}
+
+.card--brown .card__title{
+  color: var(--color-gold);
+  margin: 0 0 .5em;
+}
+
+.card--brown .card__text{
+  color: #fff;                 /* asegúrate que el párrafo quede legible */
+  text-align: center;          /* igual que en tu diseño de la captura */
+}

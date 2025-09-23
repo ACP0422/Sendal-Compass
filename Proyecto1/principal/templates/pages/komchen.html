@@ -16,7 +16,7 @@
   <!-- Header -->
   <header class="head">
     {# Mejor deja el texto “Komchén” y usa text-transform: uppercase en CSS #}
-    <h1 class="title">{% trans "Komchén" %}</h1>
+    <h1 class="city-title">{% trans "Komchén" %}</h1>
     <p class="kicker">
       {% trans "Rodeada por desarrollos residenciales de alto nivel, cerca de las mejores zonas comerciales de Mérida y a unos minutos de increíbles atractivos naturales." %}
     </p>
@@ -29,7 +29,7 @@
 
   <!-- Proyecto -->
   <section class="project">
-    <h2 class="section-title" id="project-title">{% trans "Proyecto Komchén" %}</h2>
+    <h2 class="section-title">{% trans "Proyecto Komchén" %}</h2>
     <p class="location">{% trans "Komchén, Yucatán" %}</p>
     <figure class="map-hero">
       <img src="{% static 'resources/images/places/Komchén/mapa.png' %}" alt="{% trans 'Mapa de Komchén' %}">
@@ -38,14 +38,14 @@
 
   <!-- Lotes + descripción -->
   <section class="lots">
-    <h3 id="lots-title">{% trans "Lotes Residenciales" %}</h3>
+    <h4 id="lots-title">{% trans "Lotes Residenciales" %}</h5>
     <div class="lots-grid">
-      <article><h4>{% trans "Norte-Sur" %}</h4><p>{% trans "Lotes con la mejor orientación" %}</p></article>
-      <article><h4>{% trans "Parque central" %}</h4><p>{% trans "con amenidades frente a los lotes" %}</p></article>
-      <article><h4>{% trans "Acceso" %}</h4><p>{% trans "con seguridad avanzada" %}</p></article>
-      <article><h4>{% trans "Internet" %}</h4><p>{% trans "de fibra óptica de alta velocidad" %}</p></article>
-      <article><h4>{% trans "Instalaciones" %}</h4><p>{% trans "Subterráneas, drenaje y sistema de agua" %}</p></article>
-      <article><h4>{% trans "Estacionamiento" %}</h4><p>{% trans "para visitantes" %}</p></article>
+      <article><h5>{% trans "Norte-Sur" %}</h5><p>{% trans "Lotes con la mejor orientación" %}</p></article>
+      <article><h5>{% trans "Parque central" %}</h5><p>{% trans "con amenidades frente a los lotes" %}</p></article>
+      <article><h5>{% trans "Acceso" %}</h5><p>{% trans "con seguridad avanzada" %}</p></article>
+      <article><h5>{% trans "Internet" %}</h5><p>{% trans "de fibra óptica de alta velocidad" %}</p></article>
+      <article><h5>{% trans "Instalaciones" %}</h5><p>{% trans "Subterráneas, drenaje y sistema de agua" %}</p></article>
+      <article><h5>{% trans "Estacionamiento" %}</h5><p>{% trans "para visitantes" %}</p></article>
     </div>
     <div class="lots-desc">
       <p>
@@ -63,7 +63,7 @@
 
   <!-- Amenidades (galería principal de fotos) -->
   <section class="amenities">
-    <h2 class="section-title">{% trans "Amenidades" %}</h2>
+    <h3 class="section-subtitle">{% trans "Amenidades" %}</h3>
     <div class="amen-grid">
       <figure class="amen amen-lg">
         <img src="{% static 'resources/images/places/Komchén/amenidad-piscina.png' %}" alt="{% trans 'Piscina' %}">
@@ -83,49 +83,49 @@
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/jogging.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Pista de Jogging" %}</h3>
+          <h5 class="item-name">{% trans "Pista de Jogging" %}</h5>
           <p>{% trans "Construye tu historia con espacios ideales para la recreación y el deporte." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/grill.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Zona Grill" %}</h3>
+          <h5 class="item-name">{% trans "Zona Grill" %}</h5>
           <p>{% trans "Espacios que enriquecen tu vida." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/court.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Cancha de Fut-Basquet" %}</h3>
+          <h5 class="item-name">{% trans "Cancha de Fut-Basquet" %}</h5>
           <p>{% trans "Practica tu deporte favorito en cualquier momento del día." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/business.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Business Center con Wifi" %}</h3>
+          <h5 class="item-name">{% trans "Business Center con Wifi" %}</h5>
           <p>{% trans "Trabaja desde el Business Center con el mejor internet de fibra óptica." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/pool.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Casa Club con Alberca" %}</h3>
+          <h5 class="item-name">{% trans "Casa Club con Alberca" %}</h5>
           <p>{% trans "Disfruta de los días de sol y de un sin fin de eventos en comunidad." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/kids.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Ludoteca con circuito cerrado" %}</h3>
+          <h5 class="item-name">{% trans "Ludoteca con circuito cerrado" %}</h5>
           <p>{% trans "Un espacio ideal para los pequeños del hogar." %}</p>
         </div>
       </article>
       <article class="amenitem">
         <img src="{% static 'resources/images/icons/camera.svg' %}" alt="" aria-hidden="true">
         <div>
-          <h3>{% trans "Kids Park Cámara+Wifi" %}</h3>
+          <h5 class="item-name">{% trans "Kids Park Cámara+Wifi" %}</h5>
           <p>{% trans "Seguridad y tranquilidad mientras los pequeños se divierten." %}</p>
         </div>
       </article>
@@ -134,7 +134,7 @@
 
   <!-- CARRUSEL -->
   <section class="galeria">
-    <h2 class="section-title">{% trans "Galería" %}</h2>
+    <h3 class="section-subtitle">{% trans "Galería" %}</h3>
     <div class="carousel" aria-roledescription="carousel" data-autoplay="0">
       <div class="carousel__viewport">
         <div class="carousel__track">
@@ -159,10 +159,10 @@
 
   <!-- Banda ROSA: Explora y Dónde -->
   <div class="section-container">
+    <h3 class="section-subtitle">{% trans "Explora y Elige" %}</h3>
     <div class="peach-wrap">
       <!-- Explora y Elige -->
       <section class="explora">
-        <h2 class="section-title">{% trans "Explora y Elige" %}</h2>
 
         <div class="legend">
           <span class="chip chip-hold">{% trans "Apartado" %}</span>
@@ -188,7 +188,7 @@
         </ul>
 
         <div class="benefits-card">
-          <h3>{% trans "Beneficios" %}</h3>
+          <h4>{% trans "Beneficios" %}</h4>
           <ul>
             <li>{% trans "Lotes con orientación Norte–Sur." %}</li>
             <li>{% trans "Parque Central con todas las amenidades frente a tu casa." %}</li>
@@ -208,7 +208,7 @@
   <div class="peach-wrap">
     <div class="duo-grid">
       <article class="card card--pink">
-        <h3 class="card__title">{% trans "¿Dónde está ubicado?" %}</h3>
+        <h4 class="card__title">{% trans "¿Dónde está ubicado?" %}</h4>
         <p class="card__text">{% trans "Se extiende más allá de los límites de la ciudad, hacia las comisarías cercanas, lo que amplía la oferta inmobiliaria." %}</p>
         <div class="card__actions">
           <a class="btn ghost" href="https://maps.app.goo.gl/SjQfRkzehHEXuQ8u9" target="_blank" rel="noopener">
@@ -235,7 +235,7 @@
   <!-- Banda BEIGE: ¿Por qué elegir Mérida? -->
   <section class="merida-section">
     <div class="merida">
-      <h2 class="section-title">{% trans "¿Por qué elegir Mérida?" %}</h2>
+      <h4>{% trans "¿Por qué elegir Mérida?" %}</h4>
       <div class="merida-grid">
         <article class="merida-text">
           <p>{% trans "Mérida es considerada como la capital del sureste mexicano gracias a su creciente popularidad entre las ciudades más seguras del país, donde se respira paz y tranquilidad." %}</p>

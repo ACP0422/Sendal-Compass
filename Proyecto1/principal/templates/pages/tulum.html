@@ -4,8 +4,9 @@
 {% block title %}{% trans "Sendal – Tulum" %}{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'styles/tulum.css' %}">
 <link rel="stylesheet" href="{% static 'styles/componentes/cards.css' %}">
+<link rel="stylesheet" href="{% static 'styles/tulum.css' %}">
+
 
 {% endblock %}
 
@@ -31,7 +32,7 @@
 
   <!-- Proyecto: Tularum -->
   <section class="proj">
-    <h2>{% trans "Tularum" %}</h2>
+    <h2 class="section-title">{% trans "Tularum" %}</h2>
     <div class="place">{% trans "Quintana Roo, México" %}</div>
 
     <figure class="shot">
@@ -48,7 +49,7 @@
         cuando cuente con accesos, servicios y la plusvalía siga en aumento.
         {% endblocktrans %}
       </p>
-
+ 
       <div class="more-box">
         <small>{% trans "Conoce más de TULARUM aquí:" %}</small>
         <a class="pill" href="https://tularum.com" target="_blank" rel="noopener">www.tularum.com</a>

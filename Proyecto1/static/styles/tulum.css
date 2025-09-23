@@ -9,12 +9,7 @@
       padding: 0 var(--gutter);
     }
     .city-title{
-      font-weight: 900;
-      letter-spacing: .02em;
-      font-size: 80px;
       color: var(--accent-blue);
-      margin-bottom: 10px;
-      text-transform: uppercase;
     }
     .city-lead{
       font-size: 18px;
@@ -44,12 +39,14 @@
       margin: 0 auto 32px;
       padding: 0 var(--gutter);
     }
-    .proj h2{
-      font-weight: 700;
-      color: var(--accent-blue);
-      font-size: 56px;
-      margin-bottom: 6px;
+    .proj .section-title{
+      color: var(--accent-blue);   
     }
+
+    .card__title{
+      text-decoration: none;
+    }
+    
     .proj .place{
       font-size: 24px; margin-bottom: 12px; color: var(--accent-blue);
     }

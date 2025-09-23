@@ -30,13 +30,12 @@
   
   .card__title{
     margin: 0;
-    font-size: var(--card-title-size);
     color: var(--card-underline);
     text-decoration: underline;
   }
+
   .card__text{
     margin: 0;
-    font-size: var(--card-text-size);
   }
   
   /* Acciones */

@@ -2,7 +2,17 @@
    FUENTES
 ============================== */
 @font-face{font-family:"InterLocal";src:url("/static/resources/fonts/Inter/static/Inter_18pt-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap;}
-@font-face{font-family:"ArticulatDemibold";src:url("/static/resources/fonts/articulat/Fontspring-DEMO-articulatcf-demibold-BF64a38d8aeae4a.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap;}
+
+@font-face{
+  font-family:"ArticulatDemibold";
+  src:url("/static/resources/fonts/articulat/Fontspring-DEMO-articulatcf-demibold-BF64a38d8aeae4a.otf") format("opentype");
+  font-weight:600; font-style:normal; font-display:swap;
+  /* Solo letras latinas (con acentos) */
+  unicode-range:
+    U+0041-005A, U+0061-007A,
+    U+00C0-00FF, U+0100-017F;
+}
+
 @font-face {
   font-family: "OutfitLocal";
   src: url("/static/resources/fonts/outfit/static/Outfit-Light.ttf")
@@ -33,7 +43,7 @@
   --font-outfit: "OutfitLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
     /* Inter quedará como fallback para números y signos (%, –, •, etc.) */
   --font-articulat: "ArticulatLocal", "InterLocal", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-articulatDemibold: "ArticulatDemibold", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-articulatDemibold: "ArticulatDemibold","InterLocal", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   
   --font-ezra:"EzraLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   /*--font-cambay:"CambayLocal",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;*/
@@ -73,16 +83,35 @@ a{text-decoration:none;color:inherit}
 .full-bleed{width:100%}
 .no-scroll{overflow:hidden}
 
+.city-title{ font-weight:700; letter-spacing:.02em; margin-bottom:6px; text-transform:uppercase; font-size: 90px;}
+.section-title {
+  font-size: 70px; margin: 16px 0 8px; font-weight: 700;}
+.section-subtitle{
+  font-size: 42px; margin: 16px 0;
+}
+
+.item-name{
+  font-size: 20px;
+}
+
 
 h1{
-  font-family: var(--font-articulatDemibold);
+  font-family: var(--font-ezra);
 }
 
 h2 {
-  font-family: var(--font-outfit);
+  font-family: var(--font-articulatDemibold);
 }
 
-h3 { font-family: var(--font-inter); }
+h3 { font-family: var(--font-outfit); }
+
+h4 {
+  font-size: 30px;
+}
+
+h5 {
+  font-family: var(--font-inter);
+}
 p, blockquote{
   font-family: var(--font-articulat);
 }

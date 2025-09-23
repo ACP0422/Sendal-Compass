@@ -1,11 +1,16 @@
 /* =========================
    VALLADOLID – BASE DESKTOP
    ========================= */
-
+/* Alto del hero (solo desktop) */
+:root{
+  --hero-valladolid-desktop-h: 500px; /* mitad de 500px */
+}
 /* Encabezado */
 .city-header{ max-width:var(--max); margin:34px auto 18px; padding:0 var(--gutter); }
-.city-title{ font-weight:800; letter-spacing:.02em; font-size:80px; color:var(--color-gold); margin-bottom:6px; text-transform:uppercase; }
 .city-kicker{ font-size:18px; opacity:.9; max-width:720px; line-height:1.4; color:var(--color-brown); }
+.city-title {
+  color:var(--color-gold); 
+}
 
 /* Hero: foto + promo */
 .city-feature{
@@ -54,7 +59,7 @@
    MOBILE (<= 599px)
    ========================= */
 @media (max-width:599px){
-  .city-title{ font-size:48px; }
+  /*.city-title{ font-size:48px; }*/
   .city-kicker{ font-size:13.5px; max-width:42ch; }
 
   .city-feature{ grid-template-columns:3fr 1.2fr; gap:10px; }
@@ -72,7 +77,7 @@
    TABLET (600–1023px)
    ========================= */
 @media (min-width:600px) and (max-width:1023px){
-  .city-title{ font-size:52px; }
+  /*.city-title{ font-size:52px; }*/
   .city-kicker{ font-size:15px; }
 
   .city-feature{ grid-template-columns:2fr 1fr; gap:18px; }
@@ -86,7 +91,8 @@
    – alinear hero con grid del listado
    ========================= */
 @media (min-width:1024px){
-  .city-feature{ grid-template-columns:repeat(3,1fr); gap:28px; align-items:stretch; }
+  /*.city-feature{ grid-template-columns:repeat(3,1fr); gap:28px; align-items:stretch; }*/
+ 
   .city-feature .big-photo{ grid-column:span 2; }
   .city-feature .promo{ grid-column:span 1; display:flex; }
   .city-feature .big-photo img, .city-feature .promo img{
@@ -187,6 +193,31 @@
 
 .card__text{
   color: #8F5600;
+}
+
+
+
+
+
+
+
+@media (min-width:1024px){
+  /* fija el alto del contenedor de la imagen principal */
+  .city-feature .big-photo{
+    height: var(--hero-valladolid-desktop-h);
+    align-self: start; /* evita estirarse si la columna vecina es más alta */
+  }
+
+  /* la imagen ocupa ese alto fijo y recorta con cover */
+  .city-feature .big-photo img{
+    width: 100%;
+    height: 100%;
+    max-height: var(--hero-valladolid-desktop-h); /* por si alguna regla previa quitó límites */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+    display: block;
+  }
 }
 
 

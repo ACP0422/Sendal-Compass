@@ -63,6 +63,7 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
+            "builtins": ["django.templatetags.i18n"],  
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',

@@ -1,0 +1,9 @@
+{% load static i18n %}
+<section class="subgallery">
+  {% for it in items %}
+    <figure>
+      {% if it.caption %}<figcaption>{{ it.caption }}</figcaption>{% endif %}
+      <img src="{% static it.src %}" alt="{{ it.alt|default:it.caption }}">
+    </figure>
+  {% endfor %}
+</section>

@@ -1,0 +1,27 @@
+{# Franja full-bleed con tarjeta + mapa/imagen/iframe #}
+{% load static i18n %}
+<section class="band {{ band_theme|default:'band--gold' }}">
+  <div class="band__inner">
+    <div class="duo-grid">
+      <article class="card card--brown">
+        <h3 class="card__title">{% trans "¿Dónde está ubicado?" %}</h3>
+        <p class="card__text">
+          {{ location_blurb|default:_("Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán.") }}
+        </p>
+        <div class="card__actions">
+          {% if map_url %}
+            <a class="btn" href="{{ map_url }}" target="_blank" rel="noopener">{% trans "Ir a la ubicación" %}</a>
+          {% endif %}
+        </div>
+      </article>
+
+      <figure class="duo-media">
+        {% if map_iframe %}
+          <div class="map-frame">{{ map_iframe|safe }}</div>
+        {% elif map_img %}
+          <img src="{% static map_img %}" alt="{% trans 'Mapa de ubicación' %}">
+        {% endif %}
+      </figure>
+    </div>
+  </div>
+</section>

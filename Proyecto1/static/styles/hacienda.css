@@ -1,307 +1,123 @@
-/* =========================================================
-   BASE / RESETS
-========================================================= */
-html, body { margin: 0; overflow-x: hidden; }
+/* Hacienda Valladolid (layout específico) */
 
-.page{
-  padding: 18px var(--gutter) 28px;
-  max-width: var(--max);
-  margin: 0 auto;
-  padding-bottom: 0 !important;  /* evita huecos bajo el main */
-  margin-bottom: 0 !important;
-}
+.intro{ display:grid; gap:14px; margin-top:6px; }
+.pitch h4{ color: var(--color-brown); margin: 0 0 6px; }
 
-/* =========================================================
-   CABECERA / TÍTULOS
-========================================================= */
-.head { position: relative; }
-
-.head .title{
-  font-size: clamp(26px, 7vw, 48px);
-  color: var(--color-brown);
-  line-height: 1.05;
-}
-.head .meta{
-  color: var(--color-ink-dark);
-  opacity: .9;
-  margin-top: 4px;
-}
-
-/* Flechas de navegación */
-.nav-arrows{
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: flex;
-  gap: 10px;
-}
-.nav-arrows .arrow{
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--color-olive);
-  text-decoration: none;
-  transition: color .2s ease;
-}
-.nav-arrows .arrow:hover{ color: var(--color-brown); }
-.nav-arrows .arrow.disabled{
-  opacity: .4;
-  pointer-events: none;
-  cursor: default;
-}
-
-/* Tipografía global suave */
-p, li, .facts-span{ font-size: 20px; }
-h4, h3{ font-size: 28px; }
-
-/* =========================================================
-   HERO
-========================================================= */
-.hero img{
-  width: 100%;
-  height: clamp(180px, 42vw, 260px);
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-}
-
-/* =========================================================
-   INTRO
-========================================================= */
-.section-title{
-  font-size: clamp(18px, 5.4vw, 28px);
-  color: var(--color-brown);
-  margin: 16px 0 10px;
-}
-
-.intro{
-  display: grid;
-  gap: 14px;
-  margin-top: 6px;
-}
-
-.facts{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 14px;
-}
+.facts{ grid-template-columns: 1fr 1fr; gap: 8px 14px; }
 .facts div{ padding: 8px 10px; }
-.facts strong{
-  display: block;
-  font-weight: 800;
-  color: var(--color-brown);
-  font-size: 20px;
-}
+.facts strong{ display:block; font-weight:800; color:var(--color-brown); }
 
-.desc p{
-  margin: 6px 0 10px;
-  text-align: justify;
-  color: #000;
-}
-.btn.map{
-  display: inline-block;
-  background: var(--color-gold);
-  color: var(--color-ink-dark);
-  border-radius: 40px;
-  padding: 8px 14px;
-  font-weight: 700;
-  text-decoration: none;
-}
+.desc p{ margin:6px 0 10px; text-align:justify; color:#000; }
+.btn.map{ background:var(--color-gold); color:var(--color-ink-dark); border-radius:40px; padding:8px 14px; font-weight:700; text-decoration:none; }
 
-/* =========================================================
-   AMENIDADES
-========================================================= */
+/* ===== Amenidades (imágenes + lista) ===== */
 .amenities{ margin-top: 18px; }
 
 .amenities-grid{
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 1fr; /* móvil */
+  display:grid;
+  gap:10px;
+  grid-template-columns: 1fr;           /* móvil */
 }
-
-.amenity{ border-radius: 8px; overflow: hidden; }
-.amenity img{
-  width: 100%;
-  height: clamp(160px, 44vw, 220px);
-  object-fit: cover;
-  display: block;
-}
-.amenity figcaption{
-  font-size: 12px;
-  color: #6b6450;
-  padding: 6px 2px 0;
-}
+.amenity{ border-radius:8px; overflow:hidden; }
+.amenity img{ width:100%; height: clamp(160px, 44vw, 220px); object-fit: cover; display:block; }
 
 .amen-list{
-  display: grid;
+  display:grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 10px;
+  gap:14px;
+  margin-top:10px;
 }
-.amen-list article{ border-radius: 8px; padding: 10px; }
-.amen-icon{ margin: 0; font-size: 18px; }
-.amen-list h4{ margin: 4px 0; font-weight: 700; color: #000; }
-.amen-list p{ margin: 0; color: #828282; }
+.amen-list article{ border-radius:8px; padding:10px; }
+.amen-list h5{ margin:4px 0; font-weight:700; color:#000; }
+.amen-list p { margin:0; color:#828282; }
 
-/* =========================================================
-   GALERÍA
-========================================================= */
-.gallery{ margin-top: 16px; }
+/* ===== Galería (ARREGLADA) ===== */
+.gallery{ margin-top:16px; margin-bottom: 16px; } /* respiro antes de franja */
+.gallery-grid{
+  display:grid;
+  gap:12px;
+  grid-template-columns: 1fr;          /* móvil: 1 col */
+}
+.gallery-item{
+  border-radius:12px;
+  overflow:hidden;
+  /* Fijamos relación para uniformar alturas en tablet/desktop */
+  aspect-ratio: 4 / 3;
+}
+.gallery-item img{
+  width:100%;
+  height:100%;
+  object-fit: cover;                    /* rellena sin deformar */
+  display:block;
+}
 
-/* =========================================================
-   EXPLORA (full-bleed, espacios simétricos y sin hueco antes del footer)
-========================================================= */
+/* ===== Explora (franja full-bleed) ===== */
 .explora{
   background: var(--color-gold);
-  padding-block: 12px;   /* aire interno arriba/abajo */
-  margin-top: 16px;      /* respiro antes de la franja */
-  margin-bottom: 0;      /* pegado al footer */
-
-  /* full-bleed real sin scroll horizontal */
+  padding-block: 12px;
+  margin-top: 16px;
+  margin-bottom: 0;
   box-shadow: 0 0 0 100vmax var(--color-gold);
   clip-path: inset(0 -100vmax);
 }
-
 .explora__inner{
   max-width: var(--max);
   margin: 0 auto;
-  padding: 12px var(--gutter);   /* simétrico */
+  padding: 12px var(--gutter);
   display: grid;
-  row-gap: 12px;                 /* ritmo interno uniforme */
+  row-gap: 12px;
 }
+.map-container{ background:#fff; border-radius:12px; padding-block:12px; }
+.explora__chips{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:0; }
 
-.explora__title{
-  font-size: clamp(22px, 5.6vw, 36px);
-  color: #3B0C0C;
-  margin: 0 0 10px;
-}
+.chip{ display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; font-size:14px; background:#eee; }
+.chip-hold{ background:#F5F49A; } .chip-ok{ background:#CFE8A6; } .chip-sold{ background:#C7C7C7; }
 
-.map-container{
-  background: #fff;
-  border-radius: 12px;
-  padding-block: 12px;
-}
+.cta{ display:inline-block; padding:8px 14px; border-radius:999px; background:#4B0E0E; color:#fff; text-decoration:none; }
 
-.explora__chips{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 0;
-}
-
-.chip{
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 14px;
-  background: #eee;
-}
-.chip-hold{ background: #F5F49A; }
-.chip-ok  { background: #CFE8A6; }
-.chip-sold{ background: #C7C7C7; }
-
-.cta{
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: #4B0E0E;
-  color: #fff;
-  text-decoration: none;
-}
-
-/* Masterplan — mostrar SIEMPRE completo, sin recortes */
-.explora__plan{ margin: 0; }
-.explora__plan img{
-  display: block;
-  width: 100%;
-  height: auto;            /* respeta la proporción natural */
-  object-fit: contain;     /* evita recortes */
-  border-radius: 10px;
-}
+.explora__plan{ margin:0; }
+.explora__plan img{ display:block; width:100%; height:auto; object-fit:contain; border-radius:10px; }
 
 .explora__legend{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px 24px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  align-items: center;
+  display:flex; flex-wrap:wrap; gap:18px 24px;
+  list-style:none; padding:0; margin:0; align-items:center;
 }
 .explora__legend img{ width: 28px; height: 28px; }
 
-.duo-grid{ margin-block: 12px; } /* separación uniforme para la dupla */
+.duo-grid{ margin-block: 12px; }
 
-/* =========================================================
-   MEDIA QUERIES
-========================================================= */
-
-/* Tablet (768–1024px) */
+/* ================== Media queries ================== */
 @media (min-width:768px) and (max-width:1024px){
-  .page{ padding: 22px var(--gutter) 32px; }
-
-  .hero img{ height: min(36vw, 360px); }
-
-  .intro{
-    grid-template-columns: 1.15fr .85fr;
-    gap: 18px;
-    align-items: start;
-  }
-  .facts{ grid-template-columns: repeat(3, 1fr); gap: 12px 16px; }
-  .desc p{ margin-top: 0; }
-  .btn.map{ margin-top: 6px; }
+  .intro{ grid-template-columns: 1.15fr .85fr; gap:18px; align-items:start; }
+  .facts{ grid-template-columns: repeat(3,1fr); gap:12px 16px; }
+  .btn.map{ margin-top:6px; }
 
   .amenities-grid{ grid-template-columns: 1fr; }
-  .amenity-lg img{ height: min(42vw, 380px); }
   .amenity img{ height: min(40vw, 300px); }
 
-  .amen-list{ grid-template-columns: 1fr 1fr; gap: 18px; }
+  /* Galería en 2 columnas, alturas uniformes gracias al aspect-ratio */
+  .gallery-grid{ grid-template-columns: repeat(2, 1fr); gap: 14px; }
 
-  /* Masterplan completo, con tope de altura opcional */
-  .explora__plan img{
-    height: auto;
-    max-height: 360px;     /* ajusta si deseas mayor/menor alto */
-    object-fit: contain;
-  }
-
-  .explora__legend img{ width: 30px; height: 30px; }
+  .explora__plan img{ max-height: 360px; }
+  .explora__legend img{ width:30px; height:30px; }
 }
 
-/* Desktop (≥1025px) */
 @media (min-width:1025px){
-  .page{ padding: 24px var(--gutter) 40px; }
+  .intro{ grid-template-columns: 1.2fr .8fr; gap:24px; margin-top:14px; }
+  .facts{ grid-template-columns: repeat(3,1fr); gap:14px 18px; }
+  .facts div{ padding:10px 12px; }
 
-  .hero img{ height: 420px; }
-
-  .intro{
-    grid-template-columns: 1.2fr .8fr;
-    gap: 24px;
-    margin-top: 14px;
-  }
-  .facts{ grid-template-columns: repeat(3, 1fr); gap: 14px 18px; }
-  .facts div{ padding: 10px 12px; }
-
-  /* Amenidades: una grande a la izq., dos apiladas a la der. */
   .amenities-grid{
     grid-template-columns: 1.35fr .65fr;
     grid-template-rows: auto auto;
-    gap: 18px;
+    gap:18px;
   }
   .amenity-lg{ grid-row: 1 / span 2; grid-column: 1; }
   .amenity-lg img{ height: 520px; }
   .amenities-grid .amenity:not(.amenity-lg) img{ height: 250px; }
 
-  .amen-list{ grid-template-columns: 1fr 1fr; gap: 22px; }
+  .gallery-grid{ grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
-  /* Masterplan completo, con tope de altura opcional */
-  .explora__plan img{
-    height: auto;
-    max-height: 480px;     /* p.ej. 420–520px según tu layout */
-    object-fit: contain;
-    border-radius: 12px;
-  }
-
-  .explora__legend img{ width: 32px; height: 32px; }
+  .explora__plan img{ max-height: 480px; border-radius: 12px; }
+  .explora__legend img{ width:32px; height:32px; }
 }
-

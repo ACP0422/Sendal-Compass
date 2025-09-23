@@ -1,0 +1,8 @@
+{% load i18n %}
+{# Espera: items=[{label, href, btn}], hidden=True/False, cols=1..3 #}
+<nav class="actions cols-{{ cols }}" {% if hidden %}hidden{% endif %}
+     aria-label="{% trans 'Proyectos disponibles para cotizar' %}">
+  {% for p in items %}
+    <a class="btn {{ p.btn }}" href="{{ p.href }}">{{ p.label }}</a>
+  {% endfor %}
+</nav>

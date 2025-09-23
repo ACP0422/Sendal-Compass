@@ -1,0 +1,35 @@
+{# Precio, datos (facts) y características #}
+{% load i18n %}
+{% if price_text %}
+  <h2>{{ price_text }}</h2>
+{% endif %}
+
+<section class="info">
+  {% if facts %}
+    <dl class="facts">
+      {% for f in facts %}
+        <div class="f">
+          <dt>{{ f.dt }}</dt>
+          <dd>{{ f.dd }}</dd>
+        </div>
+      {% endfor %}
+    </dl>
+  {% endif %}
+
+  {% if features %}
+    <aside class="features">
+      <h3>{% trans "Características:" %}</h3>
+      <ul>
+        {% for it in features %}
+          <li>{{ it }}</li>
+        {% endfor %}
+      </ul>
+
+      {% if map_url %}
+        <a class="btn map" href="{{ map_url }}" target="_blank" rel="noopener">
+          {% trans "Ubicación Google maps" %}
+        </a>
+      {% endif %}
+    </aside>
+  {% endif %}
+</section>

@@ -1,0 +1,12 @@
+{# templates/pages/_proyecto.html #}
+<article
+  class="project-card"
+  data-ubicacion="{{ proyecto.slug }}"
+  data-tipos="{{ proyecto.tipos|join:',' }}">
+  <a href="{% url proyecto.url %}">
+    {# OJO: ya viene con static() desde la vista #}
+    <img src="{{ proyecto.img }}" alt="{{ proyecto.nombre }}">
+    <h3>{{ proyecto.nombre }}</h3>
+  </a>
+  <p>{{ proyecto.descripcion }}</p>
+</article>

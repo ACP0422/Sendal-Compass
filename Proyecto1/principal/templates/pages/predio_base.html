@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/componentes/cards.css' %}">
+<link rel="stylesheet" href="{% static 'styles/subpaginas/valladolid.css' %}">
+<link rel="stylesheet" href="{% static 'styles/predio.css' %}">
+<link rel="stylesheet" href="{% static 'styles/subpaginas/general.css' %}">
+
+
+{% endblock %}
+
+{% block content %}
+<main class="predio container">
+  {% include "componentes/predio/_head.html" %}
+  {% include "componentes/predio/_hero.html" %}
+  {% include "componentes/predio/_info.html" %}
+
+  {# Subgalería (opcional) #}
+  {% if subgallery %}
+    <section class="subgallery">
+      {% for g in subgallery %}
+        <figure>
+          {% if g.caption %}<figcaption>{{ g.caption }}</figcaption>{% endif %}
+          <img src="{% static g.src %}" alt="{{ g.alt }}">
+        </figure>
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  {% include "componentes/predio/_band_duo.html" %}
+</main>
+{% endblock %}
+ 

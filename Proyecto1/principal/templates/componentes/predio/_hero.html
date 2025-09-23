@@ -1,0 +1,6 @@
+{% load static i18n %}
+{% if hero_src %}
+  <figure class="hero">
+    <img src="{% static hero_src %}" alt="{% trans 'Portón del predio' %}">
+  </figure>
+{% endif %}

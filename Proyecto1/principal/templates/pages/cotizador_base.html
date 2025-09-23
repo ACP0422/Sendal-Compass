@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% firstof page_title _("Cotizador") %}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'styles/cotizador.css' %}">{% endblock %}
+
+{% block content %}
+<main class="quote{% if variant %} quote--{{ variant }}{% endif %}">
+  {% include "componentes/_hero.html" with hero_img=hero_img hero_alt=hero_alt %}
+
+  <section class="banner">
+    <div class="banner-inner">
+      {% if kicker %}<p class="kicker">{{ kicker }}</p>{% endif %}
+
+      <h1 class="title"{{ title_style|safe }}>
+        {% firstof heading page_title %}
+      </h1>
+
+      {% if show_toggle %}
+        {% include "componentes/_toggle.html" %}
+      {% endif %}
+
+      {# 👇 pasamos cols (1..3) calculado en la vista #}
+      {% include "componentes/_actions.html" with items=actions hidden=actions_hidden cols=grid_cols %}
+    </div>
+
+    {% if map_img %}
+      <div class="map-card">
+        <img src="{% static map_img %}" alt="">
+      </div>
+    {% endif %}
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+{% if show_toggle %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var root    = document.querySelector('main.quote{% if variant %}.quote--{{ variant }}{% endif %}');
+  if (!root) return;
+
+  var actions = root.querySelector('.banner .actions');
+  var toggle  = root.querySelector('#toggle-projects');
+  if (!actions || !toggle) return;
+
+  var SHOW = toggle.getAttribute('data-label-show');
+  var HIDE = toggle.getAttribute('data-label-hide');
+
+  function sync() {
+    toggle.textContent = actions.hidden ? SHOW : HIDE;
+    toggle.setAttribute('aria-expanded', String(!actions.hidden));
+  }
+
+  toggle.addEventListener('click', function () {
+    actions.hidden = !actions.hidden;
+    sync();
+  });
+
+  sync(); // respeta estado inicial
+});
+</script>
+{% endif %}
+{% endblock %}

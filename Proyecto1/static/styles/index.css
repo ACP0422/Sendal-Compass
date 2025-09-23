@@ -22,8 +22,9 @@ body{ line-height:1.35; color:var(--color-ink-dark); }
   text-align:center; padding:0 1rem; row-gap:1rem;
   transform:translateY(2vh);
 }
-.hero h1{ font-weight:700; font-size:clamp(1.625rem,6vw,2.875rem); line-height:1.18; }
-.hero h2{ /*font-family:var(--font-ezra);*/ text-transform:uppercase; font-size:clamp(1rem,3.2vw,2.25rem); margin-top:1.25rem; }
+.hero-head h1{font-family: var(--font-articulat); font-weight:700; font-size:clamp(1.625rem,6vw,2.875rem); line-height:1.18; }
+
+.hero-head h2{ font-family:var(--font-ezra); text-transform:uppercase; font-size:clamp(1rem,3.2vw,2.25rem); margin-top:1.25rem; }
 .hero-bottom{
   display:flex; flex-direction:column; gap:.875rem; align-items:center; justify-content:center;
   margin-bottom:3.125rem; padding-inline:1rem;

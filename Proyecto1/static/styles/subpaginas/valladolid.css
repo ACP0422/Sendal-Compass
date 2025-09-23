@@ -1,0 +1,80 @@
+:root{
+  --radius: 12px;
+  --sp-1: 8px; --sp-2: 12px; --sp-3: 16px; --sp-4: 20px;
+  --hero-h-m: clamp(180px, 45vw, 260px);
+  --hero-h-t: min(42vw, 360px);
+  --hero-h-d: 420px;
+}
+
+.page, .predio{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 18px var(--gutter) 0;
+}
+
+.head{ position: relative; }
+.head .title{ line-height: 1.05; margin: 0; }
+.head .meta{ color: var(--color-ink-dark); opacity: .9; margin-top: 4px; }
+
+.nav-arrows{
+  position: absolute; top: 0; right: 0;
+  display: flex; gap: 10px;
+}
+.nav-arrows .arrow{ font-size: 26px; font-weight: 700; color: var(--color-olive); text-decoration: none; transition: color .2s ease; }
+.nav-arrows .arrow:hover{ color: var(--color-brown); }
+.nav-arrows .arrow.disabled{ opacity:.4; pointer-events:none; cursor:default; }
+
+.hero img{
+  width: 100%;
+  height: var(--hero-h-m);
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+}
+
+.facts{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 18px;
+}
+.f{ border-radius: var(--radius); padding: 10px 12px; }
+.f dt{ font-weight: 800; color: var(--color-brown); }
+.f dd{ margin: 2px 0 0; color: #000; }
+
+.features{ border-radius: var(--radius); padding: 12px; }
+.features ul{ margin: 0 0 10px 1em; padding: 0; color:#3B0C0C; }
+.btn{ display:inline-block; text-decoration:none; font-weight:700; border-radius:999px; }
+.btn.map{ background:var(--color-gold); color:var(--color-ink-dark); padding:8px 14px; }
+
+.band{
+  margin-top: 24px;
+  position: relative;
+  left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw;
+  width: 100vw;
+}
+.band__inner{ max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); }
+.band--gold{ background: var(--color-gold); }
+
+.subgallery{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+  margin-top:16px;
+}
+.subgallery figcaption{ font-weight:700; color:#3B0C0C; margin: 0 0 6px; }
+.subgallery img{
+  width:100%; height:auto; max-height: 400px;
+  object-fit: contain; border-radius: var(--radius); display:block; background:#fff;
+}
+
+@media (min-width:768px) and (max-width:1024px){
+  .hero img{ height: var(--hero-h-t); }
+  .subgallery img{ max-height: 500px; }
+}
+
+@media (min-width:1025px){
+  .hero img{ height: var(--hero-h-d); }
+  .subgallery{ gap: 22px; margin-top: 22px; }
+  .subgallery img{ max-height: 600px; }
+}
