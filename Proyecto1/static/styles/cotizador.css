@@ -10,27 +10,36 @@
 .hero img{ width:100%; height:clamp(220px, 40vw, 440px); object-fit:cover; display:block; }
 
 .banner{ background:#5b5747; }
-.banner-inner{ max-width:var(--max); margin:0 auto; padding:28px var(--gutter) 24px; text-align:center; color:#f4efe7; }
-.title{ font-size:clamp(28px, 7.2vw, 52px); font-weight:800; letter-spacing:.01em; margin:6px 0 10px; }
+.banner-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:28px var(--gutter) 24px;
+  text-align:center;
+  color:#f4efe7;
+}
+.title{
+  font-size:clamp(28px, 7.2vw, 52px);
+  font-weight:800;
+  letter-spacing:.01em;
+  margin:6px 0 10px;
+}
 .kicker{ margin:0 0 10px; opacity:.9; font-weight:700; font-size:clamp(16px,3.8vw,20px); }
 
-/* ===== BOTONES DE ACCIÓN (SIEMPRE CENTRADOS) ===== */
-/* Contenedor: mismo ancho que Komchén, centrado */
+/* ===== BOTONES DE ACCIÓN ===== */
 .actions{
   display:grid;
   gap:20px;
-  width:min(960px, 100%);          /* mismo “ancho correcto” */
-  margin:18px auto 22px;           /* centro el contenedor */
-  justify-content:center;          /* centro la grilla */
-  justify-items:stretch;           /* los botones llenan su columna */
+  width:min(960px, 100%);
+  margin:18px auto 22px;
+  justify-content:center;
+  justify-items:stretch;
 }
-
-/* Columnas según clase cols-N (N=1..3) */
+/* Columnas por clase (por defecto) */
 .actions.cols-1{ grid-template-columns:minmax(240px, 420px); }
 .actions.cols-2{ grid-template-columns:repeat(2, minmax(240px, 1fr)); }
 .actions.cols-3{ grid-template-columns:repeat(3, minmax(220px, 1fr)); }
 
-/* En móvil: una columna y ancho cómodo */
+/* En móvil (antes) intentabas forzar 1 col solo con .actions; la especificidad lo rompía */
 @media (max-width:767.98px){
   .actions{ grid-template-columns:1fr; width:min(520px, 100%); }
 }
@@ -52,7 +61,7 @@
 .btn-hacienda{ background:#f0c160; }
 .btn-tularum{ background:#bfcdfa; color:#1f2a44; }
 
-/* ===== TOGGLE “OTROS PROYECTOS” ===== */
+/* Toggle */
 .btn-toggle{
   display:inline-flex; align-items:center; justify-content:center;
   height:42px; padding:0 16px;
@@ -63,9 +72,58 @@
 }
 .btn-toggle:hover{ filter:brightness(.98); transform:translateY(-1px); }
 
-/* ===== MAPA (si aplica) ===== */
-.map-card{ max-width:calc(var(--max) + 2*var(--gutter)); margin:18px auto 38px; padding:0 var(--gutter); }
-.map-card img{ width:100%; height:auto; display:block; border-radius:14px; background:#f4efe7; box-shadow:0 2px 0 rgba(0,0,0,.08); }
+/* Mapa (si aplica) */
+.map-card{
+  max-width:calc(var(--max) + 2*var(--gutter));
+  margin:18px auto 38px;
+  padding:0 var(--gutter);
+}
+.map-card img{
+  width:100%; height:auto; display:block;
+  border-radius:14px; background:#f4efe7;
+  box-shadow:0 2px 0 rgba(0,0,0,.08);
+}
 
-/* ===== SI ESTÁ HIDDEN, SIEMPRE SE OCULTA ===== */
+/* Ocultos */
 [hidden]{ display:none !important; }
+
+/* =====================================================================
+   OVERRIDES MOBILE-FIRST SOLO PARA EL COTIZADOR PRINCIPAL (quote--home)
+   ===================================================================== */
+
+/* ——— Base móvil (siempre 1 columna, sin importar cols-2/cols-3) ——— */
+.quote--home .hero img{ height: clamp(180px, 48vw, 360px); }
+.quote--home .banner-inner{
+  padding: clamp(16px, 4vw, 32px) var(--gutter) clamp(20px, 4vw, 32px);
+}
+.quote--home .title{ font-size: clamp(26px, 6.2vw, 42px); margin: 4px 0 12px; }
+.quote--home .kicker{ font-size: clamp(15px, 3.6vw, 18px); }
+
+/* ⚠️ Forzamos 1 columna también si el contenedor trae cols-2/cols-3 */
+.quote--home .actions,
+.quote--home .actions.cols-1,
+.quote--home .actions.cols-2,
+.quote--home .actions.cols-3{
+  grid-template-columns: 1fr;
+  gap: clamp(12px, 3vw, 20px);
+  width: 100%;
+  max-width: 960px;
+  margin: 18px auto 22px;
+  padding: 0 var(--gutter);
+}
+
+/* ——— Escala a 2 columnas cuando hay espacio (y solo si corresponde) ——— */
+@media (min-width: 640px){
+  .quote--home .actions.cols-2{
+    grid-template-columns: repeat(2, minmax(220px,1fr));
+  }
+}
+
+/* ——— Escala a 3 columnas para pantallas grandes (si corresponde) ——— */
+@media (min-width: 1024px){
+  .quote--home .title{ font-size: clamp(32px, 3.8vw, 50px); }
+  .quote--home .hero img{ height: clamp(280px, 36vw, 420px); }
+  .quote--home .actions.cols-3{
+    grid-template-columns: repeat(3, minmax(220px,1fr));
+  }
+}

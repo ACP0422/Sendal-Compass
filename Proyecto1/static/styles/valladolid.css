@@ -224,4 +224,317 @@
 
 
 
+/* =========================================================
+   VALLADOLID — OVERRIDES MÍNIMOS (solo mobile/tablet ≤1023px)
+   - No tocan la vista actual de desktop
+   - Títulos responsivos con los tamaños actuales en desktop
+   - Carrusel visible y con tamaños controlados en tablet/mobile
+   ========================================================= */
 
+/* -----------------------------
+   1) Tipografía responsiva
+   ----------------------------- */
+   @media (max-width:1023px){
+    /* H1 principal de la página */
+    .city-title{
+      font-size: clamp(32px, 7vw, 52px);
+      line-height: 1.05;
+    }
+  
+    /* Título de bloque “Cubrimos todos tus requerimientos” */
+    .services-cover h2{
+      font-size: clamp(22px, 4.8vw, 32px);
+      line-height: 1.15;
+    }
+  
+    /* Títulos dentro del listado (mantén jerarquía sin romper desktop) */
+    .listing h3{
+      font-size: clamp(14px, 2.8vw, 16px);
+      line-height: 1.2;
+    }
+  
+    /* Texto intro */
+    .city-kicker{
+      font-size: clamp(13.5px, 2.2vw, 15px);
+    }
+  }
+  
+  /* -----------------------------
+     2) Ajustes de layout en tablet
+     (mantienen tu intención original)
+     ----------------------------- */
+  @media (min-width:600px) and (max-width:1023px){
+    .city-feature{
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+    }
+    .city-feature .big-photo img,
+    .city-feature .promo img{
+      max-height: 360px;
+      aspect-ratio: auto;
+    }
+  
+    .listing{
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+  }
+  
+  /* -----------------------------
+     3) Carrusel — visibilidad y sizing
+     (solo mobile/tablet; desktop sigue con la grilla)
+     ----------------------------- */
+  
+  /* Muestra el carrusel solo en ≤1023px y oculta la grilla */
+  #services-carousel{ display:none; }
+  @media (max-width:1023px){
+    .services-grid{ display:none !important; }
+    #services-carousel{ display:block; }
+  }
+  
+  /* Alturas fluidas del viewport del carrusel */
+  :root{
+    --services-h-mobile: clamp(300px, 62vw, 520px);
+    --services-h-tablet: clamp(360px, 50vw, 560px);
+  }
+  #services-carousel .carousel__viewport{
+    position: relative;
+    height: var(--services-h-mobile);
+    min-height: 280px;            /* evita colapso si tarda en montar */
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  @media (min-width:768px) and (max-width:1023px){
+    #services-carousel .carousel__viewport{ height: var(--services-h-tablet); }
+  }
+  
+  /* Pista y slides (asegura ancho/alto correctos) */
+  #services-carousel .carousel__track{
+    display: flex;
+    gap: 12px;
+    height: 100%;
+    width: 100%;
+    transform: translate3d(0,0,0);
+    transition: transform .45s ease;
+    will-change: transform;
+  }
+  @media (min-width:768px) and (max-width:1023px){
+    #services-carousel .carousel__track{ gap: 16px; }
+  }
+  
+  /* Número de tarjetas visibles por breakpoint (sin JS extra) */
+  #services-carousel{ --perView: 1; }
+  @media (min-width:768px) and (max-width:1023px){
+    #services-carousel{ --perView: 2; }
+  }
+  
+  #services-carousel .carousel__slide{
+    flex: 0 0 calc((100% - (var(--perView) - 1) * var(--slide-gap, 12px)) / var(--perView));
+    min-width: calc((100% - (var(--perView) - 1) * var(--slide-gap, 12px)) / var(--perView));
+    height: 100%;
+    display: block;
+  }
+  #services-carousel .carousel__slide > article{
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Imágenes del slide siempre visibles y cubriendo */
+  #services-carousel .carousel__slide img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  /* Gradiente y textos del slide */
+  #services-carousel .service-text{
+    position: absolute;
+    inset: 0;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: #fff;
+    background: linear-gradient(0deg,#0000008c 60%,rgba(0,0,0,0) 100%);
+  }
+  
+  /* Botones/dots: aseguran que queden por encima */
+  #services-carousel .carousel__btn{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:42px; height:42px; border:0; border-radius:999px;
+    background:#0006; color:#fff; display:grid; place-items:center;
+    cursor:pointer; z-index:3;
+  }
+  #services-carousel .carousel__btn.prev{ left:10px; }
+  #services-carousel .carousel__btn.next{ right:10px; }
+  
+  #services-carousel .carousel__dots{
+    position:absolute; left:0; right:0; bottom:10px;
+    display:flex; gap:8px; justify-content:center; z-index:3;
+  }
+  #services-carousel .carousel__dots button{
+    width:8px; height:8px; border-radius:999px; border:0;
+    background:#fff9; opacity:.6;
+  }
+  #services-carousel .carousel__dots button[aria-current="true"]{
+    opacity:1; transform:scale(1.15); background:var(--color-brown,#3B0C0C);
+  }
+  
+  /* Color de textos de tarjetas informativas (sin tocar desktop) */
+  .card__title{ text-decoration:none; }
+  .card__text{ color:#8F5600; }
+  
+
+
+
+
+
+
+
+
+  /* =========================================================
+   VALLADOLID — OVERRIDES MÍNIMOS (solo ≤1023px)
+   - Mantiene intacta la vista de desktop
+   - Títulos responsivos (mismos tamaños en desktop)
+   - Hero a todo el ancho en mobile/tablet
+   - Carrusel visible y con imágenes ocupando el viewport
+   ========================================================= */
+
+/* -----------------------------
+   1) Tipografía responsiva
+   ----------------------------- */
+@media (max-width:1023px){
+  .city-title{
+    font-size: clamp(32px, 7vw, 52px);
+    line-height: 1.05;
+  }
+  .services-cover h2{
+    font-size: clamp(22px, 4.8vw, 32px);
+    line-height: 1.15;
+  }
+  .listing h3{
+    font-size: clamp(14px, 2.8vw, 16px);
+    line-height: 1.2;
+  }
+  .city-kicker{
+    font-size: clamp(13.5px, 2.2vw, 15px);
+  }
+}
+
+/* ------------------------------------------
+   2) HERO: imagen a todo el ancho en ≤1023px
+   ------------------------------------------ */
+@media (max-width:1023px){
+  /* una sola columna para que la foto ocupe todo el ancho del contenedor */
+  .city-feature{ grid-template-columns: 1fr; gap: 16px; }
+
+  /* remover límites heredados y permitir ancho completo */
+  .city-feature .big-photo img,
+  .city-feature .promo img{
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: auto;               /* evita recortes raros */
+    aspect-ratio: 16 / 9;       /* presencia consistente */
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+  }
+}
+
+/* ------------------------------------------
+   3) Carrusel “Servicios” visible en ≤1023px
+   y con imágenes ocupando el alto declarativo
+   ------------------------------------------ */
+
+/* mostrar carrusel y ocultar grid solo en mobile/tablet */
+#services-carousel{ display:none; }
+@media (max-width:1023px){
+  .services-grid{ display:none !important; }
+  #services-carousel{ display:block; }
+}
+
+/* alturas fluidas del viewport */
+:root{
+  --services-h-mobile: clamp(300px, 62vw, 520px);
+  --services-h-tablet: clamp(360px, 50vw, 560px);
+}
+#services-carousel .carousel__viewport{
+  position: relative;
+  height: var(--services-h-mobile);
+  min-height: 280px;            /* evita colapso si el JS tarda */
+  border-radius: 16px;
+  overflow: hidden;
+  background: transparent;
+}
+@media (min-width:768px) and (max-width:1023px){
+  #services-carousel .carousel__viewport{ height: var(--services-h-tablet); }
+}
+
+/* pista y slides correctamente dimensionados */
+#services-carousel{ --slide-gap: 12px; --perView: 1; }
+#services-carousel .carousel__track{
+  display: flex;
+  gap: var(--slide-gap);
+  height: 100%;
+  width: 100%;
+  transform: translate3d(0,0,0);
+  transition: transform .45s ease;
+  will-change: transform;
+}
+#services-carousel .carousel__slide{
+  flex: 0 0 calc((100% - (var(--perView) - 1) * var(--slide-gap)) / var(--perView));
+  min-width: calc((100% - (var(--perView) - 1) * var(--slide-gap)) / var(--perView));
+  height: 100%;
+  display: block;
+}
+#services-carousel .carousel__slide > article{
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+#services-carousel .carousel__slide img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* la imagen SIEMPRE visible */
+  display: block;
+}
+
+/* tablet: 2 tarjetas visibles */
+@media (min-width:768px) and (max-width:1023px){
+  #services-carousel{ --slide-gap: 16px; --perView: 2; }
+}
+
+/* controles por encima del contenido */
+#services-carousel .carousel__btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border: 0; border-radius: 999px;
+  background: #0006; color: #fff;
+  display: grid; place-items: center;
+  cursor: pointer; z-index: 3;
+}
+#services-carousel .carousel__btn.prev{ left: 10px; }
+#services-carousel .carousel__btn.next{ right: 10px; }
+#services-carousel .carousel__dots{
+  position: absolute; left: 0; right: 0; bottom: 10px;
+  display: flex; gap: 8px; justify-content: center; z-index: 3;
+}
+#services-carousel .carousel__dots button{
+  width: 8px; height: 8px; border-radius: 999px; border: 0;
+  background: #fff9; opacity: .6;
+}
+#services-carousel .carousel__dots button[aria-current="true"]{
+  opacity: 1; transform: scale(1.15);
+  background: var(--color-brown,#3B0C0C);
+}
+
+/* detalles de tarjetas informativas (sin tocar desktop) */
+.card__title{ text-decoration: none; }
+.card__text{ color: #8F5600; }

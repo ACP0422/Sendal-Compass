@@ -76,19 +76,39 @@ def cotizador_detail(request, slug: str):
     return render(request, "pages/cotizador_base.html", ctx)
 
 # ===== Vistas públicas =====
+
 def index(request):
     proyectos = [
-        {"slug":"komchen","nombre":"Komchén","url":"komchen",
-         "img": static("resources/images/places/Komchén/Komchén.png"),
-         "descripcion":"Zona con alta plusvalía y acceso rápido a la ciudad.","tipos":["otro"],"activo":True},
-        {"slug":"valladolid","nombre":"Valladolid","url":"valladolid",
-         "img": static("resources/images/places/Valladolid/Valladolid.png"),
-         "descripcion":"Ciudad en crecimiento con alto potencial turístico e inmobiliario.","tipos":["lote","otro"],"activo":True},
-        {"slug":"tulum","nombre":"Tulum","url":"tulum",
-         "img": static("resources/images/places/Tulum/Tulum.jpg"),
-         "descripcion":"Destino icónico con gran plusvalía, naturaleza y proyección internacional.","tipos":["lote"],"activo":True},
+        {
+            "slug": "komchen",
+            "nombre": "Komchén",
+            "url": "komchen",
+            "img": static("resources/images/places/Komchén/Komchén.png"),
+            "descripcion": _("Zona con alta plusvalía y acceso rápido a la ciudad."),
+            "tipos": ["otro"],
+            "activo": True,
+        },
+        {
+            "slug": "valladolid",
+            "nombre": "Valladolid",
+            "url": "valladolid",
+            "img": static("resources/images/places/Valladolid/Valladolid.png"),
+            "descripcion": _("Ciudad en crecimiento con alto potencial turístico e inmobiliario."),
+            "tipos": ["lote", "otro"],
+            "activo": True,
+        },
+        {
+            "slug": "tulum",
+            "nombre": "Tulum",
+            "url": "tulum",
+            "img": static("resources/images/places/Tulum/Tulum.jpg"),
+            "descripcion": _("Destino icónico con gran plusvalía, naturaleza y proyección internacional."),
+            "tipos": ["lote"],
+            "activo": True,
+        },
     ]
     return render(request, "pages/index.html", {"proyectos": proyectos})
+
 
 def contacto(request):  return render(request, 'pages/contacto.html')
 def valladolid(request): return render(request, 'pages/valladolid.html')
@@ -184,7 +204,7 @@ def predio_detail(request, slug):
     # --- cadenas traducibles con variables ---
     price_text = None
     if p.get("price_mxn"):
-        price_text = _("Precio: %(amount)s MXN") % {"amount": f"{p['price_mxn']:,.0f}"}
+        price_text = _("Precio: $%(amount)s MXN") % {"amount": f"{p['price_mxn']:,.0f}"}
 
     price_m2_str = None
     if p.get("price_m2"):

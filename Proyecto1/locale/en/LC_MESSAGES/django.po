@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sendal Website\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-22 18:34-0600\n"
+"POT-Creation-Date: 2025-09-23 11:02-0600\n"
 "PO-Revision-Date: 2025-09-22 16:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
@@ -90,13 +90,13 @@ msgid "Ocultar proyectos"
 msgstr "Hide projects"
 
 #: principal/templates/componentes/predio/_band_duo.html:7
-#: principal/templates/pages/hacienda.html:165
+#: principal/templates/pages/hacienda.html:166
 #: principal/templates/pages/komchen.html:211
 msgid "¿Dónde está ubicado?"
 msgstr "Where is it located?"
 
 #: principal/templates/componentes/predio/_band_duo.html:9
-#: principal/views.py:132 principal/views.py:162
+#: principal/views.py:152 principal/views.py:182
 msgid ""
 "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, "
 "Yucatán."
@@ -105,18 +105,18 @@ msgstr ""
 "Yucatán."
 
 #: principal/templates/componentes/predio/_band_duo.html:13
-#: principal/templates/pages/hacienda.html:170
+#: principal/templates/pages/hacienda.html:171
 #: principal/templates/pages/komchen.html:215
 msgid "Ir a la ubicación"
 msgstr "Open location"
 
 #: principal/templates/componentes/predio/_band_duo.html:22
-#: principal/templates/pages/hacienda.html:176
+#: principal/templates/pages/hacienda.html:177
 msgid "Mapa de ubicación"
 msgstr "Location map"
 
 #: principal/templates/componentes/predio/_head.html:8
-#: principal/templates/pages/hacienda.html:23
+#: principal/templates/pages/hacienda.html:24
 #, python-format
 msgid "Superficie: %(val)s m²"
 msgstr "Area: %(val)s m²"
@@ -140,7 +140,7 @@ msgid "Características:"
 msgstr "Features:"
 
 #: principal/templates/componentes/predio/_info.html:30
-#: principal/templates/pages/hacienda.html:62
+#: principal/templates/pages/hacienda.html:63
 #: principal/templates/pages/komchen.html:60
 msgid "Ubicación Google maps"
 msgstr "Google Maps location"
@@ -221,67 +221,67 @@ msgid "Niñas corriendo"
 msgstr "Girls running"
 
 #: principal/templates/pages/hacienda.html:4
-#: principal/templates/pages/hacienda.html:20
+#: principal/templates/pages/hacienda.html:21
 #: principal/templates/pages/valladolid.html:37 principal/views.py:23
 #: principal/views.py:24
 msgid "Hacienda Residencial"
 msgstr "Residential Hacienda"
 
-#: principal/templates/pages/hacienda.html:22 principal/views.py:103
+#: principal/templates/pages/hacienda.html:23 principal/views.py:123
 msgid "Valladolid, Yucatán"
 msgstr "Valladolid, Yucatán"
 
-#: principal/templates/pages/hacienda.html:29
+#: principal/templates/pages/hacienda.html:30
 msgid "Ir a Predio 2"
 msgstr "Go to Plot 2"
 
-#: principal/templates/pages/hacienda.html:35
+#: principal/templates/pages/hacienda.html:36
 msgid "Fachada tipo hacienda"
 msgstr "Hacienda-style facade"
 
-#: principal/templates/pages/hacienda.html:41
+#: principal/templates/pages/hacienda.html:42
 msgid "Vive el lujo de lo natural."
 msgstr "Live the luxury of nature."
 
-#: principal/templates/pages/hacienda.html:44
+#: principal/templates/pages/hacienda.html:45
 msgid "Precio más bajo"
 msgstr "Lowest price"
 
-#: principal/templates/pages/hacienda.html:45
+#: principal/templates/pages/hacienda.html:46
 msgid "Terrenos"
 msgstr "Lots"
 
-#: principal/templates/pages/hacienda.html:45
+#: principal/templates/pages/hacienda.html:46
 msgid "Con 550m²"
 msgstr "With 550 m²"
 
-#: principal/templates/pages/hacienda.html:46
+#: principal/templates/pages/hacienda.html:47
 msgid "Tribu Easter"
 msgstr "Easter Tribe"
 
-#: principal/templates/pages/hacienda.html:46
+#: principal/templates/pages/hacienda.html:47
 msgid "Mayores de 50 años"
 msgstr "Ages 50+"
 
-#: principal/templates/pages/hacienda.html:48
+#: principal/templates/pages/hacienda.html:49
 #: principal/templates/pages/index.html:81
 #: principal/templates/pages/index.html:172
 msgid "Ubicación"
 msgstr "Location"
 
-#: principal/templates/pages/hacienda.html:48
+#: principal/templates/pages/hacienda.html:49
 msgid "Sobre periférico"
 msgstr "On the ring road"
 
-#: principal/templates/pages/hacienda.html:49
+#: principal/templates/pages/hacienda.html:50
 msgid "Vialidades"
 msgstr "Roadways"
 
-#: principal/templates/pages/hacienda.html:50
+#: principal/templates/pages/hacienda.html:51
 msgid "Áreas verdes"
 msgstr "Green areas"
 
-#: principal/templates/pages/hacienda.html:55
+#: principal/templates/pages/hacienda.html:56
 msgid ""
 "Este desarrollo residencial, con entrega a partir de junio de 2026, ofrece "
 "haciendas y terrenos residenciales desde 448 m² hasta 915 m² en una "
@@ -298,48 +298,48 @@ msgstr ""
 "reuse, and a building code with environmental standards. The project holds "
 "sustainable certification (EDGE or LEED)."
 
-#: principal/templates/pages/hacienda.html:68
-#: principal/templates/pages/hacienda.html:156
+#: principal/templates/pages/hacienda.html:69
+#: principal/templates/pages/hacienda.html:157
 #: principal/templates/pages/komchen.html:66
 msgid "Amenidades"
 msgstr "Amenities"
 
-#: principal/templates/pages/hacienda.html:72
+#: principal/templates/pages/hacienda.html:73
 #: principal/templates/pages/komchen.html:69
 msgid "Piscina"
 msgstr "Pool"
 
-#: principal/templates/pages/hacienda.html:76
-#: principal/templates/pages/hacienda.html:101
+#: principal/templates/pages/hacienda.html:77
+#: principal/templates/pages/hacienda.html:102
 msgid "Casa Club"
 msgstr "Clubhouse"
 
-#: principal/templates/pages/hacienda.html:80
+#: principal/templates/pages/hacienda.html:81
 msgid "Canchas de pádel, tenis y básquetbol"
 msgstr "Padel, tennis, and basketball courts"
 
-#: principal/templates/pages/hacienda.html:87
+#: principal/templates/pages/hacienda.html:88
 msgid "ícono de piscina con canal de nado"
 msgstr "icon of pool with lap lane"
 
-#: principal/templates/pages/hacienda.html:89
+#: principal/templates/pages/hacienda.html:90
 msgid "Piscina con canal de nado"
 msgstr "Pool with lap lane"
 
-#: principal/templates/pages/hacienda.html:90
+#: principal/templates/pages/hacienda.html:91
 msgid ""
 "Alberca amplia con área de relajación y canal de nado para ejercicio diario."
 msgstr "Large pool with relaxation area and a lap lane for daily exercise."
 
-#: principal/templates/pages/hacienda.html:93
+#: principal/templates/pages/hacienda.html:94
 msgid "ícono de canchas deportivas"
 msgstr "icon of sports courts"
 
-#: principal/templates/pages/hacienda.html:95
+#: principal/templates/pages/hacienda.html:96
 msgid "Canchas Deportivas"
 msgstr "Sports Courts"
 
-#: principal/templates/pages/hacienda.html:96
+#: principal/templates/pages/hacienda.html:97
 msgid ""
 "Canchas de pádel, tenis y básquet disponibles para que disfrutes del deporte "
 "sin salir de casa."
@@ -347,11 +347,11 @@ msgstr ""
 "Padel, tennis, and basketball courts so you can enjoy sports without leaving "
 "home."
 
-#: principal/templates/pages/hacienda.html:99
+#: principal/templates/pages/hacienda.html:100
 msgid "ícono de casa club"
 msgstr "icon of clubhouse"
 
-#: principal/templates/pages/hacienda.html:102
+#: principal/templates/pages/hacienda.html:103
 msgid ""
 "Zona común con espacios para reuniones, actividades y descanso para "
 "residentes."
@@ -359,72 +359,72 @@ msgstr ""
 "Common area with spaces for gatherings, activities, and relaxation for "
 "residents."
 
-#: principal/templates/pages/hacienda.html:105
+#: principal/templates/pages/hacienda.html:106
 msgid "ícono destileria y bar"
 msgstr "icon of distillery and bar"
 
-#: principal/templates/pages/hacienda.html:107
+#: principal/templates/pages/hacienda.html:108
 msgid "Destilería y Bar"
 msgstr "Distillery & Bar"
 
-#: principal/templates/pages/hacienda.html:108
+#: principal/templates/pages/hacienda.html:109
 msgid ""
 "Espacio equipado para eventos, reuniones y degustaciones con producción "
 "local."
 msgstr ""
 "Equipped space for events, gatherings, and tastings with local production."
 
-#: principal/templates/pages/hacienda.html:114
+#: principal/templates/pages/hacienda.html:115
 #: principal/templates/pages/komchen.html:137
 msgid "Galería"
 msgstr "Gallery"
 
-#: principal/templates/pages/hacienda.html:120
+#: principal/templates/pages/hacienda.html:121
 msgid "Render de área social"
 msgstr "Social area render"
 
-#: principal/templates/pages/hacienda.html:128
+#: principal/templates/pages/hacienda.html:129
 msgid "Render de amenidades"
 msgstr "Amenities render"
 
-#: principal/templates/pages/hacienda.html:139
+#: principal/templates/pages/hacienda.html:140
 #: principal/templates/pages/komchen.html:162
 msgid "Explora y Elige"
 msgstr "Explore and Choose"
 
-#: principal/templates/pages/hacienda.html:143
+#: principal/templates/pages/hacienda.html:144
 #: principal/templates/pages/komchen.html:168
 msgid "Apartado"
 msgstr "Reserved"
 
-#: principal/templates/pages/hacienda.html:144
+#: principal/templates/pages/hacienda.html:145
 #: principal/templates/pages/komchen.html:169
 msgid "Disponible"
 msgstr "Available"
 
-#: principal/templates/pages/hacienda.html:145
+#: principal/templates/pages/hacienda.html:146
 #: principal/templates/pages/komchen.html:170
 msgid "Vendido"
 msgstr "Sold"
 
-#: principal/templates/pages/hacienda.html:146
+#: principal/templates/pages/hacienda.html:147
 #: principal/templates/pages/komchen.html:172
 msgid "Quiero saber más"
 msgstr "I want to know more"
 
-#: principal/templates/pages/hacienda.html:152
+#: principal/templates/pages/hacienda.html:153
 msgid "Masterplan Hacienda Residencial"
 msgstr "Residential Hacienda master plan"
 
-#: principal/templates/pages/hacienda.html:157
+#: principal/templates/pages/hacienda.html:158
 msgid "Zona Comercial"
 msgstr "Commercial Area"
 
-#: principal/templates/pages/hacienda.html:158
+#: principal/templates/pages/hacienda.html:159
 msgid "Siembra de Agave"
 msgstr "Agave Plantation"
 
-#: principal/templates/pages/hacienda.html:167
+#: principal/templates/pages/hacienda.html:168
 msgid ""
 "Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el "
 "periférico."
@@ -532,7 +532,7 @@ msgid "Tulum"
 msgstr "Tulum"
 
 #: principal/templates/pages/index.html:87
-#: principal/templates/pages/index.html:173 principal/views.py:197
+#: principal/templates/pages/index.html:173 principal/views.py:217
 msgid "Valladolid"
 msgstr "Valladolid"
 
@@ -724,7 +724,8 @@ msgid "Pista de Jogging"
 msgstr "Jogging Track"
 
 #: principal/templates/pages/komchen.html:87
-msgid "Construye tu historia con espacios ideales para la recreación y el deporte."
+msgid ""
+"Construye tu historia con espacios ideales para la recreación y el deporte."
 msgstr "Build your story with spaces ideal for recreation and sports."
 
 #: principal/templates/pages/komchen.html:94
@@ -1062,13 +1063,13 @@ msgstr "See more"
 msgid "Predio vallado en Valladolid"
 msgstr "Fenced plot in Valladolid"
 
-#: principal/templates/pages/valladolid.html:47 principal/views.py:107
+#: principal/templates/pages/valladolid.html:47 principal/views.py:127
 msgid "Predio 1"
 msgstr "Plot 1"
 
 #: principal/templates/pages/valladolid.html:48
-#: principal/templates/pages/valladolid.html:59 principal/views.py:115
-#: principal/views.py:144
+#: principal/templates/pages/valladolid.html:59 principal/views.py:135
+#: principal/views.py:164
 msgid "Propiedad Privada"
 msgstr "Private Property"
 
@@ -1076,7 +1077,7 @@ msgstr "Private Property"
 msgid "Edificio de esquina en Valladolid"
 msgstr "Corner building in Valladolid"
 
-#: principal/templates/pages/valladolid.html:58 principal/views.py:137
+#: principal/templates/pages/valladolid.html:58 principal/views.py:157
 msgid "Predio 2"
 msgstr "Plot 2"
 
@@ -1144,76 +1145,89 @@ msgstr ""
 msgid "Cotiza nuestros proyectos"
 msgstr "Get quotes for our projects"
 
-#: principal/views.py:114
+#: principal/views.py:87
+msgid "Zona con alta plusvalía y acceso rápido a la ciudad."
+msgstr "High-appreciation area with quick access to the city."
+
+#: principal/views.py:96
+msgid "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
+msgstr "A fast-growing city with strong tourism and real-estate potential."
+
+#: principal/views.py:105
+msgid ""
+"Destino icónico con gran plusvalía, naturaleza y proyección internacional."
+msgstr "An iconic destination with strong appreciation, nature, and international appeal."
+
+#: principal/views.py:134
 msgid "Calle 35 # 198 F"
 msgstr "Street 35 # 198 F"
 
-#: principal/views.py:116 principal/views.py:145
+#: principal/views.py:136 principal/views.py:165
 msgid "Centro"
 msgstr "Centro (Downtown)"
 
-#: principal/views.py:119 principal/views.py:150
+#: principal/views.py:139 principal/views.py:170
 msgid "Barda Perimetral"
 msgstr "Perimeter Wall"
 
-#: principal/views.py:120 principal/views.py:151
+#: principal/views.py:140 principal/views.py:171
 msgid "Puerta de Acceso"
 msgstr "Access Gate"
 
-#: principal/views.py:121 principal/views.py:152
+#: principal/views.py:141 principal/views.py:172
 msgid "Uso de Suelo Comercial"
 msgstr "Commercial Land Use"
 
-#: principal/views.py:122 principal/views.py:153
+#: principal/views.py:142 principal/views.py:173
 msgid "A 2 calles de Catedral"
 msgstr "Two blocks from the Cathedral"
 
-#: principal/views.py:126 principal/views.py:157
+#: principal/views.py:146 principal/views.py:177
 msgid "Vista fachada"
 msgstr "Facade view"
 
-#: principal/views.py:126 principal/views.py:157
+#: principal/views.py:146 principal/views.py:177
 msgid "Vista Fachada"
 msgstr "Facade View"
 
-#: principal/views.py:128 principal/views.py:159
+#: principal/views.py:148 principal/views.py:179
 msgid "Vista satelital"
 msgstr "Satellite view"
 
-#: principal/views.py:128 principal/views.py:159
+#: principal/views.py:148 principal/views.py:179
 msgid "Vista Satelital"
 msgstr "Satellite View"
 
-#: principal/views.py:143
+#: principal/views.py:163
 msgid "Calle 39 #205 C"
 msgstr "Street 39 #205 C"
 
-#: principal/views.py:148
+#: principal/views.py:168
 msgid "Construcción 321 m²"
 msgstr "Construction 321 m²"
 
-#: principal/views.py:149
+#: principal/views.py:169
 msgid "2 niveles"
 msgstr "2 floors"
 
-#: principal/views.py:187
+#: principal/views.py:207
 #, python-format
 msgid "Precio: %(amount)s MXN"
 msgstr "Price: %(amount)s MXN"
 
-#: principal/views.py:191
+#: principal/views.py:211
 #, python-format
 msgid "$%(amount)s m²"
 msgstr "$%(amount)s per m²"
 
-#: principal/views.py:195
+#: principal/views.py:215
 msgid "Precio por m²"
 msgstr "Price per m²"
 
-#: principal/views.py:196
+#: principal/views.py:216
 msgid "Colonia:"
 msgstr "Neighborhood:"
 
-#: principal/views.py:197
+#: principal/views.py:217
 msgid "Municipio:"
 msgstr "Municipality:"

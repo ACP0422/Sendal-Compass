@@ -5,7 +5,7 @@
 {% block extra_css %}<link rel="stylesheet" href="{% static 'styles/cotizador.css' %}">{% endblock %}
 
 {% block content %}
-<main class="quote{% if variant %} quote--{{ variant }}{% endif %}">
+<main class="quote {% if variant %}quote--{{ variant }}{% else %}quote--home{% endif %}">
   {% include "componentes/_hero.html" with hero_img=hero_img hero_alt=hero_alt %}
 
   <section class="banner">
