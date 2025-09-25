@@ -1,0 +1,270 @@
+/* ====== Paleta Sendal (tuneable) ====== */
+:root{
+    --sendal-bg: #5b5747;          /* ya lo usas en el banner */
+    --sendal-ink: #f4efe7;         /* texto claro sobre oscuro */
+    --lot-stroke: #234b38;         /* borde verdoso sobrio */
+    --lot-shadow: 0 4px 18px rgba(0,0,0,.20);
+  
+    --lot-available: #CDE7C8;      /* Disponible */
+    --lot-reserved:  #FFECAA;      /* Apartado  */
+    --lot-sold:      #D0D0D0;      /* Vendido    */
+  
+    --legend-ink: #f4efe7;
+    --tooltip-bg: #111;
+    --tooltip-ink:#fff;
+  }
+  
+  /* ====== Contenedor dentro de tu .banner ====== */
+  .map-card{
+    max-width: min(1100px, calc(var(--max, 1280px) + 2*var(--gutter,16px)));
+    margin: clamp(10px, 2.5vw, 22px) auto clamp(18px, 3.2vw, 34px);
+    padding: 0 var(--gutter,16px);
+  }
+  
+  .svg-frame{
+    position: relative;
+    background: #4c483b;              /* un tono +claro que el banner para separar */
+    border-radius: 16px;
+    box-shadow: 0 2px 0 rgba(0,0,0,.08), var(--lot-shadow);
+    overflow: hidden;
+    padding: clamp(8px, 1.6vw, 14px);
+  }
+  
+  /* El SVG escalable y centrado */
+  .lots-svg{
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #fff;
+  }
+  
+  /* ====== ESTADO BASE (mientras carga JSON) ====== */
+  .lots-svg [id^="lot-"]{
+    fill: #eaeaea;                   /* evita negro por defecto */
+    stroke: var(--lot-stroke);
+    stroke-width: 2;
+    cursor: pointer;
+    transition: filter .15s ease, transform .06s ease, opacity .15s ease;
+  }
+  .lots-svg [id^="lot-"]:hover{
+    filter: brightness(.98) drop-shadow(0 4px 10px rgba(0,0,0,.25));
+  }
+  
+  /* ====== Estados que añade JS ====== */
+  .lot{ /* clase que pone JS además del estado */
+    outline: none;
+  }
+  .is-available{ fill: var(--lot-available) !important; }
+  .is-reserved{  fill: var(--lot-reserved)  !important; }
+  .is-sold{      fill: var(--lot-sold)      !important; cursor: not-allowed; opacity: .9; }
+  
+  /* ====== Tooltip ====== */
+  .tooltip{
+    position: fixed; z-index: 40;
+    background: var(--tooltip-bg); color: var(--tooltip-ink);
+    font-size: 13px; line-height: 1; white-space: nowrap;
+    padding: 8px 10px; border-radius: 8px; pointer-events: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,.35);
+    transform: translate(-50%,-120%);
+  }
+  
+  /* ====== Leyenda ====== */
+  .legend{
+    display: inline-flex; gap: 18px; align-items: center;
+    margin: 12px 4px 0;
+    color: var(--legend-ink);
+    font-size: 14px; user-select: none;
+  }
+  .legend .dot{
+    width: 12px; height: 12px; border-radius: 999px; display: inline-block;
+    margin-right: 6px; border: 1px solid rgba(0,0,0,.14);
+    vertical-align: -2px;
+  }
+  .dot-available{ background: var(--lot-available); }
+  .dot-reserved{  background: var(--lot-reserved); }
+  .dot-sold{      background: var(--lot-sold); }
+  
+  /* ====== Responsive pequeño ====== */
+  @media (max-width: 640px){
+    .svg-frame{ border-radius: 12px; padding: 8px; }
+  }
+  
+
+
+
+
+  /* Botón volver (flotante dentro del marco) */
+.back-btn{
+    position:absolute; left:14px; top:14px;
+    background:#fff; color:#333; border:none; border-radius:10px;
+    height:36px; padding:0 12px; font-weight:700; cursor:pointer;
+    box-shadow:0 2px 12px rgba(0,0,0,.18);
+  }
+  
+  /* Estética de ETAPAS (overview) */
+  .stage rect, .stage path{
+    fill:#e9ecef; stroke:#1d4b3a; stroke-width:2;
+  }
+  .stage text{
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-size: 18px; fill: #f4efe7; pointer-events:none;
+  }
+  .stage.is-inactive rect, .stage.is-inactive path{
+    fill:#9aa19c; opacity:.35;
+  }
+  .stage.is-active rect, .stage.is-active path{
+    fill:#CDE7C8; /* Etapa 1 en color */
+  }
+  .stage.is-active:hover rect, .stage.is-active:hover path{
+    filter: brightness(.98) drop-shadow(0 4px 10px rgba(0,0,0,.28));
+  }
+  
+
+
+
+
+  /* Etapas (overview) con look de tu diseño */
+.stage polygon, .stage path{ fill:#8c8f89; stroke:#1d4b3a; stroke-width:2; }
+.stage text{ font: 600 20px/1 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; fill:#f4efe7; }
+.stage.is-inactive{ opacity:.55; cursor:not-allowed; }
+.stage.is-active polygon{ fill:#CDE7C8; }
+.stage.is-active{ cursor:pointer; }
+.stage.is-active:hover polygon{ filter:brightness(.98) drop-shadow(0 4px 12px rgba(0,0,0,.28)); }
+
+
+
+
+
+/* Mantén lo que ya tenías y suma/ajusta esto */
+
+/* Evita grosor variable en zoom */
+.stage polygon, .stage path, .lots rect { vector-effect: non-scaling-stroke; }
+
+/* Estados de etapas */
+.stage polygon, .stage path { fill:#8b8e89; stroke:#1d4b3a; stroke-width:2; }
+.stage.is-inactive { opacity:.65; cursor:not-allowed; }
+.stage text{
+  fill:#fff; font-weight:800;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size:22px; letter-spacing:.2px;
+  /* leve halo para legibilidad sobre fondos oscuros */
+  paint-order: stroke fill;
+  stroke:#000; stroke-width:1.2px; stroke-opacity:.25;
+}
+.stage.is-active polygon{ fill:#DDF5D8; }
+.stage.is-active{ cursor:pointer; }
+.stage.is-active:hover polygon{ filter:brightness(.98) drop-shadow(0 6px 16px rgba(0,0,0,.28)); }
+
+/* Pastillas de texto (Zona comercial, Agave, Entrada, Amenidades) */
+.pill-label rect{ fill:#fff; opacity:.92; }
+.pill-label text{
+  fill:#222; font:700 14px/1.2 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+
+/* Etapas angostas (7 y 1): el texto baja a 18px para no cortarse */
+.stage.narrow text { font-size: 18px; }
+
+/* Pastillas (labels blancos) ya existentes */
+.pill-label rect{ fill:#fff; opacity:.92; }
+.pill-label text{ fill:#222; font:700 14px/1.2 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+
+
+
+
+/* Colores fijos y sin costuras */
+.decor .bg-agave      { fill:#41c95b !important; stroke:none; fill-rule:nonzero; }
+.decor .bg-commercial { fill:#26c6da !important; stroke:none; fill-rule:nonzero; }
+.decor .bg-amenities  { fill:#47d461 !important; stroke:none; }
+
+
+
+
+
+/* Colores por estado */
+.is-available{ fill: #C4DA96 !important; }   /* Disponible */
+.is-reserved{  fill: #FFFD72 !important; }   /* Apartado  */
+.is-sold{      fill: #979797 !important; cursor:not-allowed; opacity:.9; }
+
+/* Estética general de cada franja (lote) */
+#stage-1-overlay .lot{
+  stroke:#1d4b3a; stroke-width:2; vector-effect:non-scaling-stroke;
+  transition: filter .15s ease, transform .06s ease, opacity .15s ease;
+  cursor: pointer;
+}
+#stage-1-overlay .lot:hover{
+  filter: brightness(.98) drop-shadow(0 4px 10px rgba(0,0,0,.25));
+}
+
+
+
+
+
+/* ===== Botón "Ver todas las etapas" — mobile-first ===== */
+.back-btn{
+  position:absolute;
+  left: calc(env(safe-area-inset-left, 0px) + clamp(8px, 3vw, 16px));
+  top:  calc(env(safe-area-inset-top,  0px) + clamp(8px, 2.5vw, 14px));
+  height: clamp(40px, 10vw, 48px);               /* touch target ≥44px */
+  padding: 0 clamp(12px, 4vw, 18px);
+  border: 0;
+  border-radius: clamp(10px, 4vw, 14px);
+  background: #fff;
+  color: #333;
+  font: 700 clamp(14px, 3.8vw, 16px)/1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tamaños de texto dentro del SVG de etapas (evita cortar) */
+.stage text{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  font-size: clamp(12px, 2.7vw, 20px);
+  fill:#f4efe7;
+  paint-order: stroke fill;
+  stroke:#000; stroke-width:1.2px; stroke-opacity:.18; /* halo sutil para legibilidad */
+}
+.stage.narrow text{ font-size: clamp(11px, 2.3vw, 18px); }
+
+/* ===== Leyenda (chips) — mobile-first ===== */
+.legend{
+  display:flex; flex-wrap:wrap; gap: clamp(8px, 2.8vw, 18px);
+  justify-content:center; align-items:center;
+  margin: clamp(8px, 2.5vw, 14px) 4px 0;
+  color: var(--legend-ink);
+  user-select:none;
+}
+.legend .chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding: clamp(10px, 3.5vw, 14px) clamp(14px, 4.5vw, 18px);
+  min-height: 44px;                              /* target táctil */
+  border-radius: 999px;
+  font: 700 clamp(13px, 3.6vw, 20px)/1.1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color:#111;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  flex: 1 1 auto;                                /* se acomodan/rompen en móvil */
+  text-align:center;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Colores coherentes con estados */
+.chip-available{ background: var(--lot-available); }
+.chip-reserved { background: var(--lot-reserved);  }
+.chip-sold     { background: var(--lot-sold);      }
+
+/* ===== Ajustes pequeños extra ===== */
+.tooltip{
+  font-size: clamp(12px, 3.2vw, 13px);
+  padding: clamp(6px, 1.8vw, 8px) clamp(8px, 2.5vw, 10px);
+  border-radius: clamp(6px, 2vw, 8px);
+}
+
+/* Reduce sombras/animaciones si el usuario lo pide */
+@media (prefers-reduced-motion: reduce){
+  .stage .is-active:hover polygon,
+  #stage-1-overlay .lot:hover { filter:none; }
+}

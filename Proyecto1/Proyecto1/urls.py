@@ -22,6 +22,8 @@ urlpatterns = [
     path("proyectos/valladolid/<slug:slug>/", views.predio_compat, name="valladolid-compat"),
 
     path('proyectos/komchen/', views.komchen, name='komchen'),
+
+    path('hacienda/', include('lots.urls')),      
 ]
 
 

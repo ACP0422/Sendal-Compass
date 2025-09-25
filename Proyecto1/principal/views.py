@@ -24,7 +24,6 @@ COTIZADORES = {
         "title": _("Hacienda Residencial"),
         "variant": "hacienda",
         "title_color": "#F0C160",
-        "map_img": "resources/images/places/Hacienda/masterplan.png",
         "btn": "btn-hacienda",
         "otros": ["komchen"],
         "show_in_index": True,
@@ -73,6 +72,15 @@ def cotizador_detail(request, slug: str):
         "map_img": cfg.get("map_img"),
         "title_style": title_style,
     }
+
+    # <<< SOLO para HACIENDA: mostrar mapa interactivo >>>
+    if slug == "hacienda":
+        ctx["show_lots_map"] = True
+        ctx["lots_dev_slug"] = "hacienda"
+        ctx["lots_stage_number"] = 1
+        # Si quieres ocultar la imagen estática del masterplan:
+        # ctx["map_img"] = None
+        
     return render(request, "pages/cotizador_base.html", ctx)
 
 # ===== Vistas públicas =====
