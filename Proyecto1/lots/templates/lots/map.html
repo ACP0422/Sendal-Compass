@@ -1,0 +1,51 @@
+{% load static i18n %}
+<link rel="stylesheet" href="{% static 'styles/lots-map.css' %}">
+
+<main class="map-wrap container">
+  <ul class="legend">
+    <li><span class="dot dot-available"></span>{% trans "Disponible" %}</li>
+    <li><span class="dot dot-reserved"></span>{% trans "Apartado" %}</li>
+    <li><span class="dot dot-sold"></span>{% trans "Vendido" %}</li>
+  </ul>
+
+  <div class="svg-frame">
+    <!-- Reemplaza los <rect> por tu SVG real de MZ-01 (9 lotes) con ids lot-1..lot-9 -->
+    <svg viewBox="0 0 900 300" class="lots-svg" aria-labelledby="mapaTitle">
+      <title id="mapaTitle">{% trans "Mapa de lotes – Etapa" %} {{ stage_number }}</title>
+      <g id="stage-1">
+        <rect id="lot-1" x="40"  y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-2" x="130" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-3" x="220" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-4" x="310" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-5" x="400" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-6" x="490" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-7" x="580" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-8" x="670" y="120" width="80" height="120" rx="6"/>
+        <rect id="lot-9" x="760" y="120" width="80" height="120" rx="6"/>
+      </g>
+    </svg>
+    <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const endpoint = "{% url 'lots_json' development_slug=development_slug stage_number=stage_number %}";
+  const $tooltip = document.getElementById('tooltip');
+  const showTip = (e, t)=>{ $tooltip.textContent=t; $tooltip.style.left=(e.clientX+12)+'px'; $tooltip.style.top=(e.clientY+12)+'px'; $tooltip.hidden=false; };
+  const hideTip = ()=>{ $tooltip.hidden=true; };
+
+  fetch(endpoint).then(r=>r.json()).then(({lots})=>{
+    lots.forEach(l=>{
+      const el=document.getElementById(l.svg_id); if(!el) return;
+      el.classList.add('lot', `is-${l.status}`);
+      el.setAttribute('tabindex','0'); el.setAttribute('role','button');
+      const tip=`${l.tooltip} • ${l.status==='available'?'Disponible':(l.status==='reserved'?'Apartado':'Vendido')}`;
+      ['mouseenter','mousemove'].forEach(evt=>el.addEventListener(evt, e=>showTip(e, tip)));
+      ['mouseleave','blur'].forEach(evt=>el.addEventListener(evt, hideTip));
+      el.addEventListener('click', ()=>{ if(l.status!=='sold') window.location.href=l.url; });
+      el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
+    });
+  }).catch(console.error);
+})();
+</script>

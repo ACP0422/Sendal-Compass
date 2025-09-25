@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+{% load i18n humanize static l10n %}
+
+{% block title %}Lote {{ lot.code }} – {{ dev.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/lot-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="lotd container">
+  <a href="javascript:history.back()" class="lotd-back">← {% trans "Regresar" %}</a>
+
+  <div class="lotd-grid">
+    <!-- LADO IZQUIERDO: PREVIEW DEL LOTE -->
+    <section class="lotd-left">
+      <div id="lotPreview"
+           data-front="{{ lot.front_m|default_if_none:''|unlocalize }}"
+           data-back="{{ lot.back_m|default_if_none:''|unlocalize }}"
+           data-left="{{ lot.left_m|default_if_none:''|unlocalize }}"
+           data-right="{{ lot.right_m|default_if_none:''|unlocalize }}"
+           data-frontage="{{ lot.frontage_m|default_if_none:''|unlocalize }}"
+           data-depth="{{ lot.depth_m|default_if_none:''|unlocalize }}">
+        <!-- SVG generado por JS -->
+      </div>
+
+      <div class="lotd-meta">
+        <h1 class="lotd-title">
+          {% trans "Lote" %} {{ lot.code }}
+          <small>({{ lot.area_m2|floatformat:0 }} m²)</small>
+        </h1>
+        <p class="lotd-sub">
+          {% trans "Etapa" %} {{ stage.number }} – {{ dev.name }}
+        </p>
+        <p class="lotd-status">
+          <b>{% trans "Estado" %}:</b>
+          {% if lot.status == "available" %}
+            <span class="badge ok">{% trans "Disponible" %}</span>
+          {% elif lot.status == "reserved" %}
+            <span class="badge warn">{% trans "Apartado" %}</span>
+          {% else %}
+            <span class="badge off">{% trans "Vendido" %}</span>
+          {% endif %}
+        </p>
+        <ul class="lotd-keys">
+          {% with ppm=lot.price_per_m2_override|default:stage.price_per_m2 %}
+            <li><b>{% trans "Área total" %}:</b> {{ lot.area_m2|floatformat:2 }} m²</li>
+            <li><b>{% trans "Precio por m²" %}:</b> {{ ppm|floatformat:2|intcomma }}</li>
+          {% endwith %}
+        </ul>
+      </div>
+    </section>
+
+    <!-- LADO DERECHO: COTIZADOR -->
+    <aside class="lotd-right">
+      <h2 class="lotd-price">
+        {% trans "Precio de lista" %}:
+        <span id="priceDisplay">{{ lot.list_price|floatformat:2|intcomma }}</span>
+      </h2>
+    
+      <!-- Controles -->
+      <div class="qc-controls">
+        <div>
+          <label for="months">{% trans "Plazo" %}</label>
+          <select id="months">
+            <option>60</option><option>96</option><option>120</option><option selected>180</option>
+          </select>
+        </div>
+    
+        <div>
+          <label for="downMethod">{% trans "Método cálculo de enganche" %}</label>
+          <select id="downMethod">
+            <option value="percent">{% trans "Porcentaje" %}</option>
+            <option value="amount">{% trans "Monto" %}</option>
+          </select>
+        </div>
+    
+        <div>
+          <label for="downValue">{% trans "Valor de enganche" %}</label>
+          <div class="qc-inline">
+            <input id="downValue" type="number" step="0.01" value="10">
+            <small id="downHint">%</small>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Resumen -->
+      <ul class="qc-summary">
+        <li><b>{% trans "Apartado" %}:</b> <span id="bookingDisplay"></span></li>
+        <li><b>{% trans "Saldo de enganche" %}:</b> <span id="downBalanceDisplay"></span></li>
+        <li><b>{% trans "Fecha límite para el pago de enganche" %}:</b> <span id="deadlineDisplay">5 {% trans "días" %}</span></li>
+        <li><b>{% trans "Precio de lista" %}:</b> <span id="listDisplay"></span></li>
+      </ul>
+    
+      <!-- Esquema de pagos -->
+      <h3 class="qc-h3">{% trans "Esquema de pagos" %}</h3>
+      <table class="qc-table" aria-describedby="scheduleHelp">
+        <thead>
+          <tr>
+            <th>{% trans "Actualización" %}</th>
+            <th class="num">{% trans "Monto" %}</th>
+            <th class="num">{% trans "Pagos" %}</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleRows">
+          <!-- JS inserta 3 filas -->
+        </tbody>
+      </table>
+    
+      <!-- Datos de envío -->
+      <h3 class="qc-h3">{% trans "Datos de envío" %}</h3>
+      <p id="scheduleHelp" class="qc-help">
+        {% trans "Al ingresar sus datos de contacto se le enviará a su correo la cotización generada con base al número de plazos ingresado." %}
+      </p>
+    
+      <form class="qc-send">
+        <label>{% trans "Nombre Completo" %}</label>
+        <input type="text" placeholder="Jane Smitherton" required>
+    
+        <label>{% trans "Teléfono" %}</label>
+        <input type="tel" placeholder="(+52) 999 999 9999" required>
+    
+        <label>Email</label>
+        <input type="email" placeholder="email@ejemplo.com" required>
+    
+        <button type="submit">{% trans "Enviar cotización" %}</button>
+      </form>
+    </aside>
+    
+  </div>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script>
+(() => {
+  const money = n => (isFinite(n) ? n : 0).toLocaleString('es-MX',{style:'currency',currency:'MXN'});
+
+  // ===== COTIZADOR (panel con esquema) =====
+
+  // Opción 1: directo desde el template, sin formatear
+const price = parseFloat('{{ lot.list_price|unlocalize }}') || 0;
+  const BOOKING_FEE  = 1000;   // Apartado (ajústalo)
+  const DEADLINE_DAYS = 5;     // Límite enganche (texto)
+
+  // Controles
+  const $months = document.getElementById('months');
+  const $method = document.getElementById('downMethod');
+  const $value  = document.getElementById('downValue');
+  const $hint   = document.getElementById('downHint');
+
+  // Displays
+  const $priceDisp = document.getElementById('priceDisplay');
+  const $booking   = document.getElementById('bookingDisplay');
+  const $downBal   = document.getElementById('downBalanceDisplay');
+  const $listDisp  = document.getElementById('listDisplay');
+  const $deadline  = document.getElementById('deadlineDisplay');
+  const $rows      = document.getElementById('scheduleRows');
+
+  // Inicializa fijos
+  if ($priceDisp) $priceDisp.textContent = money(price);
+  if ($booking)   $booking.textContent   = money(BOOKING_FEE);
+  if ($listDisp)  $listDisp.textContent  = money(price);
+  if ($deadline)  $deadline.textContent  = `${DEADLINE_DAYS} días`;
+
+  // División del plazo en 3 bloques y escalamiento de mensualidad
+  const SPLIT   = [0.25, 0.42, 1];      // 25% / 42% / resto
+  const STEP_UP = [0.00, 0.15, 0.30];   // +0%, +15%, +30%
+
+  const splitMonths = (m) => {
+    const a = Math.max(1, Math.round(m * SPLIT[0]));
+    const b = Math.max(1, Math.round(m * SPLIT[1]) - a);
+    const c = Math.max(1, m - a - b);
+    return [a,b,c];
+  };
+
+  function recalc(){
+    const m  = +($months?.value || 1);
+    const v  = +($value?.value || 0);
+    const down = ($method?.value === 'amount')
+      ? Math.min(v, price)
+      : price * (v/100);
+
+    // Saldo de enganche (después del apartado)
+    const engancheSaldo = Math.max(0, down - BOOKING_FEE);
+    if ($downBal) $downBal.textContent = money(engancheSaldo);
+
+    // Saldo a financiar
+    const balance = Math.max(0, price - down);
+    const baseMonthly = balance / Math.max(1, m);
+
+    const [m1,m2,m3] = splitMonths(m);
+    const pm1 = baseMonthly * (1 + STEP_UP[0]);
+    const pm2 = baseMonthly * (1 + STEP_UP[1]);
+    const pm3 = baseMonthly * (1 + STEP_UP[2]);
+
+    if ($rows){
+      $rows.innerHTML = '';
+      [
+        {label: 'Actualización 1', monto: pm1, pagos: m1},
+        {label: 'Actualización 2', monto: pm2, pagos: m2},
+        {label: 'Actualización 3', monto: pm3, pagos: m3},
+      ].forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.label}</td>
+          <td class="num">${money(r.monto)}</td>
+          <td class="num">${r.pagos}</td>`;
+        $rows.appendChild(tr);
+      });
+    }
+  }
+
+  $method?.addEventListener('change', () => {
+    if ($method.value === 'percent'){ $hint.textContent = '%'; $value.value ||= 10; }
+    else { $hint.textContent = 'MXN'; $value.value ||= 10000; }
+    recalc();
+  });
+  $months?.addEventListener('input', recalc);
+  $value?.addEventListener('input', recalc);
+  recalc();
+
+  // ===== PREVIEW SVG (etiquetas fuera + “pills” y sin recortes) =====
+  const wrap = document.getElementById('lotPreview');
+  if (!wrap) return;
+
+  const meta = {
+    front    : parseFloat(wrap.dataset.front),
+    back     : parseFloat(wrap.dataset.back),
+    left     : parseFloat(wrap.dataset.left),
+    right    : parseFloat(wrap.dataset.right),
+    frontage : parseFloat(wrap.dataset.frontage),
+    depth    : parseFloat(wrap.dataset.depth),
+  };
+
+  const W = 460, H = 320;                 // lienzo
+  const PAD = 40;                         // margen para etiquetas
+  const GAP = 20;                         // distancia etiqueta ↔ lote
+  const svgNS = 'http://www.w3.org/2000/svg';
+
+  const svg = document.createElementNS(svgNS,'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.classList.add('lotd-svg');
+
+  // Fondo
+  const bg = document.createElementNS(svgNS,'rect');
+  bg.setAttribute('x',0); bg.setAttribute('y',0);
+  bg.setAttribute('width',W); bg.setAttribute('height',H);
+  bg.setAttribute('rx',18); bg.setAttribute('class','lotd-canvas');
+  svg.appendChild(bg);
+
+  // Helper etiquetas con “pill” y auto-ajuste para no salir del lienzo
+  const fs = 16;                 // tamaño base de fuente
+  const TAGPX = {x:10, y:6};     // padding del pill
+
+  function label(x, y, text, anchor='middle'){
+    const g = document.createElementNS(svgNS,'g');
+
+    const t = document.createElementNS(svgNS,'text');
+    t.setAttribute('x',x); t.setAttribute('y',y);
+    t.setAttribute('text-anchor', anchor);
+    t.setAttribute('dominant-baseline','middle');
+    t.setAttribute('class','lotd-txt');
+    t.style.fontSize = fs + 'px';
+    t.textContent = text;
+    g.appendChild(t);
+
+    // medir y crear “pill”
+    svg.appendChild(g);
+    const bb = t.getBBox();
+    const r  = document.createElementNS(svgNS,'rect');
+    r.setAttribute('x', bb.x - TAGPX.x);
+    r.setAttribute('y', bb.y - TAGPX.y);
+    r.setAttribute('width',  bb.width  + TAGPX.x*2);
+    r.setAttribute('height', bb.height + TAGPX.y*2);
+    r.setAttribute('rx', 8);
+    r.setAttribute('class','lotd-tag');
+    g.insertBefore(r, t);
+
+    // Mantener dentro del lienzo (sin cortar)
+    const margin = 6;
+    const gbb = g.getBBox();
+    let dx = 0, dy = 0;
+    if (gbb.x < margin) dx = margin - gbb.x;
+    else if (gbb.x + gbb.width > W - margin) dx = (W - margin) - (gbb.x + gbb.width);
+    if (gbb.y < margin) dy = margin - gbb.y;
+    else if (gbb.y + gbb.height > H - margin) dy = (H - margin) - (gbb.y + gbb.height);
+    if (dx || dy) g.setAttribute('transform', `translate(${dx},${dy})`);
+
+    return g;
+  }
+
+  // ¿Irregular (4 lados) o rectangular (frente×fondo)?
+  const isIrregular = [meta.front,meta.back,meta.left,meta.right].every(v => !isNaN(v));
+
+  if (isIrregular){
+    const top = meta.front, bot = meta.back, lft = meta.left, rgt = meta.right;
+    const sx = (W - 2*PAD) / Math.max(top, bot);
+    const sy = (H - 2*PAD) / Math.max(lft, rgt);
+    const S  = Math.min(sx, sy);
+
+    const Wt = top*S, Wb = bot*S;
+    const yTop = PAD, yLb = PAD + lft*S, yRb = PAD + rgt*S;
+    const cx = W/2;
+    const xTl = cx - Wt/2, xTr = cx + Wt/2, xBl = cx - Wb/2, xBr = cx + Wb/2;
+
+    const p = document.createElementNS(svgNS,'path');
+    p.setAttribute('d', `M ${xTl},${yTop} L ${xTr},${yTop} L ${xBr},${yRb} L ${xBl},${yLb} Z`);
+    p.setAttribute('class','lotd-poly');
+    svg.appendChild(p);
+
+    // Etiquetas SIEMPRE fuera
+    label(cx, yTop - GAP,                `${top.toFixed(2)} m`, 'middle'); // arriba
+    label(cx, Math.max(yLb,yRb) + GAP,   `${bot.toFixed(2)} m`, 'middle'); // abajo
+    label(xTl - GAP, (yTop+yLb)/2,       `${lft.toFixed(2)} m`, 'end');    // izq
+    label(xTr + GAP, (yTop+yRb)/2,       `${rgt.toFixed(2)} m`, 'start');  // der
+  } else if (!isNaN(meta.frontage) && !isNaN(meta.depth)) {
+    const fw = meta.frontage, dh = meta.depth;
+    const sx = (W - 2*PAD) / fw;
+    const sy = (H - 2*PAD) / dh;
+    const S  = Math.min(sx, sy);
+
+    const w = fw*S, h = dh*S;
+    const x = (W - w)/2, y = (H - h)/2;
+
+    const r = document.createElementNS(svgNS,'rect');
+    r.setAttribute('x',x); r.setAttribute('y',y);
+    r.setAttribute('width',w); r.setAttribute('height',h);
+    r.setAttribute('rx',12);
+    r.setAttribute('class','lotd-poly');
+    svg.appendChild(r);
+
+    // Etiquetas SIEMPRE fuera
+    label(W/2, y - GAP,        `${fw.toFixed(2)} m`, 'middle'); // arriba
+    label(W/2, y + h + GAP,    `${fw.toFixed(2)} m`, 'middle'); // abajo
+    label(x - GAP,     y + h/2,`${dh.toFixed(2)} m`, 'end');    // izq
+    label(x + w + GAP, y + h/2,`${dh.toFixed(2)} m`, 'start');  // der
+  }
+
+  wrap.appendChild(svg);
+})();
+</script>
+{% endblock %}

@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',  
     'principal',
+    'lots',
 ]
 
 # Add WhiteNoise to middleware (add this to your existing MIDDLEWARE)

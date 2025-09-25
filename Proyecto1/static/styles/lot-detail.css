@@ -1,0 +1,116 @@
+/* Layout general */
+.lotd.container{max-width:1100px;margin:24px auto;padding:0 16px}
+.lotd-back{display:inline-block;margin-bottom:10px;color:#3b5b53;font-weight:700;text-decoration:none}
+.lotd-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+@media (max-width:900px){.lotd-grid{grid-template-columns:1fr;gap:18px}}
+
+/* Panel izquierdo */
+.lotd-left{display:grid;grid-template-rows:auto auto;gap:14px}
+#lotPreview{background:#fff;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,.12);padding:12px}
+.lotd-svg{width:100%;height:auto;display:block}
+.lotd-canvas{fill:#f7f7f7}
+.lotd-poly{fill:#e7f6ee;stroke:#2b5a46;stroke-width:3}
+.lotd-txt{font:600 12px/1 Inter,system-ui;fill:#222;text-anchor:middle;dominant-baseline:central}
+.lotd-title{font:700 28px/1.1 Inter,system-ui;margin:0}
+.lotd-title small{font-weight:700;font-size:.72em;color:#556}
+.lotd-sub{margin:.2rem 0 0;color:#6b6b6b}
+.lotd-status{margin:.2rem 0 0}
+.badge{padding:.22rem .6rem;border-radius:999px;font-size:.85rem}
+.badge.ok{background:#cfe8a6}
+.badge.warn{background:#f5f49a}
+.badge.off{background:#c7c7c7}
+.lotd-keys{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.2rem}
+
+/* Cotizador (derecha) */
+.lotd-right{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 6px 30px rgba(0,0,0,.12)}
+.lotd-price{margin:.2rem 0 1rem;font:700 20px/1.2 Inter,system-ui}
+.lotd-price span{font-size:24px}
+.lotd-quote .row{display:grid;gap:6px;margin:.6rem 0}
+.lotd-quote .row.two{grid-template-columns:1fr 1fr;gap:12px}
+.lotd-quote label{font:600 13px/1 Inter,system-ui;color:#333}
+.lotd-quote select,.lotd-quote input{height:38px;border:1px solid #d2d2d2;border-radius:10px;padding:0 10px;font:600 14px/1 Inter,system-ui}
+#downHint{margin-left:6px;color:#555}
+.lotd-box{margin:12px 0 4px;background:#fafafa;border:1px dashed #ddd;border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.lotd-plan{margin:14px 0 0}
+.lotd-plan img{max-width:100%;height:auto;border-radius:12px;display:block}
+.lotd-plan figcaption{font-size:12px;color:#666;margin-top:4px}
+
+
+
+/* El SVG ocupa el ancho, y el texto siempre legible */
+.lotd-svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+.lotd-canvas{ fill:#f7f7f7; }
+
+.lotd-poly{
+  fill:#e7f6ee;
+  stroke:#2b5a46;
+  stroke-width:3;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Texto con halo + “pill” blanco detrás */
+.lotd-txt{
+  font: 700 16px/1.1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  fill:#1f2937;
+  paint-order: stroke fill;
+  stroke:#fff;                 /* halo blanco */
+  stroke-width:3px;
+  dominant-baseline: middle;
+}
+
+.lotd-tag{
+  fill:#fff;                   /* pill */
+  stroke:#e5e7eb;
+  stroke-width:1px;
+  filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.08));
+}
+
+
+
+
+
+
+/* ---- Quote Card (lado derecho) ---- */
+.qc-controls{
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:10px 0 12px;
+  }
+  .qc-controls label{ font:600 13px/1 Inter,system-ui; color:#333; }
+  .qc-controls select,.qc-controls input{
+    width:100%; height:38px; border:1px solid #d2d2d2; border-radius:10px; padding:0 10px;
+    font:600 14px/1 Inter,system-ui; background:#fff;
+  }
+  .qc-inline{ display:flex; align-items:center; gap:6px; }
+  #downHint{ color:#555; }
+  
+  .qc-summary{
+    list-style:none; margin:6px 0 12px; padding:10px 12px;
+    background:#fafafa; border:1px dashed #dedede; border-radius:12px;
+    display:grid; gap:6px;
+  }
+  .qc-summary b{ font-weight:700; }
+  
+  .qc-h3{ margin:12px 0 8px; font:700 16px/1.2 Inter,system-ui; color:#3a2; }
+  
+  .qc-table{ width:100%; border-collapse:separate; border-spacing:0; overflow:hidden;
+    border:1px solid #e6e6e6; border-radius:12px; background:#fff;
+  }
+  .qc-table thead th{
+    text-align:left; font:700 13px/1 Inter,system-ui; background:#f6f6f6; padding:10px 12px; border-bottom:1px solid #e6e6e6;
+  }
+  .qc-table td{ padding:10px 12px; border-bottom:1px solid #f0f0f0; }
+  .qc-table tr:last-child td{ border-bottom:0; }
+  .qc-table .num{ text-align:right; font-variant-numeric: tabular-nums; }
+  
+  .qc-help{ font-size:12px; color:#666; margin:.4rem 0 .6rem; }
+  
+  .qc-send{ display:grid; gap:8px; }
+  .qc-send input{
+    height:40px; border:1px solid #d2d2d2; border-radius:10px; padding:0 12px; font:600 14px/1 Inter,system-ui;
+  }
+  .qc-send button{
+    margin-top:6px; height:44px; border:0; border-radius:12px; background:#6a6a52; color:#fff; font:700 14px/1 Inter,system-ui;
+    cursor:pointer; box-shadow:0 6px 30px rgba(0,0,0,.12);
+  }
+  .qc-send button:hover{ filter:brightness(.97); }
+  
