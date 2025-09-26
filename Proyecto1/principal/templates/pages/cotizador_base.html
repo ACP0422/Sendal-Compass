@@ -30,8 +30,8 @@
       </div>
     {% endif %}
     {% if show_lots_map %}
-  {% include "lots/_map_inline.html" with dev_slug=lots_dev_slug stage_number=lots_stage_number %}
-{% endif %}
+    {% include "lots/_map_inline.html" with lots_dev_slug=lots_dev_slug lots_stage_number=lots_stage_number %}
+    {% endif %}
 
   </section>
 </main>

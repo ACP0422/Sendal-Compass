@@ -16,9 +16,9 @@ urlpatterns = [
     path('proyectos/tulum/', views.tulum, name='tulum'),
     path('proyectos/valladolid/hacienda/', views.hacienda, name='hacienda'),
 
-    # predios (ruta correcta)
+    
     path("proyectos/valladolid/predios/<slug:slug>/", views.predio_detail, name="predio-detail"),
-    # compatibilidad /proyectos/valladolid/predio1/
+   
     path("proyectos/valladolid/<slug:slug>/", views.predio_compat, name="valladolid-compat"),
 
     path('proyectos/komchen/', views.komchen, name='komchen'),
