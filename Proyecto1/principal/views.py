@@ -75,9 +75,22 @@ def cotizador_detail(request, slug: str):
 
     # <<< SOLO para HACIENDA: mostrar mapa interactivo >>>
     if slug == "hacienda":
+        dev_slug = "hacienda-residencial"   # <- este debe coincidir con Development.slug en DB
+        stage_number = 1
+
         ctx["show_lots_map"] = True
-        ctx["lots_dev_slug"] = "hacienda"
-        ctx["lots_stage_number"] = 1
+        ctx["lots_dev_slug"] = dev_slug
+        ctx["lots_stage_number"] = stage_number
+
+    # Opción robusta: calcula la URL del JSON aquí
+        ctx["lots_endpoint"] = reverse(
+            "lots_json",
+            kwargs={"development_slug": dev_slug, "stage_number": stage_number},
+    )
+
+
+
+
         # Si quieres ocultar la imagen estática del masterplan:
         # ctx["map_img"] = None
         
