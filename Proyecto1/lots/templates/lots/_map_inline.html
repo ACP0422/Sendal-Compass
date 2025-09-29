@@ -194,7 +194,7 @@
         
 
 
-      const endpoint = "{% url 'lots_json' development_slug=dev_slug stage_number=stage_number %}";
+        const endpoint = "{{ endpoint|escapejs }}";
       const svg  = document.getElementById('hacienda-map');
       const tip  = document.getElementById('tooltip');
       const back = document.getElementById('backToOverview');
