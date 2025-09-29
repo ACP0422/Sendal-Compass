@@ -1,342 +1,337 @@
-{% extends "base.html" %}
-{% load i18n humanize static l10n %}
+{% load static i18n %}
+<link rel="stylesheet" href="{% static 'styles/lots-map.css' %}">
 
-{% block title %}Lote {{ lot.code }} – {{ dev.name }}{% endblock %}
+<div class="map-card">
+  <div class="svg-frame">
+    <!-- ======== HACIENDA RESIDENCIAL (Overview + Etapa 1 lots) ======== -->
+    <svg id="hacienda-map" viewBox="0 0 1500 540" class="lots-svg" aria-labelledby="title">
+      <title id="title">Hacienda Residencial – Mapa general</title>
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'styles/lot-detail.css' %}">
-{% endblock %}
+      <!-- ======= DECOR (no interactivo) ======= -->
+      <g class="decor" pointer-events="none">
 
-{% block content %}
-<main class="lotd container">
-  <a href="javascript:history.back()" class="lotd-back">← {% trans "Regresar" %}</a>
+       
 
-  <div class="lotd-grid">
-    <!-- LADO IZQUIERDO: PREVIEW DEL LOTE -->
-    <section class="lotd-left">
-      <div id="lotPreview"
-           data-front="{{ lot.front_m|default_if_none:''|unlocalize }}"
-           data-back="{{ lot.back_m|default_if_none:''|unlocalize }}"
-           data-left="{{ lot.left_m|default_if_none:''|unlocalize }}"
-           data-right="{{ lot.right_m|default_if_none:''|unlocalize }}"
-           data-frontage="{{ lot.frontage_m|default_if_none:''|unlocalize }}"
-           data-depth="{{ lot.depth_m|default_if_none:''|unlocalize }}">
-        <!-- SVG generado por JS -->
-      </div>
+    <!-- Periférico: líneas + etiqueta tipo pill -->
+    <g id="periferico" transform="translate(185,360) rotate(62)">
+        <!-- barras rojas -->
+        <rect x="-12" y="-230" width="10" height="330" fill="#cf2626"/>
+        <rect x="  8" y="-230" width="10" height="330" fill="#cf2626"/>
+    
+        <!--
+        <defs>
+        <path id="periferico-path" d="M -20 65 L -20 -255" />
+        </defs>
+        <text font-size="20" font-family="Inter, system-ui" fill="#222" font-weight="600" >
+        <textPath href="#periferico-path" startOffset="5%" >Periférico Valladolid</textPath>
+        </text>
+    -->
+    </g>
 
-      <div class="lotd-meta">
-        <h1 class="lotd-title">
-          {% trans "Lote" %} {{ lot.code }}
-          <small>({{ lot.area_m2|floatformat:0 }} m²)</small>
-        </h1>
-        <p class="lotd-sub">
-          {% trans "Etapa" %} {{ stage.number }} – {{ dev.name }}
-        </p>
-        <p class="lotd-status">
-          <b>{% trans "Estado" %}:</b>
-          {% if lot.status == "available" %}
-            <span class="badge ok">{% trans "Disponible" %}</span>
-          {% elif lot.status == "reserved" %}
-            <span class="badge warn">{% trans "Apartado" %}</span>
-          {% else %}
-            <span class="badge off">{% trans "Vendido" %}</span>
-          {% endif %}
-        </p>
-        <ul class="lotd-keys">
-          {% with ppm=lot.price_per_m2_override|default:stage.price_per_m2 %}
-            <li><b>{% trans "Área total" %}:</b> {{ lot.area_m2|floatformat:2 }} m²</li>
-            <li><b>{% trans "Precio por m²" %}:</b> {{ ppm|floatformat:2|intcomma }}</li>
-          {% endwith %}
-        </ul>
-      </div>
-    </section>
+            <!-- Curva negra superior -->
+        <path d="M 260 245 C 510 232, 740 234, 975 246 C 1115 254, 1280 256, 1422 252"
+              fill="none" stroke="#0c0c0c" stroke-width="6" stroke-linecap="round"/>
 
-    <!-- LADO DERECHO: COTIZADOR -->
-    <aside class="lotd-right">
-      <h2 class="lotd-price">
-        {% trans "Precio de lista" %}:
-        <span id="priceDisplay">{{ lot.list_price|floatformat:2|intcomma }}</span>
-      </h2>
-    
-      <!-- Controles -->
-      <div class="qc-controls">
-        <div>
-          <label for="months">{% trans "Plazo" %}</label>
-          <select id="months">
-            <option>60</option><option>96</option><option>120</option><option selected>180</option>
-          </select>
-        </div>
-    
-        <div>
-          <label for="downMethod">{% trans "Método cálculo de enganche" %}</label>
-          <select id="downMethod">
-            <option value="percent">{% trans "Porcentaje" %}</option>
-            <option value="amount">{% trans "Monto" %}</option>
-          </select>
-        </div>
-    
-        <div>
-          <label for="downValue">{% trans "Valor de enganche" %}</label>
-          <div class="qc-inline">
-            <input id="downValue" type="number" step="0.01" value="10">
-            <small id="downHint">%</small>
-          </div>
-        </div>
-      </div>
-    
-      <!-- Resumen -->
-      <ul class="qc-summary">
-        <li><b>{% trans "Apartado" %}:</b> <span id="bookingDisplay"></span></li>
-        <li><b>{% trans "Saldo de enganche" %}:</b> <span id="downBalanceDisplay"></span></li>
-        <li><b>{% trans "Fecha límite para el pago de enganche" %}:</b> <span id="deadlineDisplay">5 {% trans "días" %}</span></li>
-        <li><b>{% trans "Precio de lista" %}:</b> <span id="listDisplay"></span></li>
-      </ul>
-    
-      <!-- Esquema de pagos -->
-      <h3 class="qc-h3">{% trans "Esquema de pagos" %}</h3>
-      <table class="qc-table" aria-describedby="scheduleHelp">
-        <thead>
-          <tr>
-            <th>{% trans "Actualización" %}</th>
-            <th class="num">{% trans "Monto" %}</th>
-            <th class="num">{% trans "Pagos" %}</th>
-          </tr>
-        </thead>
-        <tbody id="scheduleRows">
-          <!-- JS inserta 3 filas -->
-        </tbody>
-      </table>
-    
-      <!-- Datos de envío -->
-      <h3 class="qc-h3">{% trans "Datos de envío" %}</h3>
-      <p id="scheduleHelp" class="qc-help">
-        {% trans "Al ingresar sus datos de contacto se le enviará a su correo la cotización generada con base al número de plazos ingresado." %}
-      </p>
-    
-      <form class="qc-send">
-        <label>{% trans "Nombre Completo" %}</label>
-        <input type="text" placeholder="Jane Smitherton" required>
-    
-        <label>{% trans "Teléfono" %}</label>
-        <input type="tel" placeholder="(+52) 999 999 9999" required>
-    
-        <label>Email</label>
-        <input type="email" placeholder="email@ejemplo.com" required>
-    
-        <button type="submit">{% trans "Enviar cotización" %}</button>
-      </form>
-    </aside>
-    
+        <!-- Siembra de Agave (fluye y llega a la altura de Etapa 7) -->
+        <polygon class="bg-agave"
+          points="
+            300,360  420,372  540,360  585,344  610,322
+            610,500  488,492  370,468  286,436
+          " />
+
+        <!-- Zona Comercial (trapezio sobre Agave, DOM después para quedar encima) -->
+        <polygon class="bg-commercial"
+          points="
+            300,418  438,458  520,476  548,410
+            420,370  308,360
+          " />
+
+        <!-- Amenidades (alineada a E1/E2) -->
+        <polygon class="bg-amenities" fill="#47d461"
+          points="1290,372 1346,372 1362,500 1290,500" />
+
+        <!-- Pills de texto -->
+        <g class="pill-label" transform="translate(360,382)">
+          <rect x="-90" y="-22" width="180" height="32" rx="10"/>
+          <text text-anchor="middle" dominant-baseline="middle" y="-6">Zona Comercial</text>
+        </g>
+        <g class="pill-label" transform="translate(540,350)">
+          <rect x="-105" y="-22" width="210" height="32" rx="10"/>
+          <text text-anchor="middle" dominant-baseline="middle" y="-6">Siembra de Agave</text>
+        </g>
+
+        <g class="pill-label" transform="translate(200,310) rotate(335)">
+            <rect x="-90" y="-22" width="180" height="32" rx="10"/>
+            <text text-anchor="middle" dominant-baseline="middle" y="-6">Periférico</text>
+          </g>
+
+
+        <g class="pill-label" transform="translate(825,270)">
+          <rect x="-58" y="-20" width="116" height="28" rx="8"/>
+          <text text-anchor="middle" dominant-baseline="middle">Entrada</text>
+        </g>
+        <g class="pill-label" transform="translate(1320,358)">
+          <rect x="-78" y="-22" width="156" height="32" rx="10"/>
+          <text text-anchor="middle" dominant-baseline="middle" y="-6">Amenidades</text>
+        </g>
+      </g>
+
+      <!-- ===== OVERVIEW (etapas) ===== -->
+      <g id="overview">
+        <g id="stage-7-shape" class="stage narrow is-inactive" data-stage="7">
+          <polygon points="610,322 650,322 650,500 610,500"/>
+          <text x="630" y="414" text-anchor="middle" dominant-baseline="middle">Etapa 7</text>
+        </g>
+
+        <g id="stage-6-shape" class="stage is-inactive" data-stage="6">
+          <polygon points="655,320 770,318 770,500 655,500"/>
+          <text x="712" y="414" text-anchor="middle" dominant-baseline="middle">Etapa 6</text>
+        </g>
+
+        <g id="stage-5-shape" class="stage is-inactive" data-stage="5">
+          <polygon points="778,318 920,328 920,500 778,500"/>
+          <text x="849" y="414" text-anchor="middle" dominant-baseline="middle">Etapa 5</text>
+        </g>
+
+        <g id="stage-4-shape" class="stage is-inactive" data-stage="4">
+          <polygon points="928,328 1026,352 1026,500 928,500"/>
+          <text x="977" y="424" text-anchor="middle" dominant-baseline="middle">Etapa 4</text>
+        </g>
+
+        <g id="stage-3-shape" class="stage is-inactive" data-stage="3">
+          <polygon points="1034,352 1118,372 1118,500 1034,500"/>
+          <text x="1076" y="432" text-anchor="middle" dominant-baseline="middle">Etapa 3</text>
+        </g>
+
+        <g id="stage-2-shape" class="stage is-inactive" data-stage="2">
+          <polygon points="1126,372 1250,372 1250,500 1126,500"/>
+          <text x="1188" y="436" text-anchor="middle" dominant-baseline="middle">Etapa 2</text>
+        </g>
+
+        <!-- Etapa 1 (activa) -->
+        <g id="stage-1-shape" class="stage narrow is-active" data-stage="1">
+          <polygon points="1250,372 1290,372 1290,500 1250,500"/>
+          <text x="1270" y="432" text-anchor="middle" dominant-baseline="middle">Etapa 1</text>
+        </g>
+      </g>
+
+      <!-- ===== OVERLAY DETALLE (sin zoom) ===== -->
+      <g id="stage-1-overlay" visibility="hidden"></g>
+    </svg>
+     <!-- Leyenda (solo se muestra en vista de lotes) -->
+<div id="legend" class="legend" hidden>
+    <span class="chip chip-reserved">Apartado</span>
+    <span class="chip chip-available">Disponible</span>
+    <span class="chip chip-sold">Vendido</span>
   </div>
-</main>
-{% endblock %}
-{% block extra_js %}
+
+    <button id="backToOverview" class="back-btn" hidden>← {% trans "Ver todas las etapas" %}</button>
+    <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+  </div>
+
+ 
+  
+</div>
+
+<style>
+  :root{
+    --sendal-bg:#5b5747; --sendal-ink:#f4efe7;
+    --lot-stroke:#234b38; --lot-available:#CFE8A6; --lot-reserved:#F5F49A; --lot-sold:#C7C7C7;
+  }
+  .svg-frame{position:relative;background:#4c483b;border-radius:16px;box-shadow:0 2px 0 rgba(0,0,0,.08),0 4px 18px rgba(0,0,0,.20);overflow:hidden;padding:12px}
+  .lots-svg{width:100%;height:auto;display:block}
+
+  .stage polygon,.stage path{fill:#8c8f89;stroke:#1d4b3a;stroke-width:2;vector-effect:non-scaling-stroke}
+  .stage text{font:600 20px/1 Inter,system-ui;-webkit-font-smoothing:antialiased;fill:#f4efe7}
+  .stage.is-inactive{opacity:.55;cursor:not-allowed}
+  .stage.is-active polygon{fill:#CDE7C8}
+  .stage.is-active{cursor:pointer}
+  .stage.narrow text{font-size:18px}
+
+  .pill-label rect{fill:#fff;opacity:.92}
+  .pill-label text{fill:#222;font:700 14px/1.2 Inter,system-ui}
+
+  .decor .bg-agave{fill:#41c95b!important;stroke:none}
+  .decor .bg-commercial{fill:#26c6da!important;stroke:none}
+  .decor .bg-amenities{fill:#47d461!important;stroke:none}
+
+  .tooltip{position:fixed;z-index:40;background:#111;color:#fff;font-size:13px;white-space:nowrap;
+           padding:8px 10px;border-radius:8px;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.35);transform:translate(-50%,-120%)}
+
+  .back-btn{position:absolute;left:14px;top:14px;background:#fff;color:#333;border:none;border-radius:10px;height:36px;padding:0 12px;font-weight:700;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+
+  /* Overlay detalle */
+  #stage-1-overlay .panel{fill:#8c8f89;stroke:#1d4b3a;stroke-width:3;vector-effect:non-scaling-stroke}
+  #stage-1-overlay .lot{fill:#e9f2ee;stroke:#1d4b3a;stroke-width:2;vector-effect:non-scaling-stroke}
+  #stage-1-overlay .lot:hover{filter:brightness(.98) drop-shadow(0 4px 10px rgba(0,0,0,.25))}
+  .is-available{fill:var(--lot-available)!important}
+  .is-reserved{fill:var(--lot-reserved)!important}
+  .is-sold{fill:var(--lot-sold)!important;cursor:not-allowed;opacity:.9}
+
+
+  /* Leyenda en vista de lotes (overlay) */
+.legend{
+    display:flex; gap:28px; justify-content:center; align-items:center;
+    padding:16px 0 6px;
+  }
+  .legend .chip{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:170px; padding:14px 18px;
+    border-radius:999px; font:700 20px/1.1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color:#111; box-shadow:0 1px 2px rgba(0,0,0,.06);
+  }
+  
+  /* Colores coherentes con los lotes */
+  .chip-available{ background: var(--lot-available); }
+  .chip-reserved { background: var(--lot-reserved);  }
+  .chip-sold     { background: var(--lot-sold);      color:#111; }
+  
+</style>
+
 <script>
-(() => {
-  const money = n => (isFinite(n) ? n : 0).toLocaleString('es-MX',{style:'currency',currency:'MXN'});
+    (function(){
+        const legend = document.getElementById('legend');
+        
 
-  // ===== COTIZADOR (panel con esquema) =====
 
-  // Opción 1: directo desde el template, sin formatear
-const price = parseFloat('{{ lot.list_price|unlocalize }}') || 0;
-  const BOOKING_FEE  = 1000;   // Apartado (ajústalo)
-  const DEADLINE_DAYS = 5;     // Límite enganche (texto)
+      const endpoint = "{{ endpoint|escapejs }}";
+      const svg  = document.getElementById('hacienda-map');
+      const tip  = document.getElementById('tooltip');
+      const back = document.getElementById('backToOverview');
+      const overview = document.getElementById('overview');
+      const overlay  = document.getElementById('stage-1-overlay'); // <g id="stage-1-overlay" visibility="hidden"></g>
+    
+      const STATUS_LABEL = { available: 'Disponible', reserved: 'Apartado', sold: 'Vendido' };
+    
+      // Tooltip helpers
+      const showTip = (e,t)=>{
+        tip.textContent = t;
+        tip.style.left = (e.clientX+12)+'px';
+        tip.style.top  = (e.clientY+12)+'px';
+        tip.hidden = false;
+      };
+      const hideTip = ()=>{ tip.hidden = true; };
+    
+      // === Dibuja el panel de Etapa 1 ocupando TODO el mapa (sin zoom)
+      function showStage1Detail(){
+        
+        // Oculta overview visualmente y muestra overlay
+        overview.style.opacity = .12;
+        overlay.setAttribute('visibility','visible');
+        overlay.innerHTML = '';
+    
+        // Dimensiones del SVG (viewBox)
+        const vb = svg.viewBox.baseVal; // p.ej. 1500 x 540
+        const PAD = 36;   // margen externo del panel
+        const GAP = 8;    // separación entre lotes
+        const N   = 9;    // número de lotes
+    
+        // Panel
+        const panelX = PAD, panelY = PAD;
+        const panelW = vb.width  - PAD*2;
+        const panelH = vb.height - PAD*2;
+    
+        const panel = document.createElementNS('http://www.w3.org/2000/svg','rect');
+        panel.setAttribute('x',panelX);
+        panel.setAttribute('y',panelY);
+        panel.setAttribute('width',panelW);
+        panel.setAttribute('height',panelH);
+        panel.setAttribute('rx','16');
+        panel.setAttribute('class','panel'); // dale estilo si quieres
+        overlay.appendChild(panel);
+    
+        // Franjas/lotes (verticales)
+        const innerPad = 22;
+        const innerW = panelW - innerPad*2 - GAP*(N-1);
+        const innerH = panelH - innerPad*2;
+        const lotW   = innerW / N;
+        const x0     = panelX + innerPad;
+        const y0     = panelY + innerPad;
+    
+        const rects = [];
+        for(let i=0;i<N;i++){
+          const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+          r.setAttribute('id', `lot-${i+1}`);           // intenta empatar con svg_id del backend
+          r.setAttribute('x',  (x0 + i*(lotW+GAP)).toFixed(2));
+          r.setAttribute('y',  y0.toFixed(2));
+          r.setAttribute('width',  lotW.toFixed(2));
+          r.setAttribute('height', innerH.toFixed(2));
+          r.setAttribute('rx','10');
+          r.setAttribute('class','lot');               // estilos base
+          overlay.appendChild(r);
+          rects.push(r);
+        }
+    
+        // Trae estados y comportamientos
+        fetch(endpoint)
+          .then(r=>r.json())
+          .then(({lots})=>{
+            lots.forEach((l, i)=>{
+              // 1) Busca por id exacto
+              let el = l.svg_id ? document.getElementById(l.svg_id) : null;
+              // 2) Si no existe o no coincide, usa el orden como respaldo
+              if (!el) el = rects[i];
+              if (!el) return;
+    
+              // Colorea por estado
+              el.classList.add(`is-${l.status}`);
+    
+              // Accesibilidad + metadatos
+              el.setAttribute('tabindex','0');
+              el.setAttribute('role','button');
+              el.dataset.status = l.status;
+              el.dataset.code   = l.code;
+              el.dataset.area   = l.area_m2;
+    
+              // Tooltip
+              const txt = `Lote ${l.code} · ${l.area_m2} m² • ${STATUS_LABEL[l.status] || l.status}`;
+              ['mouseenter','mousemove'].forEach(evt=> el.addEventListener(evt, e=>showTip(e, txt)));
+              ['mouseleave','blur'].forEach(evt=> el.addEventListener(evt, hideTip));
+    
+              // Navegación a detalle (si no está vendido)
+              if (l.status !== 'sold' && l.url){
+                el.addEventListener('click', ()=>{ window.location.href = l.url; });
+                el.addEventListener('keydown', e=>{
+                  if (e.key==='Enter' || e.key===' '){ e.preventDefault(); el.click(); }
+                });
+              } else {
+                el.style.cursor = 'not-allowed';
+                el.setAttribute('aria-disabled','true');
+              }
+            });
+          })
+          .catch(console.error);
+    
 
-  // Controles
-  const $months = document.getElementById('months');
-  const $method = document.getElementById('downMethod');
-  const $value  = document.getElementById('downValue');
-  const $hint   = document.getElementById('downHint');
-
-  // Displays
-  const $priceDisp = document.getElementById('priceDisplay');
-  const $booking   = document.getElementById('bookingDisplay');
-  const $downBal   = document.getElementById('downBalanceDisplay');
-  const $listDisp  = document.getElementById('listDisplay');
-  const $deadline  = document.getElementById('deadlineDisplay');
-  const $rows      = document.getElementById('scheduleRows');
-
-  // Inicializa fijos
-  if ($priceDisp) $priceDisp.textContent = money(price);
-  if ($booking)   $booking.textContent   = money(BOOKING_FEE);
-  if ($listDisp)  $listDisp.textContent  = money(price);
-  if ($deadline)  $deadline.textContent  = `${DEADLINE_DAYS} días`;
-
-  // División del plazo en 3 bloques y escalamiento de mensualidad
-  const SPLIT   = [0.25, 0.42, 1];      // 25% / 42% / resto
-  const STEP_UP = [0.00, 0.15, 0.30];   // +0%, +15%, +30%
-
-  const splitMonths = (m) => {
-    const a = Math.max(1, Math.round(m * SPLIT[0]));
-    const b = Math.max(1, Math.round(m * SPLIT[1]) - a);
-    const c = Math.max(1, m - a - b);
-    return [a,b,c];
-  };
-
-  function recalc(){
-    const m  = +($months?.value || 1);
-    const v  = +($value?.value || 0);
-    const down = ($method?.value === 'amount')
-      ? Math.min(v, price)
-      : price * (v/100);
-
-    // Saldo de enganche (después del apartado)
-    const engancheSaldo = Math.max(0, down - BOOKING_FEE);
-    if ($downBal) $downBal.textContent = money(engancheSaldo);
-
-    // Saldo a financiar
-    const balance = Math.max(0, price - down);
-    const baseMonthly = balance / Math.max(1, m);
-
-    const [m1,m2,m3] = splitMonths(m);
-    const pm1 = baseMonthly * (1 + STEP_UP[0]);
-    const pm2 = baseMonthly * (1 + STEP_UP[1]);
-    const pm3 = baseMonthly * (1 + STEP_UP[2]);
-
-    if ($rows){
-      $rows.innerHTML = '';
-      [
-        {label: 'Actualización 1', monto: pm1, pagos: m1},
-        {label: 'Actualización 2', monto: pm2, pagos: m2},
-        {label: 'Actualización 3', monto: pm3, pagos: m3},
-      ].forEach(r=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${r.label}</td>
-          <td class="num">${money(r.monto)}</td>
-          <td class="num">${r.pagos}</td>`;
-        $rows.appendChild(tr);
+        back.hidden = false;
+        legend.hidden = false;        // ✅ mostrar leyenda al entrar
+      }
+    
+      function resetView(){
+        overlay.setAttribute('visibility','hidden');
+        overlay.innerHTML = '';
+        overview.style.opacity = 1;
+        back.hidden = true;
+        legend.hidden = true;         // ✅ ocultar leyenda al salir
+        hideTip();
+      }
+    
+      // ===== Eventos de overview =====
+      document.querySelectorAll('#overview .stage').forEach(st=>{
+        const n = st.dataset.stage;
+        const isActive = (n === '1');
+        st.classList.toggle('is-active',   isActive);
+        st.classList.toggle('is-inactive', !isActive);
+        st.style.cursor = isActive ? 'pointer' : 'not-allowed';
+    
+        const label = 'Etapa ' + n + (isActive ? ' – Click para ver lotes' : ' – Próximamente');
+        ['mouseenter','mousemove'].forEach(evt => st.addEventListener(evt, e=>showTip(e,label)));
+        ['mouseleave','blur'].forEach(evt => st.addEventListener(evt, hideTip));
+    
+        if (isActive) st.addEventListener('click', showStage1Detail);
       });
-    }
-  }
-
-  $method?.addEventListener('change', () => {
-    if ($method.value === 'percent'){ $hint.textContent = '%'; $value.value ||= 10; }
-    else { $hint.textContent = 'MXN'; $value.value ||= 10000; }
-    recalc();
-  });
-  $months?.addEventListener('input', recalc);
-  $value?.addEventListener('input', recalc);
-  recalc();
-
-  // ===== PREVIEW SVG (etiquetas fuera + “pills” y sin recortes) =====
-  const wrap = document.getElementById('lotPreview');
-  if (!wrap) return;
-
-  const meta = {
-    front    : parseFloat(wrap.dataset.front),
-    back     : parseFloat(wrap.dataset.back),
-    left     : parseFloat(wrap.dataset.left),
-    right    : parseFloat(wrap.dataset.right),
-    frontage : parseFloat(wrap.dataset.frontage),
-    depth    : parseFloat(wrap.dataset.depth),
-  };
-
-  const W = 460, H = 320;                 // lienzo
-  const PAD = 40;                         // margen para etiquetas
-  const GAP = 20;                         // distancia etiqueta ↔ lote
-  const svgNS = 'http://www.w3.org/2000/svg';
-
-  const svg = document.createElementNS(svgNS,'svg');
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.classList.add('lotd-svg');
-
-  // Fondo
-  const bg = document.createElementNS(svgNS,'rect');
-  bg.setAttribute('x',0); bg.setAttribute('y',0);
-  bg.setAttribute('width',W); bg.setAttribute('height',H);
-  bg.setAttribute('rx',18); bg.setAttribute('class','lotd-canvas');
-  svg.appendChild(bg);
-
-  // Helper etiquetas con “pill” y auto-ajuste para no salir del lienzo
-  const fs = 16;                 // tamaño base de fuente
-  const TAGPX = {x:10, y:6};     // padding del pill
-
-  function label(x, y, text, anchor='middle'){
-    const g = document.createElementNS(svgNS,'g');
-
-    const t = document.createElementNS(svgNS,'text');
-    t.setAttribute('x',x); t.setAttribute('y',y);
-    t.setAttribute('text-anchor', anchor);
-    t.setAttribute('dominant-baseline','middle');
-    t.setAttribute('class','lotd-txt');
-    t.style.fontSize = fs + 'px';
-    t.textContent = text;
-    g.appendChild(t);
-
-    // medir y crear “pill”
-    svg.appendChild(g);
-    const bb = t.getBBox();
-    const r  = document.createElementNS(svgNS,'rect');
-    r.setAttribute('x', bb.x - TAGPX.x);
-    r.setAttribute('y', bb.y - TAGPX.y);
-    r.setAttribute('width',  bb.width  + TAGPX.x*2);
-    r.setAttribute('height', bb.height + TAGPX.y*2);
-    r.setAttribute('rx', 8);
-    r.setAttribute('class','lotd-tag');
-    g.insertBefore(r, t);
-
-    // Mantener dentro del lienzo (sin cortar)
-    const margin = 6;
-    const gbb = g.getBBox();
-    let dx = 0, dy = 0;
-    if (gbb.x < margin) dx = margin - gbb.x;
-    else if (gbb.x + gbb.width > W - margin) dx = (W - margin) - (gbb.x + gbb.width);
-    if (gbb.y < margin) dy = margin - gbb.y;
-    else if (gbb.y + gbb.height > H - margin) dy = (H - margin) - (gbb.y + gbb.height);
-    if (dx || dy) g.setAttribute('transform', `translate(${dx},${dy})`);
-
-    return g;
-  }
-
-  // ¿Irregular (4 lados) o rectangular (frente×fondo)?
-  const isIrregular = [meta.front,meta.back,meta.left,meta.right].every(v => !isNaN(v));
-
-  if (isIrregular){
-    const top = meta.front, bot = meta.back, lft = meta.left, rgt = meta.right;
-    const sx = (W - 2*PAD) / Math.max(top, bot);
-    const sy = (H - 2*PAD) / Math.max(lft, rgt);
-    const S  = Math.min(sx, sy);
-
-    const Wt = top*S, Wb = bot*S;
-    const yTop = PAD, yLb = PAD + lft*S, yRb = PAD + rgt*S;
-    const cx = W/2;
-    const xTl = cx - Wt/2, xTr = cx + Wt/2, xBl = cx - Wb/2, xBr = cx + Wb/2;
-
-    const p = document.createElementNS(svgNS,'path');
-    p.setAttribute('d', `M ${xTl},${yTop} L ${xTr},${yTop} L ${xBr},${yRb} L ${xBl},${yLb} Z`);
-    p.setAttribute('class','lotd-poly');
-    svg.appendChild(p);
-
-    // Etiquetas SIEMPRE fuera
-    label(cx, yTop - GAP,                `${top.toFixed(2)} m`, 'middle'); // arriba
-    label(cx, Math.max(yLb,yRb) + GAP,   `${bot.toFixed(2)} m`, 'middle'); // abajo
-    label(xTl - GAP, (yTop+yLb)/2,       `${lft.toFixed(2)} m`, 'end');    // izq
-    label(xTr + GAP, (yTop+yRb)/2,       `${rgt.toFixed(2)} m`, 'start');  // der
-  } else if (!isNaN(meta.frontage) && !isNaN(meta.depth)) {
-    const fw = meta.frontage, dh = meta.depth;
-    const sx = (W - 2*PAD) / fw;
-    const sy = (H - 2*PAD) / dh;
-    const S  = Math.min(sx, sy);
-
-    const w = fw*S, h = dh*S;
-    const x = (W - w)/2, y = (H - h)/2;
-
-    const r = document.createElementNS(svgNS,'rect');
-    r.setAttribute('x',x); r.setAttribute('y',y);
-    r.setAttribute('width',w); r.setAttribute('height',h);
-    r.setAttribute('rx',12);
-    r.setAttribute('class','lotd-poly');
-    svg.appendChild(r);
-
-    // Etiquetas SIEMPRE fuera
-    label(W/2, y - GAP,        `${fw.toFixed(2)} m`, 'middle'); // arriba
-    label(W/2, y + h + GAP,    `${fw.toFixed(2)} m`, 'middle'); // abajo
-    label(x - GAP,     y + h/2,`${dh.toFixed(2)} m`, 'end');    // izq
-    label(x + w + GAP, y + h/2,`${dh.toFixed(2)} m`, 'start');  // der
-  }
-
-  wrap.appendChild(svg);
-})();
-</script>
-{% endblock %}
+    
+      back.addEventListener('click', resetView);
+    })();
+    </script>
+    

@@ -75,13 +75,14 @@ def cotizador_detail(request, slug: str):
 
     # <<< SOLO para HACIENDA: mostrar mapa interactivo >>>
     if slug == "hacienda":
-        ctx["show_lots_map"] = True
-        ctx["lots_dev_slug"] = "hacienda"
-        ctx["lots_stage_number"] = 1
-        # Si quieres ocultar la imagen estática del masterplan:
-        # ctx["map_img"] = None
+        ctx.update({
+            "show_lots_map": True,
+            "dev_slug": "hacienda",  # <- ESTA es la que necesita tu {% url ... %}
+            "stage_number": 1,       # <- y esta también
+        })
         
     return render(request, "pages/cotizador_base.html", ctx)
+
 
 # ===== Vistas públicas =====
 

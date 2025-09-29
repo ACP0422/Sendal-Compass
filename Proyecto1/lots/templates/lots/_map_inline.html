@@ -1,5 +1,4 @@
 {% load static i18n %}
-
 <link rel="stylesheet" href="{% static 'styles/lots-map.css' %}">
 
 <div class="map-card">
@@ -10,29 +9,48 @@
 
       <!-- ======= DECOR (no interactivo) ======= -->
       <g class="decor" pointer-events="none">
-        <!-- Periférico -->
-        <g id="periferico" transform="translate(185,360) rotate(62)">
-          <rect x="-12" y="-230" width="10" height="330" fill="#cf2626"/>
-          <rect x="  8" y="-230" width="10" height="330" fill="#cf2626"/>
-        </g>
 
-        <!-- Curva negra superior -->
+       
+
+    <!-- Periférico: líneas + etiqueta tipo pill -->
+    <g id="periferico" transform="translate(185,360) rotate(62)">
+        <!-- barras rojas -->
+        <rect x="-12" y="-230" width="10" height="330" fill="#cf2626"/>
+        <rect x="  8" y="-230" width="10" height="330" fill="#cf2626"/>
+    
+        <!--
+        <defs>
+        <path id="periferico-path" d="M -20 65 L -20 -255" />
+        </defs>
+        <text font-size="20" font-family="Inter, system-ui" fill="#222" font-weight="600" >
+        <textPath href="#periferico-path" startOffset="5%" >Periférico Valladolid</textPath>
+        </text>
+    -->
+    </g>
+
+            <!-- Curva negra superior -->
         <path d="M 260 245 C 510 232, 740 234, 975 246 C 1115 254, 1280 256, 1422 252"
               fill="none" stroke="#0c0c0c" stroke-width="6" stroke-linecap="round"/>
 
-        <!-- Siembra de Agave -->
+        <!-- Siembra de Agave (fluye y llega a la altura de Etapa 7) -->
         <polygon class="bg-agave"
-          points="300,360 420,372 540,360 585,344 610,322 610,500 488,492 370,468 286,436" />
+          points="
+            300,360  420,372  540,360  585,344  610,322
+            610,500  488,492  370,468  286,436
+          " />
 
-        <!-- Zona Comercial -->
+        <!-- Zona Comercial (trapezio sobre Agave, DOM después para quedar encima) -->
         <polygon class="bg-commercial"
-          points="300,418 438,458 520,476 548,410 420,370 308,360" />
+          points="
+            300,418  438,458  520,476  548,410
+            420,370  308,360
+          " />
 
-        <!-- Amenidades -->
+        <!-- Amenidades (alineada a E1/E2) -->
         <polygon class="bg-amenities" fill="#47d461"
           points="1290,372 1346,372 1362,500 1290,500" />
 
-        <!-- Pills -->
+        <!-- Pills de texto -->
         <g class="pill-label" transform="translate(360,382)">
           <rect x="-90" y="-22" width="180" height="32" rx="10"/>
           <text text-anchor="middle" dominant-baseline="middle" y="-6">Zona Comercial</text>
@@ -41,10 +59,13 @@
           <rect x="-105" y="-22" width="210" height="32" rx="10"/>
           <text text-anchor="middle" dominant-baseline="middle" y="-6">Siembra de Agave</text>
         </g>
+
         <g class="pill-label" transform="translate(200,310) rotate(335)">
-          <rect x="-90" y="-22" width="180" height="32" rx="10"/>
-          <text text-anchor="middle" dominant-baseline="middle" y="-6">Periférico</text>
-        </g>
+            <rect x="-90" y="-22" width="180" height="32" rx="10"/>
+            <text text-anchor="middle" dominant-baseline="middle" y="-6">Periférico</text>
+          </g>
+
+
         <g class="pill-label" transform="translate(825,270)">
           <rect x="-58" y="-20" width="116" height="28" rx="8"/>
           <text text-anchor="middle" dominant-baseline="middle">Entrada</text>
@@ -61,26 +82,32 @@
           <polygon points="610,322 650,322 650,500 610,500"/>
           <text x="630" y="414" text-anchor="middle" dominant-baseline="middle">Etapa 7</text>
         </g>
+
         <g id="stage-6-shape" class="stage is-inactive" data-stage="6">
           <polygon points="655,320 770,318 770,500 655,500"/>
           <text x="712" y="414" text-anchor="middle" dominant-baseline="middle">Etapa 6</text>
         </g>
+
         <g id="stage-5-shape" class="stage is-inactive" data-stage="5">
           <polygon points="778,318 920,328 920,500 778,500"/>
           <text x="849" y="414" text-anchor="middle" dominant-baseline="middle">Etapa 5</text>
         </g>
+
         <g id="stage-4-shape" class="stage is-inactive" data-stage="4">
           <polygon points="928,328 1026,352 1026,500 928,500"/>
           <text x="977" y="424" text-anchor="middle" dominant-baseline="middle">Etapa 4</text>
         </g>
+
         <g id="stage-3-shape" class="stage is-inactive" data-stage="3">
           <polygon points="1034,352 1118,372 1118,500 1034,500"/>
           <text x="1076" y="432" text-anchor="middle" dominant-baseline="middle">Etapa 3</text>
         </g>
+
         <g id="stage-2-shape" class="stage is-inactive" data-stage="2">
           <polygon points="1126,372 1250,372 1250,500 1126,500"/>
           <text x="1188" y="436" text-anchor="middle" dominant-baseline="middle">Etapa 2</text>
         </g>
+
         <!-- Etapa 1 (activa) -->
         <g id="stage-1-shape" class="stage narrow is-active" data-stage="1">
           <polygon points="1250,372 1290,372 1290,500 1250,500"/>
@@ -91,17 +118,17 @@
       <!-- ===== OVERLAY DETALLE (sin zoom) ===== -->
       <g id="stage-1-overlay" visibility="hidden"></g>
     </svg>
-
-    <!-- Leyenda (solo en vista de lotes) -->
-    <div id="legend" class="legend" hidden>
-      <span class="chip chip-reserved">{% trans "Apartado" %}</span>
-      <span class="chip chip-available">{% trans "Disponible" %}</span>
-      <span class="chip chip-sold">{% trans "Vendido" %}</span>
-    </div>
+     <!-- Leyenda (solo se muestra en vista de lotes) -->
+<div id="legend" class="legend" hidden>
+    <span class="chip chip-reserved">Apartado</span>
+    <span class="chip chip-available">Disponible</span>
+    <span class="chip chip-sold">Vendido</span>
+  </div>
 
     <button id="backToOverview" class="back-btn" hidden>← {% trans "Ver todas las etapas" %}</button>
     <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
   </div>
+
 </div>
 
 <style>
@@ -139,180 +166,170 @@
   .is-reserved{fill:var(--lot-reserved)!important}
   .is-sold{fill:var(--lot-sold)!important;cursor:not-allowed;opacity:.9}
 
-  .legend{display:flex; gap:28px; justify-content:center; align-items:center; padding:16px 0 6px;}
-  .legend .chip{display:inline-flex; align-items:center; justify-content:center;
-    min-width:170px; padding:14px 18px; border-radius:999px; font:700 20px/1.1 Inter,system-ui;
-    color:#111; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* Leyenda en vista de lotes (overlay) */
+.legend{
+    display:flex; gap:28px; justify-content:center; align-items:center;
+    padding:16px 0 6px;
+  }
+  .legend .chip{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:170px; padding:14px 18px;
+    border-radius:999px; font:700 20px/1.1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color:#111; box-shadow:0 1px 2px rgba(0,0,0,.06);
+  }
+  
+  /* Colores coherentes con los lotes */
   .chip-available{ background: var(--lot-available); }
   .chip-reserved { background: var(--lot-reserved);  }
   .chip-sold     { background: var(--lot-sold);      color:#111; }
+  
 </style>
 
-{# ===== Resolver variables del endpoint y exponerlas como data-* ===== #}
-{% firstof lots_dev_slug development_slug dev.slug as _dev_slug %}
-{% firstof lots_stage_number stage_number stage.number as _stage_num %}
-{% url 'lots_json' development_slug=_dev_slug stage_number=_stage_num as _endpoint %}
-
-<div id="map-config"
-     data-endpoint="{{ _endpoint }}"
-     data-dev="{{ _dev_slug }}"
-     data-stage="{{ _stage_num }}"></div>
-
 <script>
-(function(){
-  const cfg      = document.getElementById('map-config');
-  const legend   = document.getElementById('legend');
-  const svg      = document.getElementById('hacienda-map');
-  const tip      = document.getElementById('tooltip');
-  const back     = document.getElementById('backToOverview');
-  const overview = document.getElementById('overview');
-  const overlay  = document.getElementById('stage-1-overlay');
+    (function(){
+        const legend = document.getElementById('legend');
+        
 
-  // ===== Variables resueltas por Django (desde data-*) =====
-  const ENDPOINT  = cfg?.dataset.endpoint || "";
-  const DEV_SLUG  = cfg?.dataset.dev || "";
-  const STAGE_NUM = parseInt(cfg?.dataset.stage || "0", 10) || 0;
 
-  const STATUS_LABEL = {
-    available: '{% trans "Disponible" %}',
-    reserved : '{% trans "Apartado" %}',
-    sold     : '{% trans "Vendido" %}',
-  };
-
-  const showTip = (e,t)=>{
-    tip.textContent = t;
-    tip.style.left = (e.clientX+12)+'px';
-    tip.style.top  = (e.clientY+12)+'px';
-    tip.hidden = false;
-  };
-  const hideTip = ()=>{ tip.hidden = true; };
-
-  const slugify = s => String(s||'').toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-
-  function showStage1Detail(){
-    overview.style.opacity = .12;
-    overlay.setAttribute('visibility','visible');
-    overlay.innerHTML = '';
-
-    const vb = svg.viewBox.baseVal; // 1500 x 540
-    const PAD = 36, GAP = 8;
-
-    // Panel base
-    const panelX = PAD, panelY = PAD;
-    const panelW = vb.width  - PAD*2;
-    const panelH = vb.height - PAD*2;
-
-    const panel = document.createElementNS('http://www.w3.org/2000/svg','rect');
-    panel.setAttribute('x',panelX);
-    panel.setAttribute('y',panelY);
-    panel.setAttribute('width',panelW);
-    panel.setAttribute('height',panelH);
-    panel.setAttribute('rx','16');
-    panel.setAttribute('class','panel');
-    overlay.appendChild(panel);
-
-    fetch(ENDPOINT)
-      .then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-      .then(({lots})=>{
-        const N = Math.max(0, (lots||[]).length);
-
-        if (N === 0){
-          const msg = document.createElementNS('http://www.w3.org/2000/svg','text');
-          msg.setAttribute('x', vb.width/2);
-          msg.setAttribute('y', vb.height/2);
-          msg.setAttribute('text-anchor','middle');
-          msg.setAttribute('dominant-baseline','middle');
-          msg.setAttribute('fill','#fff');
-          msg.setAttribute('font-weight','700');
-          msg.textContent = '{% trans "Sin lotes registrados en esta etapa" %}';
-          overlay.appendChild(msg);
-          back.hidden = false; legend.hidden = true;
-          return;
-        }
-
+      const endpoint = "{% url 'lots_json' development_slug=dev_slug stage_number=stage_number %}";
+      const svg  = document.getElementById('hacienda-map');
+      const tip  = document.getElementById('tooltip');
+      const back = document.getElementById('backToOverview');
+      const overview = document.getElementById('overview');
+      const overlay  = document.getElementById('stage-1-overlay'); // <g id="stage-1-overlay" visibility="hidden"></g>
+    
+      const STATUS_LABEL = { available: 'Disponible', reserved: 'Apartado', sold: 'Vendido' };
+    
+      // Tooltip helpers
+      const showTip = (e,t)=>{
+        tip.textContent = t;
+        tip.style.left = (e.clientX+12)+'px';
+        tip.style.top  = (e.clientY+12)+'px';
+        tip.hidden = false;
+      };
+      const hideTip = ()=>{ tip.hidden = true; };
+    
+      // === Dibuja el panel de Etapa 1 ocupando TODO el mapa (sin zoom)
+      function showStage1Detail(){
+        
+        // Oculta overview visualmente y muestra overlay
+        overview.style.opacity = .12;
+        overlay.setAttribute('visibility','visible');
+        overlay.innerHTML = '';
+    
+        // Dimensiones del SVG (viewBox)
+        const vb = svg.viewBox.baseVal; // p.ej. 1500 x 540
+        const PAD = 36;   // margen externo del panel
+        const GAP = 8;    // separación entre lotes
+        const N   = 9;    // número de lotes
+    
+        // Panel
+        const panelX = PAD, panelY = PAD;
+        const panelW = vb.width  - PAD*2;
+        const panelH = vb.height - PAD*2;
+    
+        const panel = document.createElementNS('http://www.w3.org/2000/svg','rect');
+        panel.setAttribute('x',panelX);
+        panel.setAttribute('y',panelY);
+        panel.setAttribute('width',panelW);
+        panel.setAttribute('height',panelH);
+        panel.setAttribute('rx','16');
+        panel.setAttribute('class','panel'); // dale estilo si quieres
+        overlay.appendChild(panel);
+    
+        // Franjas/lotes (verticales)
         const innerPad = 22;
         const innerW = panelW - innerPad*2 - GAP*(N-1);
         const innerH = panelH - innerPad*2;
         const lotW   = innerW / N;
         const x0     = panelX + innerPad;
         const y0     = panelY + innerPad;
-
-        lots.forEach((l, i)=>{
-          const x = (x0 + i*(lotW+GAP)).toFixed(2);
-          const y = y0.toFixed(2);
-
+    
+        const rects = [];
+        for(let i=0;i<N;i++){
           const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
-          const rid = (l.svg_id && String(l.svg_id).trim())
-                      || `${slugify(DEV_SLUG)}-e${STAGE_NUM}-l-${slugify(l.code)}`;
-
-          r.setAttribute('id', rid);
-          r.setAttribute('x', x);
-          r.setAttribute('y', y);
+          r.setAttribute('id', `lot-${i+1}`);           // intenta empatar con svg_id del backend
+          r.setAttribute('x',  (x0 + i*(lotW+GAP)).toFixed(2));
+          r.setAttribute('y',  y0.toFixed(2));
           r.setAttribute('width',  lotW.toFixed(2));
           r.setAttribute('height', innerH.toFixed(2));
           r.setAttribute('rx','10');
-          r.setAttribute('class','lot');
+          r.setAttribute('class','lot');               // estilos base
           overlay.appendChild(r);
-
-          if (l.status) r.classList.add(`is-${l.status}`);
-
-          r.setAttribute('tabindex','0');
-          r.setAttribute('role','button');
-          r.dataset.status = l.status || '';
-          r.dataset.code   = l.code || '';
-          r.dataset.area   = l.area_m2 || '';
-
-          const txt = `Lote ${l.code} · ${(l.area_m2||0)} m² • ${STATUS_LABEL[l.status] || l.status || ''}`;
-          ['mouseenter','mousemove'].forEach(evt=> r.addEventListener(evt, e=>showTip(e, txt)));
-          ['mouseleave','blur'].forEach(evt=> r.addEventListener(evt, hideTip));
-
-          if (l.status !== 'sold' && l.url){
-            r.addEventListener('click', ()=>{ window.location.href = l.url; });
-            r.addEventListener('keydown', e=>{
-              if (e.key==='Enter' || e.key===' '){ e.preventDefault(); r.click(); }
+          rects.push(r);
+        }
+    
+        // Trae estados y comportamientos
+        fetch(endpoint)
+          .then(r=>r.json())
+          .then(({lots})=>{
+            lots.forEach((l, i)=>{
+              // 1) Busca por id exacto
+              let el = l.svg_id ? document.getElementById(l.svg_id) : null;
+              // 2) Si no existe o no coincide, usa el orden como respaldo
+              if (!el) el = rects[i];
+              if (!el) return;
+    
+              // Colorea por estado
+              el.classList.add(`is-${l.status}`);
+    
+              // Accesibilidad + metadatos
+              el.setAttribute('tabindex','0');
+              el.setAttribute('role','button');
+              el.dataset.status = l.status;
+              el.dataset.code   = l.code;
+              el.dataset.area   = l.area_m2;
+    
+              // Tooltip
+              const txt = `Lote ${l.code} · ${l.area_m2} m² • ${STATUS_LABEL[l.status] || l.status}`;
+              ['mouseenter','mousemove'].forEach(evt=> el.addEventListener(evt, e=>showTip(e, txt)));
+              ['mouseleave','blur'].forEach(evt=> el.addEventListener(evt, hideTip));
+    
+              // Navegación a detalle (si no está vendido)
+              if (l.status !== 'sold' && l.url){
+                el.addEventListener('click', ()=>{ window.location.href = l.url; });
+                el.addEventListener('keydown', e=>{
+                  if (e.key==='Enter' || e.key===' '){ e.preventDefault(); el.click(); }
+                });
+              } else {
+                el.style.cursor = 'not-allowed';
+                el.setAttribute('aria-disabled','true');
+              }
             });
-          } else {
-            r.style.cursor = 'not-allowed';
-            r.setAttribute('aria-disabled','true');
-          }
-        });
+          })
+          .catch(console.error);
+    
 
         back.hidden = false;
-        legend.hidden = false;
-      })
-      .catch(err=>{
-        console.error('Error cargando lots.json:', err);
-        back.hidden = false;
-        legend.hidden = true;
+        legend.hidden = false;        // ✅ mostrar leyenda al entrar
+      }
+    
+      function resetView(){
+        overlay.setAttribute('visibility','hidden');
+        overlay.innerHTML = '';
+        overview.style.opacity = 1;
+        back.hidden = true;
+        legend.hidden = true;         // ✅ ocultar leyenda al salir
+        hideTip();
+      }
+    
+      // ===== Eventos de overview =====
+      document.querySelectorAll('#overview .stage').forEach(st=>{
+        const n = st.dataset.stage;
+        const isActive = (n === '1');
+        st.classList.toggle('is-active',   isActive);
+        st.classList.toggle('is-inactive', !isActive);
+        st.style.cursor = isActive ? 'pointer' : 'not-allowed';
+    
+        const label = 'Etapa ' + n + (isActive ? ' – Click para ver lotes' : ' – Próximamente');
+        ['mouseenter','mousemove'].forEach(evt => st.addEventListener(evt, e=>showTip(e,label)));
+        ['mouseleave','blur'].forEach(evt => st.addEventListener(evt, hideTip));
+    
+        if (isActive) st.addEventListener('click', showStage1Detail);
       });
-  }
-
-  function resetView(){
-    overlay.setAttribute('visibility','hidden');
-    overlay.innerHTML = '';
-    overview.style.opacity = 1;
-    back.hidden = true;
-    legend.hidden = true;
-    hideTip();
-  }
-
-  // ===== Eventos de overview =====
-  document.querySelectorAll('#overview .stage').forEach(st=>{
-    const n = st.dataset.stage;
-    const isActive = (n === '1');
-    st.classList.toggle('is-active',   isActive);
-    st.classList.toggle('is-inactive', !isActive);
-    st.style.cursor = isActive ? 'pointer' : 'not-allowed';
-
-    const label = 'Etapa ' + n + (isActive ? ' – {% trans "Click para ver lotes" %}' : ' – {% trans "Próximamente" %}');
-    ['mouseenter','mousemove'].forEach(evt => st.addEventListener(evt, e=>showTip(e,label)));
-    ['mouseleave','blur'].forEach(evt => st.addEventListener(evt, hideTip));
-
-    if (isActive) st.addEventListener('click', showStage1Detail);
-  });
-
-  back.addEventListener('click', resetView);
-})();
-</script>
+    
+      back.addEventListener('click', resetView);
+    })();
+    </script>
+    

@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("<slug:development_slug>/etapa/<int:stage_number>/mapa/",
+    path("<slug:development_slug>/etapa/<int:stage_number>/mapa/", 
          views.map_view, name="lots_map"),
     path("api/<slug:development_slug>/etapa/<int:stage_number>/lots.json",
          views.lots_json, name="lots_json"),
