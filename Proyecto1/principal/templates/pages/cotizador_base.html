@@ -25,17 +25,22 @@
     </div>
 
     {% if map_img %}
-  <div class="map-card">
-    <div class="map-wrap">
-      <img class="komchen-map" src="{% static map_img %}" alt="">
-      {% if variant == "komchen" %}
-        <div id="komchen-hotspots"
-        data-lots='{{ komchen_hotspots_json|safe|default:"[]" }}'>
-        </div>
-      {% endif %}
+    <div class="map-card">
+      <div class="map-wrap">
+        {# usa misma clase para no tocar tu CSS actual #}
+        <img class="komchen-map" src="{% static map_img %}" alt="">
+  
+        {# Hotspots genéricos: Komchén (Lote) y Hacienda (Etapa) #}
+        {% if hotspots_json %}
+          <div class="hotspots-holder"
+               data-label="{{ hotspot_label|default:_('Lote') }}"
+               data-lots='{{ hotspots_json|safe|default:"[]" }}'>
+          </div>
+        {% endif %}
+      </div>
     </div>
-  </div>
-{% endif %}
+  {% endif %}
+  
 
 
 
@@ -82,29 +87,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
   (function () {
-    // Solo corre en Komchén (cuando existe el contenedor con data-lots)
     const wrap   = document.querySelector('.map-wrap');
-    const holder = document.getElementById('komchen-hotspots');
+    const holder = wrap?.querySelector('.hotspots-holder');
     if (!wrap || !holder) return;
   
-    // 1) Leer y parsear JSON válido desde data-lots
     let lots = [];
     try {
-      const raw = holder.getAttribute('data-lots') || '[]';
-      lots = JSON.parse(raw);
-    } catch (e) {
-      console.error('Hotspots JSON inválido en data-lots:', e);
-      return;
-    }
-    if (!Array.isArray(lots) || !lots.length) {
-      console.warn('No hay hotspots para Komchén.');
-      return;
-    }
+      lots = JSON.parse(holder.getAttribute('data-lots') || '[]');
+    } catch (e) { lots = []; }
+    if (!Array.isArray(lots) || !lots.length) return;
   
-    // 2) Evitar duplicados si el script se ejecuta más de una vez
+    const label = holder.getAttribute('data-label') || 'Lote';
+  
+    // Limpia si ya existían
     wrap.querySelectorAll('.lot-dot').forEach(el => el.remove());
   
-    // 3) Crear los puntos
     const frag = document.createDocumentFragment();
     lots.forEach(({ n, x, y }) => {
       const btn = document.createElement('button');
@@ -112,17 +109,15 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.type = 'button';
       btn.style.left = x + '%';
       btn.style.top  = y + '%';
-      btn.setAttribute('aria-label', `Lote ${n}`);
+      btn.setAttribute('aria-label', `${label} ${n}`);
   
-      // número visible
       const num = document.createElement('span');
       num.className = 'num';
       num.textContent = String(n);
   
-      // tooltip
       const tip = document.createElement('span');
       tip.className = 'tip';
-      tip.textContent = `Lote ${n}`;
+      tip.textContent = `${label} ${n}`;
   
       btn.append(num, tip);
       frag.appendChild(btn);

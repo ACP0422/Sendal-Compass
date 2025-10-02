@@ -25,6 +25,7 @@ COTIZADORES = {
         "title": _("Hacienda Residencial"),
         "variant": "hacienda",
         "title_color": "#F0C160",
+        "map_img": "resources/images/places/Valladolid/hacienda/masterplan.png",
         "btn": "btn-hacienda",
         "otros": ["komchen"],
         "show_in_index": True,
@@ -54,15 +55,12 @@ def cotizador_index(request):
 
 
 
-
-
-
 def cotizador_detail(request, slug: str):
     cfg = COTIZADORES.get(slug)
     if not cfg:
         return redirect("cotizador")
 
-    # Construye la lista "otros" (para el toggle)
+    # Construye la lista "otros"
     otros = []
     for s in cfg.get("otros", []):
         other = COTIZADORES.get(s)
@@ -74,29 +72,29 @@ def cotizador_detail(request, slug: str):
             })
 
     grid_cols = min(3, max(1, len(otros)))
-
-    # Colorear título (opcional por config)
     title_color = cfg.get("title_color")
     title_style = f' style="color:{title_color}"' if title_color else ""
 
-    # Contexto base
     ctx = {
         "page_title": cfg["title"],
         "hero_img": HERO_IMG,
         "kicker": KICKER,
         "heading": cfg["title"],
-        "variant": cfg.get("variant"),
+        "variant": cfg.get("variant"),  # "komchen" | "hacienda"
         "show_toggle": True,
         "actions": otros,
         "actions_hidden": True,
         "grid_cols": grid_cols,
         "map_img": cfg.get("map_img"),
         "title_style": title_style,
+        # genéricos para hotspots (se setean abajo según slug)
+        "hotspots_json": None,
+        "hotspot_label": None,
     }
 
-    # ====== Komchén: hotspots por lote (x,y en %) ======
+    # ===== Hotspots por proyecto =====
     if slug == "komchen":
-        hotspots = [
+        komchen_hotspots = [
             {"n": 1, "x": 10.89, "y": 70.91},
             {"n": 2, "x": 13.13, "y": 90.43},
             {"n": 3, "x": 21.43, "y": 90.43},
@@ -106,54 +104,50 @@ def cotizador_detail(request, slug: str):
             {"n": 7, "x": 40.54, "y": 90.23},
             {"n": 8, "x": 45.27, "y": 90.23},
             {"n": 9, "x": 50.09, "y": 90.03},
-            {"n": 10, "x": 54.73, "y": 90.23},
-            {"n": 11, "x": 59.46, "y": 90.63},
-            {"n": 12, "x": 64.29, "y": 90.43},
-            {"n": 13, "x": 69.20, "y": 90.23},
-            {"n": 14, "x": 74.02, "y": 90.23},
-            {"n": 15, "x": 78.66, "y": 90.43},
-            {"n": 16, "x": 83.30, "y": 90.23},
-            {"n": 17, "x": 93.75, "y": 90.43},
-            {"n": 18, "x": 93.57, "y": 69.52},
-            {"n": 19, "x": 93.66, "y": 51.19},
-            {"n": 20, "x": 93.84, "y": 31.67},
-            {"n": 21, "x": 93.13, "y": 11.35},
-            {"n": 22, "x": 83.39, "y": 13.35},
-            {"n": 23, "x": 78.57, "y": 13.15},
-            {"n": 24, "x": 73.75, "y": 13.35},
-            {"n": 25, "x": 68.93, "y": 13.54},
-            {"n": 26, "x": 64.11, "y": 13.35},
-            {"n": 27, "x": 59.64, "y": 13.35},
-            {"n": 28, "x": 54.64, "y": 13.54},
-            {"n": 29, "x": 50.00, "y": 13.74},
-            {"n": 30, "x": 45.27, "y": 13.54},
-            {"n": 31, "x": 40.45, "y": 13.15},
-            {"n": 32, "x": 35.54, "y": 13.54},
-            {"n": 33, "x": 30.89, "y": 13.15},
-            {"n": 34, "x": 26.07, "y": 13.15},
-            {"n": 35, "x": 21.34, "y": 13.35},
-            {"n": 36, "x": 12.50, "y": 11.35},
-            {"n": 37, "x": 10.89, "y": 30.68},
+            {"n":10, "x": 54.73, "y": 90.23},
+            {"n":11, "x": 59.46, "y": 90.63},
+            {"n":12, "x": 64.29, "y": 90.43},
+            {"n":13, "x": 69.20, "y": 90.23},
+            {"n":14, "x": 74.02, "y": 90.23},
+            {"n":15, "x": 78.66, "y": 90.43},
+            {"n":16, "x": 83.30, "y": 90.23},
+            {"n":17, "x": 93.75, "y": 90.43},
+            {"n":18, "x": 93.57, "y": 69.52},
+            {"n":19, "x": 93.66, "y": 51.19},
+            {"n":20, "x": 93.84, "y": 31.67},
+            {"n":21, "x": 93.13, "y": 11.35},
+            {"n":22, "x": 83.39, "y": 13.35},
+            {"n":23, "x": 78.57, "y": 13.15},
+            {"n":24, "x": 73.75, "y": 13.35},
+            {"n":25, "x": 68.93, "y": 13.54},
+            {"n":26, "x": 64.11, "y": 13.35},
+            {"n":27, "x": 59.64, "y": 13.35},
+            {"n":28, "x": 54.64, "y": 13.54},
+            {"n":29, "x": 50.00, "y": 13.74},
+            {"n":30, "x": 45.27, "y": 13.54},
+            {"n":31, "x": 40.45, "y": 13.15},
+            {"n":32, "x": 35.54, "y": 13.54},
+            {"n":33, "x": 30.89, "y": 13.15},
+            {"n":34, "x": 26.07, "y": 13.15},
+            {"n":35, "x": 21.34, "y": 13.35},
+            {"n":36, "x": 12.50, "y": 11.35},
+            {"n":37, "x": 10.89, "y": 30.68},
         ]
-        ctx["komchen_hotspots_json"] = json.dumps(hotspots) 
+        ctx["hotspots_json"] = json.dumps(komchen_hotspots)
+        ctx["hotspot_label"] = _("Lote")
 
-    # ====== Hacienda: integra el mapa interactivo de lots ======
-    if slug == "hacienda":
-        dev_slug = "hacienda-residencial"  # Debe coincidir con Development.slug en DB
-        stage_number = 1
-
-        ctx["show_lots_map"] = True
-        ctx["lots_dev_slug"] = dev_slug
-        ctx["lots_stage_number"] = stage_number
-
-        # URL del JSON ya resuelta (evita armarla en plantilla)
-        ctx["lots_endpoint"] = reverse(
-            "lots_json",
-            kwargs={"development_slug": dev_slug, "stage_number": stage_number},
-        )
-
-        # Si quisieras ocultar la imagen estática del masterplan y mostrar solo el SVG/JS:
-        # ctx["map_img"] = None
+    elif slug == "hacienda":
+        hacienda_hotspots = [
+            {"n": 1, "x": 83.48, "y": 71.21},
+            {"n": 2, "x": 75.63, "y": 70.97},
+            {"n": 3, "x": 65.36, "y": 70.50},
+            {"n": 4, "x": 55.63, "y": 66.21},
+            {"n": 5, "x": 45.45, "y": 61.69},
+            {"n": 6, "x": 35.54, "y": 60.73},
+            {"n": 7, "x": 27.68, "y": 62.88},
+        ]
+        ctx["hotspots_json"] = json.dumps(hacienda_hotspots)
+        ctx["hotspot_label"] = _("Etapa")
 
     return render(request, "pages/cotizador_base.html", ctx)
 
