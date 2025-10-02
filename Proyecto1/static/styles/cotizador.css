@@ -260,7 +260,7 @@
 @media (hover: none), (max-width: 767px){
   /* Punto visual más pequeño */
   .map-wrap .lot-dot::before{
-    width: 11px;
+    width: 12px;
     height: 11px;
     box-shadow: 0 0 0 3px rgba(0,0,0,.16);  /* antes 6px */
     transform: scale(.98);
