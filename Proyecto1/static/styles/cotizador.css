@@ -127,3 +127,154 @@
     grid-template-columns: repeat(3, minmax(220px,1fr));
   }
 }
+
+
+
+
+/* ====== Hotspots Komchén (resalte notorio) ====== */
+.map-wrap { position: relative; display: inline-block; width: 100%; }
+.komchen-map { display:block; width:100%; height:auto; }
+
+/* Botón con área de impacto grande (Fitts) */
+.lot-dot{
+  position:absolute;
+  left:0; top:0; transform:translate(-50%,-50%);
+  width:44px; height:44px;            /* área real de hover/click */
+  border:0; padding:0; background:transparent;
+  cursor:pointer; outline:none;
+}
+
+/* Punto visual (22px) centrado dentro del botón grande */
+.lot-dot::before{
+  content:"";
+  position:absolute; inset:0;
+  margin:auto;                        /* centra */
+  width:22px; height:22px; border-radius:999px;
+  border:2px solid #fff;
+  background: rgba(0,0,0,.62);        /* punto visible */
+  box-shadow: 0 0 0 8px rgba(0,0,0,.16); /* halo suave por defecto */
+  transition: box-shadow .15s ease, background .15s ease, transform .15s ease;
+}
+
+/* Número centrado */
+.lot-dot .num{
+  position:absolute; inset:0; display:grid; place-items:center;
+  font: 600 11px/1 var(--font-inter, system-ui);
+  color:#fff; pointer-events:none;
+}
+
+/* Tooltip */
+.lot-dot .tip{
+  position:absolute; left:50%; top:-10px; transform:translate(-50%,-100%);
+  background:rgba(0,0,0,.85); color:#fff; font-size:12px;
+  padding:6px 8px; border-radius:8px; white-space:nowrap;
+  pointer-events:none; opacity:0;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.lot-dot .tip::after{
+  content:""; position:absolute; left:50%; bottom:-6px; transform:translateX(-50%);
+  border:6px solid transparent; border-top-color:rgba(0,0,0,.85);
+}
+
+/* HOVER/FOCUS: resalte fuerte y halo grande */
+.lot-dot:hover::before,
+.lot-dot:focus-visible::before{
+  background: rgba(0,0,0,.82);
+    box-shadow: 0 0 0 16px rgba(0,0,0,.30);
+
+  transform: scale(1.04);
+}
+.lot-dot:hover .tip,
+.lot-dot:focus-visible .tip{
+  opacity:1; transform:translate(-50%,-110%);
+}
+
+
+
+/* ==============================
+   Komchén – hotspots por lote
+   (aparecen solo al pasar por ese lote)
+============================== */
+.map-wrap{ position:relative; display:inline-block; width:100%; }
+.komchen-map{ position:relative; z-index:0; display:block; width:100%; height:auto; }
+
+/* Área de hit invisible (44x44) por encima del mapa */
+.map-wrap .lot-dot{
+  position:absolute; left:0; top:0; transform:translate(-50%,-50%);
+  width:44px; height:44px;           /* área cómoda para hover/click */
+  border:0; padding:0; background:transparent;
+  cursor:pointer; outline:none;
+  z-index:3;                          /* por encima de la imagen */
+  -webkit-tap-highlight-color: transparent; /* evita destello en móvil */
+}
+
+/* Punto visual (oculto por defecto) */
+.map-wrap .lot-dot::before{
+  content:"";
+  position:absolute; inset:0; margin:auto;
+  width:22px; height:22px; border-radius:999px;
+  border:2px solid #fff;
+  background: rgba(0,0,0,.62);
+  box-shadow: 0 0 0 8px rgba(0,0,0,.16);
+  opacity:0;                          /* oculto */
+  transform:scale(.96);
+  transition: opacity .15s ease, box-shadow .15s ease, transform .15s ease, background .15s ease;
+}
+
+/* Número y tooltip (ocultos) */
+.map-wrap .lot-dot .num,
+.map-wrap .lot-dot .tip{
+  opacity:0; pointer-events:none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.map-wrap .lot-dot .tip{
+  position:absolute; left:50%; top:-10px; transform:translate(-50%,-100%);
+  background:rgba(0,0,0,.85); color:#fff; font-size:12px;
+  padding:6px 8px; border-radius:8px; white-space:nowrap;
+}
+.map-wrap .lot-dot .tip::after{
+  content:""; position:absolute; left:50%; bottom:-6px; transform:translateX(-50%);
+  border:6px solid transparent; border-top-color:rgba(0,0,0,.85);
+}
+
+/* Solo en hover/focus del lote activo aparece el punto + tooltip */
+.map-wrap .lot-dot:hover::before,
+.map-wrap .lot-dot:focus-visible::before{
+  opacity:1;
+  background:rgba(0,0,0,.85);
+  box-shadow:0 0 0 16px rgba(0,0,0,.32);  /* halo notorio */
+  transform:scale(1.05);
+}
+.map-wrap .lot-dot:hover .num,
+.map-wrap .lot-dot:focus-visible .num{
+  opacity:1;
+}
+.map-wrap .lot-dot:hover .tip,
+.map-wrap .lot-dot:focus-visible .tip{
+  opacity:1; transform:translate(-50%,-110%);
+}
+
+
+/* Mobile: halo más chico y discreto */
+@media (hover: none), (max-width: 767px){
+  /* Punto visual más pequeño */
+  .map-wrap .lot-dot::before{
+    width: 11px;
+    height: 11px;
+    box-shadow: 0 0 0 3px rgba(0,0,0,.16);  /* antes 6px */
+    transform: scale(.98);
+  }
+
+  /* En tap/focus el halo crece muy poco */
+  .map-wrap .lot-dot:focus-visible::before,
+  .map-wrap .lot-dot:hover::before{
+    box-shadow: 0 0 0 4px rgba(0,0,0,.22);  /* antes 8px */
+    transform: scale(1.01);                 /* sin “brincar” */
+  }
+
+  /* Número acorde al punto más chico */
+  .map-wrap .lot-dot .num{
+    font-size: 9px;
+  }
+}

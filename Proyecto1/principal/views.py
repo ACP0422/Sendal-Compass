@@ -3,6 +3,7 @@ from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.http import Http404
+import json
 
 # ===== Config global (cotizador) =====
 HERO_IMG = "resources/images/cotizador/hero.png"
@@ -51,50 +52,111 @@ def cotizador_index(request):
     }
     return render(request, "pages/cotizador_base.html", ctx)
 
+
+
+
+
+
 def cotizador_detail(request, slug: str):
     cfg = COTIZADORES.get(slug)
     if not cfg:
         return redirect("cotizador")
+
+    # Construye la lista "otros" (para el toggle)
     otros = []
     for s in cfg.get("otros", []):
         other = COTIZADORES.get(s)
         if other:
-            otros.append({"label": other["label"], "href": _href_to_detail(s), "btn": other["btn"]})
+            otros.append({
+                "label": other["label"],
+                "href": _href_to_detail(s),
+                "btn": other["btn"],
+            })
+
     grid_cols = min(3, max(1, len(otros)))
+
+    # Colorear título (opcional por config)
     title_color = cfg.get("title_color")
     title_style = f' style="color:{title_color}"' if title_color else ""
+
+    # Contexto base
     ctx = {
         "page_title": cfg["title"],
-        "hero_img": HERO_IMG, "kicker": KICKER, "heading": cfg["title"],
-        "variant": cfg.get("variant"), "show_toggle": True,
-        "actions": otros, "actions_hidden": True,
+        "hero_img": HERO_IMG,
+        "kicker": KICKER,
+        "heading": cfg["title"],
+        "variant": cfg.get("variant"),
+        "show_toggle": True,
+        "actions": otros,
+        "actions_hidden": True,
         "grid_cols": grid_cols,
         "map_img": cfg.get("map_img"),
         "title_style": title_style,
     }
 
-    # <<< SOLO para HACIENDA: mostrar mapa interactivo >>>
+    # ====== Komchén: hotspots por lote (x,y en %) ======
+    if slug == "komchen":
+        hotspots = [
+            {"n": 1, "x": 10.89, "y": 70.91},
+            {"n": 2, "x": 13.13, "y": 90.43},
+            {"n": 3, "x": 21.43, "y": 90.43},
+            {"n": 4, "x": 26.34, "y": 90.63},
+            {"n": 5, "x": 30.98, "y": 90.63},
+            {"n": 6, "x": 35.54, "y": 90.23},
+            {"n": 7, "x": 40.54, "y": 90.23},
+            {"n": 8, "x": 45.27, "y": 90.23},
+            {"n": 9, "x": 50.09, "y": 90.03},
+            {"n": 10, "x": 54.73, "y": 90.23},
+            {"n": 11, "x": 59.46, "y": 90.63},
+            {"n": 12, "x": 64.29, "y": 90.43},
+            {"n": 13, "x": 69.20, "y": 90.23},
+            {"n": 14, "x": 74.02, "y": 90.23},
+            {"n": 15, "x": 78.66, "y": 90.43},
+            {"n": 16, "x": 83.30, "y": 90.23},
+            {"n": 17, "x": 93.75, "y": 90.43},
+            {"n": 18, "x": 93.57, "y": 69.52},
+            {"n": 19, "x": 93.66, "y": 51.19},
+            {"n": 20, "x": 93.84, "y": 31.67},
+            {"n": 21, "x": 93.13, "y": 11.35},
+            {"n": 22, "x": 83.39, "y": 13.35},
+            {"n": 23, "x": 78.57, "y": 13.15},
+            {"n": 24, "x": 73.75, "y": 13.35},
+            {"n": 25, "x": 68.93, "y": 13.54},
+            {"n": 26, "x": 64.11, "y": 13.35},
+            {"n": 27, "x": 59.64, "y": 13.35},
+            {"n": 28, "x": 54.64, "y": 13.54},
+            {"n": 29, "x": 50.00, "y": 13.74},
+            {"n": 30, "x": 45.27, "y": 13.54},
+            {"n": 31, "x": 40.45, "y": 13.15},
+            {"n": 32, "x": 35.54, "y": 13.54},
+            {"n": 33, "x": 30.89, "y": 13.15},
+            {"n": 34, "x": 26.07, "y": 13.15},
+            {"n": 35, "x": 21.34, "y": 13.35},
+            {"n": 36, "x": 12.50, "y": 11.35},
+            {"n": 37, "x": 10.89, "y": 30.68},
+        ]
+        ctx["komchen_hotspots_json"] = json.dumps(hotspots) 
+
+    # ====== Hacienda: integra el mapa interactivo de lots ======
     if slug == "hacienda":
-        dev_slug = "hacienda-residencial"   # <- este debe coincidir con Development.slug en DB
+        dev_slug = "hacienda-residencial"  # Debe coincidir con Development.slug en DB
         stage_number = 1
 
         ctx["show_lots_map"] = True
         ctx["lots_dev_slug"] = dev_slug
         ctx["lots_stage_number"] = stage_number
 
-    # Opción robusta: calcula la URL del JSON aquí
+        # URL del JSON ya resuelta (evita armarla en plantilla)
         ctx["lots_endpoint"] = reverse(
             "lots_json",
             kwargs={"development_slug": dev_slug, "stage_number": stage_number},
-    )
+        )
 
-
-
-
-        # Si quieres ocultar la imagen estática del masterplan:
+        # Si quisieras ocultar la imagen estática del masterplan y mostrar solo el SVG/JS:
         # ctx["map_img"] = None
-        
+
     return render(request, "pages/cotizador_base.html", ctx)
+
 
 # ===== Vistas públicas =====
 
