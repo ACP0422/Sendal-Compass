@@ -11,11 +11,12 @@ html body.contact-page {
   
   /* Columna izquierda */
   .brand-title{
-    font-size: 64px;
+    font-size: 48px;
     letter-spacing: .06em;
     margin-bottom: 12px;
     font-weight: 700;
     color: #41070A;
+    text-align: center;
   }
   .taglines p{font-weight:600}
   .taglines p + p{margin-top:4px}
@@ -166,7 +167,7 @@ html body.contact-page {
   /* Truco: “aplanar” la columna izquierda para poder intercalar la imagen */
   .col-left{ display: contents; }
 
-  .brand-title{ grid-area: title; text-align:center; font-size: 44px; margin-bottom: 6px; }
+  .brand-title{ grid-area: title; text-align:center; font-size: 20px; margin-bottom: 6px; }
   .taglines{ grid-area: taglines; text-align:center; }
   .lead{ grid-area: lead; text-align:center; margin: 6px auto 0; max-width: 52ch; }
   .contact-title{ grid-area: contact; text-align:center; font-size: 32px; margin-top: 18px; }
@@ -201,7 +202,6 @@ html body.contact-page {
   /* “Aplanamos” la columna izquierda para intercalar la imagen */
   .col-left{ display: contents; }
 
-  .brand-title{ grid-area: title; text-align:center; font-size: 64px; }
   .taglines{ grid-area: taglines; text-align:center; }
   .lead{ grid-area: lead; text-align:center; margin: 4px auto 0; max-width: 70ch; }
 
@@ -265,3 +265,120 @@ html body.contact-page {
   /* Por si acaso, elimina margen inferior del form */
   .contact-form{ margin-bottom: 0; }
 }
+
+
+
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px; /* espacio entre columnas */
+  margin-top: 32px;
+}
+
+.contact-info .col p {
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  color: #3B0C0C; /* tu marrón */
+}
+
+.contact-info a {
+  color: #3B0C0C;
+  font-weight: bold;
+}
+
+
+
+
+/* ===== Bloque info (2 columnas) ===== */
+.contact-info{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;                 /* separación entre columnas */
+  margin: 28px auto 0;       /* pega al botón, como en la captura */
+  padding-inline: 0;         /* usa el padding del .container si lo tienes */
+}
+
+.contact-info .col p{ margin: 0 0 10px; color:#3B0C0C; }
+
+/* Título (CONTACTO, UBICACIÓN) */
+.contact-info .info-title{
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+/* Teléfono grande como en la foto */
+.contact-info .info-big{
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+/* Párrafos de dirección en 2 líneas cómodas */
+.contact-info .info-lines{
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+/* Enlace “Google Maps” subrayado y grueso */
+.contact-info .info-link a{
+  font-weight: 800;
+  color:#3B0C0C;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+/* Responsive: 1 columna en móvil */
+@media (max-width: 767px){
+  .contact-info{
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .contact-info .info-big,
+  .contact-info .info-lines,
+  .contact-info .info-link a{
+    font-size: 18px;
+  }
+}
+
+
+
+/* H1 centrado y abarcando todo el grid */
+.page > .page-title{
+  grid-column: 1 / -1;  /* ocupa ambas columnas */
+  text-align: center;
+  margin: 0 0 12px;
+}
+
+/* Opcional: tamaños responsivos */
+@media (max-width: 767px){
+  .page > .page-title{
+    font-size: clamp(28px, 6.5vw, 48px);
+  }
+}
+
+/* Mantener formato tipográfico en el link del teléfono */
+.contact-info .info-big a{
+  color: inherit;           /* mismo color que .info-big */
+  font: inherit;            /* hereda tamaño y peso */
+  text-decoration: none;    /* sin subrayado por defecto */
+  display: inline-block;    /* mejor foco/clic */
+  cursor: pointer;
+}
+
+.contact-info .info-big a:hover,
+.contact-info .info-big a:focus-visible, .contact-info .info-link a:hover{
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  outline: none;            /* evita doble estilo con focus */
+}
+
+
+
+
+

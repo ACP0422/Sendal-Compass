@@ -268,4 +268,23 @@ body{ line-height:1.35; color:var(--color-ink-dark); }
 
 
 
+/* ==============================
+   HOVER TARJETAS: OSCURECER IMG
+============================== */
+
+/* Oscurecer solo la imagen en hover */
+.project-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter .3s ease;
+}
+
+.project-card:hover img {
+  filter: brightness(0.8); /* baja el brillo = se oscurece */
+}
+
+
+
+
 

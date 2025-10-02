@@ -9,8 +9,8 @@
 
 {% block content %}
 <main class="page container">
+  <h1 class="brand-title page-title">IMAGINA TU FUTURO <br>EN YUCATÁN</h1>
   <section class="col-left">
-    <h1 class="brand-title">SENDAL</h1>
 
     <div class="taglines">
       <p><strong>{% trans "Donde crece tu historia." %}</strong></p>
@@ -56,5 +56,39 @@
   <aside class="col-right">
     <img src="{% static 'resources/images/alt/contacto.jpg' %}" alt="{% trans 'Niñas corriendo' %}" class="hero-photo">
   </aside>
-</main>
+
+
+
+
+
+<section class="contact-info container">
+  <aside class="col">
+    <p class="info-title">CONTACTO</p>
+    <p class="info-big">
+      <a href="https://wa.me/529993976683?text={{ 'Hola, me gustaría saber más sobre los proyectos de Sendal.'|urlencode }}"
+         target="_blank" rel="noopener"
+         aria-label="{% trans 'Escríbenos por WhatsApp' %}">
+        999 397 6683
+      </a>
+    </p>
+  </aside>
+
+  <aside class="col">
+    <p class="info-title">UBICACIÓN</p>
+    <p class="info-lines">
+      C.15 #503, Col. Altabrisa, Mérida Yuc.<br>
+      Dentro de Magnia Corporate Center
+    </p>
+    <p class="info-link">
+      <a href="https://www.google.com/maps?q=MAGNIA+Corporate+Center,+C.+15+503,+Col.+Altabrisa,+97130+Mérida,+Yuc.&ftid=0x8f567720f0462bff:0x9eeb570980663d76&entry=gps"
+         target="_blank" rel="noopener">
+        GOOGLE MAPS
+      </a>
+    </p>
+  </aside>
+</section>
+
+
+
+
 {% endblock %}
