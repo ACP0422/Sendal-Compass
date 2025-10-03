@@ -6,3 +6,5 @@ whitenoise>=6.0.0
 Pillow>=10.0.0
 pandas
 openpyxl
+requests
+python-dotenv
