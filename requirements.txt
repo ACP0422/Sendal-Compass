@@ -4,3 +4,5 @@ sqlparse==0.5.3
 gunicorn>=21.0.0
 whitenoise>=6.0.0
 Pillow>=10.0.0
+pandas
+openpyxl
