@@ -12,11 +12,24 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATICFILES_DIRS = [ BASE_DIR / 'static' ] #OJOOOOOO AGREGADO
+load_dotenv(BASE_DIR / ".env")  # <— carga tu .env en la raíz del proyecto
 
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
+LOTS_SHEET_URL     = os.getenv("LOTS_SHEET_URL", "")
+LOTS_SHEET_FORMAT  = os.getenv("LOTS_SHEET_FORMAT", "xlsx") 
+LOTS_SHEET_TIMEOUT = int(os.getenv("LOTS_SHEET_TIMEOUT", "15"))
+
+
+GHL_INBOUND_WEBHOOK_URL = os.getenv("GHL_INBOUND_WEBHOOK_URL", "")
+GHL_WEBHOOK_SECRET      = os.getenv("GHL_WEBHOOK_SECRET", "")
+HOLD_TTL_MINUTES        = int(os.getenv("HOLD_TTL_MINUTES", "45"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -137,6 +150,7 @@ LOCALE_PATHS = [
 # Static files configuration
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

@@ -281,3 +281,75 @@
 
 
 
+
+
+
+
+
+
+
+
+/* El contenedor manda */
+.map-wrap{
+  position: relative;
+  display: block;
+  /* Mueve aquí el look & feel (antes estaba en el <img>) */
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f4efe7;
+  box-shadow: 0 0 2px rgba(0,0,0,.08);
+}
+
+/* La imagen NO debe tener padding/border ni posición relativa */
+.map-card img,
+.komchen-map{
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  position: static !important;
+}
+
+
+.lot-dot:focus{ outline: none; } /* evita el aro grueso de focus del navegador */
+
+.lot-dot__pill{
+  width: 34px; height: 34px; border-radius: 999px; display: block;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.10);
+}
+.lot-dot__num{
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font: 700 14px/1 Inter, system-ui, sans-serif;
+  color: #1a1a1a; pointer-events: none;
+}
+
+/* Colores por estado */
+.lot-dot[data-status="apartado"]   .lot-dot__pill{ background:#FFF36B; }
+.lot-dot[data-status="disponible"] .lot-dot__pill{ background:#CFE6A6; }
+.lot-dot[data-status="vendido"]    .lot-dot__pill{ background:#BDBDBD; }
+
+/* Tooltip */
+.lot-dot__tip{
+  position:absolute; top:-32px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,.8); color:#fff; padding:4px 8px; border-radius:6px;
+  font-size:12px; white-space:nowrap; opacity:0; pointer-events:none; z-index:5;
+  transition:opacity .15s ease;
+}
+.lot-dot:hover .lot-dot__tip{ opacity:1; }
+
+
+
+
+
+/* 🔧 Botón del hotspot: tamaño fijo y centrado exacto */
+.lot-dot{
+  position:absolute; left:0; top:0;
+  width:34px; height:34px;            /* tamaño del círculo */
+  display:grid; place-items:center;   /* centra el contenido dentro del botón */
+  z-index:2; padding:0; margin:0; border:0; background:transparent;
+  appearance:none; -webkit-appearance:none; cursor:pointer;
+}
+

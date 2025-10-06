@@ -139,47 +139,64 @@
       <img src="{% static 'resources/images/home/formulario.jpg' %}" alt="{% trans 'Terreno' %}" />
     </figure>
 
-    <form class="quote-form" action="#" method="post" novalidate>
-      <h2>{% trans "Cotiza tu propiedad" %}</h2>
 
+
+    <form id="contactForm" class="quote-form" action="#" method="post" novalidate>
+      {% csrf_token %}
+      {# Honeypot anti-spam (debe quedar vacío) #}
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+             style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;"/>
+    
+      <h2>{% trans "Cotiza tu propiedad" %}</h2>
+    
       <div class="q-row">
         <label>
           <span>{% trans "Nombre" %}</span>
-          <input type="text" name="nombre" placeholder="{% trans 'Jane' %}" required>
+          <input type="text" name="nombre" placeholder="{% trans 'Jane' %}" required
+                 autocomplete="given-name" inputmode="text" maxlength="60"
+                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{2,}$" />
         </label>
         <label>
           <span>{% trans "Apellido" %}</span>
-          <input type="text" name="apellido" placeholder="{% trans 'Smitherton' %}" required>
+          <input type="text" name="apellido" placeholder="{% trans 'Smitherton' %}" required
+                 autocomplete="family-name" inputmode="text" maxlength="60"
+                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{2,}$" />
         </label>
       </div>
-
+    
       <label class="q-full">
         <span>{% trans "Email" %}</span>
-        <input type="email" name="correo" placeholder="{% trans 'email@contacto.com' %}" required>
+        <input type="email" name="correo" placeholder="{% trans 'email@contacto.com' %}" required
+               autocomplete="email" inputmode="email" maxlength="120" />
       </label>
-
+    
       <label class="q-full">
         <span>{% trans "Número de contacto" %}</span>
-        <input type="tel" name="telefono" placeholder="{% trans '+52 9999 99 99 99' %}" required>
+        <input type="tel" name="telefono" placeholder="{% trans '+52 9999 99 99 99' %}" required
+               autocomplete="tel" inputmode="tel" maxlength="20" />
       </label>
-
+    
       <div class="q-row">
         <label>
           <span>{% trans "Tipo del terreno o propiedad" %}</span>
-          <input type="text" name="tipo" placeholder="{% trans 'Terreno' %}" required>
+          <input type="text" name="tipo" placeholder="{% trans 'Terreno' %}" required maxlength="80"/>
         </label>
         <label>
           <span>{% trans "Ubicación" %}</span>
-          <input type="text" name="ubicacion" placeholder="{% trans 'Valladolid' %}" required>
+          <input type="text" name="ubicacion" placeholder="{% trans 'Valladolid' %}" required maxlength="80"/>
         </label>
       </div>
-
+    
       <button type="submit" class="q-cta"><b>{% trans "COTIZA AHORA" %}</b></button>
-
+    
       <p class="q-note">
         {% blocktrans %}Tu información es 100% confidencial. Uno de nuestros asesores te contactará para darte todos los detalles del terreno.{% endblocktrans %}
       </p>
     </form>
+    
+
+
+
   </div>
 </section>
 
@@ -228,6 +245,149 @@
     aplicarFiltros();
   })();
 </script>
+
+<script>
+  (function () {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+  
+    const LANG = (document.documentElement.lang || 'es').slice(0,2);
+    const T = {
+      es: {
+        required: 'Este campo es obligatorio.',
+        name: 'Escribe un nombre válido.',
+        lastname: 'Escribe un apellido válido.',
+        email: 'Escribe un correo válido (ej. nombre@dominio.com).',
+        phone: 'Escribe un teléfono válido (mín. 10 dígitos).',
+        type: 'Indica el tipo de propiedad.',
+        location: 'Indica la ubicación.',
+        bot: 'No se pudo enviar. Actualiza la página e inténtalo de nuevo.'
+      },
+      en: {
+        required: 'This field is required.',
+        name: 'Please enter a valid first name.',
+        lastname: 'Please enter a valid last name.',
+        email: 'Enter a valid email (e.g. name@domain.com).',
+        phone: 'Enter a valid phone (min. 10 digits).',
+        type: 'Specify the property type.',
+        location: 'Specify the location.',
+        bot: 'Submission blocked. Refresh the page and try again.'
+      }
+    }[LANG] || T.es;
+  
+    // Helpers
+    const $ = sel => form.querySelector(sel);
+    const inputs = {
+      nombre:   $('[name="nombre"]'),
+      apellido: $('[name="apellido"]'),
+      correo:   $('[name="correo"]'),
+      telefono: $('[name="telefono"]'),
+      tipo:     $('[name="tipo"]'),
+      ubicacion:$('[name="ubicacion"]'),
+      website:  $('[name="website"]') // honeypot
+    };
+  
+    function ensureErrorBox(input){
+      let box = input.parentElement.querySelector('.field-error');
+      if (!box){
+        box = document.createElement('p');
+        box.className = 'field-error';
+        box.id = input.name + '-error';
+        input.parentElement.appendChild(box);
+      }
+      input.setAttribute('aria-describedby', box.id);
+      return box;
+    }
+    function setError(input, msg){
+      const box = ensureErrorBox(input);
+      input.classList.add('is-invalid');
+      input.setAttribute('aria-invalid', 'true');
+      box.textContent = msg || '';
+    }
+    function clearError(input){
+      const box = input.parentElement.querySelector('.field-error');
+      input.classList.remove('is-invalid');
+      input.removeAttribute('aria-invalid');
+      if (box) box.textContent = '';
+    }
+  
+    // Validadores
+    const NAME_RE = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{2,}$/;
+    function validName(v){ return NAME_RE.test((v||'').trim()); }
+  
+    function validEmail(input){
+      // usa validación nativa y un fallback sencillo
+      if (input.value && input.checkValidity) return input.checkValidity();
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((input.value||'').trim());
+    }
+  
+    function digits(n){ return (n||'').replace(/\D/g,''); }
+    function validPhone(v){
+      const d = digits(v);
+      return d.length >= 10 && d.length <= 15; // acepta MX (10) y otros
+    }
+  
+    function validateField(input){
+      const name = input.name;
+      const val  = input.value || '';
+  
+      clearError(input);
+  
+      if (!val.trim()){
+        setError(input, T.required); return false;
+      }
+      if (name === 'nombre'   && !validName(val))  { setError(input, T.name); return false; }
+      if (name === 'apellido' && !validName(val))  { setError(input, T.lastname); return false; }
+      if (name === 'correo'   && !validEmail(input)){ setError(input, T.email); return false; }
+      if (name === 'telefono' && !validPhone(val)) { setError(input, T.phone); return false; }
+      if (name === 'tipo'     && val.trim().length < 2){ setError(input, T.type); return false; }
+      if (name === 'ubicacion'&& val.trim().length < 2){ setError(input, T.location); return false; }
+      return true;
+    }
+  
+    // Formateo ligero de teléfono (admite +, espacios y dígitos)
+    inputs.telefono?.addEventListener('input', (e) => {
+      const el = e.currentTarget;
+      let v = el.value.replace(/[^\d+ ]+/g,''); // elimina caracteres no permitidos
+      // deja un solo '+' al inicio
+      v = v.replace(/\+/g, (m, i) => i === 0 ? '+' : '');
+      el.value = v;
+      if (el.classList.contains('is-invalid')) validateField(el);
+    });
+  
+    // Blur/entrada: validar en vivo
+    Object.values(inputs).forEach(inp => {
+      if (!inp || !['text','email','tel'].includes(inp.type)) return;
+      inp.addEventListener('blur',  () => validateField(inp));
+      inp.addEventListener('input', () => { if (inp.classList.contains('is-invalid')) validateField(inp); });
+    });
+  
+    // Submit
+    form.addEventListener('submit', (e) => {
+      // honeypot
+      if (inputs.website && inputs.website.value.trim()){
+        e.preventDefault();
+        alert(T.bot);
+        return;
+      }
+  
+      let ok = true;
+      const order = [inputs.nombre, inputs.apellido, inputs.correo, inputs.telefono, inputs.tipo, inputs.ubicacion];
+      order.forEach(inp => { if (inp) ok = validateField(inp) && ok; });
+  
+      if (!ok){
+        e.preventDefault();
+        const first = form.querySelector('.is-invalid');
+        if (first){
+          first.focus({preventScroll:true});
+          first.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      }
+      // si ok == true, deja que el form se envíe normalmente
+    });
+  })();
+  </script>
+  
 
 
 

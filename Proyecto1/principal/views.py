@@ -4,6 +4,19 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.http import Http404
 import json
+from utils.lots_loader import load_states
+
+
+def _enrich_hotspots_with_status(slug: str, hotspots: list[dict]) -> list[dict]:
+    states_by_dev = load_states()                   # {'komchen': {9: 'vendido', ...}}
+    states = states_by_dev.get(slug, {})
+    out = []
+    for h in hotspots:
+        n = h.get("n")
+        st = states.get(n, "disponible")           # default si no viene en Excel
+        out.append({**h, "status": st})
+    return out
+
 
 # ===== Config global (cotizador) =====
 HERO_IMG = "resources/images/cotizador/hero.png"
@@ -133,6 +146,7 @@ def cotizador_detail(request, slug: str):
             {"n":36, "x": 12.50, "y": 11.35},
             {"n":37, "x": 10.89, "y": 30.68},
         ]
+        komchen_hotspots = _enrich_hotspots_with_status("komchen", komchen_hotspots)
         ctx["hotspots_json"] = json.dumps(komchen_hotspots)
         ctx["hotspot_label"] = _("Lote")
 
@@ -146,9 +160,9 @@ def cotizador_detail(request, slug: str):
             {"n": 6, "x": 35.54, "y": 60.73},
             {"n": 7, "x": 27.68, "y": 62.88},
         ]
+        hacienda_hotspots = _enrich_hotspots_with_status("hacienda", hacienda_hotspots)
         ctx["hotspots_json"] = json.dumps(hacienda_hotspots)
         ctx["hotspot_label"] = _("Etapa")
-
     return render(request, "pages/cotizador_base.html", ctx)
 
 
@@ -211,7 +225,7 @@ PREDIO_REGISTRY = {
                 "address": _("Calle 35 # 198 F"),
                 "propiedad_tipo": _("Propiedad Privada"),
                 "colonia": _("Centro"),
-                "map_url": "#",  # pon tu link de Google Maps
+                "map_url": "#",  
                 "features": [
                     _("Barda Perimetral"),
                     _("Puerta de Acceso"),
@@ -224,7 +238,7 @@ PREDIO_REGISTRY = {
                     {"src": "resources/images/places/Valladolid/predio1/satelite.png",
                      "alt": _("Vista satelital"), "caption": _("Vista Satelital")},
                 ],
-                # “Hotel” detrás del nombre en inglés => “Palacio Cantón Hotel”
+                
                 "location_blurb": _(
                     "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
                 ),
