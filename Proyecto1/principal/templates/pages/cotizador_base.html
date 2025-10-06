@@ -41,10 +41,6 @@
     </div>
   {% endif %}
   
-
-
-
-
     {% if show_lots_map %}
     {# ✅ pasa el endpoint ya resuelto #}
   {% include "lots/_map_inline.html" with endpoint=lots_endpoint %}
@@ -90,42 +86,53 @@ document.addEventListener('DOMContentLoaded', function () {
     const wrap   = document.querySelector('.map-wrap');
     const holder = wrap?.querySelector('.hotspots-holder');
     if (!wrap || !holder) return;
-  
+
     let lots = [];
-    try {
-      lots = JSON.parse(holder.getAttribute('data-lots') || '[]');
-    } catch (e) { lots = []; }
+    try { lots = JSON.parse(holder.getAttribute('data-lots') || '[]'); }
+    catch (e) { lots = []; }
     if (!Array.isArray(lots) || !lots.length) return;
-  
+
     const label = holder.getAttribute('data-label') || 'Lote';
-  
+
     // Limpia si ya existían
     wrap.querySelectorAll('.lot-dot').forEach(el => el.remove());
-  
+
     const frag = document.createDocumentFragment();
-    lots.forEach(({ n, x, y }) => {
+
+    lots.forEach(({ n, x, y, status }) => {
       const btn = document.createElement('button');
       btn.className = 'lot-dot';
       btn.type = 'button';
       btn.style.left = x + '%';
       btn.style.top  = y + '%';
-      btn.setAttribute('aria-label', `${label} ${n}`);
-  
+      const st = (status || 'disponible').toLowerCase();
+      btn.dataset.status = st;
+
+      const pill = document.createElement('span');
+      pill.className = 'lot-dot__pill';
+
       const num = document.createElement('span');
-      num.className = 'num';
+      num.className = 'lot-dot__num';
       num.textContent = String(n);
-  
+
+      // opcional: tooltip
       const tip = document.createElement('span');
-      tip.className = 'tip';
-      tip.textContent = `${label} ${n}`;
-  
-      btn.append(num, tip);
+      tip.className = 'lot-dot__tip';
+      tip.textContent = `${label} ${n} — ${st}`;
+
+      btn.append(pill, num, tip);
       frag.appendChild(btn);
     });
-  
+
+// 👇 ayuda a depurar: verifica que vengan los status en el navegador
+console.table(lots);
+
+
+
     wrap.appendChild(frag);
   })();
-  </script>
+</script>
+
   
   
   
