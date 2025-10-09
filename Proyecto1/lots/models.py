@@ -1,121 +1,69 @@
-# models.py
-from decimal import Decimal, ROUND_HALF_UP
 from django.db import models
-from django.urls import reverse
 
-Q2 = Decimal("0.01")
-def q2(x: Decimal) -> Decimal:
-    """Redondea a 2 decimales."""
-    return x.quantize(Q2, rounding=ROUND_HALF_UP)
-
-
-class Development(models.Model):
-    slug = models.SlugField(unique=True)
+class Project(models.Model):
     name = models.CharField(max_length=120)
-    def __str__(self): return self.name
-
-
-class Stage(models.Model):
-    development = models.ForeignKey(Development, on_delete=models.CASCADE, related_name="stages")
-    number = models.PositiveIntegerField()
-    is_active = models.BooleanField(default=False)
-
-    # Precio base por m² para esta etapa
-    price_per_m2 = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
-    class Meta:
-        unique_together = ("development", "number")
+    slug = models.SlugField(unique=True)
+    default_lot_image = models.ImageField(
+        upload_to="projects/default_lots/", blank=True, null=True
+    )
 
     def __str__(self):
-        return f"{self.development.name} – Etapa {self.number}"
+        return self.name
 
 
 class Lot(models.Model):
     class Status(models.TextChoices):
-        AVAILABLE = "available", "Disponible"
-        RESERVED  = "reserved",  "Apartado"
-        SOLD      = "sold",      "Vendido"
+        DISPONIBLE = "disponible", "Disponible"
+        APARTADO   = "apartado",   "Apartado"
+        VENDIDO    = "vendido",    "Vendido"
 
-    stage = models.ForeignKey(Stage, on_delete=models.CASCADE, related_name="lots")
-    code = models.CharField(max_length=20)
-    block = models.CharField(max_length=20, blank=True)
+    project   = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="lots")
+    number    = models.PositiveIntegerField()
+    area_m2   = models.DecimalField(max_digits=10, decimal_places=2)
+    status    = models.CharField(max_length=12, choices=Status.choices, default=Status.DISPONIBLE)
 
-    # —— Dimensiones (opción 1: 4 lados para irregulares; opción 2: frente × fondo)
-    front_m  = models.DecimalField("Frente (m)",  max_digits=7, decimal_places=2, null=True, blank=True)
-    back_m   = models.DecimalField("Fondo (m)",   max_digits=7, decimal_places=2, null=True, blank=True)
-    left_m   = models.DecimalField("Lado izq. (m)", max_digits=7, decimal_places=2, null=True, blank=True)
-    right_m  = models.DecimalField("Lado der. (m)", max_digits=7, decimal_places=2, null=True, blank=True)
-    frontage_m = models.DecimalField("Frontage m", max_digits=7, decimal_places=2, null=True, blank=True)
-    depth_m    = models.DecimalField("Depth m",    max_digits=7, decimal_places=2, null=True, blank=True)
+    # Imagen propia del lote (plano/render)
+    image     = models.ImageField(upload_to="lots/%Y/%m/", blank=True, null=True)
 
-    # —— Derivados
-    area_m2 = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
-    price_per_m2_override = models.DecimalField(
-        "Price per m2 override", max_digits=10, decimal_places=2, null=True, blank=True
-    )
-    list_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    # Datos mostrados arriba del esquema (editables)
+    apartado                      = models.DecimalField(max_digits=12, decimal_places=2, default=1000)
+    saldo_enganche                = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    dias_limite_pago_enganche     = models.PositiveIntegerField(default=5)
+    precio_lista                  = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
-    status = models.CharField(max_length=12, choices=Status.choices, default=Status.AVAILABLE)
-
-    # Conectar con el SVG
-    svg_id = models.CharField(max_length=40, unique=True)
-    tooltip_label = models.CharField(max_length=120, blank=True)
-    plan_image = models.ImageField(upload_to="lots/plans/", blank=True)
+    # Opcional: valores por defecto de selects
+    plazo_default_meses           = models.PositiveIntegerField(default=180)
+    metodo_enganche_default       = models.CharField(max_length=20, default="Monto")  # Monto | Porcentaje
 
     class Meta:
-        ordering = ["code"]
+        unique_together = ("project", "number")
 
     def __str__(self):
-        return f"{self.code} (Etapa {self.stage.number})"
+        return f"{self.project.name} – Lote {self.number}"
 
-    def get_absolute_url(self):
-        return reverse("lot_detail", kwargs={
-            "development_slug": self.stage.development.slug,
-            "stage_number": self.stage.number,
-            "lot_code": self.code,
-        })
-
-    # ====== Cálculos ======
-    def compute_area(self):
+    @property
+    def display_image_url(self) -> str | None:
         """
-        Si hay 4 lados -> promedio (trapecio/romboide aproximado).
-        Si no, usa frente×fondo.
+        Regresa la imagen del lote; si no hay, usa la del proyecto; si tampoco,
+        devuelve None para que el template muestre un placeholder.
         """
-        D = Decimal
-        if all(v is not None for v in (self.front_m, self.back_m, self.left_m, self.right_m)):
-            width = (D(self.front_m) + D(self.back_m)) / D(2)   # promedio de frentes
-            depth = (D(self.left_m) + D(self.right_m)) / D(2)   # promedio de costados
-            return q2(width * depth)
-        if self.frontage_m is not None and self.depth_m is not None:
-            return q2(D(self.frontage_m) * D(self.depth_m))
+        if self.image:
+            return self.image.url
+        if self.project.default_lot_image:
+            return self.project.default_lot_image.url
         return None
 
-    def effective_price_per_m2(self) -> Decimal:
-        """Override > precio de la etapa > 0."""
-        return self.price_per_m2_override or self.stage.price_per_m2 or Decimal("0")
 
-    def compute_price(self, area=None):
-        area = area if area is not None else self.area_m2
-        if not area:
-            return None
-        return q2(Decimal(area) * Decimal(self.effective_price_per_m2()))
+class PaymentUpdate(models.Model):
+    """Filas del 'Esquema de pagos' (editables por lote)."""
+    lot        = models.ForeignKey(Lot, on_delete=models.CASCADE, related_name="payment_updates")
+    label      = models.CharField(max_length=60, default="Actualización")
+    amount     = models.DecimalField(max_digits=12, decimal_places=2)
+    payments   = models.PositiveIntegerField(default=0)  # ej. 60
+    sort_order = models.PositiveIntegerField(default=1)
 
-    # Se recalcula SIEMPRE antes de guardar
-    def clean(self):
-        super().clean()
-        area = self.compute_area()
-        if area is not None:
-            self.area_m2 = area
-        price = self.compute_price(area)
-        if price is not None:
-            self.list_price = price
+    class Meta:
+        ordering = ["sort_order", "id"]
 
-    def save(self, *args, **kwargs):
-        # Garantiza que se apliquen los cálculos incluso si el admin no llama clean()
-        self.full_clean()
-        return super().save(*args, **kwargs)
-
-    # —— Alias de compatibilidad para admins viejos que llamaban recalc_fields()
-    def recalc_fields(self):
-        """Compat: recalcula área y precio."""
-        self.clean()
+    def __str__(self):
+        return f"{self.lot} – {self.label}"

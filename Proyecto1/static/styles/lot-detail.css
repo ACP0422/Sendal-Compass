@@ -132,7 +132,7 @@
 .quote-box { background:#fff; border-radius:16px; padding:1.25rem; box-shadow:0 6px 30px rgba(0,0,0,.06); }
 .controls { display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1rem; }
 .controls label{ display:block; font-size:.9rem; color:#6b635d; }
-.controls select{ width:100%; padding:.5rem .6rem; border:1px solid #ddd; border-radius:10px; }
+.controls select, .control input{ width:100%; padding:.5rem .6rem; border:1px solid #ddd; border-radius:10px; }
 
 .facts { list-style:none; padding:0; margin:0 0 1rem; display:grid; gap:.35rem; color:#6b635d; }
 
@@ -143,6 +143,8 @@
 .lead-form{ display:grid; gap:.6rem; }
 .lead-form input{ padding:.6rem .7rem; border:1px solid #ddd; border-radius:10px; }
 .lead-form button{ margin-top:.4rem; padding:.7rem 1rem; border:0; border-radius:12px; background:#7b5d4a; color:#fff; cursor:pointer; }
+
+
 
 .payrows .payrow:nth-child(odd){ background:#fceee6; }
 .payrows .payrow:nth-child(even){ background:#fff3ec; }

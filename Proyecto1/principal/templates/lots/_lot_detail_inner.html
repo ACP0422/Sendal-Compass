@@ -46,7 +46,7 @@
     #lot-modal .lead-form { display:grid; gap:.6rem; }
     #lot-modal .lead-form .input:focus { outline:3px solid #e8dccf; border-color:#cbb79f; }
   </style>
-  
+
 
 <div class="lot-detail">
     <header class="lot-head">
@@ -60,10 +60,15 @@
     <div class="lot-grid">
       <!-- Columna izquierda: mapa + regreso -->
       <aside class="lot-left">
-        <div class="map-card">
-          <img src="{% static 'resources/images/places/Komchén/ejemplo.png' %}" alt="Vista del lote {{ number }}">
-        </div>
-  
+       <!-- Imagen -->
+<div class="map-card">
+  {% if lot.display_image_url %}
+    <img src="{{ lot.display_image_url }}" alt="Vista del lote {{ lot.number }}">
+  {% else %}
+    <img src="{% static 'resources/images/places/placeholder-lote.png' %}" alt="Vista del lote {{ lot.number }}">
+  {% endif %}
+</div>
+
         <div class="project-meta">
           <p class="project-name">Proyecto Komchén</p>
           <button type="button" class="btn btn-secondary" onclick="document.querySelector('#lot-modal [data-close]')?.click()">
@@ -71,56 +76,62 @@
           </button>
         </div>
       </aside>
-  
-      <!-- Columna derecha: controles + datos + tabla -->
-      <section class="lot-right">
-        <div class="controls">
-          <label class="control">
-            <span class="control-label">Plazo</span>
-            <select class="input" aria-label="Plazo">
-              <option>180 meses</option>
-              <option>120 meses</option>
-              <option>60 meses</option>
-            </select>
-          </label>
-  
-          <label class="control">
-            <span class="control-label">Método cálculo de enganche</span>
-            <select class="input" aria-label="Método de cálculo de enganche">
-              <option>Monto</option>
-              <option>Porcentaje</option>
-            </select>
-          </label>
-        </div>
-  
-        <ul class="facts">
-          <li><strong>Apartado:</strong> $1,000.00</li>
-          <li><strong>Saldo de enganche:</strong> $93,208.40</li>
-          <li><strong>Fecha límite para el pago de enganche:</strong> 5 días</li>
-          <li><strong>Precio de lista:</strong> $785,070.00</li>
-        </ul>
-  
-        <h3 class="section-title">Esquema de pagos</h3>
-        <div class="table-wrap">
-          <table class="payments" aria-describedby="lot-modal-title">
-            <thead>
-              <tr>
-                <th>Actualización</th>
-                <th>Monto</th>
-                <th>Pagos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for r in "123"|make_list %}
-                <tr class="row-alt">
-                  <td>Actualización {{ forloop.counter }}</td>
-                  <td>$7,498.43</td>
-                  <td>60</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+
+<!-- Columna derecha: controles + datos + tabla -->
+<section class="lot-right">
+  <div class="controls">
+    <label class="control">
+      <span class="control-label">Plazo</span>
+      <select class="input" aria-label="Plazo">
+        <option {% if lot.plazo_default_meses == 180 %}selected{% endif %}>180 meses</option>
+        <option {% if lot.plazo_default_meses == 120 %}selected{% endif %}>120 meses</option>
+        <option {% if lot.plazo_default_meses ==  60 %}selected{% endif %}>60 meses</option>
+      </select>
+    </label>
+
+
+      <label class="control">
+        <span class="control-label">Método cálculo de enganche</span>
+        <select class="input" aria-label="Método de cálculo de enganche">
+          <option {% if lot.metodo_enganche_default == "Monto" %}selected{% endif %}>Monto</option>
+    <option {% if lot.metodo_enganche_default == "Porcentaje" %}selected{% endif %}>Porcentaje</option>
+        </select>
+      </label>
+    </div>
+
+
+
+    <ul class="facts">
+      <li><strong>Apartado:</strong> $1,000.00</li>
+      <li><strong>Saldo de enganche:</strong> $93,208.40</li>
+      <li><strong>Fecha límite para el pago de enganche:</strong> 5 días</li>
+      <li><strong>Precio de lista:</strong> $785,070.00</li>
+    </ul>
+
+      <!-- Esquema de pagos (dinámico) -->
+      <h3 class="section-title">Esquema de pagos</h3>
+      <div class="table-wrap">
+      <table class="payments" aria-describedby="lot-modal-title">
+      <tbody>
+        <thead>
+          <tr>
+            <th>Actualización</th>
+            <th>Monto</th>
+            <th>Pagos</th>
+          </tr>
+        </thead>
+        {% for u in updates %}
+          <tr>
+            <td>{{ u.label }} {{ forloop.counter }}</td>
+            <td>${{ u.amount|floatformat:2 }}</td>
+            <td>{{ u.payments }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="3">Sin registros de pagos para este lote.</td></tr>
+        {% endfor %}
+      </tbody>
+      </table>
+      </div>
   
         <h3 class="section-title">Datos de envío</h3>
         <p class="helper">
@@ -144,6 +155,7 @@
           <button class="btn btn-primary" type="submit">Enviar cotización</button>
         </form>
       </section>
+
     </div>
   </div>
   
