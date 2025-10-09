@@ -287,12 +287,15 @@ body{ line-height:1.35; color:var(--color-ink-dark); }
 
 /* Estados de error accesibles */
 .quote-form input.is-invalid{
-  border-color:#C62828 !important;
+  border-color:#d07653 !important;
   box-shadow:0 0 0 3px rgba(198,40,40,.12);
 }
 .quote-form .field-error{
-  margin-top:6px; font-size:13px; line-height:1.3; color:#B71C1C;
+  margin-top:6px; font-size:13px; line-height:1.3; color:#d07653;
+  
 }
+
+
 
 
 

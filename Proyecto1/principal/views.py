@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.http import Http404
 import json
 from utils.lots_loader import load_states
+from django.http import Http404
 
 
 def _enrich_hotspots_with_status(slug: str, hotspots: list[dict]) -> list[dict]:
@@ -165,6 +166,78 @@ def cotizador_detail(request, slug: str):
         ctx["hotspot_label"] = _("Etapa")
     return render(request, "pages/cotizador_base.html", ctx)
 
+
+
+
+
+# Proyecto1/principal/views.py
+from django.shortcuts import render
+from django.utils.translation import gettext as _
+from utils.lots_loader import load_states
+
+def lot_detail(request, slug: str, number: int):
+    # Datos mínimos: estado y un área “dummy” (ajústalo a tu cálculo real si lo tienes)
+    states_by_dev = load_states()
+    status = (states_by_dev.get(slug, {}) or {}).get(number, "disponible")
+    ctx = {
+        "slug": slug,
+        "number": number,
+        "status": status,
+        "area_m2": 124.0,  # <- pon tu lógica real si aplica
+        # lo demás del layout puede ser estático o venir de tu lógica
+    }
+    partial = request.GET.get("partial") == "1" or request.headers.get("x-requested-with") == "XMLHttpRequest"
+    tpl = "lots/_lot_detail_inner.html" if partial else "lots/lot_detail.html"
+    return render(request, tpl, ctx)
+
+"""
+def lot_detail(request, slug: str, number: int):
+    # valida proyecto
+    cfg = COTIZADORES.get(slug)
+    if not cfg:
+        raise Http404("Proyecto no encontrado")
+
+    # estado desde Excel/CSV
+    states_by_dev = load_states()              # {'komchen': {9: 'vendido', ...}}
+    state = states_by_dev.get(slug, {}).get(number, "disponible")
+
+    # (opcional) meta de lotes por proyecto
+    # Si luego quieres poner superficie real por lote, llena este dict:
+    LOT_META = {
+        "komchen": {
+            # 9: {"m2": 124}, ...
+        },
+        "hacienda": {}
+    }
+    meta = LOT_META.get(slug, {}).get(number, {})
+    m2 = meta.get("m2")  # puede ser None y la plantilla lo ocultará
+
+    # Datos ejemplo para el cuadro de pagos (ajústalos como necesites)
+    plan = {
+        "plazo": "180 meses",
+        "metodo": "Monto",
+        "saldo_enganche": "$93,208.40",
+        "fecha_limite": "5 días",
+        "precio_lista": "$785,070.00",
+        "pagos": [
+            {"act": "Actualización 1", "monto": "$3,838.12", "pagos": 45},
+            {"act": "Actualización 2", "monto": "$7,011.30", "pagos": 75},
+            {"act": "Actualización 3", "monto": "$7,498.43", "pagos": 60},
+        ]
+    }
+
+    ctx = {
+        "slug": slug,
+        "project_title": cfg["title"],
+        "number": number,
+        "status": state,             # vendido | apartado | disponible
+        "m2": m2,                    # puede ser None
+        "master_img": cfg.get("map_img"),
+        "plan": plan,
+    }
+    return render(request, "lots/lot_detail.html", ctx)
+
+    """
 
 # ===== Vistas públicas =====
 

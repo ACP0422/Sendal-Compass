@@ -6,13 +6,12 @@ from django.conf import settings
 # Estados permitidos y normalización (acepta pequeños “typos”)
 VALID = {"disponible", "vendido", "apartado"}
 NORMALIZE = {
-    "vendible": "vendido",     # por si en Excel escribiste "vendible"
+    "vendible": "vendido",    
     "vendido":  "vendido",
     "disponible": "disponible",
     "apartado":  "apartado",
 }
 
-# 👇 **DECLARAR CACHÉ A NIVEL DE MÓDULO**
 _CACHE: Dict[str, Dict[int, str]] | None = None
 
 def _fetch_bytes(url_or_path: str, timeout: int = 15) -> bytes:

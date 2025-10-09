@@ -1,10 +1,10 @@
-/* Layout general */
+/* 
 .lotd.container{max-width:1100px;margin:24px auto;padding:0 16px}
 .lotd-back{display:inline-block;margin-bottom:10px;color:#3b5b53;font-weight:700;text-decoration:none}
 .lotd-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
 @media (max-width:900px){.lotd-grid{grid-template-columns:1fr;gap:18px}}
 
-/* Panel izquierdo */
+
 .lotd-left{display:grid;grid-template-rows:auto auto;gap:14px}
 #lotPreview{background:#fff;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,.12);padding:12px}
 .lotd-svg{width:100%;height:auto;display:block}
@@ -21,7 +21,6 @@
 .badge.off{background:#c7c7c7}
 .lotd-keys{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.2rem}
 
-/* Cotizador (derecha) */
 .lotd-right{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 6px 30px rgba(0,0,0,.12)}
 .lotd-price{margin:.2rem 0 1rem;font:700 20px/1.2 Inter,system-ui}
 .lotd-price span{font-size:24px}
@@ -37,7 +36,7 @@
 
 
 
-/* El SVG ocupa el ancho, y el texto siempre legible */
+
 .lotd-svg{ width:100%; height:auto; display:block; overflow:visible; }
 
 .lotd-canvas{ fill:#f7f7f7; }
@@ -49,18 +48,18 @@
   vector-effect: non-scaling-stroke;
 }
 
-/* Texto con halo + “pill” blanco detrás */
+
 .lotd-txt{
   font: 700 16px/1.1 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   fill:#1f2937;
   paint-order: stroke fill;
-  stroke:#fff;                 /* halo blanco */
+  stroke:#fff;                 
   stroke-width:3px;
   dominant-baseline: middle;
 }
 
 .lotd-tag{
-  fill:#fff;                   /* pill */
+  fill:#fff;                  
   stroke:#e5e7eb;
   stroke-width:1px;
   filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.08));
@@ -71,7 +70,7 @@
 
 
 
-/* ---- Quote Card (lado derecho) ---- */
+
 .qc-controls{
     display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:10px 0 12px;
   }
@@ -113,4 +112,42 @@
     cursor:pointer; box-shadow:0 6px 30px rgba(0,0,0,.12);
   }
   .qc-send button:hover{ filter:brightness(.97); }
-  
+  */
+
+  .lot-detail { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#302a26; }
+.container { max-width: 1152px; margin: 2rem auto; padding: 0 1rem; }
+.site-head { display:flex; justify-content:space-between; align-items:center; padding:1rem; }
+.site-head .logo img { height:28px; }
+.nav a { text-decoration:none; color:#7b5d4a; }
+
+.lot-hero { display:grid; grid-template-columns: 1fr 1fr; gap:2rem; align-items:center; margin-bottom:2rem; }
+.lot-meta h1 { font-size: 1.75rem; margin:0 0 .5rem; }
+.badge { display:inline-block; padding:.25rem .5rem; border-radius:999px; font-size:.8rem; }
+.badge--sold{ background:#e74c3c; color:#fff; }
+.badge--hold{ background:#f39c12; color:#fff; }
+.badge--free{ background:#2ecc71; color:#fff; }
+
+.map-preview img { width:100%; height:auto; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.08); }
+
+.quote-box { background:#fff; border-radius:16px; padding:1.25rem; box-shadow:0 6px 30px rgba(0,0,0,.06); }
+.controls { display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1rem; }
+.controls label{ display:block; font-size:.9rem; color:#6b635d; }
+.controls select{ width:100%; padding:.5rem .6rem; border:1px solid #ddd; border-radius:10px; }
+
+.facts { list-style:none; padding:0; margin:0 0 1rem; display:grid; gap:.35rem; color:#6b635d; }
+
+.payments{ width:100%; border-collapse:collapse; margin-bottom:1rem; }
+.payments th, .payments td{ border-bottom:1px solid #eee; padding:.5rem .6rem; text-align:left; }
+.payments thead th{ background:#f7efe7; }
+
+.lead-form{ display:grid; gap:.6rem; }
+.lead-form input{ padding:.6rem .7rem; border:1px solid #ddd; border-radius:10px; }
+.lead-form button{ margin-top:.4rem; padding:.7rem 1rem; border:0; border-radius:12px; background:#7b5d4a; color:#fff; cursor:pointer; }
+
+.payrows .payrow:nth-child(odd){ background:#fceee6; }
+.payrows .payrow:nth-child(even){ background:#fff3ec; }
+
+
+
+
+
