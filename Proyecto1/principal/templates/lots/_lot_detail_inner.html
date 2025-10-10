@@ -47,115 +47,163 @@
     #lot-modal .lead-form .input:focus { outline:3px solid #e8dccf; border-color:#cbb79f; }
   </style>
 
-
 <div class="lot-detail">
-    <header class="lot-head">
-      <h2 id="lot-modal-title" class="lot-title">
-        Lote {{ number }}
-        <small class="lot-area">({{ area_m2|floatformat:0 }} m²)</small>
-      </h2>
-      <span class="lot-status">Estado: {{ status }}</span>
-    </header>
-  
-    <div class="lot-grid">
-      <!-- Columna izquierda: mapa + regreso -->
-      <aside class="lot-left">
-       <!-- Imagen -->
-<div class="map-card">
-  {% if lot.display_image_url %}
-    <img src="{{ lot.display_image_url }}" alt="Vista del lote {{ lot.number }}">
-  {% else %}
-    <img src="{% static 'resources/images/places/placeholder-lote.png' %}" alt="Vista del lote {{ lot.number }}">
-  {% endif %}
-</div>
+  <header class="lot-head">
+    <h2 id="lot-modal-title" class="lot-title">
+      Lote {{ number }}
+      <small class="lot-area">({{ area_m2|floatformat:0 }} m²)</small>
+    </h2>
+    <span class="lot-status">Estado: {{ status }}</span>
+  </header>
 
-        <div class="project-meta">
-          <p class="project-name">Proyecto Komchén</p>
-          <button type="button" class="btn btn-secondary" onclick="document.querySelector('#lot-modal [data-close]')?.click()">
-            Regresar
-          </button>
-        </div>
-      </aside>
-
-<!-- Columna derecha: controles + datos + tabla -->
-<section class="lot-right">
-  <div class="controls">
-    <label class="control">
-      <span class="control-label">Plazo</span>
-      <select class="input" aria-label="Plazo">
-        <option {% if lot.plazo_default_meses == 180 %}selected{% endif %}>180 meses</option>
-        <option {% if lot.plazo_default_meses == 120 %}selected{% endif %}>120 meses</option>
-        <option {% if lot.plazo_default_meses ==  60 %}selected{% endif %}>60 meses</option>
-      </select>
-    </label>
-
-
-      <label class="control">
-        <span class="control-label">Método cálculo de enganche</span>
-        <select class="input" aria-label="Método de cálculo de enganche">
-          <option {% if lot.metodo_enganche_default == "Monto" %}selected{% endif %}>Monto</option>
-    <option {% if lot.metodo_enganche_default == "Porcentaje" %}selected{% endif %}>Porcentaje</option>
-        </select>
-      </label>
-    </div>
+  <div class="lot-grid">
+    <!-- Columna izquierda: imagen + regresar -->
+    <aside class="lot-left">
+      <div class="map-card">
+        {% if image_url %}
+          {% if image_url|slice:":8" == "STATIC::" %}
+            {% with rel=image_url|slice:"8:" %}
+              <img src="{% static rel %}" alt="Vista del lote {{ number }}">
+            {% endwith %}
+          {% else %}
+            <img
+              src="{{ image_url }}"
+              alt="Vista del lote {{ number }}"
+              {% if image_url_fallback %}data-alt-src="{{ image_url_fallback }}"{% endif %}
+              onerror="if(this.dataset.altSrc){ this.onerror=null; this.src=this.dataset.altSrc; }"
+              referrerpolicy="no-referrer"
+            >
+          {% endif %}
+        {% else %}
+          <img src="{% static 'resources/images/places/placeholder-lote.png' %}" alt="Vista del lote {{ number }}">
+        {% endif %}
+      </div>
+      
+      <!-- debug: {{ image_url }} | fb: {{ image_url_fallback }} -->
+      
+      
+     
+      <div class="project-meta">
+        <p class="project-name">{{ lot.project.name }}</p>
+        <button type="button" class="btn btn-secondary"
+                onclick="document.querySelector('#lot-modal [data-close]')?.click()">
+          Regresar
+        </button>
+      </div>
 
 
+      {% if regular_width_m or regular_length_m or irregular_sides_m %}
+  <div class="project-meta" style="margin-top:8px;">
+    <p class="project-name" style="color:#6b635d;margin-bottom:6px;">Medidas del lote</p>
+    {% if regular_width_m and regular_length_m %}
+      <ul class="facts" style="margin:0;">
+        <li><strong>Regular:</strong> {{ regular_width_m|floatformat:2 }} m × {{ regular_length_m|floatformat:2 }} m</li>
+        <li><strong>Área:</strong> {{ area_m2|floatformat:2 }} m²</li>
+      </ul>
+    {% elif irregular_sides_m %}
+      <ul class="facts" style="margin:0;">
+        <li><strong>Irregular (lados):</strong> {{ irregular_sides_m }} m</li>
+        <li><strong>Área:</strong> {{ area_m2|floatformat:2 }} m²</li>
+      </ul>
+    {% endif %}
+  </div>
+{% endif %}
 
-    <ul class="facts">
-      <li><strong>Apartado:</strong> $1,000.00</li>
-      <li><strong>Saldo de enganche:</strong> $93,208.40</li>
-      <li><strong>Fecha límite para el pago de enganche:</strong> 5 días</li>
-      <li><strong>Precio de lista:</strong> $785,070.00</li>
-    </ul>
 
-      <!-- Esquema de pagos (dinámico) -->
+
+
+
+
+
+
+
+    </aside>
+
+    <!-- Columna derecha: controles + datos + tabla -->
+    <section class="lot-right">
+      <div class="controls">
+        <!-- Plazo -->
+        <label class="control">
+          <span class="control-label">Plazo</span>
+          <select class="input" aria-label="Plazo">
+            <option {% if lot.plazo_default_meses == 180 %}selected{% endif %}>180 meses</option>
+            <option {% if lot.plazo_default_meses == 120 %}selected{% endif %}>120 meses</option>
+            <option {% if lot.plazo_default_meses ==  60 %}selected{% endif %}>60 meses</option>
+          </select>
+        </label>
+
+        <label class="control">
+          <span class="control-label">Cantidad de enganche</span>
+          <div class="input" style="display:flex;align-items:center;gap:.5rem;">
+            <input type="text"
+                   class="input"
+                   value="${{ enganche_total|floatformat:2 }}"
+                   aria-label="Cantidad de enganche"
+                   readonly
+                   style="border:none;padding:0;flex:1;background:transparent;" />
+            <span style="font-size:.85rem;color:#6b635d;">({{ pct|default:20 }}%)</span>
+          </div>
+        </label>
+        
+      </div>
+
+      <!-- Datos fijos pero administrables por etapa -->  
+      <ul class="facts">
+        <li><strong>Apartado:</strong> ${{ apartar_amount|floatformat:2 }}</li>
+        <li><strong>Fecha límite para cubrir el enganche:</strong> {{ deadline_days }} días posteriores al apartado</li>
+        <li><strong>Precio de lista:</strong> ${{ precio_lista|floatformat:2 }}</li>
+        <li><strong>Precio por m²:</strong> ${{ precio_m2|floatformat:2 }}</li>  
+      </ul>
+
+      
+      
+
+      <!-- Esquema de pagos -->
       <h3 class="section-title">Esquema de pagos</h3>
       <div class="table-wrap">
-      <table class="payments" aria-describedby="lot-modal-title">
-      <tbody>
-        <thead>
-          <tr>
-            <th>Actualización</th>
-            <th>Monto</th>
-            <th>Pagos</th>
-          </tr>
-        </thead>
-        {% for u in updates %}
-          <tr>
-            <td>{{ u.label }} {{ forloop.counter }}</td>
-            <td>${{ u.amount|floatformat:2 }}</td>
-            <td>{{ u.payments }}</td>
-          </tr>
-        {% empty %}
-          <tr><td colspan="3">Sin registros de pagos para este lote.</td></tr>
-        {% endfor %}
-      </tbody>
-      </table>
+        <table class="payments" aria-describedby="lot-modal-title">
+          <thead>
+            <tr>
+              <th>Actualización</th>
+              <th>Monto</th>
+              <th>Pagos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in updates %}
+              <tr>
+                <td>{{ u.label }} {{ forloop.counter }}</td>
+                <td>${{ u.amount|floatformat:2 }}</td>
+                <td>{{ u.payments }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="3">Sin registros de pagos para este lote.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-  
-        <h3 class="section-title">Datos de envío</h3>
-        <p class="helper">
-          Al ingresar tus datos, se enviará la cotización al correo con base en el número de plazos seleccionado.
-        </p>
-  
-        <form class="lead-form" novalidate>
-          <label>
-            <span class="sr-only">Nombre Completo</span>
-            <input class="input" type="text" placeholder="Nombre Completo" name="name" required>
-          </label>
-          <label>
-            <span class="sr-only">Teléfono</span>
-            <input class="input" type="tel" placeholder="(+52) 999 999 9999" name="phone" inputmode="tel" required>
-          </label>
-          <label>
-            <span class="sr-only">Email</span>
-            <input class="input" type="email" placeholder="email@ejemplo.com" name="email" required>
-          </label>
-  
-          <button class="btn btn-primary" type="submit">Enviar cotización</button>
-        </form>
-      </section>
 
-    </div>
+      <h3 class="section-title">Datos de envío</h3>
+      <p class="helper">
+        Al ingresar tus datos, se enviará la cotización al correo con base en el número de plazos seleccionado.
+      </p>
+
+      <form class="lead-form" novalidate>
+        <label>
+          <span class="sr-only">Nombre Completo</span>
+          <input class="input" type="text" placeholder="Nombre Completo" name="name" required>
+        </label>
+        <label>
+          <span class="sr-only">Teléfono</span>
+          <input class="input" type="tel" placeholder="(+52) 999 999 9999" name="phone" inputmode="tel" required>
+        </label>
+        <label>
+          <span class="sr-only">Email</span>
+          <input class="input" type="email" placeholder="email@ejemplo.com" name="email" required>
+        </label>
+
+        <button class="btn btn-primary" type="submit">Enviar cotización</button>
+      </form>
+    </section>
   </div>
-  
+</div>

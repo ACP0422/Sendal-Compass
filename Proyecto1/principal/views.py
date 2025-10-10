@@ -6,6 +6,128 @@ from django.http import Http404
 import json
 from utils.lots_loader import load_states
 from django.http import Http404
+from django.shortcuts import render
+from urllib.parse import urlparse, parse_qs
+import re
+from utils.lots_loader import load_inventory
+
+
+import re
+from urllib.parse import urlparse, parse_qs
+
+def drive_urls(url: str) -> tuple[str | None, str | None]:
+    """
+    Recibe un vínculo de Drive y regresa:
+      (primary_uc, fallback_lh3)
+    - primary_uc  -> https://drive.google.com/uc?export=view&id=... [&resourcekey=...]
+    - fallback_lh3-> https://lh3.googleusercontent.com/d/...
+    Devuelve (None, None) si no parece de Drive.
+    """
+    if not url:
+        return None, None
+
+    p = urlparse(url)
+    host = p.netloc
+    if "drive.google.com" not in host and "docs.google.com" not in host:
+        return None, None
+
+    qs = parse_qs(p.query)
+    file_id = None
+    # /file/d/<ID>/...
+    m = re.search(r"/file/d/([^/]+)", p.path)
+    if m:
+        file_id = m.group(1)
+    # ?id=<ID>
+    if not file_id and "id" in qs and qs["id"]:
+        file_id = qs["id"][0]
+
+    if not file_id:
+        return None, None
+
+    resourcekey = (qs.get("resourcekey") or [None])[0]
+
+    primary = f"https://drive.google.com/uc?export=view&id={file_id}"
+    if resourcekey:
+        primary += f"&resourcekey={resourcekey}"
+
+    fallback = f"https://lh3.googleusercontent.com/d/{file_id}"
+    return primary, fallback
+
+
+
+
+def lot_detail(request, slug: str, number: int):
+    # si agregas ?reload=1 en la URL forzará releer el Excel
+    force = request.GET.get("reload") == "1"
+    inv_by_dev = load_inventory(force_reload=force)
+
+    dev = inv_by_dev.get(slug, {}) or {}
+    row = dev.get(number, {})  # dict con todas las columnas del Excel
+
+    status = row.get("status", "disponible")
+    area_m2 = float(row.get("area_m2") or 0)
+    price_total = float(row.get("price_total") or 0)
+
+    # Calcula precio/m2 si no viene en el archivo
+    precio_m2 = float(row.get("precio_m2") or 0)
+    if not precio_m2 and area_m2 > 0:
+        precio_m2 = price_total / area_m2
+
+    # Parámetros de etapa (administrables vía archivo)
+    pct = float(row.get("stage_down_payment_percent") or 20.0)      # 20% por defecto
+    apartar = float(row.get("stage_apartar_amount") or 1000.0)      # $1000 por defecto
+    deadline_days = int(row.get("stage_deadline_days") or 5)        # 5 días por defecto
+
+    # Enganche y saldo
+    enganche_total = price_total * (pct / 100.0)
+    saldo_enganche = max(enganche_total - apartar, 0.0)
+
+    # Imagen dinámica (URL absoluta, Drive o estático) con fallback
+    raw_img = (row.get("image_filename") or "").strip()
+    image_url = ""
+    image_url_fallback = ""
+
+    if raw_img:
+        if urlparse(raw_img).scheme in ("http", "https"):
+            primary, fallback = drive_urls(raw_img)  # usa tu helper nuevo
+            image_url = primary or raw_img
+            image_url_fallback = fallback or ""
+        else:
+            image_url = f"STATIC::resources/images/lotes/{raw_img}"
+
+
+    ctx = {
+        "slug": slug,
+        "number": number,
+        "status": status,
+        "area_m2": area_m2,
+
+        # Datos para el popup (dinámicos)
+        "precio_lista": price_total,
+        "precio_m2": precio_m2,
+        "enganche_total": enganche_total,
+        "apartar_amount": apartar,
+        "saldo_enganche": saldo_enganche,
+        "deadline_days": deadline_days,
+        "pct": pct,
+
+        # Medidas
+        "regular_width_m": row.get("regular_width_m"),
+        "regular_length_m": row.get("regular_length_m"),
+        "irregular_sides_m": row.get("irregular_sides_m"),
+
+        # Imagen ya resuelta
+        "image_url": image_url,
+        "image_url_fallback": image_url_fallback,
+
+    }
+
+    partial = request.GET.get("partial") == "1" or request.headers.get("x-requested-with") == "XMLHttpRequest"
+    tpl = "lots/_lot_detail_inner.html" if partial else "lots/lot_detail.html"
+    return render(request, tpl, ctx)
+
+
+
 
 
 def _enrich_hotspots_with_status(slug: str, hotspots: list[dict]) -> list[dict]:
@@ -170,74 +292,6 @@ def cotizador_detail(request, slug: str):
 
 
 
-# Proyecto1/principal/views.py
-from django.shortcuts import render
-from django.utils.translation import gettext as _
-from utils.lots_loader import load_states
-
-def lot_detail(request, slug: str, number: int):
-    # Datos mínimos: estado y un área “dummy” (ajústalo a tu cálculo real si lo tienes)
-    states_by_dev = load_states()
-    status = (states_by_dev.get(slug, {}) or {}).get(number, "disponible")
-    ctx = {
-        "slug": slug,
-        "number": number,
-        "status": status,
-        "area_m2": 124.0,  # <- pon tu lógica real si aplica
-        # lo demás del layout puede ser estático o venir de tu lógica
-    }
-    partial = request.GET.get("partial") == "1" or request.headers.get("x-requested-with") == "XMLHttpRequest"
-    tpl = "lots/_lot_detail_inner.html" if partial else "lots/lot_detail.html"
-    return render(request, tpl, ctx)
-
-"""
-def lot_detail(request, slug: str, number: int):
-    # valida proyecto
-    cfg = COTIZADORES.get(slug)
-    if not cfg:
-        raise Http404("Proyecto no encontrado")
-
-    # estado desde Excel/CSV
-    states_by_dev = load_states()              # {'komchen': {9: 'vendido', ...}}
-    state = states_by_dev.get(slug, {}).get(number, "disponible")
-
-    # (opcional) meta de lotes por proyecto
-    # Si luego quieres poner superficie real por lote, llena este dict:
-    LOT_META = {
-        "komchen": {
-            # 9: {"m2": 124}, ...
-        },
-        "hacienda": {}
-    }
-    meta = LOT_META.get(slug, {}).get(number, {})
-    m2 = meta.get("m2")  # puede ser None y la plantilla lo ocultará
-
-    # Datos ejemplo para el cuadro de pagos (ajústalos como necesites)
-    plan = {
-        "plazo": "180 meses",
-        "metodo": "Monto",
-        "saldo_enganche": "$93,208.40",
-        "fecha_limite": "5 días",
-        "precio_lista": "$785,070.00",
-        "pagos": [
-            {"act": "Actualización 1", "monto": "$3,838.12", "pagos": 45},
-            {"act": "Actualización 2", "monto": "$7,011.30", "pagos": 75},
-            {"act": "Actualización 3", "monto": "$7,498.43", "pagos": 60},
-        ]
-    }
-
-    ctx = {
-        "slug": slug,
-        "project_title": cfg["title"],
-        "number": number,
-        "status": state,             # vendido | apartado | disponible
-        "m2": m2,                    # puede ser None
-        "master_img": cfg.get("map_img"),
-        "plan": plan,
-    }
-    return render(request, "lots/lot_detail.html", ctx)
-
-    """
 
 # ===== Vistas públicas =====
 
@@ -268,8 +322,9 @@ def index(request):
             "img": static("resources/images/places/Tulum/Tulum.jpg"),
             "descripcion": _("Destino icónico con gran plusvalía, naturaleza y proyección internacional."),
             "tipos": ["lote"],
-            "activo": True,
+            "activo": False,
         },
+        
     ]
     return render(request, "pages/index.html", {"proyectos": proyectos})
 
