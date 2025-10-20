@@ -1,0 +1,41 @@
+<svg id="komchen-svg" viewBox="0 0 1201 559" xmlns="http://www.w3.org/2000/svg" aria-label="Masterplan Komchén">
+      <g id="komchen-lotes">
+        <path id="L-001" class="lot" d="M114 446H0V333H33.9467H107.413V426.916C108.942 432.972 110.405 435.809 114 439.973V446Z"/>
+        <path id="L-002" class="lot" d="M113.153 439C132.589 457.948 143.504 457.217 163 440.013V558H2.49235L0 445.583H113.153V439Z"/>
+        <path id="L-003" class="lot" d="M170.696 426.684V397H222V558H163V439.766C167.238 435.861 168.942 433.02 170.696 426.684Z"/>
+        <path id="L-004" class="lot" d="M222 558H283V397H222V558Z"/>
+        <path id="L-005" class="lot" d="M283 558H345V397H283V558Z"/>
+        <path id="L-006" class="lot" d="M345 558H407V397H345V558Z"/>
+        <path id="L-007" class="lot" d="M407 558H469V397H407V558Z"/>
+        <path id="L-008" class="lot" d="M469 558H531V397H469V558Z"/>
+        <path id="L-009" class="lot" d="M531 558H592V397H531V558Z"/>
+        <path id="L-010" class="lot" d="M592 558H652V397H592V558Z"/>
+        <path id="L-011" class="lot" d="M652 558H714V397H652V558Z"/>
+        <path id="L-012" class="lot" d="M714 558H776V397H714V558Z"/>
+        <path id="L-013" class="lot" d="M776 558H837V397H776V558Z"/>
+        <path id="L-014" class="lot" d="M837 558H897V397H837V558Z"/>
+        <path id="L-015" class="lot" d="M897 558H959V397H897V558Z"/>
+        <path id="L-016" class="lot" d="M959 558H1023V444.146C1019.12 441.677 1017.09 439.037 1013.93 430.103V397H959V558Z"/>
+        <path id="L-017" class="lot" d="M1022 444V558H1200V444H1069.13C1050.73 457.577 1040.41 454.469 1022 444Z"/>
+        <path id="L-018" class="lot" d="M1075.58 429.068C1074.06 438.525 1074.7 438.413 1069 444H1200V335H1075.58V429.068Z"/>
+        <path id="L-019" class="lot" d="M1200.5 223V335H1075.5V223H1200.5Z"/>
+        <path id="L-020" class="lot" d="M1075.65 126.204V223H1199.5V166.747V111H1067.5V116.068C1071.5 118.332 1073.43 120.248 1075.65 126.204Z"/>
+        <path id="L-021" class="lot" d="M1019 116C1036.62 101.902 1047.11 100.278 1067.64 116V111.441H1199V0H1019V116Z"/>
+        <path id="L-022" class="lot" d="M1012.94 132.322C1012.51 125.5 1014.11 121.868 1020 115.719V0H958V161H1012.94V132.322Z"/>
+        <path id="L-023" class="lot" d="M896 161H958V0H896V161Z"/>
+        <path id="L-024" class="lot" d="M835 161H896V0H835V161Z"/>
+        <path id="L-025" class="lot" d="M774 161H835V0H774V161Z"/>
+        <path id="L-026" class="lot" d="M713 161H774V0H713V161Z"/>
+        <path id="L-027" class="lot" d="M652 161H713V0H652V161Z"/>
+        <path id="L-028" class="lot" d="M591 161H652V0H591V161Z"/>
+        <path id="L-029" class="lot" d="M530 161H591V0H530V161Z"/>
+        <path id="L-030" class="lot" d="M469 161H530V0H469V161Z"/>
+        <path id="L-031" class="lot" d="M408 161H469V0H408V161Z"/>
+        <path id="L-032" class="lot" d="M347 161H408V0H347V161Z"/>
+        <path id="L-033" class="lot" d="M286 161H347V0H286V161Z"/>
+        <path id="L-034" class="lot" d="M225 161H286V0H225V161Z"/>
+        <path id="L-035" class="lot" d="M169.056 161H225V0H162V117.731C166.828 121.731 168.665 124.685 169.056 132.322V161Z"/>
+        <path id="L-036" class="lot" d="M113.151 118C131.205 102.316 141.848 101.501 162 118V0H0V112.936H113.151V118Z"/>
+        <path id="L-037" class="lot" d="M0 222V112H114V116.977C110.464 120.796 108.605 123.093 107.442 129.919V222H0Z"/>
+      </g>
+    </svg>

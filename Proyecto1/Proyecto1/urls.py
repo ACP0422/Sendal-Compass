@@ -14,8 +14,10 @@ urlpatterns = [
     path("cotizador/", views.cotizador_index, name="cotizador"),
     path("cotizador/<slug:slug>/", views.cotizador_detail, name="cotizador-detail"),
 
+    path('komchen-svg/', views.komchen_svg_view, name='komchen-svg'),
+    path('api/lead/', views.create_lead, name='create_lead'),
     
-    path("cotizador/<slug:slug>/lote/<int:number>/", views.lot_detail, name="lot-detail"),
+
 
     path('proyectos/valladolid/', views.valladolid, name='valladolid'),
     path('proyectos/tulum/', views.tulum, name='tulum'),
@@ -23,7 +25,8 @@ urlpatterns = [
 
     path("proyectos/valladolid/predios/<slug:slug>/", views.predio_detail, name="predio-detail"),
     path("proyectos/valladolid/<slug:slug>/", views.predio_compat, name="valladolid-compat"),
-    path("cotizador/<slug:slug>/lote/<int:number>/", views.lot_detail, name="lot-detail"),
+
+   
 
 
     path('proyectos/komchen/', views.komchen, name='komchen'),

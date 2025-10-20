@@ -15,6 +15,110 @@ from utils.lots_loader import load_inventory
 import re
 from urllib.parse import urlparse, parse_qs
 
+from pathlib import Path
+import json
+from django.conf import settings
+from django.shortcuts import render
+from utils.lots_loader import load_states  # fallback temporal a Excel
+
+
+def _fetch_states_from_crm(dev_slug: str) -> dict[str, str]:
+    """
+    Devuelve { 'L-001': 'available'|'reserved'|'sold', ... } desde el CRM.
+    Por ahora, hacemos fallback al Excel con tu util load_states().
+    """
+    try:
+      states_by_dev = load_states(force_reload=False)  # {'komchen': {1:'disponible', ...}}
+    except Exception:
+      states_by_dev = {}
+
+    raw = states_by_dev.get(dev_slug, {}) or {}  # {1:'vendido', ...}
+    out: dict[str, str] = {}
+    for num, st in raw.items():
+        s = (st or "").lower()
+        if "vend" in s: css = "sold"
+        elif "apart" in s or "reserv" in s: css = "reserved"
+        else: css = "available"
+        out[f"L-{int(num):03d}"] = css
+    return out
+
+def komchen_svg_view(request):
+    # 1) lee el SVG (guardado en static/maps/komchen.svg)
+    svg_path = Path(settings.BASE_DIR) / 'static' / 'maps' / 'komchen.svg'
+    svg_markup = svg_path.read_text(encoding='utf-8')
+
+    # 2) estados (CRM → fallback Excel)
+    lot_states = _fetch_states_from_crm('komchen')
+
+    ctx = {
+        'svg_markup': svg_markup,
+        'lot_states_json': json.dumps(lot_states),
+    }
+    return render(request, 'komchen.html', ctx)
+
+
+from django.shortcuts import redirect
+from django.http import Http404
+
+# Si quieres ir sumando más proyectos SVG, mapea aquí: slug -> nombre_de_url
+SVG_ROUTES = {
+    "komchen": "komchen-svg",
+    # "hacienda": "hacienda-svg",   # cuando lo tengas listo
+}
+
+def cotizador_detail(request, slug: str):
+    """
+    Vista del cotizador por proyecto.
+    Ahora solamente redirige a la página SVG correspondiente.
+    """
+    # ¿tenemos ruta SVG para este proyecto?
+    svg_urlname = SVG_ROUTES.get(slug)
+    if not svg_urlname:
+        # Si aún no existe el SVG de ese proyecto, puedes:
+        # - mandar 404
+        # - o redirigir al índice del cotizador
+        raise Http404("Proyecto sin vista SVG configurada")
+        # return redirect("cotizador")
+
+    return redirect(svg_urlname)
+
+
+
+
+# views.py
+import json
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+# from django.views.decorators.csrf import csrf_exempt  # <- solo si decides desactivar CSRF
+
+@require_POST
+def create_lead(request):
+    """
+    Recibe el clic de un lote desde el mapa SVG.
+    Payload esperado (JSON): {"lotId": "L-023", "source": "komchen_web", ...}
+    Aquí luego conectarás con tu CRM (GHL): crear/actualizar contacto y oportunidad.
+    """
+    try:
+        data = json.loads(request.body or "{}")
+    except json.JSONDecodeError:
+        return JsonResponse({"ok": False, "error": "invalid_json"}, status=400)
+
+    lot_id = data.get("lotId")
+    source = data.get("source") or "web"
+
+    if not lot_id:
+        return JsonResponse({"ok": False, "error": "missing_lotId"}, status=400)
+
+    # TODO: aquí harías la integración real con GHL (contacto/opportunity/tags)
+    # ejemplo (pseudo):
+    # ghl.upsert_contact(name=..., phone=..., email=...)
+    # ghl.upsert_opportunity(pipeline_id=..., stage_id=..., custom_fields={"lot_id": lot_id}, tags=[source, "komchen"])
+
+    # por ahora solo respondemos OK para probar el flujo front→back
+    return JsonResponse({"ok": True, "lotId": lot_id, "source": source})
+
+
+
 def drive_urls(url: str) -> tuple[str | None, str | None]:
     """
     Recibe un vínculo de Drive y regresa:
@@ -128,19 +232,6 @@ def lot_detail(request, slug: str, number: int):
 
 
 
-
-
-def _enrich_hotspots_with_status(slug: str, hotspots: list[dict]) -> list[dict]:
-    states_by_dev = load_states()                   # {'komchen': {9: 'vendido', ...}}
-    states = states_by_dev.get(slug, {})
-    out = []
-    for h in hotspots:
-        n = h.get("n")
-        st = states.get(n, "disponible")           # default si no viene en Excel
-        out.append({**h, "status": st})
-    return out
-
-
 # ===== Config global (cotizador) =====
 HERO_IMG = "resources/images/cotizador/hero.png"
 KICKER   = _("Cotiza nuestros proyectos")
@@ -188,106 +279,6 @@ def cotizador_index(request):
         "title_style": "",
     }
     return render(request, "pages/cotizador_base.html", ctx)
-
-
-
-def cotizador_detail(request, slug: str):
-    cfg = COTIZADORES.get(slug)
-    if not cfg:
-        return redirect("cotizador")
-
-    # Construye la lista "otros"
-    otros = []
-    for s in cfg.get("otros", []):
-        other = COTIZADORES.get(s)
-        if other:
-            otros.append({
-                "label": other["label"],
-                "href": _href_to_detail(s),
-                "btn": other["btn"],
-            })
-
-    grid_cols = min(3, max(1, len(otros)))
-    title_color = cfg.get("title_color")
-    title_style = f' style="color:{title_color}"' if title_color else ""
-
-    ctx = {
-        "page_title": cfg["title"],
-        "hero_img": HERO_IMG,
-        "kicker": KICKER,
-        "heading": cfg["title"],
-        "variant": cfg.get("variant"),  # "komchen" | "hacienda"
-        "show_toggle": True,
-        "actions": otros,
-        "actions_hidden": True,
-        "grid_cols": grid_cols,
-        "map_img": cfg.get("map_img"),
-        "title_style": title_style,
-        # genéricos para hotspots (se setean abajo según slug)
-        "hotspots_json": None,
-        "hotspot_label": None,
-    }
-
-    # ===== Hotspots por proyecto =====
-    if slug == "komchen":
-        komchen_hotspots = [
-            {"n": 1, "x": 10.89, "y": 70.91},
-            {"n": 2, "x": 13.13, "y": 90.43},
-            {"n": 3, "x": 21.43, "y": 90.43},
-            {"n": 4, "x": 26.34, "y": 90.63},
-            {"n": 5, "x": 30.98, "y": 90.63},
-            {"n": 6, "x": 35.54, "y": 90.23},
-            {"n": 7, "x": 40.54, "y": 90.23},
-            {"n": 8, "x": 45.27, "y": 90.23},
-            {"n": 9, "x": 50.09, "y": 90.03},
-            {"n":10, "x": 54.73, "y": 90.23},
-            {"n":11, "x": 59.46, "y": 90.63},
-            {"n":12, "x": 64.29, "y": 90.43},
-            {"n":13, "x": 69.20, "y": 90.23},
-            {"n":14, "x": 74.02, "y": 90.23},
-            {"n":15, "x": 78.66, "y": 90.43},
-            {"n":16, "x": 83.30, "y": 90.23},
-            {"n":17, "x": 93.75, "y": 90.43},
-            {"n":18, "x": 93.57, "y": 69.52},
-            {"n":19, "x": 93.66, "y": 51.19},
-            {"n":20, "x": 93.84, "y": 31.67},
-            {"n":21, "x": 93.13, "y": 11.35},
-            {"n":22, "x": 83.39, "y": 13.35},
-            {"n":23, "x": 78.57, "y": 13.15},
-            {"n":24, "x": 73.75, "y": 13.35},
-            {"n":25, "x": 68.93, "y": 13.54},
-            {"n":26, "x": 64.11, "y": 13.35},
-            {"n":27, "x": 59.64, "y": 13.35},
-            {"n":28, "x": 54.64, "y": 13.54},
-            {"n":29, "x": 50.00, "y": 13.74},
-            {"n":30, "x": 45.27, "y": 13.54},
-            {"n":31, "x": 40.45, "y": 13.15},
-            {"n":32, "x": 35.54, "y": 13.54},
-            {"n":33, "x": 30.89, "y": 13.15},
-            {"n":34, "x": 26.07, "y": 13.15},
-            {"n":35, "x": 21.34, "y": 13.35},
-            {"n":36, "x": 12.50, "y": 11.35},
-            {"n":37, "x": 10.89, "y": 30.68},
-        ]
-        komchen_hotspots = _enrich_hotspots_with_status("komchen", komchen_hotspots)
-        ctx["hotspots_json"] = json.dumps(komchen_hotspots)
-        ctx["hotspot_label"] = _("Lote")
-
-    elif slug == "hacienda":
-        hacienda_hotspots = [
-            {"n": 1, "x": 83.48, "y": 71.21},
-            {"n": 2, "x": 75.63, "y": 70.97},
-            {"n": 3, "x": 65.36, "y": 70.50},
-            {"n": 4, "x": 55.63, "y": 66.21},
-            {"n": 5, "x": 45.45, "y": 61.69},
-            {"n": 6, "x": 35.54, "y": 60.73},
-            {"n": 7, "x": 27.68, "y": 62.88},
-        ]
-        hacienda_hotspots = _enrich_hotspots_with_status("hacienda", hacienda_hotspots)
-        ctx["hotspots_json"] = json.dumps(hacienda_hotspots)
-        ctx["hotspot_label"] = _("Etapa")
-    return render(request, "pages/cotizador_base.html", ctx)
-
 
 
 
