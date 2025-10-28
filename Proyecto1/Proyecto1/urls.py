@@ -15,7 +15,7 @@ urlpatterns = [
     path("cotizador/<slug:slug>/", views.cotizador_detail, name="cotizador-detail"),
 
     path('komchen-svg/', views.komchen_svg_view, name='komchen-svg'),
-    path('api/lead/', views.create_lead, name='create_lead'),
+    path('hacienda-svg/', views.hacienda_svg_view, name='hacienda-svg'),
     
 
 
@@ -26,12 +26,12 @@ urlpatterns = [
     path("proyectos/valladolid/predios/<slug:slug>/", views.predio_detail, name="predio-detail"),
     path("proyectos/valladolid/<slug:slug>/", views.predio_compat, name="valladolid-compat"),
 
-   
+   path("contacto/", views.contacto_view, name="contacto"),
 
 
     path('proyectos/komchen/', views.komchen, name='komchen'),
-
-    path('hacienda/', include('lots.urls')),
+    
+    path("api/", include("ghl_connector.urls")),
  
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

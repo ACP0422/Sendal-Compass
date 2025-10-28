@@ -99,6 +99,11 @@
       white-space: nowrap;
     }
 
+    .proj .pill:hover {
+      background: #1f2a44;
+      color: #fff;
+    }
+    
 
     /* ===================== RESPONISVE OVERRIDES ===================== */
 /* -------- Mobile: ≤ 767px -------- */

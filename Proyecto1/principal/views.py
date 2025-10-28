@@ -57,13 +57,29 @@ def komchen_svg_view(request):
     return render(request, 'komchen.html', ctx)
 
 
+
+def hacienda_svg_view(request):
+    
+    svg_path = Path(settings.BASE_DIR) / 'static' / 'maps' / 'hacienda.svg'
+    svg_markup = svg_path.read_text(encoding='utf-8')
+
+    # 2) estados (CRM → fallback Excel)
+    lot_states = _fetch_states_from_crm('hacienda')
+
+    ctx = {
+        'svg_markup': svg_markup,
+        'lot_states_json': json.dumps(lot_states),
+    }
+    return render(request, 'hacienda.html', ctx)
+
+
 from django.shortcuts import redirect
 from django.http import Http404
 
 # Si quieres ir sumando más proyectos SVG, mapea aquí: slug -> nombre_de_url
 SVG_ROUTES = {
     "komchen": "komchen-svg",
-    # "hacienda": "hacienda-svg",   # cuando lo tengas listo
+    "hacienda": "hacienda-svg",   
 }
 
 def cotizador_detail(request, slug: str):
@@ -85,38 +101,43 @@ def cotizador_detail(request, slug: str):
 
 
 
-# views.py
-import json
+import requests
 from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-# from django.views.decorators.csrf import csrf_exempt  # <- solo si decides desactivar CSRF
+from django.views.decorators.csrf import csrf_exempt
+import json
 
-@require_POST
+@csrf_exempt
 def create_lead(request):
-    """
-    Recibe el clic de un lote desde el mapa SVG.
-    Payload esperado (JSON): {"lotId": "L-023", "source": "komchen_web", ...}
-    Aquí luego conectarás con tu CRM (GHL): crear/actualizar contacto y oportunidad.
-    """
-    try:
-        data = json.loads(request.body or "{}")
-    except json.JSONDecodeError:
-        return JsonResponse({"ok": False, "error": "invalid_json"}, status=400)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        lot_id = data.get('lotId')
+        source = data.get('source', 'web')
+        
+        # Token de GHL (recuerda que expira cada día)
+        token = 'TU_ACCESS_TOKEN'
+        
+        # Endpoint de GHL (ejemplo: crear contacto)
+        ghl_url = 'https://services.leadconnectorhq.com/contacts/'
 
-    lot_id = data.get("lotId")
-    source = data.get("source") or "web"
+        payload = {
+            "firstName": "Cotizador",        
+            "lastName": f"Lote {lot_id}",
+            "email": "contacto@sendal.mx",
+            "phone": "9990000000",
+            "customField": f"Lote seleccionado {lot_id}",
+            "source": source,
+        }
 
-    if not lot_id:
-        return JsonResponse({"ok": False, "error": "missing_lotId"}, status=400)
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
 
-    # TODO: aquí harías la integración real con GHL (contacto/opportunity/tags)
-    # ejemplo (pseudo):
-    # ghl.upsert_contact(name=..., phone=..., email=...)
-    # ghl.upsert_opportunity(pipeline_id=..., stage_id=..., custom_fields={"lot_id": lot_id}, tags=[source, "komchen"])
+        response = requests.post(ghl_url, headers=headers, json=payload)
+        return JsonResponse(response.json(), safe=False)
 
-    # por ahora solo respondemos OK para probar el flujo front→back
-    return JsonResponse({"ok": True, "lotId": lot_id, "source": source})
-
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 def drive_urls(url: str) -> tuple[str | None, str | None]:
@@ -157,78 +178,6 @@ def drive_urls(url: str) -> tuple[str | None, str | None]:
     fallback = f"https://lh3.googleusercontent.com/d/{file_id}"
     return primary, fallback
 
-
-
-
-def lot_detail(request, slug: str, number: int):
-    # si agregas ?reload=1 en la URL forzará releer el Excel
-    force = request.GET.get("reload") == "1"
-    inv_by_dev = load_inventory(force_reload=force)
-
-    dev = inv_by_dev.get(slug, {}) or {}
-    row = dev.get(number, {})  # dict con todas las columnas del Excel
-
-    status = row.get("status", "disponible")
-    area_m2 = float(row.get("area_m2") or 0)
-    price_total = float(row.get("price_total") or 0)
-
-    # Calcula precio/m2 si no viene en el archivo
-    precio_m2 = float(row.get("precio_m2") or 0)
-    if not precio_m2 and area_m2 > 0:
-        precio_m2 = price_total / area_m2
-
-    # Parámetros de etapa (administrables vía archivo)
-    pct = float(row.get("stage_down_payment_percent") or 20.0)      # 20% por defecto
-    apartar = float(row.get("stage_apartar_amount") or 1000.0)      # $1000 por defecto
-    deadline_days = int(row.get("stage_deadline_days") or 5)        # 5 días por defecto
-
-    # Enganche y saldo
-    enganche_total = price_total * (pct / 100.0)
-    saldo_enganche = max(enganche_total - apartar, 0.0)
-
-    # Imagen dinámica (URL absoluta, Drive o estático) con fallback
-    raw_img = (row.get("image_filename") or "").strip()
-    image_url = ""
-    image_url_fallback = ""
-
-    if raw_img:
-        if urlparse(raw_img).scheme in ("http", "https"):
-            primary, fallback = drive_urls(raw_img)  # usa tu helper nuevo
-            image_url = primary or raw_img
-            image_url_fallback = fallback or ""
-        else:
-            image_url = f"STATIC::resources/images/lotes/{raw_img}"
-
-
-    ctx = {
-        "slug": slug,
-        "number": number,
-        "status": status,
-        "area_m2": area_m2,
-
-        # Datos para el popup (dinámicos)
-        "precio_lista": price_total,
-        "precio_m2": precio_m2,
-        "enganche_total": enganche_total,
-        "apartar_amount": apartar,
-        "saldo_enganche": saldo_enganche,
-        "deadline_days": deadline_days,
-        "pct": pct,
-
-        # Medidas
-        "regular_width_m": row.get("regular_width_m"),
-        "regular_length_m": row.get("regular_length_m"),
-        "irregular_sides_m": row.get("irregular_sides_m"),
-
-        # Imagen ya resuelta
-        "image_url": image_url,
-        "image_url_fallback": image_url_fallback,
-
-    }
-
-    partial = request.GET.get("partial") == "1" or request.headers.get("x-requested-with") == "XMLHttpRequest"
-    tpl = "lots/_lot_detail_inner.html" if partial else "lots/lot_detail.html"
-    return render(request, tpl, ctx)
 
 
 
@@ -295,7 +244,7 @@ def index(request):
             "img": static("resources/images/places/Komchén/Komchén.png"),
             "descripcion": _("Zona con alta plusvalía y acceso rápido a la ciudad."),
             "tipos": ["otro"],
-            "activo": True,
+            "activo": False,
         },
         {
             "slug": "valladolid",
@@ -313,7 +262,7 @@ def index(request):
             "img": static("resources/images/places/Tulum/Tulum.jpg"),
             "descripcion": _("Destino icónico con gran plusvalía, naturaleza y proyección internacional."),
             "tipos": ["lote"],
-            "activo": False,
+            "activo": True,
         },
         
     ]
@@ -325,6 +274,69 @@ def valladolid(request): return render(request, 'pages/valladolid.html')
 def tulum(request):       return render(request, 'pages/tulum.html')
 def hacienda(request):    return render(request, 'pages/hacienda.html')
 def komchen(request):     return render(request, 'pages/komchen.html')
+
+
+
+# app/views.py
+from django.conf import settings
+from django.contrib import messages
+from django.core.mail import EmailMessage, BadHeaderError
+from django.shortcuts import render, redirect
+from .forms import ContactForm
+
+def contacto_view(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Honeypot: si viene lleno, asumimos bot y fingimos éxito
+            if form.cleaned_data.get("website"):
+                messages.success(request, "¡Gracias! Te contactaremos pronto.")
+                return redirect("contacto")
+
+            nombre   = form.cleaned_data["nombre"].strip()
+            apellido = form.cleaned_data["apellido"].strip()
+            email    = form.cleaned_data["email"].strip()
+            mensaje  = form.cleaned_data.get("mensaje", "").strip()
+
+            subject = f"[Sendal] Nuevo mensaje de contacto — {nombre} {apellido}"
+            body = (
+                f"Nombre: {nombre}\n"
+                f"Apellido: {apellido}\n"
+                f"Email: {email}\n\n"
+                f"Mensaje:\n{mensaje or '(sin mensaje)'}"
+            )
+
+            to_list = getattr(settings, "CONTACT_RECIPIENTS", [settings.DEFAULT_FROM_EMAIL])
+            email_msg = EmailMessage(
+                subject=subject,
+                body=body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=to_list,
+                reply_to=[email] if email else None,
+            )
+            try:
+                email_msg.send(fail_silently=False)
+                messages.success(request, "¡Gracias! Tu mensaje fue enviado.")
+                return redirect("contacto")
+            except BadHeaderError:
+                messages.error(request, "Encabezado de email inválido.")
+            except Exception:
+                messages.error(request, "Ocurrió un error al enviar tu mensaje. Inténtalo de nuevo.")
+    else:
+        form = ContactForm()
+
+    return render(request, "contacto.html", {"form": form})
+
+
+
+
+
+
+
+
+
+
+
 
 # ===== Registro de predios =====
 PREDIO_REGISTRY = {

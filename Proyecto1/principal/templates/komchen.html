@@ -1,11 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Komchén | Mapa interactivo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+{% load static i18n %}
+
+<link rel="stylesheet" href="{% static 'styles/cotizador.css' %}">
 
   <style>
     html, body { height: 100%; }
@@ -18,22 +14,15 @@
     }
 
     #svg-wrap{
-  width: min(95vw, 1200px);
-  height: min(80vh, 720px);  /* alto estable */
-  overflow:hidden;
-}
-#svg-wrap svg{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-
-
-
-
-
-
+      width: min(95vw, 1200px);
+      height: min(80vh, 720px);  /* alto estable */
+      overflow:hidden;
+    }
+    #svg-wrap svg{
+      width:100%;
+      height:100%;
+      display:block;
+    }
     .lot {
       fill:#A3FFB8; stroke:#222; stroke-width:1;
       vector-effect:non-scaling-stroke;
@@ -44,8 +33,8 @@
 
     /* Colores por estado (ajusta a tus nombres) */
     .available { fill:#A3FFB8 !important; }
-    .reserved  { fill:#FFF2CC !important; }
-    .sold      { fill:#FFE1E1 !important; }
+    .reserved  { fill:#f0d78a !important; }
+    .sold      { fill:#ee0f0f !important; }
     .controls {
       position: fixed;
       top: 16px;
@@ -63,15 +52,28 @@
       font-size: 16px;
     }
     .controls button:hover { background: #f5f5f5; }
+
+
+    #cancha{
+        fill: #502221;
+    }
+
+    #Vector-16{
+        fill:#45403D;
+    }
+
+    #Vector-14{
+        fill:#4A5123;
+    }
   </style>
 
 
-</head>
-<body>
+
+
     <div id="svg-wrap">
         <div id="svg-inline">{{ svg_markup|safe }}</div>
       </div>
-      
+
       <script src="https://unpkg.com/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
       <script>
         // --- Datos desde Django ---
@@ -160,5 +162,4 @@
       
 
 
-</body>
-</html>
+

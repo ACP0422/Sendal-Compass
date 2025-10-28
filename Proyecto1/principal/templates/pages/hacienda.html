@@ -140,16 +140,14 @@
     <h2>{% trans "Explora y Elige" %}</h2>
 
     <div class="map-container">
+      <!-- ocultar cotizador -->
       <div class="explora__chips">
-        <span class="chip chip-hold">{% trans "Apartado" %}</span>
-        <span class="chip chip-ok">{% trans "Disponible" %}</span>
-        <span class="chip chip-sold">{% trans "Vendido" %}</span>
         <a class="cta" href="{% url 'cotizador' %}">{% trans "Cotizador" %}</a>
       </div>
 
       <figure class="explora__plan">
         <img class="fluid"
-             src="{% static 'resources/images/places/Valladolid/hacienda/masterplan.png' %}"
+             src="{% static 'maps/hacienda.svg' %}"
              alt="{% trans 'Masterplan Hacienda Residencial' %}">
       </figure>
 

@@ -53,13 +53,38 @@
   box-shadow:0 2px 0 rgba(0,0,0,.08);
   transition:transform .08s ease, filter .15s ease;
 }
-.btn:hover{ filter:brightness(.97); transform:translateY(-1px); }
+
 .btn:active{ transform:translateY(0); }
 
-/* Paleta de botones */
-.btn-komchen{ background:#f5b197; }
-.btn-hacienda{ background:#f0c160; }
-.btn-tularum{ background:#bfcdfa; color:#1f2a44; }
+.btn-komchen {
+  background: #f5b197;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-komchen:hover {
+  background: #F29E7D; 
+}
+
+.btn-hacienda {
+  background: #f0c160;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn-hacienda:hover {
+  background: #EEB544; 
+}
+
+.btn-tularum {
+  background: #bfcdfa;
+  color: #1f2a44;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+
+}
+
+.btn-tularum:hover {
+  background: #A0B5F8; 
+}
+
 
 /* Toggle */
 .btn-toggle{

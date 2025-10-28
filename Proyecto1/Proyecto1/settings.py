@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',  
     'principal',
-    'lots',
+    'ghl_connector',
+
 ]
 
 # Add WhiteNoise to middleware (add this to your existing MIDDLEWARE)

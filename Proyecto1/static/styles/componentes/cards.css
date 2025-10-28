@@ -69,8 +69,17 @@
   .btn.ghost{ --btn-bg:#fff; --btn-fg:#000; border:0; }
   
   /* Colores del mock */
-  .btn--wapp{ --btn-bg:#F2BB57; --btn-fg:#3B0C0C; } /* dorado claro */
-  .btn--mail{ --btn-bg:#8F5600; --btn-fg:#F2BB57; } /* marrón + dorado */
+  .btn--wapp{ --btn-bg:#F2BB57; --btn-fg:#3B0C0C; } 
+  .btn--mail{ --btn-bg:#8F5600; --btn-fg:#F2BB57; } 
+  
+
+  .btn--wapp:hover {
+    color: #fff; 
+  }
+  
+  .btn--mail:hover {
+    color: #fff; 
+  }
   
   /* =========================================================
      TARJETAS — TEMAS (sobrescriben tokens)
