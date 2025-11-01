@@ -9,7 +9,9 @@
 
 {% block content %}
 <main class="page container">
-  <h1 class="brand-title page-title">IMAGINA TU FUTURO <br>EN YUCATÁN</h1>
+  <h1 class="brand-title page-title">
+    {% blocktrans %}IMAGINA TU FUTURO <br>EN YUCATÁN{% endblocktrans %}
+  </h1>
   <section class="col-left">
 
     <div class="taglines">
@@ -25,31 +27,85 @@
 
     <h2 class="contact-title">{% trans "Contáctanos" %}</h2>
 
-    <form class="contact-form" action="#" method="post" novalidate>
+    {% if messages %}
+  <div class="messages">
+    {% for m in messages %}
+      <div class="msg {{ m.tags }}">{{ m }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+    <form class="contact-form" action="{% url 'contacto' %}" method="post" novalidate>
       {% csrf_token %}
+    
+      {# errores globales #}
+      {% if form.non_field_errors %}
+        <div class="form-errors">{{ form.non_field_errors }}</div>
+      {% endif %}
+    
       <div class="grid-2">
         <label>
           <span>{% trans "Nombre" %}</span>
-          <input type="text" name="nombre" placeholder="{% trans 'Jane' %}" required>
+          <input type="text" name="nombre"
+       value="{{ form.nombre.value|default_if_none:'' }}"
+       placeholder="{% trans 'Jane' %}" required minlength="2" maxlength="60"
+       pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s]+$"
+       title="{% trans 'Solo letras y espacios' %}">
+
+       <div class="field-error" aria-live="polite">
+        {% if form.nombre.errors %}{{ form.nombre.errors.0 }}{% endif %}
+      </div>
         </label>
         <label>
           <span>{% trans "Apellido" %}</span>
-          <input type="text" name="apellido" placeholder="{% trans 'Smitherton' %}" required>
+          <input type="text" name="apellido"
+       value="{{ form.apellido.value|default_if_none:'' }}"
+       placeholder="{% trans 'Smitherton' %}" required minlength="2" maxlength="60"
+       pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s-]+$"
+       title="{% trans 'Solo letras y espacios' %}">
+
+       <div class="field-error" aria-live="polite">
+        {% if form.apellido.errors %}{{ form.apellido.errors.0 }}{% endif %}
+      </div>
         </label>
       </div>
-
+      
       <label>
         <span>{% trans "Email" %}</span>
-        <input type="email" name="email" placeholder="{% trans 'email@janesfakedomain.net' %}" required>
-      </label>
+        <input
+        type="email"
+        name="email"
+        value="{{ form.email.value|default_if_none:'' }}"
+        placeholder="{% trans 'email@janesfakedomain.net' %}"
+        required
+        maxlength="120"
+        pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+        title="{% trans 'Escribe un correo válido, por ejemplo nombre@dominio.com' %}"
+      >
 
+
+      <div class="field-error" aria-live="polite">
+        {% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}
+      </div>
+      </label>
+      
       <label>
         <span>{% trans "Mensaje" %}</span>
-        <textarea name="mensaje" rows="5" placeholder="{% trans 'Escribe tu pregunta o mensaje' %}"></textarea>
+        <textarea name="mensaje" rows="5"
+                  placeholder="{% trans 'Escribe tu pregunta o mensaje' %}"
+                  minlength="0" maxlength="2000">{{ form.mensaje.value|default_if_none:'' }}</textarea>
+                  <div class="field-error" aria-live="polite">
+                    {% if form.mensaje.errors %}{{ form.mensaje.errors.0 }}{% endif %}
+                  </div>
       </label>
-
+      
+    
+      {# honeypot anti-bots (tu vista ya lo usa) #}
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0">
+    
       <button type="submit" class="btn-primary">{% trans "Enviar" %}</button>
     </form>
+    
 
   </section>
 
@@ -61,31 +117,166 @@
 <section class="contact-info container">
   <aside class="col">
     <p class="info-title">CONTACTO</p>
-    <p class="info-big">
-      <a href="https://wa.me/529993976683?text={{ 'Hola, me gustaría saber más sobre los proyectos de Sendal.'|urlencode }}"
-         target="_blank" rel="noopener"
-         aria-label="{% trans 'Escríbenos por WhatsApp' %}">
-        999 397 6683
-      </a>
-    </p>
-  </aside>
+      {% blocktrans asvar wa_msg %}Hola, me gustaría saber más sobre los proyectos de Sendal.{% endblocktrans %}
+      <p class="info-big">
+        <a href="https://wa.me/529993976683?text={{ wa_msg|urlencode }}"
+           target="_blank" rel="noopener"
+           aria-label="{% trans 'Escríbenos por WhatsApp' %}">
+          999 397 6683
+        </a>
+      </p>
+    </aside>
 
   <aside class="col">
     <p class="info-title">UBICACIÓN</p>
     <p class="info-lines">
-      C.15 #503, Col. Altabrisa, Mérida Yuc.<br>
-      Dentro de Magnia Corporate Center
+      {% blocktrans %}C.15 #503, Col. Altabrisa, Mérida Yuc.{% endblocktrans %}<br>
+      {% trans "Dentro de Magnia Corporate Center" %}
     </p>
     <p class="info-link">
       <a href="https://www.google.com/maps?q=MAGNIA+Corporate+Center,+C.+15+503,+Col.+Altabrisa,+97130+Mérida,+Yuc.&ftid=0x8f567720f0462bff:0x9eeb570980663d76&entry=gps"
          target="_blank" rel="noopener">
-        GOOGLE MAPS
+        {% trans "GOOGLE MAPS" %}
       </a>
     </p>
   </aside>
 </section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.contact-form');
+    if (!form) return;
+  
+    const btn = form.querySelector('button[type="submit"]');
+    const fields = Array.from(form.querySelectorAll('input, textarea'))
+      .filter(el => el.type !== 'hidden' && el.name !== 'website');
+  
+    // --- Mostrar error solo después de enviar ---
+    function showError(el) {
+      const err = el.nextElementSibling && el.nextElementSibling.classList.contains('field-error')
+        ? el.nextElementSibling : null;
+      if (!err) return;
+  
+      const invalid = el.willValidate && !el.checkValidity();
+      const touched = el.dataset.touched === '1';
+  
+      if (touched && invalid) {
+        el.classList.add('is-invalid');
+        if (!err.textContent.trim()) {
+          err.textContent = el.validationMessage || 'Campo inválido';
+        }
+      } else {
+        el.classList.remove('is-invalid');
+        err.textContent = '';
+      }
+    }
+  
+    // Solo marcar como tocado cuando se envía
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+  
+        // marcar todos como tocados y mostrar errores
+        fields.forEach(el => {
+          el.dataset.touched = '1';
+          showError(el);
+        });
+  
+        const first = form.querySelector(':invalid');
+        if (first) first.focus();
+  
+        return;
+      }
+  
+      // si pasa validación
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+      }
+    });
+  
+    // Si el usuario corrige después del submit, actualizar
+    fields.forEach(el => {
+      el.addEventListener('input', () => {
+        if (el.dataset.touched === '1') showError(el);
+      });
+    });
+  
+    // ===== Sanitizar nombre/apellido =====
+    const onlyLetters = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]/g;
+    const onlyLettersHyphen = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s-]/g;
+  
+    function sanitize(input, regex) {
+      input.addEventListener('input', () => {
+        const start = input.selectionStart, end = input.selectionEnd;
+        input.value = input.value.replace(regex, '').replace(/\s{2,}/g, ' ');
+        if (start !== null && end !== null) input.setSelectionRange(start, end);
+      });
+      input.addEventListener('blur', () => input.value = input.value.trim());
+    }
+  
+    const nm = form.querySelector('input[name="nombre"]');
+    const ap = form.querySelector('input[name="apellido"]');
+  
+    if (nm) sanitize(nm, onlyLetters);
+    if (ap) sanitize(ap, onlyLettersHyphen);
+  
+    // ===== Marcar errores del servidor =====
+    let serverErrors = false;
+    form.querySelectorAll('.field-error').forEach(box => {
+      if (!box.textContent.trim()) return;
+      const input = box.previousElementSibling;
+      if (input && input.matches('input,textarea')) {
+        serverErrors = true;
+        input.dataset.touched = '1';
+        input.classList.add('is-invalid');
+      }
+    });
+  
+    if (serverErrors) form.setAttribute('data-server-error', '1');
+  
+    // ===== Auto-ocultar mensajes globales =====
+    function autoHide(root) {
+      const flashes = root.querySelectorAll(
+        '.form-alert, .messages li, .alert, .alert-success, .alert-error,' +
+        ' .toast, [role="alert"], .message.success, .message.error,' +
+        ' .is-success, .is-error, .success, .error'
+      );
+  
+      flashes.forEach(el => {
+        if (el.dataset.autodismiss === '1') return;
+  
+        const txt = (el.textContent || '').trim();
+        if (!txt) return;
+  
+        el.dataset.autodismiss = '1';
+  
+        setTimeout(() => {
+          el.style.transition = 'opacity .45s ease, transform .45s ease, height .45s ease';
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(-2px)';
+          const h = el.getBoundingClientRect().height;
+          el.style.height = h + 'px';
+          requestAnimationFrame(() => {
+            el.style.height = '0px';
+            el.style.marginTop = '0';
+            el.style.marginBottom = '0';
+            el.style.paddingTop = '0';
+            el.style.paddingBottom = '0';
+          });
+          setTimeout(() => { try { el.remove(); } catch (_) { el.style.display='none'; } }, 500);
+        }, 4000);
+      });
+    }
+  
+    autoHide(document);
+    window.addEventListener('pageshow', () => autoHide(document));
+  });
+  </script>
+  
 
-
+  
+  
+  
 
 
 {% endblock %}

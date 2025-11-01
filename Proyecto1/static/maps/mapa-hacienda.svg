@@ -1,206 +1,139 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Masterplan Hacienda</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      display: grid;
-      place-items: center;
-      background: #efefef;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-    }
-
-    #svg-wrap {
-      width: min(95vw, 1400px);
-      height: min(85vh, 820px);
-      background: #fff;
-      border: 1px solid #ddd;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.08);
-    }
-
-    #svg-wrap svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    /* Interacción sin alterar estilos originales */
-    .lot {
-      stroke: #222;
-      stroke-width: 1;
-      vector-effect: non-scaling-stroke;
-      cursor: pointer;
-      transition: filter .15s, stroke-width .15s;
-    }
-    .lot:hover { filter: brightness(0.96); }
-    .lot.selected { stroke: #0A8; stroke-width: 3; }
-
-
-    .controls {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      z-index: 10;
-    }
-    .controls button {
-      padding: 6px 10px;
-      border: 1px solid #ccc;
-      background: #fff;
-      cursor: pointer;
-      border-radius: 4px;
-      font-size: 16px;
-      box-shadow: 0 1px 6px rgba(0,0,0,.15);
-    }
-    .controls button:hover { background: #f5f5f5; }
-  </style>
-</head>
-<body>
-
-  <div id="svg-wrap">
-<svg id="hacienda-svg" width="1355" height="432" viewBox="0 0 1355 432" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1355" height="432" viewBox="0 0 1355 432" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Masterplan-hacienda">
 <g id="MZ-07">
-<path id="MZ07-L009" d="M1181 421.88V399H1248V425L1181 421.88Z" fill="#A3FFB8"/>
-<path id="MZ07-L008" d="M1248 375H1181V399H1248V375Z" fill="#A3FFB8"/>
-<path id="MZ07-L007" d="M1248 352H1181V375H1248V352Z" fill="#A3FFB8"/>
-<path id="MZ07-L006" d="M1248 330H1181V352H1248V330Z" fill="#A3FFB8"/>
-<path id="MZ07-L005" d="M1248 306H1181V330H1248V306Z" fill="#A3FFB8"/>
-<path id="MZ07-L004" d="M1248 282H1181V306H1248V282Z" fill="#A3FFB8"/>
-<path id="MZ07-L003" d="M1248 259H1181V282H1248V259Z" fill="#A3FFB8"/>
-<path id="MZ07-L002" d="M1248 237H1181V259H1248V237Z" fill="#A3FFB8"/>
-<path id="MZ07-L001" d="M1248 214H1181V237H1248V214Z" fill="#A3FFB8"/>
+<path id="MZ07-L009" d="M1181 421.88V399H1248V425L1181 421.88Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L008" d="M1248 375H1181V399H1248V375Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L007" d="M1248 352H1181V375H1248V352Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L006" d="M1248 330H1181V352H1248V330Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L005" d="M1248 306H1181V330H1248V306Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L004" d="M1248 282H1181V306H1248V282Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L003" d="M1248 259H1181V282H1248V259Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L002" d="M1248 237H1181V259H1248V237Z" fill="#A3FFB8" stroke= "black"/>
+<path id="MZ07-L001" d="M1248 214H1181V237H1248V214Z" fill="#A3FFB8" stroke= "black"/>
 </g>
 <g id="MZ-06">
-<path id="MZ06-L026" d="M1031 413.41V389H1098V417L1031 413.41Z" fill="#A3FFB8"/>
-<path id="MZ06-L025" d="M1098 364H1031V389H1098V364Z" fill="#A3FFB8"/>
-<path id="MZ06-L024" d="M1098 340H1031V364H1098V340Z" fill="#A3FFB8"/>
-<path id="MZ06-L023" d="M1098 314H1031V340H1098V314Z" fill="#A3FFB8"/>
-<path id="MZ06-L022" d="M1098 288H1031V314H1098V288Z" fill="#A3FFB8"/>
-<path id="MZ06-L021" d="M1098 264H1031V288H1098V264Z" fill="#A3FFB8"/>
-<path id="MZ06-L020" d="M1098 238H1031V264H1098V238Z" fill="#A3FFB8"/>
-<path id="MZ06-L019" d="M1098 212H1031V238H1098V212Z" fill="#A3FFB8"/>
-<path id="MZ06-L018" d="M1098 395H1165V422L1098 417.304V395Z" fill="#A3FFB8"/>
-<path id="MZ06-L017" d="M1165 372H1098V395H1165V372Z" fill="#A3FFB8"/>
-<path id="MZ06-L016" d="M1165 350H1098V372H1165V350Z" fill="#A3FFB8"/>
-<path id="MZ06-L015" d="M1165 327H1098V350H1165V327Z" fill="#A3FFB8"/>
-<path id="MZ06-L014" d="M1165 304H1098V327H1165V304Z" fill="#A3FFB8"/>
-<path id="MZ06-L013" d="M1165 281H1098V304H1165V281Z" fill="#A3FFB8"/>
-<path id="MZ06-L012" d="M1165 258H1098V281H1165V258Z" fill="#A3FFB8"/>
-<path id="MZ06-L011" d="M1165 235H1098V258H1165V235Z" fill="#A3FFB8"/>
-<path id="MZ06-L010" d="M1165 212H1098V235H1165V212Z" fill="#A3FFB8"/>
+<path id="MZ06-L026" d="M1031 413.41V389H1098V417L1031 413.41Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L025" d="M1098 364H1031V389H1098V364Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L024" d="M1098 340H1031V364H1098V340Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L023" d="M1098 314H1031V340H1098V314Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L022" d="M1098 288H1031V314H1098V288Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L021" d="M1098 264H1031V288H1098V264Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L020" d="M1098 238H1031V264H1098V238Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L019" d="M1098 212H1031V238H1098V212Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L018" d="M1098 395H1165V422L1098 417.304V395Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L017" d="M1165 372H1098V395H1165V372Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L016" d="M1165 350H1098V372H1165V350Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L015" d="M1165 327H1098V350H1165V327Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L014" d="M1165 304H1098V327H1165V304Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L013" d="M1165 281H1098V304H1165V281Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L012" d="M1165 258H1098V281H1165V258Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L011" d="M1165 235H1098V258H1165V235Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ06-L010" d="M1165 212H1098V235H1165V212Z" fill="#E8E9EB" stroke= "black"/>
 </g>
 <g id="MZ-05">
-<path id="MZ05-L042" d="M947 413V389H880V411L947 413Z" fill="#A3FFB8"/>
-<path id="MZ05-L041" d="M947 364H880V389H947V364Z" fill="#A3FFB8"/>
-<path id="MZ05-L040" d="M947 340H880V364H947V340Z" fill="#A3FFB8"/>
-<path id="MZ05-L039" d="M947 314H880V340H947V314Z" fill="#A3FFB8"/>
-<path id="MZ05-L038" d="M947 288H880V314H947V288Z" fill="#A3FFB8"/>
-<path id="MZ05-L037" d="M947 264H880V288H947V264Z" fill="#A3FFB8"/>
-<path id="MZ05-L036" d="M947 238H880V264H947V238Z" fill="#A3FFB8"/>
-<path id="MZ05-L035" d="M947 212H880V238H947V212Z" fill="#A3FFB8"/>
-<path id="MZ05-L034" d="M1014 415V389H947V412.961L1014 415Z" fill="#A3FFB8"/>
-<path id="MZ05-L033" d="M1014 364H947V389H1014V364Z" fill="#A3FFB8"/>
-<path id="MZ05-L032" d="M1014 340H947V364H1014V340Z" fill="#A3FFB8"/>
-<path id="MZ05-L031" d="M1014 314H947V340H1014V314Z" fill="#A3FFB8"/>
-<path id="MZ05-L030" d="M1014 288H947V314H1014V288Z" fill="#A3FFB8"/>
-<path id="MZ05-L029" d="M1014 264H947V288H1014V264Z" fill="#A3FFB8"/>
-<path id="MZ05-L028" d="M1014 238H947V264H1014V238Z" fill="#A3FFB8"/>
-<path id="MZ05-L027" d="M1014 212H947V238H1014V212Z" fill="#A3FFB8"/>
+<path id="MZ05-L042" d="M947 413V389H880V411L947 413Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L041" d="M947 364H880V389H947V364Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L040" d="M947 340H880V364H947V340Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L039" d="M947 314H880V340H947V314Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L038" d="M947 288H880V314H947V288Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L037" d="M947 264H880V288H947V264Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L036" d="M947 238H880V264H947V238Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L035" d="M947 212H880V238H947V212Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L034" d="M1014 415V389H947V412.961L1014 415Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L033" d="M1014 364H947V389H1014V364Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L032" d="M1014 340H947V364H1014V340Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L031" d="M1014 314H947V340H1014V314Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L030" d="M1014 288H947V314H1014V288Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L029" d="M1014 264H947V288H1014V264Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L028" d="M1014 238H947V264H1014V238Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ05-L027" d="M1014 212H947V238H1014V212Z" fill="#E8E9EB" stroke= "black"/>
 </g>
 <g id="MZ-04">
-<path id="MZ04-L061" d="M730 372H797V402L730 394.5V372Z" fill="#A3FFB8"/>
-<path id="MZ04-L060" d="M797 348H730V372H797V348Z" fill="#A3FFB8"/>
-<path id="MZ04-L059" d="M797 325H730V348H797V325Z" fill="#A3FFB8"/>
-<path id="MZ04-L058" d="M797 302H730V325H797V302Z" fill="#A3FFB8"/>
-<path id="MZ04-L057" d="M797 278H730V302H797V278Z" fill="#A3FFB8"/>
-<path id="MZ04-L056" d="M797 255H730V278H797V255Z" fill="#A3FFB8"/>
-<path id="MZ04-L055" d="M797 232H730V255H797V232Z" fill="#A3FFB8"/>
-<path id="MZ04-L054" d="M797 209H730V232H797V209Z" fill="#A3FFB8"/>
-<path id="MZ04-L053" d="M797 186H730V209H797V186Z" fill="#A3FFB8"/>
-<path id="MZ04-L052" d="M797 163H730V186H797V163Z" fill="#A3FFB8"/>
-<path id="MZ04-L051" d="M864 410V379H797V402.377L864 410Z" fill="#A3FFB8"/>
-<path id="MZ04-L050" d="M864 355H797V379H864V355Z" fill="#A3FFB8"/>
-<path id="MZ04-L049" d="M864 331H797V355H864V331Z" fill="#A3FFB8"/>
-<path id="MZ04-L048" d="M864 307H797V331H864V307Z" fill="#A3FFB8"/>
-<path id="MZ04-L047" d="M864 283H797V307H864V283Z" fill="#A3FFB8"/>
-<path id="MZ04-L046" d="M864 259H797V283H864V259Z" fill="#A3FFB8"/>
-<path id="MZ04-L045" d="M864 235H797V259H864V235Z" fill="#A3FFB8"/>
-<path id="MZ04-L044" d="M864 212H797V236H864V212Z" fill="#A3FFB8"/>
-<path id="MZ04-L043" d="M864 190H797V214H864V190Z" fill="#A3FFB8"/>
+<path id="MZ04-L061" d="M730 372H797V402L730 394.5V372Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L060" d="M797 348H730V372H797V348Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L059" d="M797 325H730V348H797V325Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L058" d="M797 302H730V325H797V302Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L057" d="M797 278H730V302H797V278Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L056" d="M797 255H730V278H797V255Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L055" d="M797 232H730V255H797V232Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L054" d="M797 209H730V232H797V209Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L053" d="M797 186H730V209H797V186Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L052" d="M797 163H730V186H797V163Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L051" d="M864 410V379H797V402.377L864 410Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L050" d="M864 355H797V379H864V355Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L049" d="M864 331H797V355H864V331Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L048" d="M864 307H797V331H864V307Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L047" d="M864 283H797V307H864V283Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L046" d="M864 259H797V283H864V259Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L045" d="M864 235H797V259H864V235Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L044" d="M864 212H797V236H864V212Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ04-L043" d="M864 190H797V214H864V190Z" fill="#E8E9EB" stroke= "black"/>
 </g>
 <g id="MZ-03">
-<path id="MZ03-L081" d="M647 360V384.5L612.5 383L580 384.5V360H647Z" fill="#A3FFB8"/>
-<path id="MZ03-L080" d="M647 338H580V360H647V338Z" fill="#A3FFB8"/>
-<path id="MZ03-L079" d="M647 314H580V338H647V314Z" fill="#A3FFB8"/>
-<path id="MZ03-L078" d="M647 290H580V314H647V290Z" fill="#A3FFB8"/>
-<path id="MZ03-L077" d="M647 266H580V290H647V266Z" fill="#A3FFB8"/>
-<path id="MZ03-L076" d="M647 243H580V266H647V243Z" fill="#A3FFB8"/>
-<path id="MZ03-L075" d="M647 219H580V243H647V219Z" fill="#A3FFB8"/>
-<path id="MZ03-L074" d="M647 195H580V219H647V195Z" fill="#A3FFB8"/>
-<path id="MZ03-L073" d="M647 172H580V195H647V172Z" fill="#A3FFB8"/>
-<path id="MZ03-L072" d="M647 148H580V172H647V148Z" fill="#A3FFB8"/>
-<path id="MZ03-L071" d="M647 384.5V360H714V392L647 384.5Z" fill="#A3FFB8"/>
-<path id="MZ03-L070" d="M714 337H647V360H714V337Z" fill="#A3FFB8"/>
-<path id="MZ03-L069" d="M714 314H647V337H714V314Z" fill="#A3FFB8"/>
-<path id="MZ03-L068" d="M714 290H647V314H714V290Z" fill="#A3FFB8"/>
-<path id="MZ03-L067" d="M714 267H647V290H714V267Z" fill="#A3FFB8"/>
-<path id="MZ03-L066" d="M714 243H647V267H714V243Z" fill="#A3FFB8"/>
-<path id="MZ03-L065" d="M714 220H647V243H714V220Z" fill="#A3FFB8"/>
-<path id="MZ03-L064" d="M714 195H647V220H714V195Z" fill="#A3FFB8"/>
-<path id="MZ03-L063" d="M714 172H647V195H714V172Z" fill="#A3FFB8"/>
-<path id="MZ03-L062" d="M714 148H647V172H714V148Z" fill="#A3FFB8"/>
+<path id="MZ03-L081" d="M647 360V384.5L612.5 383L580 384.5V360H647Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L080" d="M647 338H580V360H647V338Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L079" d="M647 314H580V338H647V314Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L078" d="M647 290H580V314H647V290Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L077" d="M647 266H580V290H647V266Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L076" d="M647 243H580V266H647V243Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L075" d="M647 219H580V243H647V219Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L074" d="M647 195H580V219H647V195Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L073" d="M647 172H580V195H647V172Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L072" d="M647 148H580V172H647V148Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L071" d="M647 384.5V360H714V392L647 384.5Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L070" d="M714 337H647V360H714V337Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L069" d="M714 314H647V337H714V314Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L068" d="M714 290H647V314H714V290Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L067" d="M714 267H647V290H714V267Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L066" d="M714 243H647V267H714V243Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L065" d="M714 220H647V243H714V220Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L064" d="M714 195H647V220H714V195Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L063" d="M714 172H647V195H714V172Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ03-L062" d="M714 148H647V172H714V148Z" fill="#E8E9EB" stroke= "black"/>
 </g>
 <g id="MZ-02">
-<path id="MZ02-L101" d="M496 380.5V356H429V378L461 379L496 380.5Z" fill="#A3FFB8"/>
-<path id="MZ02-L100" d="M496 333H429V356H496V333Z" fill="#A3FFB8"/>
-<path id="MZ02-L099" d="M496 311H429V333H496V311Z" fill="#A3FFB8"/>
-<path id="MZ02-L098" d="M496 287H429V311H496V287Z" fill="#A3FFB8"/>
-<path id="MZ02-L097" d="M496 264H429V287H496V264Z" fill="#A3FFB8"/>
-<path id="MZ02-L096" d="M496 241H429V264H496V241Z" fill="#A3FFB8"/>
-<path id="MZ02-L095" d="M496 219H429V241H496V219Z" fill="#A3FFB8"/>
-<path id="MZ02-L094" d="M496 196H429V219H496V196Z" fill="#A3FFB8"/>
-<path id="MZ02-L093" d="M496 174H429V196H496V174Z" fill="#A3FFB8"/>
-<path id="MZ02-L092" d="M496 150H429V174H496V150Z" fill="#A3FFB8"/>
-<path id="MZ02-L091" d="M496 380.5V357H563V382.5H533.5L513 380.5H496Z" fill="#A3FFB8"/>
-<path id="MZ02-L090" d="M563 334H496V357H563V334Z" fill="#A3FFB8"/>
-<path id="MZ02-L089" d="M563 312H496V334H563V312Z" fill="#A3FFB8"/>
-<path id="MZ02-L088" d="M563 288H496V312H563V288Z" fill="#A3FFB8"/>
-<path id="MZ02-L087" d="M563 264H496V288H563V264Z" fill="#A3FFB8"/>
-<path id="MZ02-L086" d="M563 241H496V264H563V241Z" fill="#A3FFB8"/>
-<path id="MZ02-L085" d="M563 219H496V241H563V219Z" fill="#A3FFB8"/>
-<path id="MZ02-L084" d="M563 196H496V219H563V196Z" fill="#A3FFB8"/>
-<path id="MZ02-L083" d="M563 174H496V196H563V174Z" fill="#A3FFB8"/>
-<path id="MZ02-L082" d="M563 150H496V174H563V150Z" fill="#A3FFB8"/>
+<path id="MZ02-L101" d="M496 380.5V356H429V378L461 379L496 380.5Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L100" d="M496 333H429V356H496V333Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L099" d="M496 311H429V333H496V311Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L098" d="M496 287H429V311H496V287Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L097" d="M496 264H429V287H496V264Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L096" d="M496 241H429V264H496V241Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L095" d="M496 219H429V241H496V219Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L094" d="M496 196H429V219H496V196Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L093" d="M496 174H429V196H496V174Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L092" d="M496 150H429V174H496V150Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L091" d="M496 380.5V357H563V382.5H533.5L513 380.5H496Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L090" d="M563 334H496V357H563V334Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L089" d="M563 312H496V334H563V312Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L088" d="M563 288H496V312H563V288Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L087" d="M563 264H496V288H563V264Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L086" d="M563 241H496V264H563V241Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L085" d="M563 219H496V241H563V219Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L084" d="M563 196H496V219H563V196Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L083" d="M563 174H496V196H563V174Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ02-L082" d="M563 150H496V174H563V150Z" fill="#E8E9EB" stroke= "black"/>
 </g>
 <g id="MZ-01">
-<path id="MZ01-L110" d="M413 378V349H346V370.869L413 378Z" fill="#A3FFB8"/>
-<path id="MZ01-L109" d="M413 326H346V349H413V326Z" fill="#A3FFB8"/>
-<path id="MZ01-L108" d="M413 303H346V326H413V303Z" fill="#A3FFB8"/>
-<path id="MZ01-L107" d="M413 280H346V303H413V280Z" fill="#A3FFB8"/>
-<path id="MZ01-L106" d="M413 257H346V280H413V257Z" fill="#A3FFB8"/>
-<path id="MZ01-L105" d="M413 234H346V257H413V234Z" fill="#A3FFB8"/>
-<path id="MZ01-L104" d="M413 211H346V234H413V211Z" fill="#A3FFB8"/>
-<path id="MZ01-L103" d="M413 187H346V211H413V187Z" fill="#A3FFB8"/>
-<path id="MZ01-L102" d="M413 165H346V187H413V165Z" fill="#A3FFB8"/>
+<path id="MZ01-L110" d="M413 378V349H346V370.869L413 378Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L109" d="M413 326H346V349H413V326Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L108" d="M413 303H346V326H413V303Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L107" d="M413 280H346V303H413V280Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L106" d="M413 257H346V280H413V257Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L105" d="M413 234H346V257H413V234Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L104" d="M413 211H346V234H413V211Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L103" d="M413 187H346V211H413V187Z" fill="#E8E9EB" stroke= "black"/>
+<path id="MZ01-L102" d="M413 165H346V187H413V165Z" fill="#E8E9EB" stroke= "black"/>
 </g>
 <g id="BG">
-<path id="Vector 10" d="M1181 212V214H1248V208.5L1211 212H1181Z" fill="#03FF07" stroke= "black"/>
-<path id="Vector 9" d="M880 191V212H947L918 208L880 191Z" fill="#03FF07"stroke= "black"/>
-<path id="Vector 8" d="M730 146.5V163H797V189.5L864 190V185L790 157L730 146.5Z" fill="#03FF07"stroke= "black"/>
+<path id="Vector 10" d="M1181 212V214H1248V208.5L1211 212H1181Z" fill="black"/>
+<path id="Vector 9" d="M880 191V212H947L918 208L880 191Z" fill="black"/>
+<path id="Vector 8" d="M730 146.5V163H797V189.5L864 190V185L790 157L730 146.5Z" fill="black"/>
 <g id="Vector 7">
 <path d="M647 141L714 148H580V141H647Z" fill="#D9D9D9"/>
-<path d="M647 141L714 148H580V141H647Z" fill="#03FF07" stroke= "black"/>
+<path d="M647 141L714 148H580V141H647Z" fill="black"/>
 </g>
-<path id="Vector 6" d="M563 139L430 150H563V139Z" fill="#03FF07" stroke= "black"/>
-<path id="Vector 5" d="M370.5 157.5L346 165H413V157.5H370.5Z" fill="#03FF07" stroke="black"/>
+<path id="Vector 6" d="M563 139L430 150H563V139Z" fill="black"/>
+<path id="Vector 5" d="M370.5 157.5L346 165H413V157.5H370.5Z" fill="black" stroke="black"/>
 <path id="siembra-agave" d="M310.5 173L346 165V371H273.5L242 280L104 263L173 175L310.5 173Z" fill="#03FF07" stroke="black"/>
 <path id="zona-comercial" d="M242 280.5L104 263.5L45 338L225.5 369L273.5 370L242 280.5Z" fill="#03FFFF"/>
 <path id="amenidades" d="M1314 257.5L1248 259.5L1248.5 425.5L1325 431.5H1355L1314 257.5Z" fill="#03FF07"/>
@@ -224,263 +157,3 @@
 </g>
 </g>
 </svg>
-
-  </div>
-
-  <div class="controls">
-    <button id="zoom-in">+</button>
-    <button id="zoom-out">−</button>
-    <button id="reset">⟳</button>
-  </div>
-
-  <script src="https://unpkg.com/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
-  <script>
-    /* =========================
-     *  Utilidades (CSRF + helper)
-     * ========================= */
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-    const CSRF = () => ({ 'X-CSRFToken': getCookie('csrftoken') });
-  
-    const isAdmin = new URL(location.href).searchParams.get('admin') === '1';
-  
-    // Config “sutil”: proyectos y etapas visibles del lado del front
-    const PROJECTS = {
-      komchen: { label: 'Komchén', stages: [] },                 // sin etapas
-      hacienda:{ label: 'Hacienda', stages: ['Etapa 1'] }        // solo Etapa 1 habilitada
-    };
-  
-    // Mapea ids de lote válidos (MZxx-Lxxx)
-    const LOT_ID_RE = /^MZ\d{2}-L\d{3}$/i;
-  
-    /* =========================
-     *  Pan & Zoom
-     * ========================= */
-    const pz = svgPanZoom('#hacienda-svg', {
-      zoomEnabled: true, controlIconsEnabled: false,
-      fit: true, center: true,
-      minZoom: 0.5, maxZoom: 20, zoomScaleSensitivity: 0.3,
-    });
-    document.getElementById('zoom-in').onclick  = () => pz.zoomIn();
-    document.getElementById('zoom-out').onclick = () => pz.zoomOut();
-    document.getElementById('reset').onclick    = () => { pz.reset(); pz.fit(); pz.center(); };
-    window.addEventListener('resize', () => { pz.resize(); pz.fit(); pz.center(); });
-  
-    /* =========================
-     *  Marcar lotes clickables
-     * ========================= */
-    const svgEl = document.getElementById('hacienda-svg');
-    svgEl.querySelectorAll('path[id]').forEach(el => {
-      if (LOT_ID_RE.test(el.id)) el.classList.add('lot');
-    });
-  
-    /* =========================
-     *  UI mínima para ADMIN
-     * ========================= */
-    function ensureAdminModal() {
-      if (document.getElementById('lot-admin-modal')) return;
-      const modal = document.createElement('div');
-      modal.id = 'lot-admin-modal';
-      modal.innerHTML = `
-        <style>
-          #lot-admin-modal { position: fixed; inset: 0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.45); z-index: 9999; }
-          #lot-admin-card  { width: min(520px, 92vw); background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.2); font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
-          #lot-admin-card h3 { margin: 0 0 10px; font-size: 18px; }
-          #lot-admin-card form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
-          #lot-admin-card label { font-size: 12px; color: #555; }
-          #lot-admin-card input, #lot-admin-card select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
-          #lot-admin-actions { margin-top: 12px; display:flex; gap: 8px; justify-content:flex-end; }
-          #lot-admin-actions button { padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; }
-          #lot-admin-actions button.primary { border-color:#0a8; background:#0a8; color:#fff; }
-        </style>
-        <div id="lot-admin-modal" role="dialog" aria-modal="true"></div>
-        <div id="lot-admin-card">
-          <h3>Registrar/actualizar lote en CRM</h3>
-          <form id="lot-admin-form">
-            <div>
-              <label>Proyecto</label>
-              <select name="project" id="lot-project"></select>
-            </div>
-            <div>
-              <label>Etapa</label>
-              <select name="stage" id="lot-stage"></select>
-            </div>
-  
-            <div>
-              <label>ID Lote</label>
-              <input name="lot_id" id="lot-id" placeholder="MZ07-L021" required />
-            </div>
-            <div>
-              <label>Estado</label>
-              <select name="status" id="lot-status">
-                <option value="available">Disponible</option>
-                <option value="reserved">Apartado/Reservado</option>
-                <option value="sold">Vendido</option>
-              </select>
-            </div>
-  
-            <div>
-              <label>Área (m²)</label>
-              <input type="number" step="0.01" name="area_m2" id="lot-area" />
-            </div>
-            <div>
-              <label>Precio total (MXN)</label>
-              <input type="number" step="0.01" name="price_total" id="lot-price" />
-            </div>
-  
-            <div style="grid-column:1 / -1">
-              <label>Imagen (URL)</label>
-              <input name="image_url" id="lot-img" placeholder="https://..." />
-            </div>
-          </form>
-          <div id="lot-admin-actions">
-            <button type="button" id="lot-cancel">Cancelar</button>
-            <button type="button" class="primary" id="lot-save">Guardar</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-      modal.prepend(modal.lastElementChild); // overlay atrás
-  
-      // Rellenar selects
-      const selProject = modal.querySelector('#lot-project');
-      const selStage   = modal.querySelector('#lot-stage');
-  
-      for (const key of Object.keys(PROJECTS)) {
-        const opt = document.createElement('option');
-        opt.value = key; opt.textContent = PROJECTS[key].label;
-        selProject.appendChild(opt);
-      }
-      function rebuildStages() {
-        const p = selProject.value;
-        selStage.innerHTML = '';
-        const stages = PROJECTS[p].stages;
-        if (!stages || stages.length === 0) {
-          const opt = document.createElement('option');
-          opt.value = ''; opt.textContent = '—';
-          selStage.appendChild(opt);
-        } else {
-          stages.forEach(s => {
-            const opt = document.createElement('option');
-            opt.value = s; opt.textContent = s;
-            selStage.appendChild(opt);
-          });
-        }
-      }
-      selProject.addEventListener('change', rebuildStages);
-      rebuildStages();
-  
-      // Eventos
-      modal.querySelector('#lot-cancel').onclick = () => { modal.style.display = 'none'; };
-      modal.querySelector('#lot-save').onclick = async () => {
-        const f = modal.querySelector('#lot-admin-form');
-        const payload = {
-          project:   f.project.value,
-          stage:     f.stage.value || null,
-          lot_id:    f.lot_id.value.trim(),
-          status:    f.status.value,
-          area_m2:   f.area_m2.value ? Number(f.area_m2.value) : null,
-          price_total: f.price_total.value ? Number(f.price_total.value) : null,
-          image_url: f.image_url.value.trim() || null
-        };
-        if (!LOT_ID_RE.test(payload.lot_id)) {
-          alert('ID de lote inválido. Ejemplo: MZ07-L021'); return;
-        }
-        try {
-          const res = await fetch('/api/lot/upsert/', {
-            method: 'POST',
-            headers: { ...CSRF() },
-            credentials: 'same-origin',
-            body: (() => {
-              const fd = new FormData();
-              Object.entries(payload).forEach(([k,v]) => fd.append(k, v ?? ''));
-              return fd;
-            })()
-          });
-          const json = await res.json().catch(() => ({}));
-          if (res.ok) {
-            alert('✅ Lote guardado/actualizado en CRM');
-            modal.style.display = 'none';
-          } else {
-            console.error(json);
-            alert('⚠️ Error al guardar el lote.');
-          }
-        } catch (err) {
-          console.error(err);
-          alert('❌ No se pudo conectar con el servidor.');
-        }
-      };
-  
-      // Exponer método para abrir con datos
-      modal.openFor = (lotId, projectKey='hacienda') => {
-        selProject.value = projectKey;
-        rebuildStages();
-        modal.querySelector('#lot-id').value = lotId || '';
-        modal.querySelector('#lot-status').value = 'available';
-        modal.querySelector('#lot-area').value = '';
-        modal.querySelector('#lot-price').value = '';
-        modal.querySelector('#lot-img').value = '';
-        modal.style.display = 'flex';
-      };
-    }
-  
-    /* =========================
-     *  Flujo USUARIO (lead)
-     * ========================= */
-    async function enviarLead(lotId) {
-      const fd = new FormData();
-      fd.append('lot_id', lotId);
-      fd.append('name', 'Visitante Web');           // sustituye por tu formulario real
-      fd.append('email','lead@sendal.mx');
-  
-      try {
-        const res  = await fetch('/api/lead/', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: { ...CSRF() },   // si tu vista está csrf_exempt, puedes omitirlo
-          body: fd
-        });
-        const json = await res.json();
-        if (res.ok) {
-          alert(`✅ Lote ${lotId} enviado al CRM`);
-        } else {
-          console.error(json);
-          alert('⚠️ Error al registrar el lead.');
-        }
-      } catch (e) {
-        console.error(e);
-        alert('❌ No se pudo conectar con el servidor.');
-      }
-    }
-  
-    /* =========================
-     *  Click en el SVG
-     * ========================= */
-    if (isAdmin) ensureAdminModal();
-  
-    svgEl.addEventListener('click', (e) => {
-      const t = e.target;
-      if (!t.classList?.contains('lot')) return;
-  
-      svgEl.querySelectorAll('.lot.selected').forEach(n => n.classList.remove('selected'));
-      t.classList.add('selected');
-  
-      const lotId = t.id;
-  
-      if (isAdmin) {
-        // Admin: abrir modal para capturar metadata del lote
-        document.getElementById('lot-admin-modal').openFor(lotId, 'hacienda');
-      } else {
-        // Usuario: crear/actualizar lead en CRM
-        enviarLead(lotId);
-      }
-    });
-  </script>
-  
-
-
-</body>
-</html>

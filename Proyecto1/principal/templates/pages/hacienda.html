@@ -140,23 +140,33 @@
     <h2>{% trans "Explora y Elige" %}</h2>
 
     <div class="map-container">
-      <!-- ocultar cotizador -->
-      <div class="explora__chips">
-        <a class="cta" href="{% url 'cotizador' %}">{% trans "Cotizador" %}</a>
+      <!-- barra superior: CTA a la derecha -->
+      <div class="map-actions">
+        <a class="cta contact-cta" href="{% url 'contacto' %}">{% trans "Contáctanos" %}</a>
       </div>
-
+    
       <figure class="explora__plan">
         <img class="fluid"
-             src="{% static 'maps/hacienda.svg' %}"
+             src="{% static 'maps/mapa-hacienda.svg' %}"
              alt="{% trans 'Masterplan Hacienda Residencial' %}">
       </figure>
-
-      <ul class="explora__legend">
-        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-tenis.svg' %}" alt="" aria-hidden="true"> {% trans "Amenidades" %}</li>
-        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-casa-club.svg' %}" alt="" aria-hidden="true"> {% trans "Zona Comercial" %}</li>
+    
+      <!-- Etiquetas debajo del plano -->
+      <div class="explora__labels">
+        <span class="tag tag-hold">{% trans "Proximamente" %}</span>
+        <span class="tag tag-ok">{% trans "Disponible" %}</span>
+      </div>
+    
+      <!-- Leyenda centrada -->
+      <ul class="explora__legend legend--centered">
         <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-destileria.svg' %}" alt="" aria-hidden="true"> {% trans "Siembra de Agave" %}</li>
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-casa-club.svg' %}" alt="" aria-hidden="true"> {% trans "Zona Comercial" %}</li>
+        <li><img src="{% static 'resources/images/places/Valladolid/hacienda/icono-tenis.svg' %}" alt="" aria-hidden="true"> {% trans "Amenidades" %}</li>
+
       </ul>
     </div>
+    
+    
 
     <!-- Dupla tarjeta + mapa (alturas y márgenes unificados) -->
     <div class="duo-grid">

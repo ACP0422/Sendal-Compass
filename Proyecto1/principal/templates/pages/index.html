@@ -9,7 +9,6 @@
 
 {% block content %}
 
-<!-- HERO -->
 <section class="hero full-bleed">
   <div class="hero-inner">
     <div class="hero-head">
@@ -26,7 +25,6 @@
   </div>
 </section>
 
-<!-- CREENCIAS / EQUIPO -->
 <section class="beliefs container">
   <figure class="beliefs-media">
     <img class="team-photo" src="{% static 'resources/images/home/equipo.jpg' %}" alt="{% trans 'Equipo Sendal' %}" />
@@ -65,52 +63,34 @@
     </p>
   </div>
 </section>
-
-<!-- PROYECTOS -->
+   
 <section id="proyectos" class="projects container">
   <h2 class="projects-title">{% trans "PROYECTOS" %}</h2>
 
-  <!-- Intro + Filtros -->
   <section class="intro container">
-    <h3>{% trans "Encuentra el proyecto perfecto según zona, tipo y precio." %}</h3>
+    <h3>{% trans "Encuentra el proyecto perfecto según zona y tipo." %}</h3>
 
     <div class="filters">
-      {# Ubicación: valores = slugs estables #}
-<div class="select">
-  <select id="ubicacion">
-    <option value="" disabled selected hidden>{% trans "Ubicación" %}</option>
-    <option value="">{% trans "Todas las ubicaciones" %}</option>
-    {# <option value="komchen">{% trans "Komchén" %}</option> #}
-    {# <option value="merida">{% trans "Mérida" %}</option> #}
-    {# <option value="sac-nikte">{% trans "Sac Nikté" %}</option> #}
-    <option value="tulum">{% trans "Tulum" %}</option>
-    <option value="valladolid">{% trans "Valladolid" %}</option>
-  </select>
-</div>
+      <div class="select">
+        <select id="ubicacion">
+          <option value="" disabled selected hidden>{% trans "Ubicación" %}</option>
+          <option value="">{% trans "Todas las ubicaciones" %}</option>
+          <option value="tulum">{% trans "Tulum" %}</option>
+          <option value="valladolid">{% trans "Valladolid" %}</option>
+        </select>
+      </div>
 
-{# Tipo: valores = tokens estables #}
-<div class="select">
-  <select id="tipo">
-    <option value="" disabled selected hidden>{% trans "Proyecto / Propiedad" %}</option>
-    <option value="">{% trans "Todos" %}</option>
-    <option value="lote">{% trans "Lote" %}</option>
-    <option value="otro">{% trans "Otro" %}</option>
-  </select>
-</div>
-
-
-      <div class="range">
-        <label for="precio">{% trans "Rango de Precio" %}</label>
-        <div class="range-wrap">
-          <span class="min">30</span>
-          <input id="precio" type="range" min="30" max="100" value="80"/>
-          <span class="max">100</span>
-        </div>
+      <div class="select">
+        <select id="tipo">
+          <option value="" disabled selected hidden>{% trans "Tipo de propiedad" %}</option>
+          <option value="">{% trans "Todos" %}</option>
+          <option value="lote">{% trans "Lote" %}</option>
+          <option value="casa">{% trans "Casa" %}</option>
+        </select>
       </div>
     </div>
   </section>
 
-  <!-- Tarjetas (solo activos) -->
   <div class="projects-grid">
     {% for proyecto in proyectos %}
       {% if proyecto.activo %}
@@ -120,7 +100,6 @@
   </div>
 </section>
 
-<!-- CORPORATIVO -->
 <section class="corporate">
   <div class="container">
     <img id="logo-inmobiliaria" src="{% static 'resources/images/home/inmobiliaria-sendal.png' %}" alt="{% trans 'Logotipo Inmobiliaria' %}">
@@ -132,263 +111,345 @@
   </div>
 </section>
 
-<!-- COTIZA TU PROPIEDAD -->
-<section class="quote-section full-bleed">
+<!-- ========================= COTIZA ========================= -->
+<section id="cotiza" class="quote-section full-bleed">
   <div class="quote-grid">
     <figure class="quote-media">
       <img src="{% static 'resources/images/home/formulario.jpg' %}" alt="{% trans 'Terreno' %}" />
     </figure>
 
-
-
-    <form id="contactForm" class="quote-form" action="#" method="post" novalidate>
+    <form id="quoteForm" class="quote-form" action="{% url 'cotiza' %}" method="post" novalidate>
       {% csrf_token %}
-      {# Honeypot anti-spam (debe quedar vacío) #}
+
+      {# Mensajes flash #}
+      {% if messages %}
+        <div class="messages" id="flash-messages">
+          {% for m in messages %}
+            <div class="msg {{ m.tags }}">{{ m }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {# Honeypot anti-bots #}
       <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
-             style="position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden;"/>
-    
+             style="position:absolute; left:-9999px; opacity:0" />
+
       <h2>{% trans "Cotiza tu propiedad" %}</h2>
-    
+
       <div class="q-row">
         <label>
           <span>{% trans "Nombre" %}</span>
-          <input type="text" name="nombre" placeholder="{% trans 'Jane' %}" required
-                 autocomplete="given-name" inputmode="text" maxlength="60"
-                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{2,}$" />
+          <input type="text" name="nombre" required minlength="2" maxlength="60"
+                 pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s\-]{2,60}"
+                 title="{% trans 'Solo letras (se permiten acentos, espacios y guiones).' %}"
+                 placeholder="{% trans 'Jane' %}"
+                 value="{{ form.nombre.value|default_if_none:'' }}">
+          <div class="field-error" aria-live="polite">{% if form.nombre.errors %}{{ form.nombre.errors.0 }}{% endif %}</div>
         </label>
+
         <label>
           <span>{% trans "Apellido" %}</span>
-          <input type="text" name="apellido" placeholder="{% trans 'Smitherton' %}" required
-                 autocomplete="family-name" inputmode="text" maxlength="60"
-                 pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{2,}$" />
+          <input type="text" name="apellido" required minlength="2" maxlength="60"
+                 pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s\-]{2,60}"
+                 title="{% trans 'Solo letras (se permiten acentos, espacios y guiones).' %}"
+                 placeholder="{% trans 'Smitherton' %}"
+                 value="{{ form.apellido.value|default_if_none:'' }}">
+          <div class="field-error" aria-live="polite">{% if form.apellido.errors %}{{ form.apellido.errors.0 }}{% endif %}</div>
         </label>
       </div>
-    
+
       <label class="q-full">
-        <span>{% trans "Email" %}</span>
-        <input type="email" name="correo" placeholder="{% trans 'email@contacto.com' %}" required
-               autocomplete="email" inputmode="email" maxlength="120" />
+        <span>{% trans "Correo electrónico" %}</span>
+        <input type="email" name="email" required maxlength="120"
+               pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+               title="{% trans 'Escribe un correo válido, por ejemplo nombre@dominio.com' %}"
+               placeholder="{% trans 'email@contacto.com' %}"
+               value="{{ form.email.value|default_if_none:'' }}">
+        <div class="field-error" aria-live="polite">{% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}</div>
       </label>
-    
+
       <label class="q-full">
-        <span>{% trans "Número de contacto" %}</span>
-        <input type="tel" name="telefono" placeholder="{% trans '+52 9999 99 99 99' %}" required
-               autocomplete="tel" inputmode="tel" maxlength="20" />
+        <span>{% trans "Número de contacto (incluye lada)" %}</span>
+        <input type="tel" name="telefono" required
+               inputmode="tel"
+               minlength="10" maxlength="20"
+               pattern="^[0-9+\s\-()]{10,20}$"
+               data-mindigits="10" data-maxdigits="15"
+               title="{% trans 'Ingresa un número válido; con o sin +, ej. +52 999 999 9999' %}"
+               placeholder="{% trans '+52 999 999 9999' %}"
+               value="{{ form.telefono.value|default_if_none:'' }}">
+        <div class="field-error" aria-live="polite">
+          {% if form.telefono.errors %}{{ form.telefono.errors.0 }}{% endif %}
+        </div>
       </label>
-    
+      
+
       <div class="q-row">
         <label>
           <span>{% trans "Tipo del terreno o propiedad" %}</span>
-          <input type="text" name="tipo" placeholder="{% trans 'Terreno' %}" required maxlength="80"/>
+          <input type="text" name="tipo" required minlength="3" maxlength="80"
+                 pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s\-]{2,80}"
+                 title="{% trans 'Solo letras (se permiten acentos, espacios y guiones).' %}"
+                 placeholder="{% trans 'Terreno' %}"
+                 value="{{ form.tipo.value|default_if_none:'' }}">
+          <div class="field-error" aria-live="polite">{% if form.tipo.errors %}{{ form.tipo.errors.0 }}{% endif %}</div>
         </label>
+
         <label>
           <span>{% trans "Ubicación" %}</span>
-          <input type="text" name="ubicacion" placeholder="{% trans 'Valladolid' %}" required maxlength="80"/>
+          <input type="text" name="ubicacion" required minlength="2" maxlength="80"
+                 pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'\s-]{2,60}"
+                 title="{% trans 'Solo letras (se permiten acentos, espacios y guiones).' %}"
+                 placeholder="{% trans 'Valladolid' %}"
+                 value="{{ form.ubicacion.value|default_if_none:'' }}">
+          <div class="field-error" aria-live="polite">{% if form.ubicacion.errors %}{{ form.ubicacion.errors.0 }}{% endif %}</div>
         </label>
       </div>
-    
+
       <button type="submit" class="q-cta"><b>{% trans "COTIZA AHORA" %}</b></button>
-    
+
       <p class="q-note">
         {% blocktrans %}Tu información es 100% confidencial. Uno de nuestros asesores te contactará para darte todos los detalles del terreno.{% endblocktrans %}
       </p>
     </form>
-    
-
-
-
   </div>
 </section>
 
-<script>
-  (function () {
-    // range (igual que antes)…
-    const r = document.getElementById('precio');
-    if (r) {
-      const sync = el => {
-        el.style.setProperty('--min', el.min || '0');
-        el.style.setProperty('--max', el.max || '100');
-        el.style.setProperty('--val', el.value);
-      };
-      sync(r);
-      r.addEventListener('input', () => sync(r));
-      r.addEventListener('change', () => sync(r));
-    }
 
-    // === Filtros robustos a i18n ===
+<script>
+  // Filtros de proyectos (como ya lo tenías)
+  (function () {
     const selectUbicacion = document.getElementById('ubicacion');
     const selectTipo      = document.getElementById('tipo');
     const cards           = document.querySelectorAll('.projects-grid .project-card');
 
     function aplicarFiltros() {
-      const ubicacion = (selectUbicacion?.value || '').trim().toLowerCase(); // slug
-      const tipoSel   = (selectTipo?.value || '').trim().toLowerCase();      // "lote"|"otro"|''
+      const ubicacion = (selectUbicacion?.value || '').trim().toLowerCase();
+      const tipoSel   = (selectTipo?.value || '').trim().toLowerCase();
 
       cards.forEach(card => {
-        const cardUbic = (card.dataset.ubicacion || '').toLowerCase();       // slug
-        const tipos    = (card.dataset.tipos || '')
-                          .split(',')
-                          .map(s => s.trim().toLowerCase())
-                          .filter(Boolean);                                   // ["lote","otro"]
-
+        const cardUbic = (card.dataset.ubicacion || '').toLowerCase();
+        const tipos    = (card.dataset.tipos || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
         const matchUbic = !ubicacion || cardUbic === ubicacion;
         const matchTipo = !tipoSel   || tipos.includes(tipoSel);
-
         card.style.display = (matchUbic && matchTipo) ? '' : 'none';
       });
     }
 
     selectUbicacion?.addEventListener('change', aplicarFiltros);
     selectTipo?.addEventListener('change', aplicarFiltros);
-
-    // opcional: aplica al cargar si quieres que respete valores por defecto
     aplicarFiltros();
   })();
 </script>
-
 <script>
-  (function () {
-    const form = document.getElementById('contactForm');
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('quoteForm');
     if (!form) return;
   
-    const LANG = (document.documentElement.lang || 'es').slice(0,2);
-    const T = {
-      es: {
-        required: 'Este campo es obligatorio.',
-        name: 'Escribe un nombre válido.',
-        lastname: 'Escribe un apellido válido.',
-        email: 'Escribe un correo válido (ej. nombre@dominio.com).',
-        phone: 'Escribe un teléfono válido (mín. 10 dígitos).',
-        type: 'Indica el tipo de propiedad.',
-        location: 'Indica la ubicación.',
-        bot: 'No se pudo enviar. Actualiza la página e inténtalo de nuevo.'
-      },
-      en: {
-        required: 'This field is required.',
-        name: 'Please enter a valid first name.',
-        lastname: 'Please enter a valid last name.',
-        email: 'Enter a valid email (e.g. name@domain.com).',
-        phone: 'Enter a valid phone (min. 10 digits).',
-        type: 'Specify the property type.',
-        location: 'Specify the location.',
-        bot: 'Submission blocked. Refresh the page and try again.'
+    const btn = form.querySelector('button[type="submit"]');
+    const fields = Array.from(form.querySelectorAll('input')).filter(el => el.name !== 'website');
+    const onlyLetters = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s-]/g;
+  
+    // =========================
+    // Toasts: SINGLETON (no acumular)
+    // =========================
+    let currentToast = null;
+    let currentTimer = null;
+  
+    function ensureToastHost() {
+      let host = document.getElementById('toast-host');
+      if (!host) {
+        host = document.createElement('div');
+        host.id = 'toast-host';
+        host.style.position = 'fixed';
+        host.style.right = '16px';
+        host.style.top    = '16px';
+        host.style.zIndex = '9999';
+        host.style.display = 'grid';
+        host.style.gap = '10px';
+        document.body.appendChild(host);
       }
-    }[LANG] || T.es;
+      return host;
+    }
   
-    // Helpers
-    const $ = sel => form.querySelector(sel);
-    const inputs = {
-      nombre:   $('[name="nombre"]'),
-      apellido: $('[name="apellido"]'),
-      correo:   $('[name="correo"]'),
-      telefono: $('[name="telefono"]'),
-      tipo:     $('[name="tipo"]'),
-      ubicacion:$('[name="ubicacion"]'),
-      website:  $('[name="website"]') // honeypot
-    };
+    function clearToast() {
+      if (currentTimer) { clearTimeout(currentTimer); currentTimer = null; }
+      if (currentToast) { try { currentToast.remove(); } catch(_) { currentToast.style.display = 'none'; } }
+      currentToast = null;
+    }
   
-    function ensureErrorBox(input){
-      let box = input.parentElement.querySelector('.field-error');
-      if (!box){
-        box = document.createElement('p');
-        box.className = 'field-error';
-        box.id = input.name + '-error';
-        input.parentElement.appendChild(box);
+    function showToast(type, text, ms = 3500) {
+      const host = ensureToastHost();
+      // 1 solo toast activo: limpia el anterior
+      clearToast();
+  
+      const el = document.createElement('div');
+      el.className = 'toast';
+      el.setAttribute('role', 'status');
+      el.style.minWidth = '260px';
+      el.style.maxWidth = '360px';
+      el.style.padding = '12px 14px';
+      el.style.borderRadius = '10px';
+      el.style.boxShadow = '0 8px 20px rgba(0,0,0,.18)';
+      el.style.color = '#1d1d1d';
+  
+      let bg = '#eef2f5', bd = '#cfd8e3';
+      if (type === 'success') {
+      bg = '#d7f5df'; bd = '#8ed3a1'; // verde éxito
+    }
+    else if (type === 'warning' || type === 'error') {
+      // === Rojo Sendal (igual al de tus campos con error) ===
+      bg = '#fde8e4';        // fondo rojo claro elegante
+      bd = '#d07653';      // borde rojo Sendal
+      el.style.color = '#7a4a32'; // texto café para armonía
+    }
+
+  
+      el.style.background = bg;
+      el.style.border = '1px solid ' + bd;
+      el.style.font = '14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+      el.textContent = text;
+  
+      host.appendChild(el);
+      currentToast = el;
+  
+      currentTimer = setTimeout(() => {
+        el.style.transition = 'opacity .22s ease, transform .22s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-6px)';
+        setTimeout(clearToast, 240);
+      }, ms);
+    }
+  
+    // Mueve mensajes del servidor a toast (sin duplicar ni acumular)
+    (function moveServerMessagesToToasts() {
+      const containers = document.querySelectorAll('.messages, #flash-messages');
+      let printed = false;
+      containers.forEach(c => {
+        c.querySelectorAll('.msg, [class*="message"]').forEach(node => {
+          const cls = node.className || '';
+          const type = /success/.test(cls) ? 'success'
+                     : /warning/.test(cls) ? 'warning'
+                     : /error/.test(cls)   ? 'error' : 'info';
+          const text = node.textContent.trim();
+          if (text && !printed) { showToast(type, text); printed = true; }
+        });
+        c.remove();
+      });
+    })();
+  
+    // =========================
+    // Validación UI helpers
+    // =========================
+    function box(el) {
+      const sib = el.nextElementSibling;
+      return sib && sib.classList.contains('field-error') ? sib : null;
+    }
+    function show(el) {
+      const b = box(el); if (!b) return;
+      const bad = el.willValidate && !el.checkValidity();
+      const touched = el.dataset.touched === '1';
+      if (touched && bad) {
+        el.classList.add('is-invalid');
+        if (!b.textContent.trim()) b.textContent = el.validationMessage || 'Campo inválido';
+      } else {
+        el.classList.remove('is-invalid');
+        b.textContent = '';
       }
-      input.setAttribute('aria-describedby', box.id);
-      return box;
-    }
-    function setError(input, msg){
-      const box = ensureErrorBox(input);
-      input.classList.add('is-invalid');
-      input.setAttribute('aria-invalid', 'true');
-      box.textContent = msg || '';
-    }
-    function clearError(input){
-      const box = input.parentElement.querySelector('.field-error');
-      input.classList.remove('is-invalid');
-      input.removeAttribute('aria-invalid');
-      if (box) box.textContent = '';
     }
   
-    // Validadores
-    const NAME_RE = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{2,}$/;
-    function validName(v){ return NAME_RE.test((v||'').trim()); }
-  
-    function validEmail(input){
-      // usa validación nativa y un fallback sencillo
-      if (input.value && input.checkValidity) return input.checkValidity();
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((input.value||'').trim());
-    }
-  
-    function digits(n){ return (n||'').replace(/\D/g,''); }
-    function validPhone(v){
-      const d = digits(v);
-      return d.length >= 10 && d.length <= 15; // acepta MX (10) y otros
-    }
-  
-    function validateField(input){
-      const name = input.name;
-      const val  = input.value || '';
-  
-      clearError(input);
-  
-      if (!val.trim()){
-        setError(input, T.required); return false;
-      }
-      if (name === 'nombre'   && !validName(val))  { setError(input, T.name); return false; }
-      if (name === 'apellido' && !validName(val))  { setError(input, T.lastname); return false; }
-      if (name === 'correo'   && !validEmail(input)){ setError(input, T.email); return false; }
-      if (name === 'telefono' && !validPhone(val)) { setError(input, T.phone); return false; }
-      if (name === 'tipo'     && val.trim().length < 2){ setError(input, T.type); return false; }
-      if (name === 'ubicacion'&& val.trim().length < 2){ setError(input, T.location); return false; }
-      return true;
-    }
-  
-    // Formateo ligero de teléfono (admite +, espacios y dígitos)
-    inputs.telefono?.addEventListener('input', (e) => {
-      const el = e.currentTarget;
-      let v = el.value.replace(/[^\d+ ]+/g,''); // elimina caracteres no permitidos
-      // deja un solo '+' al inicio
-      v = v.replace(/\+/g, (m, i) => i === 0 ? '+' : '');
-      el.value = v;
-      if (el.classList.contains('is-invalid')) validateField(el);
+    // =========================
+    // Filtros texto
+    // =========================
+    ['nombre','apellido','tipo','ubicacion'].forEach(n => {
+      const el = form.querySelector(`[name="${n}"]`); if (!el) return;
+      el.addEventListener('input', () => { el.value = el.value.replace(onlyLetters,'').replace(/\s{2,}/g,' '); });
+      el.addEventListener('blur',  () => { el.value = el.value.trim(); });
     });
   
-    // Blur/entrada: validar en vivo
-    Object.values(inputs).forEach(inp => {
-      if (!inp || !['text','email','tel'].includes(inp.type)) return;
-      inp.addEventListener('blur',  () => validateField(inp));
-      inp.addEventListener('input', () => { if (inp.classList.contains('is-invalid')) validateField(inp); });
-    });
+    // =========================
+    // Teléfono robusto (10–15 dígitos reales)
+    // =========================
+    (function setupPhone(){
+      const tel = form.querySelector('[name="telefono"]'); if (!tel) return;
   
-    // Submit
-    form.addEventListener('submit', (e) => {
-      // honeypot
-      if (inputs.website && inputs.website.value.trim()){
+      // Evita conflictos con pattern/minlength HTML
+      tel.removeAttribute('pattern');
+      tel.removeAttribute('minlength');
+      tel.setAttribute('maxlength', '25');
+  
+      const MIN = parseInt(tel.dataset.mindigits || '10', 10);
+      const MAX = parseInt(tel.dataset.maxdigits || '15', 10);
+      const digits = s => (s.match(/\d/g) || []).length;
+  
+      function enforce() {
+        tel.value = tel.value.replace(/[^0-9+\s\-()]/g, '');
+        let d = digits(tel.value);
+        if (d > MAX) {
+          let out = '', count = 0;
+          for (const ch of tel.value) {
+            if (/\d/.test(ch)) { if (count >= MAX) continue; count++; }
+            out += ch;
+          }
+          tel.value = out; d = MAX;
+        }
+        if (d < MIN) tel.setCustomValidity(`Ingresa al menos ${MIN} dígitos (incluye lada).`);
+        else if (d > MAX) tel.setCustomValidity(`Demasiados dígitos (máx. ${MAX}).`);
+        else tel.setCustomValidity('');
+      }
+  
+      tel.addEventListener('input', enforce);
+      tel.addEventListener('blur', () => { tel.value = tel.value.replace(/\s{2,}/g,' ').trim(); enforce(); });
+    })();
+  
+    // Marcar errores del servidor si existen
+    (function attachServerErrors(){
+      form.querySelectorAll('.field-error').forEach(b => {
+        if (!b.textContent.trim()) return;
+        const input = b.previousElementSibling;
+        if (input) { input.dataset.touched='1'; input.classList.add('is-invalid'); }
+      });
+    })();
+  
+    // =========================
+    // Envío + mantener ancla
+    // =========================
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
         e.preventDefault();
-        alert(T.bot);
+        fields.forEach(el => { el.dataset.touched='1'; show(el); });
+        (form.querySelector(':invalid') || fields[0])?.focus();
+  
+        // ÚNICO toast de advertencia (reinicia si ya está)
+        showToast('warning', 'Revisa los campos marcados.');
+  
+        try { sessionStorage.setItem('scrollToCotiza', '1'); } catch(_) {}
         return;
       }
-  
-      let ok = true;
-      const order = [inputs.nombre, inputs.apellido, inputs.correo, inputs.telefono, inputs.tipo, inputs.ubicacion];
-      order.forEach(inp => { if (inp) ok = validateField(inp) && ok; });
-  
-      if (!ok){
-        e.preventDefault();
-        const first = form.querySelector('.is-invalid');
-        if (first){
-          first.focus({preventScroll:true});
-          first.scrollIntoView({behavior:'smooth', block:'center'});
-        }
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '.7';
+        btn.textContent = "{{ _('Enviando…') }}";
       }
-      // si ok == true, deja que el form se envíe normalmente
+      try { sessionStorage.setItem('scrollToCotiza', '1'); } catch(_) {}
     });
-  })();
+  
+    // Volver a #cotiza tras POST/redirección
+    (function restoreAnchor(){
+      const want = location.hash === '#cotiza' ||
+        (function(){ try { return sessionStorage.getItem('scrollToCotiza') === '1'; } catch(_) { return false; }})();
+      if (want) {
+        document.getElementById('cotiza')?.scrollIntoView({ behavior: 'instant' });
+        try { sessionStorage.removeItem('scrollToCotiza'); } catch (_) {}
+        if (location.hash !== '#cotiza') history.replaceState(null, '', location.pathname + location.search + '#cotiza');
+      }
+    })();
+  
+  });
   </script>
   
-
-
+  
+  
+  
 
 {% endblock %}

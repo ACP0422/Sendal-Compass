@@ -1,267 +1,222 @@
-        :root{
-      --accent-blue: #394872; 
-    }
+:root{
+  --accent-blue:#394872
+}
 
-    /* Encabezado */
-    .city-header{
-      max-width: var(--max);
-      margin: 28px auto 14px;
-      padding: 0 var(--gutter);
-    }
-    .city-title{
-      color: var(--accent-blue);
-    }
-    .city-lead{
-      font-size: 18px;
-      color: var(--accent-blue);
-      opacity: .9;
-      max-width: 740px; 
-      line-height: 1.5;
-    }
+.city-header{
+  max-width:var(--max);
+  margin:28px auto 14px;
+  padding:0 var(--gutter)
+}
+.city-title{color:var(--accent-blue)}
+.city-lead{
+  font-size:18px;
+  color:var(--accent-blue);
+  opacity:.9;
+  max-width:740px;
+  line-height:1.5
+}
 
-    /* Hero imagen */
-    .city-hero{
-      max-width: var(--max);
-      margin: 16px auto 32px;
-      padding: 0 var(--gutter);
-    }
-    .city-hero img{
-      width: 100%;
-      height: 460px;
-      object-fit: cover;
-      display: block;
-      border-radius: 8px;
-    }
+.city-hero{
+  max-width:var(--max);
+  margin:16px auto 32px;
+  padding:0 var(--gutter)
+}
+.city-hero img{
+  width:100%;
+  height:460px;
+  object-fit:cover;
+  display:block;
+  border-radius:8px
+}
 
-    /* Tularum */
-    .proj{
-      max-width: var(--max);
-      margin: 0 auto 32px;
-      padding: 0 var(--gutter);
-    }
-    .proj .section-title{
-      color: var(--accent-blue);   
-    }
+.proj{
+  max-width:var(--max);
+  margin:0 auto 32px;
+  padding:0 var(--gutter)
+}
+.proj .section-title,
+.proj .place,
+.proj .desc-row,
+.proj .more-box{color:var(--accent-blue);}
+.card__title{text-decoration:none}
+.proj .place{
+  font-size:24px;
+  margin-bottom:12px
+}
+.proj .shot{margin-bottom:14px}
+.proj .shot img{
+  width:100%;
+  height:540px;
+  object-fit:cover;
+  border-radius:8px;
+  display:block
+}
+.proj .desc-row{
+  margin:40px 0;
+  font-weight:500;
+  font-size:18px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:16px;
+  align-items:start
+}
+.proj p{
+  font-size:18px;
+  margin:0 70px 0 0;
+  line-height:1.55;
+  opacity:.95;
+  max-width:820px
+}
+.proj .more-box{
+  display:grid;
+  gap:6px;
+  justify-items:end
+}
+.proj .more-box small{
+  font-size:24px;
+  font-weight:900
+}
+.proj .pill{
+  display:inline-block;
+  background:var(--color-blue-light);
+  color:#1f2a44;
+  padding:10px 16px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:700;
+  box-shadow:var(--shadow);
+  white-space:nowrap
+}
+.proj .pill:hover{
+  background:#1f2a44;
+  color:#fff
+}
 
-    .card__title{
-      text-decoration: none;
-    }
-    
-    .proj .place{
-      font-size: 24px; margin-bottom: 12px; color: var(--accent-blue);
-    }
-    .proj .shot{
-      margin-bottom: 14px;
-    }
-    .proj .shot img{
-      width: 100%;
-      height: 540px;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-    }
-    .proj .desc-row{
-      margin: 40px 0px;
-      font-weight: 500;
-      color: var(--accent-blue);
-      font-size: 18px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: start;
-    }
-    .proj p{
-      font-size: 18px;
-      margin: 0px 70px 0px 0px;
-      line-height: 1.55;
-      opacity: .95;
-      max-width: 820px;
-    }
-    .proj .more-box{
-      display: grid;
-      gap: 6px;
-      justify-items: end;
-      color: var(--accent-blue);
-    }
-    .proj .more-box small{
-      font-size: 24px;
-      font-weight: 900;
-    }
-    .proj .pill{
-      display: inline-block;
-      background: var(--color-blue-light);
-      color: #1f2a44;
-      padding: 10px 16px;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 700;
-      box-shadow: var(--shadow);
-      white-space: nowrap;
-    }
-
-    .proj .pill:hover {
-      background: #1f2a44;
-      color: #fff;
-    }
-    
-
-    /* ===================== RESPONISVE OVERRIDES ===================== */
-/* -------- Mobile: ≤ 767px -------- */
-@media (max-width: 767px){
-  .city-header{
-    margin: 20px auto 12px;
-    padding: 0 var(--gutter);
-  }
+@media (max-width:767px){
+  .city-header{margin:20px auto 12px}
   .city-title{
-    font-size: 48px;       /* más compacto como el mock */
-    letter-spacing: .02em;
-    margin-bottom: 10px;
+    font-size:48px;
+    letter-spacing:.02em;
+    margin-bottom:10px
   }
   .city-lead{
-    font-size: 14px;
-    line-height: 1.45;
-    max-width: 100%;
+    font-size:14px;
+    line-height:1.45;
+    max-width:100%
   }
-
-  .city-hero{ margin: 14px auto 22px; }
+  .city-hero{margin:14px auto 22px}
   .city-hero img{
-    height: 240px;         /* altura como la 1ª imagen */
-    border-radius: 8px;
+    height:240px;
+    border-radius:8px
   }
-
-  .proj{
-    margin-bottom: 24px;
-  }
+  .proj{margin-bottom:24px}
   .proj h2{
-    font-size: 56px;
-    margin-bottom: 4px;
+    font-size:56px;
+    margin-bottom:4px
   }
   .proj .place{
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size:14px;
+    margin-bottom:10px
   }
-  .proj .shot{ margin-bottom: 12px; }
+  .proj .shot{margin-bottom:12px}
   .proj .shot img{
-    height: 260px;         /* relación similar al mock */
-    border-radius: 8px;
+    height:260px;
+    border-radius:8px
   }
-
-  /* Texto y CTA del proyecto apilados y centrados */
   .proj .desc-row{
-    display: block;
-    margin: 14px 0 0;
-    gap: 0;
+    display:block;
+    margin:14px 0 0;
+    gap:0
   }
   .proj p{
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0 0 14px 0;
-    max-width: 100%;
+    font-size:14px;
+    line-height:1.5;
+    margin:0 0 14px 0;
+    max-width:100%;
+    text-align: center;
   }
   .proj .more-box{
-    justify-items: center;
-    text-align: center;
+    justify-items:center;
+    text-align:center
   }
   .proj .more-box small{
-    font-size: 14px;
-    font-weight: 800;
+    font-size:14px;
+    font-weight:800
   }
   .proj .pill{
-    font-size: 14px;
-    padding: 8px 14px;
+    font-size:14px;
+    padding:8px 14px
   }
-
-  /* Sección “Invierte…” apilada y aireada (override a inline) */
-  .cta-duo > div{
-    grid-template-columns: 1fr !important; /* vence el inline */
-    gap: 16px !important;
+  .cta-duo>div{
+    grid-template-columns:1fr!important;
+    gap:16px!important
   }
-  .cta-duo > div > div:first-child{
-    padding: 24px !important;
-    border-radius: 12px !important;
+  .cta-duo>div>div:first-child{
+    padding:24px!important;
+    border-radius:12px!important
   }
   .cta-duo h3{
-    font-size: 20px !important;
-    line-height: 1.25 !important;
-    margin-bottom: 8px !important;
+    font-size:20px!important;
+    line-height:1.25!important;
+    margin-bottom:8px!important
   }
   .cta-duo p{
-    font-size: 14px !important;
-    line-height: 1.45 !important;
-    margin-bottom: 14px !important;
+    font-size:14px!important;
+    line-height:1.45!important;
+    margin-bottom:14px!important
   }
   .cta-duo a{
-    font-size: 16px !important;
-    padding: 10px 14px !important;
-    border-radius: 8px !important;
+    font-size:16px!important;
+    padding:10px 14px!important;
+    border-radius:8px!important
   }
   .cta-duo img{
-    width: 100% !important;
-    height: auto !important;
-    border-radius: 12px !important;
-    object-fit: cover !important;
+    width:100%!important;
+    height:auto!important;
+    border-radius:12px!important;
+    object-fit:cover!important
   }
 }
 
-/* -------- Tablet: 768–1024px -------- */
-@media (min-width: 768px) and (max-width: 1024px){
-  .city-header{
-    margin: 26px auto 16px;
-  }
-  .city-title{
-    font-size: 44px;       /* similar al mock 2 */
-  }
+@media (min-width:768px) and (max-width:1024px){
+  .city-header{margin:26px auto 16px}
+  .city-title{font-size:44px}
   .city-lead{
-    font-size: 16px;
-    max-width: 90ch;
+    font-size:16px;
+    max-width:90ch
   }
-
-  .city-hero{ margin-bottom: 28px; }
-  .city-hero img{
-    height: 420px;         /* hero más alto en tablet */
-  }
-
+  .city-hero{margin-bottom:28px}
+  .city-hero img{height:420px}
   .proj h2{
-    font-size: 56px;
-    margin-bottom: 6px;
+    font-size:56px;
+    margin-bottom:6px
   }
   .proj .place{
-    font-size: 15px;
-    margin-bottom: 12px;
+    font-size:15px;
+    margin-bottom:12px
   }
-  .proj .shot img{
-    height: 340px;
-  }
-
-  /* Centrar bloque de texto y CTA como en el mock 2 */
+  .proj .shot img{height:340px}
   .proj .desc-row{
-    display: block;        /* apilado en tablet */
-    margin: 18px 0 0;
-    text-align: center;
+    display:block;
+    margin:18px 0 0;
+    text-align:center
   }
   .proj p{
-    font-size: 15px;
-    line-height: 1.55;
-    margin: 0 auto 16px;
-    max-width: 70ch;
+    font-size:15px;
+    line-height:1.55;
+    margin:0 auto 16px;
+    max-width:70ch
   }
-  .proj .more-box{
-    justify-items: center;
-  }
+  .proj .more-box{justify-items:center}
   .proj .pill{
-    font-size: 15px;
-    padding: 9px 16px;
+    font-size:15px;
+    padding:9px 16px
   }
-
-  /* La dupla de CTA también en una columna en tablet */
-  .cta-duo > div{
-    grid-template-columns: 1fr !important; /* vence el inline */
-    gap: 20px !important;
+  .cta-duo>div{
+    grid-template-columns:1fr!important;
+    gap:20px!important
   }
-  .cta-duo > div > div:first-child{
-    padding: 32px !important;
-  }
-  .cta-duo h3{ font-size: 24px !important; }
-  .cta-duo p{ font-size: 15px !important; }
+  .cta-duo>div>div:first-child{padding:32px!important}
+  .cta-duo h3{font-size:24px!important}
+  .cta-duo p{font-size:15px!important}
 }
-

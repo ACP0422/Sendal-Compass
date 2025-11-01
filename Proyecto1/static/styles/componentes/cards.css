@@ -81,6 +81,7 @@
     color: #fff; 
   }
   
+ 
   /* =========================================================
      TARJETAS — TEMAS (sobrescriben tokens)
      ========================================================= */
@@ -192,3 +193,7 @@
     .card{ padding: calc(var(--card-pad) + 4px); }
   }
   
+
+  .btn:hover{
+    color: #fff;
+  }

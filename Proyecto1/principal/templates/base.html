@@ -12,40 +12,33 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 
-  <!-- ===== NAVBAR ===== -->
   <header class="navbar">
 
-    <!-- Izquierda: en mobile SOLO hamburger; en desktop aparece el brand completo -->
     <div class="nav-left">
-        <!-- HAMBURGER primero -->
         <button class="hamburger" aria-label="{% trans 'Abrir menú' %}" aria-controls="mobileMenu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       
-        <!-- BRAND (isotipo + SENDAL) solo para desktop -->
         <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
           <img src="{% static 'resources/images/general/logo.png' %}" alt="{% trans 'Isotipo Sendal' %}" class="brand-mark">
           <img src="{% static 'resources/images/general/Sendal.png' %}" alt="{% trans 'Logotipo Sendal' %}" class="brand-word">
         </a>
       </div>
-      
 
-    <!-- Centro: SENDAL centrado SOLO en mobile; en desktop se oculta -->
     <div class="brand-center">
       <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
         <img src="{% static 'resources/images/general/Sendal.png' %}" alt="{% trans 'Logotipo Sendal' %}" class="brand-word">
       </a>
     </div>
 
-    <!-- Centro: navegación (visible en desktop; oculto en mobile) -->
     <nav class="nav-center">
       <a href="{% url 'index' %}">{% trans 'Inicio' %}</a>
       <a href="{% url 'index' %}#proyectos">{% trans 'Proyectos' %}</a>
-      <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a>
+      {# <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a> #}
       <a href="{% url 'contacto' %}">{% trans 'Contacto' %}</a>
     </nav>
+    
 
-    <!-- Derecha: WhatsApp + idioma -->
     <div class="nav-right">
       <a href="https://wa.me/529993976683?text={{ 'Hola, me gustaría saber más sobre los proyectos de Sendal.'|urlencode }}"
          class="phone" aria-label="{% trans 'Escríbenos por WhatsApp' %}" target="_blank" rel="noopener">
@@ -64,13 +57,12 @@
       </form>
     </div>
 
-    <!-- Menú móvil: aparece solo al pulsar -->
     <nav id="mobileMenu" class="mobile-menu" hidden>
       <a href="{% url 'index' %}">{% trans 'Inicio' %}</a>
       <a href="{% url 'index' %}#proyectos">{% trans 'Proyectos' %}</a>
-      <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a>
+      {# <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a> #}
       <a href="{% url 'contacto' %}">{% trans 'Contacto' %}</a>
-    </nav>
+    </nav>    
   </header>
 
   <main>
@@ -79,7 +71,6 @@
 
   <footer class="site-footer">
     <div class="footer-inner container">
-      <!-- Marca y redes -->
       <div class="footer-brand">
         <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
           <img src="{% static 'resources/images/general/Sendal.png' %}" alt="{% trans 'Logotipo Sendal' %}" class="brand-word"/>
@@ -95,16 +86,13 @@
         <p class="f-slogan">{% trans 'LA RAÍZ DE TU FUTURO' %}</p>
       </div>
   
-      <!-- NAV en columna, pegado a la izquierda -->
       <nav class="footer-nav footer-nav--column-left">
         <a href="{% url 'index' %}" >{% trans 'Inicio' %}</a>
         <a href="{% url 'index' %}#proyectos">{% trans 'Proyectos' %}</a>
-        <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a>
+        {# <a href="{% url 'cotizador' %}">{% trans 'Cotizador' %}</a> #}
         <a href="{% url 'contacto' %}">{% trans 'Contacto' %}</a>
       </nav>
-      
-  
-      <!-- Brand mark al final -->
+        
       <div class="footer-logo footer-logo--end">
         <a href="{% url 'index' %}" class="brand" aria-label="{% trans 'Inicio' %}">
           <img src="{% static 'resources/images/general/logo.png' %}" alt="{% trans 'Isotipo Sendal' %}" class="brand-mark">
@@ -113,7 +101,6 @@
     </div>
   </footer>
   
-
   {% block extra_js %}{% endblock %}
 
   <script>

@@ -4,12 +4,12 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.http import Http404
 import json
-from utils.lots_loader import load_states
 from django.http import Http404
 from django.shortcuts import render
 from urllib.parse import urlparse, parse_qs
 import re
-from utils.lots_loader import load_inventory
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext  # opcional, pero útil para dar contexto
 
 
 import re
@@ -19,58 +19,6 @@ from pathlib import Path
 import json
 from django.conf import settings
 from django.shortcuts import render
-from utils.lots_loader import load_states  # fallback temporal a Excel
-
-
-def _fetch_states_from_crm(dev_slug: str) -> dict[str, str]:
-    """
-    Devuelve { 'L-001': 'available'|'reserved'|'sold', ... } desde el CRM.
-    Por ahora, hacemos fallback al Excel con tu util load_states().
-    """
-    try:
-      states_by_dev = load_states(force_reload=False)  # {'komchen': {1:'disponible', ...}}
-    except Exception:
-      states_by_dev = {}
-
-    raw = states_by_dev.get(dev_slug, {}) or {}  # {1:'vendido', ...}
-    out: dict[str, str] = {}
-    for num, st in raw.items():
-        s = (st or "").lower()
-        if "vend" in s: css = "sold"
-        elif "apart" in s or "reserv" in s: css = "reserved"
-        else: css = "available"
-        out[f"L-{int(num):03d}"] = css
-    return out
-
-def komchen_svg_view(request):
-    # 1) lee el SVG (guardado en static/maps/komchen.svg)
-    svg_path = Path(settings.BASE_DIR) / 'static' / 'maps' / 'komchen.svg'
-    svg_markup = svg_path.read_text(encoding='utf-8')
-
-    # 2) estados (CRM → fallback Excel)
-    lot_states = _fetch_states_from_crm('komchen')
-
-    ctx = {
-        'svg_markup': svg_markup,
-        'lot_states_json': json.dumps(lot_states),
-    }
-    return render(request, 'komchen.html', ctx)
-
-
-
-def hacienda_svg_view(request):
-    
-    svg_path = Path(settings.BASE_DIR) / 'static' / 'maps' / 'hacienda.svg'
-    svg_markup = svg_path.read_text(encoding='utf-8')
-
-    # 2) estados (CRM → fallback Excel)
-    lot_states = _fetch_states_from_crm('hacienda')
-
-    ctx = {
-        'svg_markup': svg_markup,
-        'lot_states_json': json.dumps(lot_states),
-    }
-    return render(request, 'hacienda.html', ctx)
 
 
 from django.shortcuts import redirect
@@ -79,8 +27,9 @@ from django.http import Http404
 # Si quieres ir sumando más proyectos SVG, mapea aquí: slug -> nombre_de_url
 SVG_ROUTES = {
     "komchen": "komchen-svg",
-    "hacienda": "hacienda-svg",   
+    "hacienda": "hacienda-svg",
 }
+
 
 def cotizador_detail(request, slug: str):
     """
@@ -99,28 +48,27 @@ def cotizador_detail(request, slug: str):
     return redirect(svg_urlname)
 
 
-
-
 import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+
 @csrf_exempt
 def create_lead(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        lot_id = data.get('lotId')
-        source = data.get('source', 'web')
-        
+        lot_id = data.get("lotId")
+        source = data.get("source", "web")
+
         # Token de GHL (recuerda que expira cada día)
-        token = 'TU_ACCESS_TOKEN'
-        
+        token = "TU_ACCESS_TOKEN"
+
         # Endpoint de GHL (ejemplo: crear contacto)
-        ghl_url = 'https://services.leadconnectorhq.com/contacts/'
+        ghl_url = "https://services.leadconnectorhq.com/contacts/"
 
         payload = {
-            "firstName": "Cotizador",        
+            "firstName": "Cotizador",
             "lastName": f"Lote {lot_id}",
             "email": "contacto@sendal.mx",
             "phone": "9990000000",
@@ -131,13 +79,13 @@ def create_lead(request):
         headers = {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
 
         response = requests.post(ghl_url, headers=headers, json=payload)
         return JsonResponse(response.json(), safe=False)
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 
 def drive_urls(url: str) -> tuple[str | None, str | None]:
@@ -179,11 +127,9 @@ def drive_urls(url: str) -> tuple[str | None, str | None]:
     return primary, fallback
 
 
-
-
 # ===== Config global (cotizador) =====
 HERO_IMG = "resources/images/cotizador/hero.png"
-KICKER   = _("Cotiza nuestros proyectos")
+KICKER = _("Cotiza nuestros proyectos")
 
 COTIZADORES = {
     "komchen": {
@@ -209,20 +155,33 @@ COTIZADORES = {
 }
 INDEX_ORDER = ["komchen", "hacienda"]
 
+
 def _href_to_detail(slug: str) -> str:
     return reverse("cotizador-detail", args=[slug])
 
+
 def cotizador_index(request):
-    slugs = [s for s in INDEX_ORDER if COTIZADORES.get(s, {}).get("show_in_index")] \
-            or [s for s, cfg in COTIZADORES.items() if cfg.get("show_in_index")]
-    items = [{"label": COTIZADORES[s]["label"], "href": _href_to_detail(s), "btn": COTIZADORES[s]["btn"]}
-             for s in slugs]
+    slugs = [s for s in INDEX_ORDER if COTIZADORES.get(s, {}).get("show_in_index")] or [
+        s for s, cfg in COTIZADORES.items() if cfg.get("show_in_index")
+    ]
+    items = [
+        {
+            "label": COTIZADORES[s]["label"],
+            "href": _href_to_detail(s),
+            "btn": COTIZADORES[s]["btn"],
+        }
+        for s in slugs
+    ]
     grid_cols = min(3, max(1, len(items)))
     ctx = {
         "page_title": _("Cotizador"),
-        "hero_img": HERO_IMG, "kicker": KICKER, "heading": _("Cotizador"),
-        "variant": "", "show_toggle": False,
-        "actions": items, "actions_hidden": False,
+        "hero_img": HERO_IMG,
+        "kicker": KICKER,
+        "heading": _("Cotizador"),
+        "variant": "",
+        "show_toggle": False,
+        "actions": items,
+        "actions_hidden": False,
         "grid_cols": grid_cols,
         "map_img": None,
         "title_style": "",
@@ -230,20 +189,53 @@ def cotizador_index(request):
     return render(request, "pages/cotizador_base.html", ctx)
 
 
-
-
-
 # ===== Vistas públicas =====
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
-def index(request):
-    proyectos = [
+# principal/views.py
+from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils.translation import gettext as _
+from django.templatetags.static import static
+from django.core.mail import send_mail
+
+from .forms import CotizaHomeForm  # alias de IndexQuoteForm
+
+
+# -----------------------------------------------------------------------------
+# Datos de proyectos (lo usamos en index y al re-renderizar por errores)
+# -----------------------------------------------------------------------------
+# principal/views.py
+from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils.translation import gettext as _
+from django.templatetags.static import static
+from django.core.mail import send_mail
+import logging
+
+from .forms import CotizaHomeForm  # NO cambiamos el nombre de tu form
+
+logger = logging.getLogger(__name__)
+
+
+# ----------------------------
+# Datos de proyectos (como en tu index)
+# ----------------------------
+def _proyectos():
+    return [
         {
             "slug": "komchen",
             "nombre": "Komchén",
             "url": "komchen",
             "img": static("resources/images/places/Komchén/Komchén.png"),
             "descripcion": _("Zona con alta plusvalía y acceso rápido a la ciudad."),
-            "tipos": ["otro"],
+            "tipos": ["lote"],
             "activo": False,
         },
         {
@@ -251,8 +243,10 @@ def index(request):
             "nombre": "Valladolid",
             "url": "valladolid",
             "img": static("resources/images/places/Valladolid/Valladolid.png"),
-            "descripcion": _("Ciudad en crecimiento con alto potencial turístico e inmobiliario."),
-            "tipos": ["lote", "otro"],
+            "descripcion": _(
+                "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
+            ),
+            "tipos": ["lote", "casa"],
             "activo": True,
         },
         {
@@ -260,82 +254,219 @@ def index(request):
             "nombre": "Tulum",
             "url": "tulum",
             "img": static("resources/images/places/Tulum/Tulum.jpg"),
-            "descripcion": _("Destino icónico con gran plusvalía, naturaleza y proyección internacional."),
+            "descripcion": _(
+                "Destino icónico con gran plusvalía, naturaleza y proyección internacional."
+            ),
             "tipos": ["lote"],
             "activo": True,
         },
-        
     ]
-    return render(request, "pages/index.html", {"proyectos": proyectos})
 
 
-def contacto(request):  return render(request, 'pages/contacto.html')
-def valladolid(request): return render(request, 'pages/valladolid.html')
-def tulum(request):       return render(request, 'pages/tulum.html')
-def hacienda(request):    return render(request, 'pages/hacienda.html')
-def komchen(request):     return render(request, 'pages/komchen.html')
+def _ctx_index(form=None):
+    """
+    Contexto base del index: proyectos + (form si se pasa).
+    """
+    ctx = {
+        "proyectos": _proyectos(),
+    }
+    if form is not None:
+        ctx["form"] = form
+    return ctx
 
 
+from django.core.mail import EmailMessage
 
-# app/views.py
+
+# ----------------------------
+# Vistas públicas (mismos nombres que ya tienes)
+# ----------------------------
+def index(request):
+    """
+    Home. Muestra los proyectos y el formulario de cotización.
+    """
+    # Si ya vienes de un POST de /cotiza con errores, el template recibirá "form".
+    # Si no, renderizamos con form vacío.
+    ctx = _ctx_index()
+    ctx.setdefault("form", CotizaHomeForm())
+    return render(request, "pages/index.html", ctx)
+
+
+def cotiza(request):
+    """
+    Procesa el formulario del home.
+    Siempre regresa a #cotiza (éxito o error), sin empujar el layout.
+    """
+    if request.method != "POST":
+        return redirect(reverse("index") + "#cotiza")
+
+    form = CotizaHomeForm(request.POST)
+    if not form.is_valid():
+        messages.error(request, _("Revisa los campos marcados."))
+        return render(request, "pages/index.html", _ctx_index(form), status=400)
+
+    data = form.cleaned_data
+
+    # ----------------------------
+    # Destinatarios y remitente seguros
+    # ----------------------------
+    recipients = []
+    # Acepta cualquiera de tus keys de settings
+    for name in ("CONTACT_EMAILS", "CONTACT_RECIPIENTS"):
+        val = getattr(settings, name, None)
+        if isinstance(val, (list, tuple)):
+            recipients.extend([x for x in val if x])
+        elif isinstance(val, str) and val:
+            recipients.append(val)
+
+    fallback = getattr(settings, "DEFAULT_FROM_EMAIL", "") or getattr(
+        settings, "EMAIL_HOST_USER", ""
+    )
+    if not recipients and fallback:
+        recipients = [fallback]
+
+    if not recipients:
+        # Evitamos 500 por mala configuración
+        messages.error(
+            request, _("No hay destinatarios configurados para recibir la cotización.")
+        )
+        return render(request, "pages/index.html", _ctx_index(form), status=500)
+
+    from_addr = getattr(settings, "DEFAULT_FROM_EMAIL", "") or getattr(
+        settings, "EMAIL_HOST_USER", ""
+    )
+    if not from_addr:
+        # Último recurso: usa el primer destinatario
+        from_addr = recipients[0]
+
+    subject = _("Nueva solicitud de cotización — {n} {a}").format(
+        n=data["nombre"], a=data["apellido"]
+    )
+    body = (
+        f"Nombre: {data['nombre']} {data['apellido']}\n"
+        f"Email: {data['email']}\n"
+        f"Teléfono: {data['telefono']}\n"
+        f"Tipo de propiedad: {data['tipo']}\n"
+        f"Ubicación: {data['ubicacion']}\n"
+    )
+
+    try:
+        msg = EmailMessage(
+            subject=subject,
+            body=body,
+            from_email=from_addr,
+            to=recipients,  # destinatarios
+            reply_to=[data["email"]],  # así puedes responder al usuario
+        )
+        msg.send(fail_silently=False)
+    except Exception as e:
+        logger.exception("Error enviando /cotiza: %s", e)
+        messages.error(request, _("No pudimos enviar tu mensaje. Intenta más tarde."))
+        return render(request, "pages/index.html", _ctx_index(form), status=500)
+
+    messages.success(request, _("¡Gracias! Nos pondremos en contacto contigo pronto."))
+    return redirect(reverse("index") + "#cotiza")
+
+
+# principal/views.py
+from django.conf import settings
+from django.contrib import messages
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import render, redirect
+from django.utils.translation import gettext as _
+
+from .forms import ContactForm
+
+# views.py
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import EmailMessage, BadHeaderError
 from django.shortcuts import render, redirect
+from django.utils.translation import gettext as _
+
 from .forms import ContactForm
 
-def contacto_view(request):
+
+def contacto(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Honeypot: si viene lleno, asumimos bot y fingimos éxito
-            if form.cleaned_data.get("website"):
-                messages.success(request, "¡Gracias! Te contactaremos pronto.")
-                return redirect("contacto")
+            data = form.cleaned_data
 
-            nombre   = form.cleaned_data["nombre"].strip()
-            apellido = form.cleaned_data["apellido"].strip()
-            email    = form.cleaned_data["email"].strip()
-            mensaje  = form.cleaned_data.get("mensaje", "").strip()
-
-            subject = f"[Sendal] Nuevo mensaje de contacto — {nombre} {apellido}"
+            subject = _("Nueva solicitud de cotización — {n} {a}").format(
+                n=data["nombre"], a=data["apellido"]
+            )
             body = (
-                f"Nombre: {nombre}\n"
-                f"Apellido: {apellido}\n"
-                f"Email: {email}\n\n"
-                f"Mensaje:\n{mensaje or '(sin mensaje)'}"
+                f"Nombre: {data['nombre']} {data['apellido']}\n"
+                f"Email: {data['email']}\n"
+                f"Mensaje:\n{data.get('mensaje', '(sin mensaje)')}\n"
             )
 
-            to_list = getattr(settings, "CONTACT_RECIPIENTS", [settings.DEFAULT_FROM_EMAIL])
-            email_msg = EmailMessage(
-                subject=subject,
-                body=body,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=to_list,
-                reply_to=[email] if email else None,
+            to_emails = getattr(
+                settings, "CONTACT_EMAILS", ["contacto@inmobiliariasendal.mx"]
             )
+            from_email = getattr(
+                settings, "DEFAULT_FROM_EMAIL", "no-reply@inmobiliariasendal.mx"
+            )
+
             try:
-                email_msg.send(fail_silently=False)
-                messages.success(request, "¡Gracias! Tu mensaje fue enviado.")
-                return redirect("contacto")
+                EmailMessage(
+                    subject=subject,
+                    body=body,
+                    from_email=from_email,  # remitente de tu dominio
+                    to=to_emails,
+                    reply_to=[data["email"]],  # responde directo al usuario
+                ).send(fail_silently=False)
+
             except BadHeaderError:
-                messages.error(request, "Encabezado de email inválido.")
+                messages.error(
+                    request, _("Error al enviar el correo (cabecera inválida).")
+                )
+                return render(request, "pages/contacto.html", {"form": form})
             except Exception:
-                messages.error(request, "Ocurrió un error al enviar tu mensaje. Inténtalo de nuevo.")
-    else:
-        form = ContactForm()
+                # No exponemos detalles técnicos al usuario
+                messages.error(
+                    request, _("No pudimos enviar tu mensaje. Inténtalo más tarde.")
+                )
+                return render(request, "pages/contacto.html", {"form": form})
 
-    return render(request, "contacto.html", {"form": form})
+            messages.success(request, _("¡Gracias! Recibimos tu mensaje."))
+            return redirect("contacto")  # PRG: evita reenvío al refrescar
+        # Form inválido: volvemos a pintar con errores de campo, sin mensaje global extra
+        return render(request, "pages/contacto.html", {"form": form})
+
+    # GET
+    form = ContactForm()
+    return render(request, "pages/contacto.html", {"form": form})
 
 
+def valladolid(request):
+    return render(request, "pages/valladolid.html")
 
 
+def tulum(request):
+    return render(request, "pages/tulum.html")
 
 
+def hacienda(request):
+    return render(request, "pages/hacienda.html")
 
 
+def komchen(request):
+    return render(request, "pages/komchen.html")
 
 
+from django.shortcuts import render
+
+
+def custom_404(request, exception):
+    # NO incluir datos sensibles ni urls dinámicas
+    return render(request, "errors/404.html", status=404)
+
+
+def custom_500(request):
+    # No recibes 'exception' aquí
+    return render(request, "errors/500.html", status=500)
 
 
 # ===== Registro de predios =====
@@ -356,7 +487,7 @@ PREDIO_REGISTRY = {
                 "address": _("Calle 35 # 198 F"),
                 "propiedad_tipo": _("Propiedad Privada"),
                 "colonia": _("Centro"),
-                "map_url": "#",  
+                "map_url": "#",
                 "features": [
                     _("Barda Perimetral"),
                     _("Puerta de Acceso"),
@@ -364,12 +495,17 @@ PREDIO_REGISTRY = {
                     _("A 2 calles de Catedral"),
                 ],
                 "subgallery": [
-                    {"src": "resources/images/places/Valladolid/predio1/fachada.png",
-                     "alt": _("Vista fachada"), "caption": _("Vista Fachada")},
-                    {"src": "resources/images/places/Valladolid/predio1/satelite.png",
-                     "alt": _("Vista satelital"), "caption": _("Vista Satelital")},
+                    {
+                        "src": "resources/images/places/Valladolid/predio1/fachada.png",
+                        "alt": _("Vista fachada"),
+                        "caption": _("Vista Fachada"),
+                    },
+                    {
+                        "src": "resources/images/places/Valladolid/predio1/satelite.png",
+                        "alt": _("Vista satelital"),
+                        "caption": _("Vista Satelital"),
+                    },
                 ],
-                
                 "location_blurb": _(
                     "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
                 ),
@@ -395,18 +531,25 @@ PREDIO_REGISTRY = {
                     _("A 2 calles de Catedral"),
                 ],
                 "subgallery": [
-                    {"src": "resources/images/places/Valladolid/predio2/fachada.png",
-                     "alt": _("Vista fachada"), "caption": _("Vista Fachada")},
-                    {"src": "resources/images/places/Valladolid/predio2/satelite.png",
-                     "alt": _("Vista satelital"), "caption": _("Vista Satelital")},
+                    {
+                        "src": "resources/images/places/Valladolid/predio2/fachada.png",
+                        "alt": _("Vista fachada"),
+                        "caption": _("Vista Fachada"),
+                    },
+                    {
+                        "src": "resources/images/places/Valladolid/predio2/satelite.png",
+                        "alt": _("Vista satelital"),
+                        "caption": _("Vista Satelital"),
+                    },
                 ],
                 "location_blurb": _(
                     "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
                 ),
             },
-        ]
+        ],
     }
 }
+
 
 def _find_predio(slug):
     for dev in PREDIO_REGISTRY.values():
@@ -418,15 +561,23 @@ def _find_predio(slug):
                 return dev, p, prev_p, next_p
     return None, None, None, None
 
+
 def predio_detail(request, slug):
     dev, p, prev_p, next_p = _find_predio(slug)
     if p is None:
         raise Http404("Predio no encontrado")
 
-    # --- cadenas traducibles con variables ---
     price_text = None
     if p.get("price_mxn"):
-        price_text = _("Precio: $%(amount)s MXN") % {"amount": f"{p['price_mxn']:,.0f}"}
+        label_price = pgettext("price label", "Precio")  # ← solo la palabra a traducir
+        amount = f"{p['price_mxn']:,.0f}"
+
+    # Plantilla general, para que el traductor pueda reordenar si lo desea
+    price_text = _("%(label)s: $%(amount)s %(currency)s") % {
+        "label": label_price,
+        "amount": amount,
+        "currency": "MXN",  # déjalo fijo o haz _('MXN') si quisieras traducirlo
+    }
 
     price_m2_str = None
     if p.get("price_m2"):
@@ -444,20 +595,17 @@ def predio_detail(request, slug):
         "municipio": dev.get("municipio"),
         "superficie_m2": p.get("superficie_m2"),
         "hero_src": p.get("hero"),
-
         # navegación (nota: ahora el prev tiene prioridad en la plantilla)
         "back_urlname": dev.get("back_urlname"),
         "prev_slug": prev_p["slug"] if prev_p else None,
         "prev_label": prev_p["title"] if prev_p else None,
         "next_slug": next_p["slug"] if next_p else None,
         "next_label": next_p["title"] if next_p else None,
-
         # info
         "price_text": price_text,
         "facts": [f for f in facts if f["dt"] and f["dd"]],
         "features": p.get("features"),
         "map_url": p.get("map_url"),
-
         # subgalería y banda
         "subgallery": p.get("subgallery"),
         "band_theme": "band--gold",

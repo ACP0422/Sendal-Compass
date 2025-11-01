@@ -18,6 +18,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")  # <— carga tu .env en la raíz del proyecto
 
 
+# === Config desde .env ===
+# Si en .env faltara algún valor, usamos defaults razonables.
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-please-change-me")
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") if h.strip()]
+
+# === Email SMTP (Hostinger) ===
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.hostinger.com")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "465"))
+
+# Usa solo UNO según tu .env:
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "").lower() == "true"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "true").lower() == "true"
+
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+
+CONTACT_RECIPIENTS = [
+    e.strip() for e in os.getenv("CONTACT_RECIPIENTS", DEFAULT_FROM_EMAIL or "").split(",")
+    if e.strip()
+]
+
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -34,13 +59,8 @@ HOLD_TTL_MINUTES        = int(os.getenv("HOLD_TTL_MINUTES", "45"))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7sxbm5f%j36m-m&s@fl&!ng^b=wbo&1jn50tl@i-6%qg-fs+^1'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,7 +96,7 @@ ROOT_URLCONF = 'Proyecto1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": [BASE_DIR / "templates"], 
         'APP_DIRS': True,
         'OPTIONS': {
             "builtins": ["django.templatetags.i18n"],  
