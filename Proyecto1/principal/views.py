@@ -469,7 +469,17 @@ def custom_500(request):
     return render(request, "errors/500.html", status=500)
 
 
-# ===== Registro de predios =====
+# views.py
+from django.shortcuts import render, redirect
+from django.http import Http404
+
+# Usaremos "_" para LAZY (registro) y "__" para no-lazy (vista)
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as __
+from django.utils.translation import pgettext
+
+
+# ===== Registro de predios (todas las cadenas con gettext_lazy => "_") =====
 PREDIO_REGISTRY = {
     "hacienda": {
         "back_urlname": "hacienda",
@@ -565,37 +575,42 @@ def _find_predio(slug):
 def predio_detail(request, slug):
     dev, p, prev_p, next_p = _find_predio(slug)
     if p is None:
-        raise Http404("Predio no encontrado")
+        raise Http404(__("Predio no encontrado"))
 
-    price_text = None
+    # ----- Precio total (traducción en tiempo real => "__") -----
     if p.get("price_mxn"):
-        label_price = pgettext("price label", "Precio")  # ← solo la palabra a traducir
+        label_price = pgettext("price label", "Precio")
         amount = f"{p['price_mxn']:,.0f}"
+        price_text = __("%(label)s: $%(amount)s %(currency)s") % {
+            "label": label_price,
+            "amount": amount,
+            "currency": "MXN",
+        }
+    else:
+        price_text = None
 
-    # Plantilla general, para que el traductor pueda reordenar si lo desea
-    price_text = _("%(label)s: $%(amount)s %(currency)s") % {
-        "label": label_price,
-        "amount": amount,
-        "currency": "MXN",  # déjalo fijo o haz _('MXN') si quisieras traducirlo
-    }
-
-    price_m2_str = None
+    # ----- Precio por m² -----
     if p.get("price_m2"):
-        price_m2_str = _("$%(amount)s m²") % {"amount": f"{p['price_m2']:,.0f}"}
+        price_m2_str = __("$%(amount)s m²") % {"amount": f"{p['price_m2']:,.0f}"}
+    else:
+        price_m2_str = None
 
+    # ----- Facts (dt / dd) -----
     facts = [
         {"dt": p.get("address"), "dd": p.get("propiedad_tipo")},
-        {"dt": price_m2_str, "dd": _("Precio por m²")},
-        {"dt": _("Colonia:"), "dd": p.get("colonia")},
-        {"dt": _("Municipio:"), "dd": _("Valladolid")},
+        {"dt": price_m2_str, "dd": __("Precio por m²")},
+        {"dt": __("Colonia:"), "dd": p.get("colonia")},
+        {"dt": __("Municipio:"), "dd": __("Valladolid")},
     ]
+    facts = [f for f in facts if f["dt"] and f["dd"]]
 
+    # ----- Contexto para el template -----
     ctx = {
         "title": p["title"],
         "municipio": dev.get("municipio"),
         "superficie_m2": p.get("superficie_m2"),
         "hero_src": p.get("hero"),
-        # navegación (nota: ahora el prev tiene prioridad en la plantilla)
+        # navegación
         "back_urlname": dev.get("back_urlname"),
         "prev_slug": prev_p["slug"] if prev_p else None,
         "prev_label": prev_p["title"] if prev_p else None,
@@ -603,7 +618,7 @@ def predio_detail(request, slug):
         "next_label": next_p["title"] if next_p else None,
         # info
         "price_text": price_text,
-        "facts": [f for f in facts if f["dt"] and f["dd"]],
+        "facts": facts,
         "features": p.get("features"),
         "map_url": p.get("map_url"),
         # subgalería y banda
@@ -611,13 +626,16 @@ def predio_detail(request, slug):
         "band_theme": "band--gold",
         "location_blurb": p.get("location_blurb"),
         "map_img": p.get("map_img"),
-        "map_iframe": None,  # si lo usas
+        "map_iframe": None,
     }
+
+    if ctx.get("superficie_m2"):
+        ctx["area_m2"] = ctx["superficie_m2"]
+
     return render(request, "pages/predio_base.html", ctx)
 
 
 def predio_compat(request, slug):
-    # /proyectos/valladolid/predio1/ -> redirige a la ruta nueva
     if slug.startswith("predio"):
         return redirect("predio-detail", slug=slug, permanent=True)
     raise Http404()

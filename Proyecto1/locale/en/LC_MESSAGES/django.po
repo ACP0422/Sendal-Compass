@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sendal Website\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-29 12:10-0600\n"
+"POT-Creation-Date: 2025-11-01 15:20-0600\n"
 "PO-Revision-Date: 2025-09-22 16:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
@@ -14,53 +14,191 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: Proyecto1/settings.py:139
+#: Proyecto1/settings.py:159
 msgid "Español"
 msgstr "Spanish"
 
-#: Proyecto1/settings.py:140
+#: Proyecto1/settings.py:160
 msgid "Inglés"
 msgstr "English"
 
-#: principal/templates/base.html:21
+#: principal/forms.py:15 principal/forms.py:197
+msgid "Usa solo letras, espacios y guiones."
+msgstr ""
+
+#: principal/forms.py:20
+msgid "Ingresa un número válido (con o sin +)."
+msgstr ""
+
+#: principal/forms.py:51 principal/forms.py:147 principal/forms.py:307
+msgid "El dominio del correo no existe. Verifica tu dirección."
+msgstr ""
+
+#: principal/forms.py:55 principal/forms.py:155
+msgid "El dominio del correo no tiene registros de correo válidos."
+msgstr ""
+
+#: principal/forms.py:59 principal/forms.py:151
+msgid "Escribe un correo válido (ejemplo: nombre@dominio.com)."
+msgstr ""
+
+#: principal/forms.py:67 principal/forms.py:168 principal/forms.py:324
+msgid "Usa un correo personal o empresarial (no temporal)."
+msgstr ""
+
+#: principal/forms.py:69 principal/forms.py:173 principal/forms.py:327
+msgid "Usa un correo personal (no cuentas genéricas)."
+msgstr ""
+
+#: principal/forms.py:85 principal/forms.py:222
+#, fuzzy
+#| msgid "Escribe tu pregunta o mensaje"
+msgid "Escribe tu nombre."
+msgstr "Enter your question or message"
+
+#: principal/forms.py:86
+msgid "El nombre es muy corto."
+msgstr ""
+
+#: principal/forms.py:87 principal/forms.py:223
+msgid "El nombre es muy largo."
+msgstr ""
+
+#: principal/forms.py:96 principal/forms.py:232
+msgid "Escribe tu apellido."
+msgstr ""
+
+#: principal/forms.py:97
+msgid "El apellido es muy corto."
+msgstr ""
+
+#: principal/forms.py:98 principal/forms.py:233
+msgid "El apellido es muy largo."
+msgstr ""
+
+#: principal/forms.py:104 principal/forms.py:241
+msgid "Escribe tu correo."
+msgstr ""
+
+#: principal/forms.py:105 principal/forms.py:242
+msgid "Escribe un correo válido."
+msgstr ""
+
+#: principal/forms.py:106 principal/forms.py:243
+msgid "El correo es demasiado largo."
+msgstr ""
+
+#: principal/forms.py:122 principal/forms.py:273
+msgid "Solicitud no válida."
+msgstr ""
+
+#: principal/forms.py:158
+msgid "Correo no válido. Verifica tu dirección."
+msgstr ""
+
+#: principal/forms.py:219 principal/templates/pages/contacto.html:48
+#: principal/templates/pages/index.html:141
+msgid "Nombre"
+msgstr "First name"
+
+#: principal/forms.py:229 principal/templates/pages/contacto.html:60
+#: principal/templates/pages/index.html:151
+msgid "Apellido"
+msgstr "Last name"
+
+#: principal/forms.py:239 principal/templates/pages/index.html:162
+#: principal/templates/pages/tulum.html:84
+#: principal/templates/pages/valladolid.html:139
+msgid "Correo electrónico"
+msgstr "Email"
+
+#: principal/forms.py:248
+msgid "Número de contacto"
+msgstr "Contact number"
+
+#: principal/forms.py:249
+msgid "Incluye lada; 10–15 dígitos en total (con o sin +)."
+msgstr ""
+
+#: principal/forms.py:250
+msgid "Escribe tu número."
+msgstr ""
+
+#: principal/forms.py:255 principal/templates/pages/index.html:85
+#, fuzzy
+#| msgid "Tipo del terreno o propiedad"
+msgid "Tipo de propiedad"
+msgstr "Property or land type"
+
+#: principal/forms.py:257
+#, fuzzy
+#| msgid "Tipo del terreno o propiedad"
+msgid "Escribe el tipo de propiedad."
+msgstr "Property or land type"
+
+#: principal/forms.py:262 principal/templates/pages/hacienda.html:49
+#: principal/templates/pages/index.html:76
+#: principal/templates/pages/index.html:199
+msgid "Ubicación"
+msgstr "Location"
+
+#: principal/forms.py:264
+#, fuzzy
+#| msgid "Ir a la ubicación"
+msgid "Escribe la ubicación."
+msgstr "Open location"
+
+#: principal/forms.py:294
+msgid "Ingresa un teléfono válido (10–15 dígitos, con o sin +)."
+msgstr ""
+
+#: principal/forms.py:311
+msgid "El dominio no tiene registros de correo válidos (MX/AAAA)."
+msgstr ""
+
+#: principal/forms.py:315
+msgid "Escribe un correo válido, por ejemplo nombre@dominio.com."
+msgstr ""
+
+#: principal/templates/base.html:18
 msgid "Abrir menú"
 msgstr "Open menu"
 
-#: principal/templates/base.html:26 principal/templates/base.html:35
-#: principal/templates/base.html:42 principal/templates/base.html:70
-#: principal/templates/base.html:85 principal/templates/base.html:101
-#: principal/templates/base.html:111
+#: principal/templates/base.html:22 principal/templates/base.html:29
+#: principal/templates/base.html:35 principal/templates/base.html:61
+#: principal/templates/base.html:75 principal/templates/base.html:90
+#: principal/templates/base.html:97
 msgid "Inicio"
 msgstr "Home"
 
-#: principal/templates/base.html:27 principal/templates/base.html:112
+#: principal/templates/base.html:23 principal/templates/base.html:98
 msgid "Isotipo Sendal"
 msgstr "Sendal Logomark"
 
-#: principal/templates/base.html:28 principal/templates/base.html:36
-#: principal/templates/base.html:86 principal/templates/pages/index.html:132
+#: principal/templates/base.html:24 principal/templates/base.html:30
+#: principal/templates/base.html:76 principal/templates/pages/index.html:110
 msgid "Logotipo Sendal"
 msgstr "Sendal Logo"
 
-#: principal/templates/base.html:43 principal/templates/base.html:71
-#: principal/templates/base.html:102
+#: principal/templates/base.html:36 principal/templates/base.html:62
+#: principal/templates/base.html:91
 msgid "Proyectos"
 msgstr "Projects"
 
-#: principal/templates/base.html:45 principal/templates/base.html:73
-#: principal/templates/base.html:104
+#: principal/templates/base.html:38 principal/templates/base.html:64
+#: principal/templates/base.html:93
 msgid "Contacto"
 msgstr "Contact"
 
-#: principal/templates/base.html:52 principal/templates/pages/contacto.html:70
+#: principal/templates/base.html:44 principal/templates/pages/contacto.html:124
 msgid "Escríbenos por WhatsApp"
 msgstr "Write to us on WhatsApp"
 
-#: principal/templates/base.html:53
+#: principal/templates/base.html:45
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
-#: principal/templates/base.html:96
+#: principal/templates/base.html:86
 msgid "LA RAÍZ DE TU FUTURO"
 msgstr "THE ROOT OF YOUR FUTURE"
 
@@ -82,13 +220,13 @@ msgid "Ocultar proyectos"
 msgstr "Hide projects"
 
 #: principal/templates/componentes/predio/_band_duo.html:7
-#: principal/templates/pages/hacienda.html:165
+#: principal/templates/pages/hacienda.html:174
 #: principal/templates/pages/komchen.html:210
 msgid "¿Dónde está ubicado?"
 msgstr "Where is it located?"
 
 #: principal/templates/componentes/predio/_band_duo.html:9
-#: principal/views.py:376 principal/views.py:406
+#: principal/views.py:520 principal/views.py:556
 msgid ""
 "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, "
 "Yucatán."
@@ -96,14 +234,14 @@ msgstr ""
 "Located on C.35 a few blocks from the Palacio Cantón Hotel in Valladolid, "
 "Yucatán."
 
-#: principal/templates/componentes/predio/_band_duo.html:13
-#: principal/templates/pages/hacienda.html:170
+#: principal/templates/componentes/predio/_band_duo.html:14
+#: principal/templates/pages/hacienda.html:179
 #: principal/templates/pages/komchen.html:214
 msgid "Ir a la ubicación"
 msgstr "Open location"
 
-#: principal/templates/componentes/predio/_band_duo.html:22
-#: principal/templates/pages/hacienda.html:176
+#: principal/templates/componentes/predio/_band_duo.html:24
+#: principal/templates/pages/hacienda.html:185
 msgid "Mapa de ubicación"
 msgstr "Location map"
 
@@ -131,100 +269,11 @@ msgstr "Property gate"
 msgid "Características:"
 msgstr "Features:"
 
+# botón mapa
 #: principal/templates/componentes/predio/_info.html:30
 #: principal/templates/pages/hacienda.html:63
-#: principal/templates/pages/komchen.html:60
-msgid "Ubicación Google maps"
+msgid "Ubicación Google Maps"
 msgstr "Google Maps location"
-
-#: principal/templates/lots/lot_detail.html:27
-msgid "Regresar"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:34
-#: principal/templates/pages/cotizador_base.html:40
-#: principal/templates/pages/index.html:96
-msgid "Lote"
-msgstr "Lot"
-
-#: principal/templates/lots/lot_detail.html:36
-#: principal/templates/pages/komchen.html:170
-msgid "Vendido"
-msgstr "Sold"
-
-#: principal/templates/lots/lot_detail.html:37
-#: principal/templates/lots/lot_detail.html:61
-#: principal/templates/pages/komchen.html:168
-msgid "Apartado"
-msgstr "Reserved"
-
-#: principal/templates/lots/lot_detail.html:38
-#: principal/templates/pages/hacienda.html:145
-#: principal/templates/pages/komchen.html:169
-msgid "Disponible"
-msgstr "Available"
-
-#: principal/templates/lots/lot_detail.html:49
-msgid "Plazo"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:54
-msgid "Método cálculo de enganche"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:62
-msgid "Saldo de enganche"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:63
-msgid "Fecha límite para el pago de enganche"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:64
-msgid "Precio de lista"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:67
-#, fuzzy
-#| msgid "Sistema de agua."
-msgid "Esquema de pagos"
-msgstr "Water system."
-
-#: principal/templates/lots/lot_detail.html:70
-#, fuzzy
-#| msgid "Paginación"
-msgid "Actualización"
-msgstr "Pagination"
-
-#: principal/templates/lots/lot_detail.html:70
-msgid "Monto"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:70
-msgid "Pagos"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:84
-msgid "Datos de envío"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:85
-msgid ""
-"Al ingresar sus datos de contacto se le enviará a su correo la cotización "
-"generada con base al número de plazos ingresado."
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:86
-msgid "Nombre Completo"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:87
-msgid "Teléfono"
-msgstr ""
-
-#: principal/templates/lots/lot_detail.html:89
-msgid "Enviar cotización"
-msgstr ""
 
 #: principal/templates/pages/contacto.html:4
 msgid "Contacto – Sendal"
@@ -257,76 +306,80 @@ msgstr ""
 "future, your legacy, your peace of mind."
 
 #: principal/templates/pages/contacto.html:28
-#: principal/templates/pages/hacienda.html:146
+#: principal/templates/pages/hacienda.html:145
 msgid "Contáctanos"
 msgstr "Contact us"
 
-#: principal/templates/pages/contacto.html:34
-#: principal/templates/pages/index.html:155
-msgid "Nombre"
-msgstr "First name"
-
-#: principal/templates/pages/contacto.html:35
-#: principal/templates/pages/index.html:156
+#: principal/templates/pages/contacto.html:51
+#: principal/templates/pages/index.html:145
 msgid "Jane"
 msgstr "Jane"
 
-#: principal/templates/pages/contacto.html:38
-#: principal/templates/pages/index.html:161
-msgid "Apellido"
-msgstr "Last name"
+#: principal/templates/pages/contacto.html:53
+#: principal/templates/pages/contacto.html:65
+msgid "Solo letras y espacios"
+msgstr ""
 
-#: principal/templates/pages/contacto.html:39
-#: principal/templates/pages/index.html:162
+#: principal/templates/pages/contacto.html:63
+#: principal/templates/pages/index.html:155
 msgid "Smitherton"
 msgstr "Smitherton"
 
-#: principal/templates/pages/contacto.html:44
-#: principal/templates/pages/index.html:169
+#: principal/templates/pages/contacto.html:74
 msgid "Email"
 msgstr "Email"
 
-#: principal/templates/pages/contacto.html:45
+#: principal/templates/pages/contacto.html:79
 msgid "email@janesfakedomain.net"
 msgstr "email@janesfakedomain.net"
 
-#: principal/templates/pages/contacto.html:49
+#: principal/templates/pages/contacto.html:83
+#: principal/templates/pages/index.html:165
+msgid "Escribe un correo válido, por ejemplo nombre@dominio.com"
+msgstr ""
+
+#: principal/templates/pages/contacto.html:93
 msgid "Mensaje"
 msgstr "Message"
 
-#: principal/templates/pages/contacto.html:50
+#: principal/templates/pages/contacto.html:95
 msgid "Escribe tu pregunta o mensaje"
 msgstr "Enter your question or message"
 
-#: principal/templates/pages/contacto.html:53
+#: principal/templates/pages/contacto.html:106
 msgid "Enviar"
 msgstr "Send"
 
-#: principal/templates/pages/contacto.html:59
+#: principal/templates/pages/contacto.html:113
 msgid "Niñas corriendo"
 msgstr "Girls running"
 
-#: principal/templates/pages/contacto.html:66
+#: principal/templates/pages/contacto.html:120
 msgid "Hola, me gustaría saber más sobre los proyectos de Sendal."
 msgstr ""
 
-#: principal/templates/pages/contacto.html:79
+#: principal/templates/pages/contacto.html:133
 msgid "C.15 #503, Col. Altabrisa, Mérida Yuc."
 msgstr ""
 
-#: principal/templates/pages/contacto.html:80
+#: principal/templates/pages/contacto.html:134
 msgid "Dentro de Magnia Corporate Center"
 msgstr ""
 
-#: principal/templates/pages/contacto.html:85
+#: principal/templates/pages/contacto.html:139
 msgid "GOOGLE MAPS"
 msgstr ""
 
 #: principal/templates/pages/cotizador_base.html:4
-#: principal/templates/pages/komchen.html:171 principal/views.py:224
-#: principal/views.py:225
+#: principal/templates/pages/komchen.html:171 principal/views.py:177
+#: principal/views.py:180
 msgid "Cotizador"
 msgstr "Quote Tool"
+
+#: principal/templates/pages/cotizador_base.html:40
+#: principal/templates/pages/index.html:87
+msgid "Lote"
+msgstr "Lot"
 
 #: principal/templates/pages/cotizador_base.html:59
 msgid "Cerrar"
@@ -338,12 +391,12 @@ msgstr ""
 
 #: principal/templates/pages/hacienda.html:4
 #: principal/templates/pages/hacienda.html:21
-#: principal/templates/pages/valladolid.html:37 principal/views.py:202
-#: principal/views.py:203
+#: principal/templates/pages/valladolid.html:37 principal/views.py:146
+#: principal/views.py:147
 msgid "Hacienda Residencial"
 msgstr "Residential Hacienda"
 
-#: principal/templates/pages/hacienda.html:23 principal/views.py:347
+#: principal/templates/pages/hacienda.html:23 principal/views.py:486
 msgid "Valladolid, Yucatán"
 msgstr "Valladolid, Yucatán"
 
@@ -380,12 +433,6 @@ msgid "Mayores de 50 años"
 msgstr "Ages 50+"
 
 #: principal/templates/pages/hacienda.html:49
-#: principal/templates/pages/index.html:81
-#: principal/templates/pages/index.html:186
-msgid "Ubicación"
-msgstr "Location"
-
-#: principal/templates/pages/hacienda.html:49
 msgid "Sobre periférico"
 msgstr "On the ring road"
 
@@ -415,7 +462,7 @@ msgstr ""
 "sustainable certification (EDGE or LEED)."
 
 #: principal/templates/pages/hacienda.html:69
-#: principal/templates/pages/hacienda.html:156
+#: principal/templates/pages/hacienda.html:164
 #: principal/templates/pages/komchen.html:66
 msgid "Amenidades"
 msgstr "Amenities"
@@ -508,23 +555,28 @@ msgstr "Amenities render"
 msgid "Explora y Elige"
 msgstr "Explore and Choose"
 
-#: principal/templates/pages/hacienda.html:144
-msgid "Proximamente"
-msgstr ""
-
-#: principal/templates/pages/hacienda.html:152
+#: principal/templates/pages/hacienda.html:151
 msgid "Masterplan Hacienda Residencial"
 msgstr "Residential Hacienda master plan"
 
-#: principal/templates/pages/hacienda.html:157
-msgid "Zona Comercial"
-msgstr "Commercial Area"
+#: principal/templates/pages/hacienda.html:156
+msgid "Proximamente"
+msgstr ""
 
-#: principal/templates/pages/hacienda.html:158
+#: principal/templates/pages/hacienda.html:157
+#: principal/templates/pages/komchen.html:169
+msgid "Disponible"
+msgstr "Available"
+
+#: principal/templates/pages/hacienda.html:162
 msgid "Siembra de Agave"
 msgstr "Agave Plantation"
 
-#: principal/templates/pages/hacienda.html:167
+#: principal/templates/pages/hacienda.html:163
+msgid "Zona Comercial"
+msgstr "Commercial Area"
+
+#: principal/templates/pages/hacienda.html:176
 msgid ""
 "Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el "
 "periférico."
@@ -536,17 +588,17 @@ msgstr ""
 msgid "Sendal – Inicio"
 msgstr "Sendal – Home"
 
-#: principal/templates/pages/index.html:16
+#: principal/templates/pages/index.html:15
 msgid ""
 "Invierte en un espacio que crecerá contigo y construye el futuro que mereces."
 msgstr ""
 "Invest in a space that grows with you and build the future you deserve."
 
-#: principal/templates/pages/index.html:17
+#: principal/templates/pages/index.html:16
 msgid "TU PROYECTO, TU COMIENZO"
 msgstr "YOUR PROJECT, YOUR START"
 
-#: principal/templates/pages/index.html:22
+#: principal/templates/pages/index.html:21
 msgid ""
 "Sendal es el punto de partida para quienes buscan invertir de manera "
 "consciente y segura."
@@ -554,54 +606,54 @@ msgstr ""
 "Sendal is the starting point for those who seek to invest consciously and "
 "safely."
 
-#: principal/templates/pages/index.html:24
+#: principal/templates/pages/index.html:23
 msgid "CONOCE LOS PROYECTOS"
 msgstr "SEE PROJECTS"
 
-#: principal/templates/pages/index.html:32
+#: principal/templates/pages/index.html:30
 msgid "Equipo Sendal"
 msgstr "Sendal Team"
 
-#: principal/templates/pages/index.html:33
+#: principal/templates/pages/index.html:31
 msgid "Sello Sendal"
 msgstr "Sendal Seal"
 
-#: principal/templates/pages/index.html:37
+#: principal/templates/pages/index.html:35
 msgid "Creencias firmes"
 msgstr "Firm beliefs"
 
-#: principal/templates/pages/index.html:37
+#: principal/templates/pages/index.html:35
 msgid "caminos claros"
 msgstr "clear paths"
 
-#: principal/templates/pages/index.html:43
+#: principal/templates/pages/index.html:41
 msgid "Confianza y transparencia"
 msgstr "Trust and transparency"
 
-#: principal/templates/pages/index.html:44
+#: principal/templates/pages/index.html:42
 msgid ""
 "Inversiones claras, procesos sencillos y seguridad jurídica garantizada."
 msgstr "Clear investments, simple processes, and guaranteed legal certainty."
 
-#: principal/templates/pages/index.html:50
+#: principal/templates/pages/index.html:48
 msgid "Accesibilidad real"
 msgstr "Real accessibility"
 
-#: principal/templates/pages/index.html:51
+#: principal/templates/pages/index.html:49
 msgid "Terrenos bien planeados a precios alcanzables, sin sacrificar calidad."
 msgstr "Well-planned plots at affordable prices, without sacrificing quality."
 
-#: principal/templates/pages/index.html:57
+#: principal/templates/pages/index.html:55
 msgid "Acompañamiento personalizado"
 msgstr "Personalized guidance"
 
-#: principal/templates/pages/index.html:58
+#: principal/templates/pages/index.html:56
 msgid ""
 "Atención cercana, profesional y un compromiso auténtico con tu proyecto."
 msgstr ""
 "Close, professional attention and an authentic commitment to your project."
 
-#: principal/templates/pages/index.html:64
+#: principal/templates/pages/index.html:62
 msgid ""
 "Más que vender tierra, ayudamos a construir historias. Porque sabemos que se "
 "trata de <strong>tu futuro, tu legado, tu tranquilidad.</strong>"
@@ -609,62 +661,48 @@ msgstr ""
 "More than selling land, we help build stories. Because we know it’s about "
 "<strong>your future, your legacy, your peace of mind.</strong>"
 
-#: principal/templates/pages/index.html:71
+#: principal/templates/pages/index.html:68
 msgid "PROYECTOS"
 msgstr "PROJECTS"
 
-#: principal/templates/pages/index.html:75
-msgid "Encuentra el proyecto perfecto según zona, tipo y precio."
+#: principal/templates/pages/index.html:71
+#, fuzzy
+#| msgid "Encuentra el proyecto perfecto según zona, tipo y precio."
+msgid "Encuentra el proyecto perfecto según zona y tipo."
 msgstr "Find the perfect project by area, type, and price."
 
-#: principal/templates/pages/index.html:82
+#: principal/templates/pages/index.html:77
 msgid "Todas las ubicaciones"
 msgstr "All locations"
 
-#: principal/templates/pages/index.html:86
+#: principal/templates/pages/index.html:78
 msgid "Tulum"
 msgstr "Tulum"
 
-#: principal/templates/pages/index.html:87
-#: principal/templates/pages/index.html:187 principal/views.py:451
+#: principal/templates/pages/index.html:79
+#: principal/templates/pages/index.html:203
 msgid "Valladolid"
 msgstr "Valladolid"
 
-#: principal/templates/pages/index.html:94
-#, fuzzy
-#| msgid "Tipo del terreno o propiedad"
-msgid "Tipo de propiedad"
-msgstr "Property or land type"
-
-#: principal/templates/pages/index.html:95
+#: principal/templates/pages/index.html:86
 msgid "Todos"
 msgstr "All"
 
-#: principal/templates/pages/index.html:97
+#: principal/templates/pages/index.html:88
 #, fuzzy
 #| msgid "Casa Club"
 msgid "Casa"
 msgstr "Clubhouse"
 
-#: principal/templates/pages/index.html:98
-#: principal/templates/pages/index.html:140
-#: principal/templates/pages/index.html:183
-msgid "Terreno"
-msgstr "Land"
-
-#: principal/templates/pages/index.html:104
-msgid "Rango de Precio"
-msgstr "Price Range"
-
-#: principal/templates/pages/index.html:127
+#: principal/templates/pages/index.html:105
 msgid "Logotipo Inmobiliaria"
 msgstr "Real estate logo"
 
-#: principal/templates/pages/index.html:128
+#: principal/templates/pages/index.html:106
 msgid "DONDE TU FUTURO TOMA RAÍZ"
 msgstr "WHERE YOUR FUTURE TAKES ROOT"
 
-#: principal/templates/pages/index.html:130
+#: principal/templates/pages/index.html:108
 msgid ""
 "“Lo que te ofrecemos no es solo tierra, es un espacio con potencial, una "
 "inversión segura y el respaldo de un equipo que cree en la honestidad, la "
@@ -674,31 +712,51 @@ msgstr ""
 "investment, and the support of a team that believes in honesty, closeness, "
 "and clarity.”"
 
-#: principal/templates/pages/index.html:151
+#: principal/templates/pages/index.html:118
+#: principal/templates/pages/index.html:193
+msgid "Terreno"
+msgstr "Land"
+
+#: principal/templates/pages/index.html:137
 msgid "Cotiza tu propiedad"
 msgstr "Get a quote for your property"
 
-#: principal/templates/pages/index.html:170
+#: principal/templates/pages/index.html:144
+#: principal/templates/pages/index.html:154
+#: principal/templates/pages/index.html:192
+#: principal/templates/pages/index.html:202
+msgid "Solo letras (se permiten acentos, espacios y guiones)."
+msgstr ""
+
+#: principal/templates/pages/index.html:166
 msgid "email@contacto.com"
 msgstr "email@contacto.com"
 
-#: principal/templates/pages/index.html:175
-msgid "Número de contacto"
+#: principal/templates/pages/index.html:172
+#, fuzzy
+#| msgid "Número de contacto"
+msgid "Número de contacto (incluye lada)"
 msgstr "Contact number"
 
-#: principal/templates/pages/index.html:176
-msgid "+52 9999 99 99 99"
+#: principal/templates/pages/index.html:178
+msgid "Ingresa un número válido; con o sin +, ej. +52 999 999 9999"
+msgstr ""
+
+#: principal/templates/pages/index.html:179
+#, fuzzy
+#| msgid "+52 9999 99 99 99"
+msgid "+52 999 999 9999"
 msgstr "+52 9999 99 99 99"
 
-#: principal/templates/pages/index.html:182
+#: principal/templates/pages/index.html:189
 msgid "Tipo del terreno o propiedad"
 msgstr "Property or land type"
 
-#: principal/templates/pages/index.html:191
+#: principal/templates/pages/index.html:209
 msgid "COTIZA AHORA"
 msgstr "GET A QUOTE NOW"
 
-#: principal/templates/pages/index.html:194
+#: principal/templates/pages/index.html:212
 #, python-format
 msgid ""
 "Tu información es 100%% confidencial. Uno de nuestros asesores te contactará "
@@ -706,6 +764,10 @@ msgid ""
 msgstr ""
 "Your information is 100%% confidential. One of our advisors will contact you "
 "to give you all the details about the land."
+
+#: principal/templates/pages/index.html:432
+msgid "Enviando…"
+msgstr ""
 
 #: principal/templates/pages/komchen.html:4
 #: principal/templates/pages/komchen.html:19
@@ -725,8 +787,8 @@ msgstr ""
 msgid "Alberca con palmeras al atardecer"
 msgstr "Pool with palm trees at sunset"
 
-#: principal/templates/pages/komchen.html:32 principal/views.py:192
-#: principal/views.py:193
+#: principal/templates/pages/komchen.html:32 principal/views.py:136
+#: principal/views.py:137
 msgid "Proyecto Komchén"
 msgstr "Komchén Project"
 
@@ -805,6 +867,13 @@ msgstr ""
 "control, and technology to live in balance with a forward-looking vision. "
 "It’s the perfect place for those who want a peaceful life away from the city "
 "noise, yet close to everything you need."
+
+# botón mapa
+#: principal/templates/pages/komchen.html:60
+#, fuzzy
+#| msgid "Ubicación Google Maps"
+msgid "Ubicación Google maps"
+msgstr "Google Maps location"
 
 #: principal/templates/pages/komchen.html:72
 #: principal/templates/pages/komchen.html:93
@@ -894,6 +963,14 @@ msgstr "Next"
 msgid "Paginación"
 msgstr "Pagination"
 
+#: principal/templates/pages/komchen.html:168
+msgid "Apartado"
+msgstr "Reserved"
+
+#: principal/templates/pages/komchen.html:170
+msgid "Vendido"
+msgstr "Sold"
+
 #: principal/templates/pages/komchen.html:175
 msgid "Masterplan"
 msgstr "Master plan"
@@ -937,10 +1014,6 @@ msgstr "High-speed fiber-optic Internet."
 #: principal/templates/pages/komchen.html:195
 msgid "Sistema de acceso con seguridad avanzada."
 msgstr "Access system with advanced security."
-
-#: principal/templates/pages/komchen.html:196
-msgid "Sistema de agua."
-msgstr "Water system."
 
 #: principal/templates/pages/komchen.html:197
 msgid "Instalaciones subterráneas."
@@ -1036,7 +1109,7 @@ msgstr ""
 
 #: principal/templates/pages/komchen.html:255
 msgid "Monumento a la Patria"
-msgstr "Monumento a la Patria"
+msgstr "Monument to the Fatherland"
 
 #: principal/templates/pages/komchen.html:292
 msgid "Ir a la imagen"
@@ -1115,11 +1188,6 @@ msgstr ""
 msgid "Whatsapp"
 msgstr "WhatsApp"
 
-#: principal/templates/pages/tulum.html:84
-#: principal/templates/pages/valladolid.html:139
-msgid "Correo electrónico"
-msgstr "Email"
-
 #: principal/templates/pages/tulum.html:91
 #: principal/templates/pages/valladolid.html:146
 msgid "Agente de ventas"
@@ -1163,13 +1231,13 @@ msgstr "See more"
 msgid "Predio vallado en Valladolid"
 msgstr "Fenced plot in Valladolid"
 
-#: principal/templates/pages/valladolid.html:47 principal/views.py:351
+#: principal/templates/pages/valladolid.html:47 principal/views.py:490
 msgid "Predio 1"
 msgstr "Plot 1"
 
 #: principal/templates/pages/valladolid.html:48
-#: principal/templates/pages/valladolid.html:59 principal/views.py:359
-#: principal/views.py:388
+#: principal/templates/pages/valladolid.html:59 principal/views.py:498
+#: principal/views.py:532
 msgid "Propiedad Privada"
 msgstr "Private Property"
 
@@ -1177,7 +1245,7 @@ msgstr "Private Property"
 msgid "Edificio de esquina en Valladolid"
 msgstr "Corner building in Valladolid"
 
-#: principal/templates/pages/valladolid.html:58 principal/views.py:381
+#: principal/templates/pages/valladolid.html:58 principal/views.py:525
 msgid "Predio 2"
 msgstr "Plot 2"
 
@@ -1241,115 +1309,143 @@ msgstr ""
 "Contact us and we’ll send you all the information you need about the project "
 "you like."
 
-#: principal/views.py:188
+#: principal/views.py:132
 msgid "Cotiza nuestros proyectos"
 msgstr "Get quotes for our projects"
 
-#: principal/views.py:247
+#: principal/views.py:237
 msgid "Zona con alta plusvalía y acceso rápido a la ciudad."
 msgstr "High-appreciation area with quick access to the city."
 
-#: principal/views.py:256
+#: principal/views.py:247
 msgid "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
 msgstr "A fast-growing city with strong tourism and real-estate potential."
 
-#: principal/views.py:265
+#: principal/views.py:258
 msgid ""
 "Destino icónico con gran plusvalía, naturaleza y proyección internacional."
 msgstr ""
 "An iconic destination with strong appreciation, nature, and international "
 "appeal."
 
-#: principal/views.py:358
-msgid "Calle 35 # 198 F"
-msgstr "Street 35 # 198 F"
+#: principal/views.py:305
+msgid "Revisa los campos marcados."
+msgstr "Please check the highlighted fields."
 
-#: principal/views.py:360 principal/views.py:389
+#: principal/views.py:331
+msgid "No hay destinatarios configurados para recibir la cotización."
+msgstr "No recipients are configured to receive the quotation."
+
+#: principal/views.py:342 principal/views.py:396
+#, python-brace-format
+msgid "Nueva solicitud de cotización — {n} {a}"
+msgstr ""
+
+#: principal/views.py:364
+msgid "No pudimos enviar tu mensaje. Intenta más tarde."
+msgstr "We couldn't send your message. Try again later."
+
+#: principal/views.py:367
+msgid "¡Gracias! Nos pondremos en contacto contigo pronto."
+msgstr "Thank you! We will contact you soon."
+
+#: principal/views.py:423
+msgid "Error al enviar el correo (cabecera inválida)."
+msgstr "Error sending email (invalid header)."
+
+#: principal/views.py:429
+msgid "No pudimos enviar tu mensaje. Inténtalo más tarde."
+msgstr "We couldn't send your message. Please try again later."
+
+#: principal/views.py:433
+msgid "¡Gracias! Recibimos tu mensaje."
+msgstr "Thank you! We have received your message."
+
+#: principal/views.py:497
+#| msgid "Calle 39 #205 C"
+msgid "Calle 35 # 198 F"
+msgstr "Street 39 #205 C"
+
+#: principal/views.py:499 principal/views.py:533
 msgid "Centro"
 msgstr "Centro (Downtown)"
 
-#: principal/views.py:363 principal/views.py:394
+#: principal/views.py:502 principal/views.py:538
 msgid "Barda Perimetral"
 msgstr "Perimeter Wall"
 
-#: principal/views.py:364 principal/views.py:395
+#: principal/views.py:503 principal/views.py:539
 msgid "Puerta de Acceso"
 msgstr "Access Gate"
 
-#: principal/views.py:365 principal/views.py:396
+#: principal/views.py:504 principal/views.py:540
 msgid "Uso de Suelo Comercial"
 msgstr "Commercial Land Use"
 
-#: principal/views.py:366 principal/views.py:397
+#: principal/views.py:505 principal/views.py:541
 msgid "A 2 calles de Catedral"
 msgstr "Two blocks from the Cathedral"
 
-#: principal/views.py:370 principal/views.py:401
+# Subgalería (captions/alt)
+#: principal/views.py:510 principal/views.py:546
 msgid "Vista fachada"
 msgstr "Facade view"
 
-#: principal/views.py:370 principal/views.py:401
+#: principal/views.py:511 principal/views.py:547
 msgid "Vista Fachada"
 msgstr "Facade View"
 
-#: principal/views.py:372 principal/views.py:403
+#: principal/views.py:515 principal/views.py:551
 msgid "Vista satelital"
 msgstr "Satellite view"
 
-#: principal/views.py:372 principal/views.py:403
+#: principal/views.py:516 principal/views.py:552
 msgid "Vista Satelital"
 msgstr "Satellite View"
 
-#: principal/views.py:387
+#: principal/views.py:531
 msgid "Calle 39 #205 C"
 msgstr "Street 39 #205 C"
 
-#: principal/views.py:392
+#: principal/views.py:536
 msgid "Construcción 321 m²"
 msgstr "Construction 321 m²"
 
-#: principal/views.py:393
+#: principal/views.py:537
 msgid "2 niveles"
 msgstr "2 floors"
 
-#: principal/views.py:431
-#, fuzzy
-#| msgid "Precio por m²"
+#: principal/views.py:582
 msgctxt "price label"
 msgid "Precio"
-msgstr "Price per m²"
+msgstr "Price"
 
-#: principal/views.py:435
 #, python-format
-msgid "%(label)s: $%(amount)s %(currency)s"
-msgstr ""
+#~ msgid "$%(amount)s m²"
+#~ msgstr "$%(amount)s m²"
 
-#: principal/views.py:445
-#, python-format
-msgid "$%(amount)s m²"
-msgstr "$%(amount)s m²"
-
-#: principal/views.py:449
 msgid "Precio por m²"
 msgstr "Price per m²"
 
-#: principal/views.py:450
-msgid "Colonia:"
-msgstr "Neighborhood:"
+# msgid "Colonia:"
+# msgstr "Neighborhood:"
 
-#: principal/views.py:451
-msgid "Municipio:"
-msgstr "Municipality:"
+# msgid "Municipio:"
+# msgstr "Municipality:"
 
-#~ msgid "Quiero saber más"
-#~ msgstr "I want to know more"
 
-#~ msgid "Proyecto / Propiedad"
-#~ msgstr "Project / Property"
+# msgid "Rango de Precio"
+# msgstr "Price Range"
 
-#~ msgid "Otro"
-#~ msgstr "Other"
+# msgid "Quiero saber más"
+# msgstr "I want to know more"
+
+# msgid "Proyecto / Propiedad"
+# msgstr "Project / Property"
+
+# msgid "Otro"
+# msgstr "Other"
 
 #, python-format
-#~ msgid "Precio: %(amount)s MXN"
-#~ msgstr "Price: %(amount)s MXN"
+# msgid "Precio: %(amount)s MXN"
+# msgstr "Price: %(amount)s MXN"
