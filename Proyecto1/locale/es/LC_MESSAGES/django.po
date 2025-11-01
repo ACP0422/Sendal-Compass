@@ -1101,11 +1101,6 @@ msgid ""
 "proyecto de tu agrado."
 msgstr ""
 
-#: principal/templates/pages/tulum.html:81
-#: principal/templates/pages/valladolid.html:136
-msgid "WhatsApp"
-msgstr ""
-
 #: principal/templates/pages/tulum.html:91
 #: principal/templates/pages/valladolid.html:146
 msgid "Agente de ventas"

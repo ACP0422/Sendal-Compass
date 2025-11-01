@@ -85,7 +85,7 @@
           <option value="" disabled selected hidden>{% trans "Tipo de propiedad" %}</option>
           <option value="">{% trans "Todos" %}</option>
           <option value="lote">{% trans "Lote" %}</option>
-          <option value="casa">{% trans "Casa" %}</option>
+          <option value="casa">{% trans "Casa" context "property type" %}</option>
         </select>
       </div>
     </div>
@@ -186,7 +186,7 @@
 
       <div class="q-row">
         <label>
-          <span>{% trans "Tipo del terreno o propiedad" %}</span>
+          <span>{% trans "Tipo de propiedad" %}</span>
           <input type="text" name="tipo" required minlength="3" maxlength="80"
                  pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s\-]{2,80}"
                  title="{% trans 'Solo letras (se permiten acentos, espacios y guiones).' %}"

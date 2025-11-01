@@ -51,7 +51,6 @@ msgid "Usa un correo personal (no cuentas genéricas)."
 msgstr ""
 
 #: principal/forms.py:85 principal/forms.py:222
-#, fuzzy
 #| msgid "Escribe tu pregunta o mensaje"
 msgid "Escribe tu nombre."
 msgstr "Enter your question or message"
@@ -125,16 +124,12 @@ msgid "Escribe tu número."
 msgstr ""
 
 #: principal/forms.py:255 principal/templates/pages/index.html:85
-#, fuzzy
-#| msgid "Tipo del terreno o propiedad"
-msgid "Tipo de propiedad"
-msgstr "Property or land type"
+
 
 #: principal/forms.py:257
-#, fuzzy
 #| msgid "Tipo del terreno o propiedad"
 msgid "Escribe el tipo de propiedad."
-msgstr "Property or land type"
+msgstr "Enter the property type."
 
 #: principal/forms.py:262 principal/templates/pages/hacienda.html:49
 #: principal/templates/pages/index.html:76
@@ -143,22 +138,21 @@ msgid "Ubicación"
 msgstr "Location"
 
 #: principal/forms.py:264
-#, fuzzy
 #| msgid "Ir a la ubicación"
 msgid "Escribe la ubicación."
-msgstr "Open location"
+msgstr "Enter the location."
 
 #: principal/forms.py:294
 msgid "Ingresa un teléfono válido (10–15 dígitos, con o sin +)."
-msgstr ""
+msgstr "Enter a valid phone number (10–15 digits, with or without +)."
 
 #: principal/forms.py:311
 msgid "El dominio no tiene registros de correo válidos (MX/AAAA)."
-msgstr ""
+msgstr "The domain has no valid email records (MX/AAAA)."
 
 #: principal/forms.py:315
 msgid "Escribe un correo válido, por ejemplo nombre@dominio.com."
-msgstr ""
+msgstr "Enter a valid email address, for example name@domain.com."
 
 #: principal/templates/base.html:18
 msgid "Abrir menú"
@@ -318,7 +312,7 @@ msgstr "Jane"
 #: principal/templates/pages/contacto.html:53
 #: principal/templates/pages/contacto.html:65
 msgid "Solo letras y espacios"
-msgstr ""
+msgstr "Letters and spaces only"
 
 #: principal/templates/pages/contacto.html:63
 #: principal/templates/pages/index.html:155
@@ -336,7 +330,7 @@ msgstr "email@janesfakedomain.net"
 #: principal/templates/pages/contacto.html:83
 #: principal/templates/pages/index.html:165
 msgid "Escribe un correo válido, por ejemplo nombre@dominio.com"
-msgstr ""
+msgstr "Enter a valid email address, for example name@domain.com"
 
 #: principal/templates/pages/contacto.html:93
 msgid "Mensaje"
@@ -356,19 +350,19 @@ msgstr "Girls running"
 
 #: principal/templates/pages/contacto.html:120
 msgid "Hola, me gustaría saber más sobre los proyectos de Sendal."
-msgstr ""
+msgstr "Hello, I would like to learn more about Sendal's projects."
 
 #: principal/templates/pages/contacto.html:133
 msgid "C.15 #503, Col. Altabrisa, Mérida Yuc."
-msgstr ""
+msgstr "C.15 #503, Altabrisa Neighborhood, Mérida, Yucatán."
 
 #: principal/templates/pages/contacto.html:134
 msgid "Dentro de Magnia Corporate Center"
-msgstr ""
+msgstr "Inside Magnia Corporate Center"
 
 #: principal/templates/pages/contacto.html:139
 msgid "GOOGLE MAPS"
-msgstr ""
+msgstr "GOOGLE MAPS"
 
 #: principal/templates/pages/cotizador_base.html:4
 #: principal/templates/pages/komchen.html:171 principal/views.py:177
@@ -383,11 +377,11 @@ msgstr "Lot"
 
 #: principal/templates/pages/cotizador_base.html:59
 msgid "Cerrar"
-msgstr ""
+msgstr "Close"
 
 #: principal/templates/pages/cotizador_base.html:61
 msgid "Cargando…"
-msgstr ""
+msgstr "Loading…"
 
 #: principal/templates/pages/hacienda.html:4
 #: principal/templates/pages/hacienda.html:21
@@ -561,7 +555,7 @@ msgstr "Residential Hacienda master plan"
 
 #: principal/templates/pages/hacienda.html:156
 msgid "Proximamente"
-msgstr ""
+msgstr "Coming soon"
 
 #: principal/templates/pages/hacienda.html:157
 #: principal/templates/pages/komchen.html:169
@@ -666,10 +660,9 @@ msgid "PROYECTOS"
 msgstr "PROJECTS"
 
 #: principal/templates/pages/index.html:71
-#, fuzzy
-#| msgid "Encuentra el proyecto perfecto según zona, tipo y precio."
+#| msgid "Encuentra el proyecto perfecto según zona y tipo"
 msgid "Encuentra el proyecto perfecto según zona y tipo."
-msgstr "Find the perfect project by area, type, and price."
+msgstr "Find the perfect project by area and type."
 
 #: principal/templates/pages/index.html:77
 msgid "Todas las ubicaciones"
@@ -689,7 +682,6 @@ msgid "Todos"
 msgstr "All"
 
 #: principal/templates/pages/index.html:88
-#, fuzzy
 #| msgid "Casa Club"
 msgid "Casa"
 msgstr "Clubhouse"
@@ -733,24 +725,22 @@ msgid "email@contacto.com"
 msgstr "email@contacto.com"
 
 #: principal/templates/pages/index.html:172
-#, fuzzy
 #| msgid "Número de contacto"
 msgid "Número de contacto (incluye lada)"
 msgstr "Contact number"
 
 #: principal/templates/pages/index.html:178
 msgid "Ingresa un número válido; con o sin +, ej. +52 999 999 9999"
-msgstr ""
+msgstr "Enter a valid number; with or without +, e.g. +52 999 999 9999"
 
 #: principal/templates/pages/index.html:179
-#, fuzzy
 #| msgid "+52 9999 99 99 99"
 msgid "+52 999 999 9999"
 msgstr "+52 9999 99 99 99"
 
 #: principal/templates/pages/index.html:189
-msgid "Tipo del terreno o propiedad"
-msgstr "Property or land type"
+msgid "Tipo de propiedad"
+msgstr "Property type"
 
 #: principal/templates/pages/index.html:209
 msgid "COTIZA AHORA"
@@ -767,7 +757,7 @@ msgstr ""
 
 #: principal/templates/pages/index.html:432
 msgid "Enviando…"
-msgstr ""
+msgstr "Sending…"
 
 #: principal/templates/pages/komchen.html:4
 #: principal/templates/pages/komchen.html:19
@@ -870,7 +860,6 @@ msgstr ""
 
 # botón mapa
 #: principal/templates/pages/komchen.html:60
-#, fuzzy
 #| msgid "Ubicación Google Maps"
 msgid "Ubicación Google maps"
 msgstr "Google Maps location"
@@ -1330,16 +1319,16 @@ msgstr ""
 
 #: principal/views.py:305
 msgid "Revisa los campos marcados."
-msgstr "Please check the highlighted fields."
+msgstr "Check the highlighted fields."
 
 #: principal/views.py:331
 msgid "No hay destinatarios configurados para recibir la cotización."
-msgstr "No recipients are configured to receive the quotation."
+msgstr "There are no recipients configured to receive the quote."
 
 #: principal/views.py:342 principal/views.py:396
 #, python-brace-format
 msgid "Nueva solicitud de cotización — {n} {a}"
-msgstr ""
+msgstr "New quote request — {n} {a}"
 
 #: principal/views.py:364
 msgid "No pudimos enviar tu mensaje. Intenta más tarde."
@@ -1420,32 +1409,13 @@ msgctxt "price label"
 msgid "Precio"
 msgstr "Price"
 
-#, python-format
-#~ msgid "$%(amount)s m²"
-#~ msgstr "$%(amount)s m²"
-
 msgid "Precio por m²"
 msgstr "Price per m²"
 
-# msgid "Colonia:"
-# msgstr "Neighborhood:"
+msgid "Próximamente"
+msgstr "Coming soon"
 
-# msgid "Municipio:"
-# msgstr "Municipality:"
+msgctxt "property type"
+msgid "Casa"
+msgstr "House"
 
-
-# msgid "Rango de Precio"
-# msgstr "Price Range"
-
-# msgid "Quiero saber más"
-# msgstr "I want to know more"
-
-# msgid "Proyecto / Propiedad"
-# msgstr "Project / Property"
-
-# msgid "Otro"
-# msgstr "Other"
-
-#, python-format
-# msgid "Precio: %(amount)s MXN"
-# msgstr "Price: %(amount)s MXN"

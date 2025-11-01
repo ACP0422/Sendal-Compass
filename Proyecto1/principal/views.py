@@ -277,6 +277,15 @@ def _ctx_index(form=None):
 
 from django.core.mail import EmailMessage
 
+from django.contrib import messages
+from django.utils.translation import gettext as _  # ← importante
+from django.contrib import messages
+
+from django.utils.translation import gettext_lazy as _  # LAZY (para messages)
+from django.utils.translation import (
+    gettext as __,
+)  # NO lazy (para formateos inmediatos)
+
 
 # ----------------------------
 # Vistas públicas (mismos nombres que ya tienes)
