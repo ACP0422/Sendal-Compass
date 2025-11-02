@@ -24,6 +24,63 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import Http404
 
+
+# principal/views.py
+from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
+
+
+from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
+
+
+def render_error(request, code, title, message):
+    ctx = {
+        "code": code,
+        "title": title,
+        "message": message,
+        "cta_text": _("Volver al inicio"),
+        "cta_url": "index",
+    }
+    return render(request, "errors/error_base.html", ctx, status=code)
+
+
+def error_404(request, exception):
+    return render_error(
+        request,
+        404,
+        _("Página no encontrada"),
+        _("La página que estás buscando no existe o fue movida."),
+    )
+
+
+def error_500(request):
+    return render_error(
+        request,
+        500,
+        _("Error interno del servidor"),
+        _("Ocurrió un problema inesperado. Estamos trabajando para solucionarlo."),
+    )
+
+
+def error_403(request, exception=None):
+    return render_error(
+        request,
+        403,
+        _("Acceso denegado"),
+        _("No tienes permisos para acceder a este recurso."),
+    )
+
+
+def error_400(request, exception=None):
+    return render_error(
+        request,
+        400,
+        _("Solicitud inválida"),
+        _("La petición no pudo procesarse. Verifica e inténtalo de nuevo."),
+    )
+
+
 # Si quieres ir sumando más proyectos SVG, mapea aquí: slug -> nombre_de_url
 SVG_ROUTES = {
     "komchen": "komchen-svg",
@@ -463,19 +520,6 @@ def hacienda(request):
 
 def komchen(request):
     return render(request, "pages/komchen.html")
-
-
-from django.shortcuts import render
-
-
-def custom_404(request, exception):
-    # NO incluir datos sensibles ni urls dinámicas
-    return render(request, "errors/404.html", status=404)
-
-
-def custom_500(request):
-    # No recibes 'exception' aquí
-    return render(request, "errors/500.html", status=500)
 
 
 # views.py

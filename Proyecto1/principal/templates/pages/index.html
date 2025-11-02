@@ -215,6 +215,18 @@
   </div>
 </section>
 
+<script>
+  /* === I18N strings del template (Django) === */
+  const L = {
+    CHECK_FIELDS: "{{ _('Revisa los campos marcados.') }}",
+    REQUIRED: "{{ _('Completa este campo') }}",
+    EMAIL_HINT: "{{ _('Escribe un correo válido, por ejemplo nombre@dominio.com') }}",
+    PHONE_MIN: "{{ _('Ingresa al menos %s dígitos (incluye lada).') }}",
+    INVALID: "{{ _('Campo inválido') }}",
+    SENDING: "{{ _('Enviando…') }}",
+  };
+  function fmt(str, n){ return (str || '').replace('%s', String(n)); }
+</script>
 
 <script>
   // Filtros de proyectos (como ya lo tenías)
@@ -346,17 +358,37 @@
       return sib && sib.classList.contains('field-error') ? sib : null;
     }
     function show(el) {
-      const b = box(el); if (!b) return;
-      const bad = el.willValidate && !el.checkValidity();
-      const touched = el.dataset.touched === '1';
-      if (touched && bad) {
-        el.classList.add('is-invalid');
-        if (!b.textContent.trim()) b.textContent = el.validationMessage || 'Campo inválido';
-      } else {
-        el.classList.remove('is-invalid');
-        b.textContent = '';
-      }
+  const b = box(el); if (!b) return;
+
+  const bad     = el.willValidate && !el.checkValidity();
+  const touched = el.dataset.touched === '1';
+
+  if (touched && bad) {
+    el.classList.add('is-invalid');
+
+    // Mensaje base del navegador o del customValidity (teléfono)
+    let msg = el.validationMessage || L.INVALID;
+
+    // Forzamos SOLO el texto mostrado (sin tocar la validez):
+    const v = el.validity || {};
+    if (v.valueMissing) {
+      msg = L.REQUIRED;
+    } else if (el.type === 'email' && v.typeMismatch) {
+      msg = L.EMAIL_HINT;
+    } else if (v.patternMismatch && el.title) {
+      // Usa tu title (ya traducido) si hay pattern
+      msg = el.title;
     }
+    // Nota: si hay customError (teléfono), se respeta el mensaje ya puesto
+
+    b.textContent = msg;
+  } else {
+    el.classList.remove('is-invalid');
+    b.textContent = '';
+  }
+}
+
+
   
     // =========================
     // Filtros texto
@@ -421,7 +453,8 @@
         (form.querySelector(':invalid') || fields[0])?.focus();
   
         // ÚNICO toast de advertencia (reinicia si ya está)
-        showToast('warning', 'Revisa los campos marcados.');
+        showToast('warning', L.CHECK_FIELDS);
+
   
         try { sessionStorage.setItem('scrollToCotiza', '1'); } catch(_) {}
         return;
@@ -429,7 +462,8 @@
       if (btn) {
         btn.disabled = true;
         btn.style.opacity = '.7';
-        btn.textContent = "{{ _('Enviando…') }}";
+        btn.textContent = L.SENDING;
+
       }
       try { sessionStorage.setItem('scrollToCotiza', '1'); } catch(_) {}
     });

@@ -51,9 +51,12 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.get_full_path }}">
         <input type="hidden" name="language" value="{% if LANGUAGE_CODE == 'es' %}en{% else %}es{% endif %}">
-        <button type="submit" class="lang">
-          {% if LANGUAGE_CODE == 'es' %}EN{% else %}ES{% endif %}
-        </button>
+        <button type="submit" 
+        class="lang {% if LANGUAGE_CODE == 'es' %}active{% endif %}">
+  {% if LANGUAGE_CODE == 'es' %}EN{% else %}ES{% endif %}
+</button>
+
+
       </form>
     </div>
 

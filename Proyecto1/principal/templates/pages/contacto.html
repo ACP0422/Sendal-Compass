@@ -116,19 +116,19 @@
 
 <section class="contact-info container">
   <aside class="col">
-    <p class="info-title">CONTACTO</p>
+    <p class="info-title">{% trans "CONTACTO" %}</p>
       {% blocktrans asvar wa_msg %}Hola, me gustaría saber más sobre los proyectos de Sendal.{% endblocktrans %}
       <p class="info-big">
         <a href="https://wa.me/529993976683?text={{ wa_msg|urlencode }}"
            target="_blank" rel="noopener"
            aria-label="{% trans 'Escríbenos por WhatsApp' %}">
-          999 397 6683
+          +52 999 397 6683
         </a>
       </p>
     </aside>
 
   <aside class="col">
-    <p class="info-title">UBICACIÓN</p>
+    <p class="info-title">{% trans "UBICACIÓN" %}</p>
     <p class="info-lines">
       {% blocktrans %}C.15 #503, Col. Altabrisa, Mérida Yuc.{% endblocktrans %}<br>
       {% trans "Dentro de Magnia Corporate Center" %}
@@ -145,66 +145,78 @@
   document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('.contact-form');
     if (!form) return;
-  
+
+    // ——— Cadenas traducibles (no alteran tu flujo) ———
+    const L = {
+      REQUIRED: "{{ _('Completa este campo') }}",
+      BAD_EMAIL: "{{ _('Escribe un correo válido, por ejemplo nombre@dominio.com') }}",
+      PATTERN: "{{ _('Formato inválido') }}",
+      TOO_SHORT: "{{ _('El valor es demasiado corto.') }}",
+      TOO_LONG: "{{ _('El valor es demasiado largo.') }}",
+      SENDING: "{{ _('Enviando…') }}"
+    };
+
     const btn = form.querySelector('button[type="submit"]');
     const fields = Array.from(form.querySelectorAll('input, textarea'))
       .filter(el => el.type !== 'hidden' && el.name !== 'website');
-  
-    // --- Mostrar error solo después de enviar ---
+
+    // —— helper para ubicar el <div class="field-error"> hermano ——
+    function errorBox(el) {
+      const sib = el.nextElementSibling;
+      return sib && sib.classList.contains('field-error') ? sib : null;
+    }
+
+    // —— mapea HTML5 Validity a nuestras traducciones ——
+    function translatedMessage(el) {
+      const v = el.validity || {};
+      if (v.valueMissing) return L.REQUIRED;
+      if (el.type === 'email' && (v.typeMismatch || v.patternMismatch))
+        return L.BAD_EMAIL;
+      if (v.patternMismatch) return L.PATTERN;
+      if (v.tooShort) return L.TOO_SHORT;
+      if (v.tooLong)  return L.TOO_LONG;
+      return el.validationMessage || L.PATTERN;
+    }
+
+    // ——— Mostrar/Ocultar error sin cambiar tu UX ———
     function showError(el) {
-      const err = el.nextElementSibling && el.nextElementSibling.classList.contains('field-error')
-        ? el.nextElementSibling : null;
-      if (!err) return;
-  
+      const box = errorBox(el);
+      if (!box) return;
+
       const invalid = el.willValidate && !el.checkValidity();
       const touched = el.dataset.touched === '1';
-  
+
       if (touched && invalid) {
         el.classList.add('is-invalid');
-        if (!err.textContent.trim()) {
-          err.textContent = el.validationMessage || 'Campo inválido';
-        }
+        box.textContent = translatedMessage(el);
       } else {
         el.classList.remove('is-invalid');
-        err.textContent = '';
+        box.textContent = '';
       }
     }
-  
-    // Solo marcar como tocado cuando se envía
+
+    // ——— Submit: marca como “tocado”, muestra errores y enfoca el primero ———
     form.addEventListener('submit', function (e) {
       if (!form.checkValidity()) {
         e.preventDefault();
-  
-        // marcar todos como tocados y mostrar errores
-        fields.forEach(el => {
-          el.dataset.touched = '1';
-          showError(el);
-        });
-  
+        fields.forEach(el => { el.dataset.touched = '1'; showError(el); });
         const first = form.querySelector(':invalid');
         if (first) first.focus();
-  
         return;
       }
-  
-      // si pasa validación
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = 'Enviando…';
-      }
+      if (btn) { btn.disabled = true; btn.textContent = L.SENDING; }
     });
-  
-    // Si el usuario corrige después del submit, actualizar
+
+    // ——— Si el usuario corrige tras el submit, actualiza el mensaje ———
     fields.forEach(el => {
-      el.addEventListener('input', () => {
-        if (el.dataset.touched === '1') showError(el);
-      });
+      el.addEventListener('input', () => { if (el.dataset.touched === '1') showError(el); });
+      el.addEventListener('blur',  () => { if (el.dataset.touched === '1') showError(el); });
     });
-  
-    // ===== Sanitizar nombre/apellido =====
+
+    // ===== Sanitizar nombre/apellido (igual que ya hacías) =====
     const onlyLetters = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]/g;
     const onlyLettersHyphen = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s-]/g;
-  
+
     function sanitize(input, regex) {
       input.addEventListener('input', () => {
         const start = input.selectionStart, end = input.selectionEnd;
@@ -213,14 +225,13 @@
       });
       input.addEventListener('blur', () => input.value = input.value.trim());
     }
-  
+
     const nm = form.querySelector('input[name="nombre"]');
     const ap = form.querySelector('input[name="apellido"]');
-  
     if (nm) sanitize(nm, onlyLetters);
     if (ap) sanitize(ap, onlyLettersHyphen);
-  
-    // ===== Marcar errores del servidor =====
+
+    // ===== Marcar errores del servidor si ya llegaron pintados =====
     let serverErrors = false;
     form.querySelectorAll('.field-error').forEach(box => {
       if (!box.textContent.trim()) return;
@@ -231,25 +242,20 @@
         input.classList.add('is-invalid');
       }
     });
-  
     if (serverErrors) form.setAttribute('data-server-error', '1');
-  
-    // ===== Auto-ocultar mensajes globales =====
+
+    // ===== Auto-ocultar flashes (se mantiene igual) =====
     function autoHide(root) {
       const flashes = root.querySelectorAll(
         '.form-alert, .messages li, .alert, .alert-success, .alert-error,' +
         ' .toast, [role="alert"], .message.success, .message.error,' +
         ' .is-success, .is-error, .success, .error'
       );
-  
       flashes.forEach(el => {
         if (el.dataset.autodismiss === '1') return;
-  
         const txt = (el.textContent || '').trim();
         if (!txt) return;
-  
         el.dataset.autodismiss = '1';
-  
         setTimeout(() => {
           el.style.transition = 'opacity .45s ease, transform .45s ease, height .45s ease';
           el.style.opacity = '0';
@@ -267,12 +273,11 @@
         }, 4000);
       });
     }
-  
     autoHide(document);
     window.addEventListener('pageshow', () => autoHide(document));
   });
-  </script>
-  
+</script>
+
 
   
   

@@ -1,0 +1,107 @@
+  /* ===== Altura según header: mobile/tablet ===== */
+  :root{ --nav-h-current: var(--nav-h); } /* móvil */
+  @media (min-width: 768px){
+    :root{ --nav-h-current: var(--nav-h-tablet); } /* tablet */
+  }
+  @media (min-width: 1120px){
+    :root{ --nav-h-current: var(--nav-h-desktop); } /* desktop */
+  }
+
+  /* ===== MOBILE/TABLET (hero bajo navbar, scroll al footer) ===== */
+  .error-fill{
+    min-height: calc(100svh - var(--nav-h-current));
+    min-height: calc(100dvh - var(--nav-h-current));
+    min-height: calc(100lvh - var(--nav-h-current));
+    display: grid;
+    place-items: center;
+    background: #f6f2e9;
+    padding: clamp(14px, 5svh, 32px) 12px;
+    box-sizing: border-box;
+  }
+
+  .error-card{
+    width: 100%;
+    max-width: 720px;
+    background: #fffdfa;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    padding: 22px;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,.06);
+  }
+
+  .error-title{
+    font-size: clamp(22px, 6vw, 40px);
+    line-height: 1.15;
+    color: #2b1f17;
+    margin: 0 0 10px;
+    font-weight: 700;
+    letter-spacing: .2px;
+  }
+
+  .error-text{
+    color: rgba(0,0,0,.65);
+    font-size: clamp(14px, 3.8vw, 18px);
+    margin: 0 auto 20px;
+    max-width: 58ch;
+  }
+
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    background: #7b6a3d;
+    color: #fff;
+    text-decoration: none;
+    transition: .2s ease;
+    white-space: nowrap;
+  }
+  .btn:hover{ filter: brightness(.95); transform: translateY(-1px); }
+
+  /* Tablet refinamiento */
+  @media (min-width: 600px) and (max-width: 1024px){
+    .error-fill{ padding-inline: 16px; }
+    .error-card{ border-radius: 20px; padding: 24px; }
+  }
+
+  /* ===== DESKTOP: sin scroll + card centrada de verdad ===== */
+  @media (min-width: 1025px){
+    body:has(.error-fill){
+      min-height: 100svh;
+      min-height: 100dvh;
+      min-height: 100lvh;
+      display: grid;
+      grid-template-rows: auto minmax(0,1fr) auto;
+      overflow: hidden;
+    }
+
+    body:has(.error-fill) > main{
+      min-height: 0;
+      padding-block: 0 !important;
+      display: grid !important;
+      align-content: center;
+      justify-items: center;
+    }
+
+    body:has(.error-fill) > main > .error-fill{
+      height: 100%;
+      width: 100%;
+      margin: 0 !important;
+      padding-block: 0 !important;
+      padding-inline: 24px;
+      display: grid !important;
+      place-items: center;
+      background: #f6f2e9;
+    }
+
+    .error-card{
+      border-radius: 20px;
+      padding: 32px;
+      max-height: calc(100% - 24px);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }

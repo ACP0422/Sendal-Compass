@@ -21,7 +21,6 @@ TEL_ALLOWED = RegexValidator(
 )
 
 DISPOSABLE_DOMAINS = {
-    # algunos ejemplos; agrega o quita según tu criterio
     "mailinator.com",
     "10minutemail.com",
     "tempmail.dev",
