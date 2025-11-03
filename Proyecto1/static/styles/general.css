@@ -173,9 +173,10 @@ p,blockquote{font-family:var(--font-articulat)}
   .hamburger,.mobile-menu{display:none!important}
   .only-mobile{display:none!important}
 
-  .site-footer{padding:50px clamp(24px,3.5vw,36px);font-size:18px}
+  .site-footer{padding:50px 24px; font-size:18px}
   .footer-inner{
-    width:100%;max-width:none;margin-inline:0;padding-inline:clamp(24px,3vw,36px);
+    
+      width:100%; max-width:none; margin-inline:0; padding-inline:24px;
     position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:30px
   }
   .footer-nav{
@@ -297,7 +298,7 @@ button[disabled], .btn-primary[disabled]{opacity:.6;cursor:not-allowed;filter:gr
 /* ====== Language Button Guinda + 3D Premium ====== */
 
 .lang {
-  background: #5A1D26; /* ✅ Guinda original */
+  background:  #5A1D26; /* ✅ Guinda original */
   color: var(--white);
   border: none;
   border-radius: 999px;
@@ -337,4 +338,90 @@ button[disabled], .btn-primary[disabled]{opacity:.6;cursor:not-allowed;filter:gr
       inset 0 3px 6px rgba(0,0,0,.25),
       inset 0 -2px 3px rgba(255,255,255,.35);
   filter: brightness(.92);
+}
+
+
+
+/* Expansión controlada del contenedor en pantallas grandes (reduce márgenes) */
+@media (min-width: 1440px){
+  :root{ --max: 1240px; }   /* de 1120 → 1240 solo en ≥1440px */
+}
+@media (min-width: 1920px){
+  :root{ --max: 1360px; }   /* un poco más en 4K; ajusta a tu gusto */
+}
+
+
+
+/* ===== Contenedor más ancho SOLO en pantallas grandes ===== */
+/* No cambia nada en M1 si tu ventana < 1440px */
+@media (min-width: 1440px){
+  :root { --max: 1280px; }   /* 1120 → 1280 (reduce margen) */
+}
+@media (min-width: 1680px){
+  :root { --max: 1360px; }   /* un poco más ancho */
+}
+@media (min-width: 1920px){
+  :root { --max: 1480px; }   /* cómodo en 4K sin exagerar márgenes */
+}
+
+
+/* Mantiene el layout original en laptops como Mac M1 */
+/* Solo ajustamos pantallas más anchas para reducir márgenes visuales */
+
+/* Pantallas grandes (Mac M3 / 1440px+) */
+@media (min-width: 1440px) {
+  :root {
+    --max: 1350px; /* antes 1120px aprox. — más contenido, menos margen */
+  }
+}
+
+/* Pantallas muy grandes (iMac / monitores grandes) */
+@media (min-width: 1680px) {
+  :root {
+    --max: 1450px; /* más ancho */
+  }
+}
+
+/* 4K Screens */
+@media (min-width: 1920px) {
+  :root {
+    --max: 1600px; /* aún más ancho sin romper diseño */
+  }
+}
+
+
+
+/* Grid flexible centrado */
+.projects .projects-grid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* Tamaño de tarjeta: más grande que antes */
+.projects .project-card{
+  width: 520px;       /* <-- Aumenté el tamaño */
+  max-width: 90vw;    /* no se pasa en pantallas pequeñas */
+}
+
+/* Desktop grande: centradas sin ocupar toda la pantalla */
+@media (min-width: 1200px){
+  .projects .projects-grid{
+    justify-content: center;
+  }
+}
+
+
+/* ===== Tablet: 2 columnas para proyectos ===== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .projects .project-card {
+    width: calc(50% - 20px); /* 2 columnas con espacio */
+    max-width: none;
+  }
+
+  .projects .projects-grid {
+    justify-content: center;
+    gap: 30px;
+  }
 }

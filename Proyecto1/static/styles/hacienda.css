@@ -568,3 +568,16 @@ font-size: 20px;
 .explora__legend.legend--centered{
   justify-content:center;
 }
+
+
+/* Hover para botón "Contáctanos" en el mapa */
+.contact-cta {
+  transition: all .25s ease;
+}
+
+.contact-cta:hover {
+  background: #6c0e0e; /* tono vino más oscuro */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+
