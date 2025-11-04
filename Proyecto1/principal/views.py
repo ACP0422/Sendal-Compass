@@ -539,8 +539,8 @@ PREDIO_REGISTRY = {
         "municipio": _("Valladolid, Yucatán"),
         "predios": [
             {
-                "slug": "predio1",
-                "title": _("Predio 1"),
+                "slug": "predio",
+                "title": _("Predio"),
                 "superficie_m2": 528,
                 "hero": "resources/images/places/Valladolid/predio1/hero.png",
                 "map_img": "resources/images/places/Valladolid/predio1/mapa.png",
@@ -574,8 +574,8 @@ PREDIO_REGISTRY = {
                 ),
             },
             {
-                "slug": "predio2",
-                "title": _("Predio 2"),
+                "slug": "casa-habitacion",
+                "title": _("Casa habitación"),
                 "superficie_m2": 520.65,
                 "hero": "resources/images/places/Valladolid/predio2/fachada.png",
                 "map_img": "resources/images/places/Valladolid/predio2/mapa.png",

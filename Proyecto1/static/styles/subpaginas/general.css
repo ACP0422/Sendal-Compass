@@ -43,7 +43,7 @@
 
 .nav-arrows{
   position: absolute;
-  top: clamp(4px, 0.7vw, 8px);
+  top: clamp(40px, 0.7vw, 40px);
   right: 0;
   display: flex; gap: 10px;
 }

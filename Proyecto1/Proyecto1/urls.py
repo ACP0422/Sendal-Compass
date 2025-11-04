@@ -7,8 +7,6 @@ from django.conf.urls.static import static
 # ⬇️ Handlers de error (se usan cuando DEBUG=False)
 from django.conf.urls import handler404, handler500
 
-handler404 = "principal.views.custom_404"
-handler500 = "principal.views.custom_500"
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
@@ -24,7 +22,7 @@ urlpatterns = [
     path("proyectos/tulum/", views.tulum, name="tulum"),
     path("proyectos/valladolid/hacienda/", views.hacienda, name="hacienda"),
     path(
-        "proyectos/valladolid/predios/<slug:slug>/",
+        "proyectos/valladolid/<slug:slug>/",
         views.predio_detail,
         name="predio-detail",
     ),

@@ -67,7 +67,14 @@
   display: grid;
   row-gap: 12px;
 }
-.map-container{ background:#fff; border-radius:12px; padding-block:12px; }
+
+.map-container{
+  background:url("/static/resources/images/cotizador/Pasto_MapaValladolid.jpeg") center 22%/cover no-repeat;
+  
+  border-radius: 12px;
+  padding-block: 12px;
+}
+
 .explora__chips{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:0; }
 
 .chip{ display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; font-size:14px; background:#eee; }
@@ -125,6 +132,27 @@
 
 
 
+/* ===== Galería: carrusel solo móvil/tablet, grid desktop ===== */
+
+/* Desktop (≥1025px): ocultar carrusel y mostrar grid */
+@media (min-width:1025px){
+  #gallery-carousel {
+    display: none !important;
+  }
+
+  .gallery-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Tablet y móvil: carrusel visible, grid oculto */
+@media (max-width:1024px){
+  .gallery-grid {
+    display: none !important;
+  }
+}
 
 
 
@@ -152,7 +180,7 @@
   margin-bottom: 0 !important;
 }
 
-.head .title{ font-size: clamp(26px, 7vw, 48px); color: var(--color-brown); line-height: 1.05; }
+.head .title{ font-size: clamp(2.125rem, 1.60rem + 2.80vw, 3.00rem); color: var(--color-brown); line-height: 1.05; }
 .head .meta{ color: var(--color-ink-dark); opacity:.9; margin-top: 4px; }
 
 .hero img{
@@ -434,7 +462,6 @@ background:var(--color-brown); color:#fff; border-radius:12px; padding:18px;
 
 
 .map-container{
-background-color: white;
 border-radius: 24px;
 padding: 30px 0;
 }
@@ -581,3 +608,31 @@ font-size: 20px;
   box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
 
+
+
+
+
+.explora__legend-box{
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+
+  width: calc(100% - 32px);
+  
+  /* pegado al bottom */
+  margin: 3px auto 0; /* estaba 14px — lo bajamos */
+  transform: translateY(8px); /* empuja hacia abajo dentro del mapa */
+}
+
+/* móvil */
+@media (max-width:768px){
+  .explora__legend-box{
+    width: calc(100% - 24px);
+    padding: 14px 12px;
+    margin-top: 4px;
+    transform: translateY(6px);
+  }
+}

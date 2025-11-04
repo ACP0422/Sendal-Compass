@@ -44,22 +44,22 @@
       <img src="{% static 'resources/images/places/Valladolid/predio1.png' %}"
            alt="{% trans 'Predio vallado en Valladolid' %}">
       <header>
-        <h3>{% trans "Predio 1" %}</h3>
+        <h3>{% trans "Predio" %}</h3>
         <p>{% trans "Propiedad Privada" %}</p>
       </header>
       {# RUTA CORRECTA: usa el name 'predio-detail' y el slug #}
-      <a class="more" href="{% url 'predio-detail' 'predio1' %}">{% trans "Ver más" %}</a>
+      <a class="more" href="{% url 'predio-detail' 'predio' %}">{% trans "Ver más" %}</a>
     </article>
 
     <article>
       <img src="{% static 'resources/images/places/Valladolid/predio2.png' %}"
            alt="{% trans 'Edificio de esquina en Valladolid' %}">
       <header>
-        <h3>{% trans "Predio 2" %}</h3>
+        <h3>{% trans "Casa habitación" %}</h3>
         <p>{% trans "Propiedad Privada" %}</p>
       </header>
       {# RUTA CORRECTA: usa el name 'predio-detail' y el slug #}
-      <a class="more" href="{% url 'predio-detail' 'predio2' %}">{% trans "Ver más" %}</a>
+      <a class="more" href="{% url 'predio-detail' 'casa-habitacion' %}">{% trans "Ver más" %}</a>
     </article>
   </section>
 </main>

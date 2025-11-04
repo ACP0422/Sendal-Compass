@@ -1240,8 +1240,8 @@ msgid "Predio vallado en Valladolid"
 msgstr "Fenced plot in Valladolid"
 
 #: principal/templates/pages/valladolid.html:47 principal/views.py:543
-msgid "Predio 1"
-msgstr "Plot 1"
+msgid "Predio"
+msgstr "Plot"
 
 #: principal/templates/pages/valladolid.html:48
 #: principal/templates/pages/valladolid.html:59 principal/views.py:551
@@ -1506,3 +1506,18 @@ msgstr "CONTACT"
 msgid "UBICACIÓN"
 msgstr "LOCATION"
 
+# Leyendas (A–E)
+msgid "Entrada"
+msgstr "Entrance"
+
+msgid "Siembra de agave"
+msgstr "Agave plantation"
+
+msgid "Zona comercial"
+msgstr "Commercial zone"
+
+msgid "Periférico Valladolid"
+msgstr "Valladolid Ring Road"
+
+msgid "Casa habitación"
+msgstr "Single-family home"
