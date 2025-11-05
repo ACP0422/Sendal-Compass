@@ -84,8 +84,6 @@
         <select id="tipo">
           <option value="" disabled selected hidden>{% trans "Tipo de propiedad" %}</option>
           <option value="">{% trans "Todos" %}</option>
-          <option value="lote">{% trans "Lote" %}</option>
-          <option value="casa">{% trans "Casa" context "property type" %}</option>
         </select>
       </div>
     </div>
@@ -98,6 +96,7 @@
       {% endif %}
     {% endfor %}
   </div>
+  
 </section>
 
 <section class="corporate">
@@ -228,12 +227,71 @@
   function fmt(str, n){ return (str || '').replace('%s', String(n)); }
 </script>
 
+
 <script>
-  // Filtros de proyectos (como ya lo tenías)
+  // ======= Filtros dependientes (Ubicación -> Tipo) =======
   (function () {
     const selectUbicacion = document.getElementById('ubicacion');
     const selectTipo      = document.getElementById('tipo');
     const cards           = document.querySelectorAll('.projects-grid .project-card');
+
+    // Mapeo de opciones por ubicación
+    const OPTIONS = {
+  valladolid: [
+    { value: 'hacienda',  label: "{{ _('Proyecto Hacienda Residencial Mayahuel') }}" },
+    { value: 'predios',   label: "{{ _('Predios') }}" },
+    { value: 'casa',      label: "{{ _('Casa habitación') }}" },
+  ],
+  tulum: [
+    { value: 'tularum',   label: "{{ _('Proyecto Tularum') }}" },
+  ],
+};
+
+
+    // Renderiza las options del segundo select según ubicación
+    function renderTipoOptions(ubic) {
+  selectTipo.innerHTML = '';
+
+  // Placeholder oculto
+  const hidden = document.createElement('option');
+  hidden.value = '';
+  hidden.hidden = true;
+  hidden.disabled = true;
+  hidden.selected = true;
+  hidden.textContent = "{{ _('Tipo') }}"; 
+  selectTipo.appendChild(hidden);
+
+  // "Todos"
+  const optAll = document.createElement('option');
+  optAll.value = '';
+  optAll.textContent = "{{ _('Todos los tipos') }}";
+  selectTipo.appendChild(optAll);
+
+  // Caso 1: NO hay ubicación seleccionada → mostrar todas las opciones de ambos lugares
+  if (!ubic) {
+    [
+    { value: 'hacienda', label: "{{ _('Proyecto Hacienda Residencial Mayahuel') }}" },
+  { value: 'predios', label: "{{ _('Predios') }}" },
+  { value: 'casa', label: "{{ _('Casa habitación') }}" },
+  { value: 'tularum', label: "{{ _('Proyecto Tularum') }}" },
+    ].forEach(o => {
+      const op = document.createElement('option');
+      op.value = o.value;
+      op.textContent = o.label;
+      selectTipo.appendChild(op);
+    });
+    return; // terminamos aquí
+  }
+
+  // Caso 2: hay ubicación → solo opciones de esa ubicación
+  (OPTIONS[ubic] || []).forEach(o => {
+    const op = document.createElement('option');
+    op.value = o.value;
+    op.textContent = o.label;
+    selectTipo.appendChild(op);
+  });
+}
+
 
     function aplicarFiltros() {
       const ubicacion = (selectUbicacion?.value || '').trim().toLowerCase();
@@ -241,18 +299,34 @@
 
       cards.forEach(card => {
         const cardUbic = (card.dataset.ubicacion || '').toLowerCase();
-        const tipos    = (card.dataset.tipos || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+        // data-tipos = "hacienda,predios,casa"  (coma-separado)
+        const tipos = (card.dataset.tipos || '')
+          .split(',')
+          .map(s => s.trim().toLowerCase())
+          .filter(Boolean);
+
         const matchUbic = !ubicacion || cardUbic === ubicacion;
         const matchTipo = !tipoSel   || tipos.includes(tipoSel);
         card.style.display = (matchUbic && matchTipo) ? '' : 'none';
       });
     }
 
-    selectUbicacion?.addEventListener('change', aplicarFiltros);
+    // Cuando cambia la ubicación, rehace las options del tipo y filtra
+    selectUbicacion?.addEventListener('change', () => {
+      const ubic = (selectUbicacion.value || '').toLowerCase();
+      renderTipoOptions(ubic);
+      aplicarFiltros();
+    });
+
+    // Cambios en tipo: solo filtra
     selectTipo?.addEventListener('change', aplicarFiltros);
+
+    // Inicial
+    renderTipoOptions((selectUbicacion?.value || '').toLowerCase());
     aplicarFiltros();
   })();
 </script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('quoteForm');
@@ -310,7 +384,6 @@
       bg = '#d7f5df'; bd = '#8ed3a1'; // verde éxito
     }
     else if (type === 'warning' || type === 'error') {
-      // === Rojo Sendal (igual al de tus campos con error) ===
       bg = '#fde8e4';        // fondo rojo claro elegante
       bd = '#d07653';      // borde rojo Sendal
       el.style.color = '#7a4a32'; // texto café para armonía
@@ -387,7 +460,6 @@
     b.textContent = '';
   }
 }
-
 
   
     // =========================

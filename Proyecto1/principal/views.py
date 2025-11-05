@@ -286,35 +286,79 @@ logger = logging.getLogger(__name__)
 # ----------------------------
 def _proyectos():
     return [
+        # Landing Valladolid (sin slug; otra vista o la misma si la tienes)
         {
-            "slug": "komchen",
-            "nombre": "Komchén",
-            "url": "komchen",
-            "img": static("resources/images/places/Komchén/Komchén.png"),
-            "descripcion": _("Zona con alta plusvalía y acceso rápido a la ciudad."),
-            "tipos": ["lote"],
-            "activo": False,
-        },
-        {
-            "slug": "valladolid",
+            "slug": None,
+            "ubicacion": "valladolid",
             "nombre": "Valladolid",
-            "url": "valladolid",
+            "url_name": "valladolid",  # name de tu landing /proyectos/valladolid/
             "img": static("resources/images/places/Valladolid/Valladolid.png"),
             "descripcion": _(
                 "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
             ),
-            "tipos": ["lote", "casa"],
+            "tipos": [],
+            "activo": True,
+        },
+        # Subpáginas de Valladolid (todas usan predio-detail con slug)
+        {
+            "slug": "hacienda",
+            "ubicacion": "valladolid",
+            "nombre": _("Hacienda Residencial Mayahuel"),
+            "url_name": "predio-detail",  # <— usa el name de tu ruta dinámica
+            "img": static("resources/images/places/Valladolid/hacienda/hero.png"),
+            "descripcion": _(
+                "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
+            ),
+            "tipos": ["hacienda"],
             "activo": True,
         },
         {
-            "slug": "tulum",
+            "slug": "predio",
+            "ubicacion": "valladolid",
+            "nombre": _("Predio Valladolid"),
+            "url_name": "predio-detail",
+            "img": static("resources/images/places/Valladolid/predio1/fachada.png"),
+            "descripcion": _(
+                "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
+            ),
+            "tipos": ["predios"],
+            "activo": True,
+        },
+        {
+            "slug": "casa-habitacion",
+            "ubicacion": "valladolid",
+            "nombre": _("Casa habitación Valladolid"),
+            "url_name": "predio-detail",
+            "img": static("resources/images/places/Valladolid/predio2/fachada.png"),
+            "descripcion": _(
+                "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
+            ),
+            "tipos": ["casa"],
+            "activo": True,
+        },
+        # Tulum / Tularum (misma página)
+        {
+            "slug": None,
+            "ubicacion": "tulum",
             "nombre": "Tulum",
-            "url": "tulum",
+            "url_name": "tulum",
             "img": static("resources/images/places/Tulum/Tulum.jpg"),
             "descripcion": _(
                 "Destino icónico con gran plusvalía, naturaleza y proyección internacional."
             ),
-            "tipos": ["lote"],
+            "tipos": [],
+            "activo": True,
+        },
+        {
+            "slug": None,  # apunta a la misma landing de Tulum
+            "ubicacion": "tulum",
+            "nombre": "Tularum",
+            "url_name": "tulum",
+            "img": static("resources/images/places/Tulum/tularum.png"),
+            "descripcion": _(
+                "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
+            ),
+            "tipos": ["tularum"],
             "activo": True,
         },
     ]
@@ -347,6 +391,21 @@ from django.utils.translation import (
 # ----------------------------
 # Vistas públicas (mismos nombres que ya tienes)
 # ----------------------------
+from django.shortcuts import render
+from django.urls import reverse
+from django.templatetags.static import static
+
+
+from django.shortcuts import render
+from django.urls import reverse
+from django.templatetags.static import static
+
+
+# principal/views.py
+from django.shortcuts import render
+from django.templatetags.static import static
+
+
 def index(request):
     """
     Home. Muestra los proyectos y el formulario de cotización.

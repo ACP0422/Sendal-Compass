@@ -680,8 +680,8 @@ msgid "Valladolid"
 msgstr "Valladolid"
 
 #: principal/templates/pages/index.html:86
-msgid "Todos"
-msgstr "All"
+msgid "Todos los tipos"
+msgstr "All types"
 
 #: principal/templates/pages/index.html:88
 msgctxt "property type"
@@ -1521,3 +1521,32 @@ msgstr "Valladolid Ring Road"
 
 msgid "Casa habitación"
 msgstr "Single-family home"
+
+msgid "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
+msgstr "Project to invest in land extensions in coveted Tulum in the state of Quintana Roo, Mexico."
+
+msgid "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
+msgstr "Residential development with a hacienda-style façade, surrounded by agave landscapes."
+
+msgid "Proyecto Hacienda Residencial Mayahuel"
+msgstr "Hacienda Residencial Mayahuel Project"
+
+msgid "Predios"
+msgstr "Plots"
+
+msgid "Proyecto Tularum"
+msgstr "Tularum Project"
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "Predio Valladolid"
+msgstr "Valladolid Plot"
+
+msgid "Casa habitación Valladolid"
+msgstr "Valladolid Single-family Home"
+
+msgid "Hacienda Residencial Mayahuel"
+msgstr "Mayahuel Residential Hacienda"
+
+

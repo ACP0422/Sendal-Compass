@@ -31,7 +31,7 @@ urlpatterns = [
         views.predio_compat,
         name="valladolid-compat",
     ),
-    # path('proyectos/komchen/', views.komchen, name='komchen'),
+    # path("proyectos/komchen/", views.komchen, name="komchen"),
     # path("api/", include("ghl_connector.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler400 = "principal.views.error_400"

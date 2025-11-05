@@ -1,12 +1,11 @@
 {# templates/pages/_proyecto.html #}
 <article
   class="project-card"
-  data-ubicacion="{{ proyecto.slug }}"
-  data-tipos="{{ proyecto.tipos|join:',' }}">
-  <a href="{% url proyecto.url %}">
-    {# OJO: ya viene con static() desde la vista #}
+  data-ubicacion="{{ proyecto.ubicacion|lower }}"
+  data-tipos="{{ proyecto.tipos|join:','|lower }}">
+  <a href="{% if proyecto.slug %}{% url proyecto.url_name slug=proyecto.slug %}{% else %}{% url proyecto.url_name %}{% endif %}">
     <img src="{{ proyecto.img }}" alt="{{ proyecto.nombre }}">
     <h3>{{ proyecto.nombre }}</h3>
   </a>
-  <p>{{ proyecto.descripcion }}</p>
+  {% if proyecto.descripcion %}<p>{{ proyecto.descripcion }}</p>{% endif %}
 </article>

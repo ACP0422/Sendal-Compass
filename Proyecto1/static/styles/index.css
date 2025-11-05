@@ -352,3 +352,14 @@ body{line-height:1.35;color:var(--color-ink-dark)}
     border-color: var(--color-ivory-soft); /* gris/beige suave */
     box-shadow: 0 0 0 2px rgba(106, 100, 78, 0.25); /* sombra beige */
 }
+
+
+
+/* Mobile: filtros apilados (2 filas, 1 columna) */
+@media (max-width: 47.99rem) {
+  .filters{
+    grid-template-columns: 1fr;   /* antes eran 2 columnas */
+    gap: .75rem;                  /* separación vertical cómoda */
+    border-radius: 1.5rem;        /* un poco menos “ovalado” en mobile (opcional) */
+  }
+}
