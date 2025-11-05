@@ -1,37 +1,25 @@
 from django.shortcuts import render, redirect
 from django.templatetags.static import static
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from django.http import Http404
 import json
-from django.http import Http404
-from django.shortcuts import render
 from urllib.parse import urlparse, parse_qs
 import re
 from django.utils.translation import gettext as _
-from django.utils.translation import pgettext  # opcional, pero útil para dar contexto
-
-
-import re
-from urllib.parse import urlparse, parse_qs
-
-from pathlib import Path
-import json
+from django.utils.translation import pgettext
 from django.conf import settings
-from django.shortcuts import render
-
-
-from django.shortcuts import redirect
-from django.http import Http404
-
-
-# principal/views.py
-from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
-
-
-from django.shortcuts import render
-from django.utils.translation import gettext_lazy as _
+from django.contrib import messages
+from .forms import ContactForm, CotizaHomeForm
+import logging
+from django.core.mail import EmailMessage, BadHeaderError
+from django.utils.translation import (
+    gettext as __,
+)
+from django.utils.translation import gettext as __
+import requests
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def render_error(request, code, title, message):
@@ -93,22 +81,12 @@ def cotizador_detail(request, slug: str):
     Vista del cotizador por proyecto.
     Ahora solamente redirige a la página SVG correspondiente.
     """
-    # ¿tenemos ruta SVG para este proyecto?
     svg_urlname = SVG_ROUTES.get(slug)
     if not svg_urlname:
-        # Si aún no existe el SVG de ese proyecto, puedes:
-        # - mandar 404
-        # - o redirigir al índice del cotizador
         raise Http404("Proyecto sin vista SVG configurada")
         # return redirect("cotizador")
 
     return redirect(svg_urlname)
-
-
-import requests
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
 
 
 @csrf_exempt
@@ -246,52 +224,16 @@ def cotizador_index(request):
     return render(request, "pages/cotizador_base.html", ctx)
 
 
-# ===== Vistas públicas =====
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.urls import reverse
-
-# principal/views.py
-from django.conf import settings
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.utils.translation import gettext as _
-from django.templatetags.static import static
-from django.core.mail import send_mail
-
-from .forms import CotizaHomeForm  # alias de IndexQuoteForm
-
-
-# -----------------------------------------------------------------------------
-# Datos de proyectos (lo usamos en index y al re-renderizar por errores)
-# -----------------------------------------------------------------------------
-# principal/views.py
-from django.conf import settings
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.utils.translation import gettext as _
-from django.templatetags.static import static
-from django.core.mail import send_mail
-import logging
-
-from .forms import CotizaHomeForm  # NO cambiamos el nombre de tu form
-
 logger = logging.getLogger(__name__)
 
 
-# ----------------------------
-# Datos de proyectos (como en tu index)
-# ----------------------------
 def _proyectos():
     return [
-        # Landing Valladolid (sin slug; otra vista o la misma si la tienes)
         {
             "slug": None,
             "ubicacion": "valladolid",
             "nombre": "Valladolid",
-            "url_name": "valladolid",  # name de tu landing /proyectos/valladolid/
+            "url_name": "valladolid",
             "img": static("resources/images/places/Valladolid/Valladolid.png"),
             "descripcion": _(
                 "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
@@ -299,17 +241,17 @@ def _proyectos():
             "tipos": [],
             "activo": True,
         },
-        # Subpáginas de Valladolid (todas usan predio-detail con slug)
         {
-            "slug": "hacienda",
-            "ubicacion": "valladolid",
-            "nombre": _("Hacienda Residencial Mayahuel"),
-            "url_name": "predio-detail",  # <— usa el name de tu ruta dinámica
-            "img": static("resources/images/places/Valladolid/hacienda/hero.png"),
+            "slug": None,
+            "ubicacion": "tulum",
+            "nombre": _("Tularum"),
+            "url_name": None,
+            "external_url": "https://tularum.com",
+            "img": static("resources/images/places/Tulum/tularum.png"),
             "descripcion": _(
-                "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
+                "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
             ),
-            "tipos": ["hacienda"],
+            "tipos": ["tularum"],
             "activo": True,
         },
         {
@@ -325,19 +267,6 @@ def _proyectos():
             "activo": True,
         },
         {
-            "slug": "casa-habitacion",
-            "ubicacion": "valladolid",
-            "nombre": _("Casa habitación Valladolid"),
-            "url_name": "predio-detail",
-            "img": static("resources/images/places/Valladolid/predio2/fachada.png"),
-            "descripcion": _(
-                "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
-            ),
-            "tipos": ["casa"],
-            "activo": True,
-        },
-        # Tulum / Tularum (misma página)
-        {
             "slug": None,
             "ubicacion": "tulum",
             "nombre": "Tulum",
@@ -350,15 +279,27 @@ def _proyectos():
             "activo": True,
         },
         {
-            "slug": None,  # apunta a la misma landing de Tulum
-            "ubicacion": "tulum",
-            "nombre": "Tularum",
-            "url_name": "tulum",
-            "img": static("resources/images/places/Tulum/tularum.png"),
+            "slug": "hacienda",
+            "ubicacion": "valladolid",
+            "nombre": _("Hacienda Residencial Mayahuel"),
+            "url_name": "predio-detail",
+            "img": static("resources/images/places/Valladolid/hacienda/hero.png"),
             "descripcion": _(
-                "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
+                "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
             ),
-            "tipos": ["tularum"],
+            "tipos": ["hacienda"],
+            "activo": True,
+        },
+        {
+            "slug": "casa-habitacion",
+            "ubicacion": "valladolid",
+            "nombre": _("Casa habitación Valladolid"),
+            "url_name": "predio-detail",
+            "img": static("resources/images/places/Valladolid/predio2/fachada.png"),
+            "descripcion": _(
+                "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
+            ),
+            "tipos": ["casa"],
             "activo": True,
         },
     ]
@@ -374,36 +315,6 @@ def _ctx_index(form=None):
     if form is not None:
         ctx["form"] = form
     return ctx
-
-
-from django.core.mail import EmailMessage
-
-from django.contrib import messages
-from django.utils.translation import gettext as _  # ← importante
-from django.contrib import messages
-
-from django.utils.translation import gettext_lazy as _  # LAZY (para messages)
-from django.utils.translation import (
-    gettext as __,
-)  # NO lazy (para formateos inmediatos)
-
-
-# ----------------------------
-# Vistas públicas (mismos nombres que ya tienes)
-# ----------------------------
-from django.shortcuts import render
-from django.urls import reverse
-from django.templatetags.static import static
-
-
-from django.shortcuts import render
-from django.urls import reverse
-from django.templatetags.static import static
-
-
-# principal/views.py
-from django.shortcuts import render
-from django.templatetags.static import static
 
 
 def index(request):
@@ -493,25 +404,6 @@ def cotiza(request):
     return redirect(reverse("index") + "#cotiza")
 
 
-# principal/views.py
-from django.conf import settings
-from django.contrib import messages
-from django.core.mail import send_mail, BadHeaderError
-from django.shortcuts import render, redirect
-from django.utils.translation import gettext as _
-
-from .forms import ContactForm
-
-# views.py
-from django.conf import settings
-from django.contrib import messages
-from django.core.mail import EmailMessage, BadHeaderError
-from django.shortcuts import render, redirect
-from django.utils.translation import gettext as _
-
-from .forms import ContactForm
-
-
 def contacto(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -581,17 +473,6 @@ def komchen(request):
     return render(request, "pages/komchen.html")
 
 
-# views.py
-from django.shortcuts import render, redirect
-from django.http import Http404
-
-# Usaremos "_" para LAZY (registro) y "__" para no-lazy (vista)
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext as __
-from django.utils.translation import pgettext
-
-
-# ===== Registro de predios (todas las cadenas con gettext_lazy => "_") =====
 PREDIO_REGISTRY = {
     "hacienda": {
         "back_urlname": "hacienda",
@@ -603,7 +484,6 @@ PREDIO_REGISTRY = {
                 "superficie_m2": 528,
                 "hero": "resources/images/places/Valladolid/predio1/hero.png",
                 "map_img": "resources/images/places/Valladolid/predio1/mapa.png",
-                # ----- datos específicos -----
                 "price_mxn": 2_904_000,
                 "price_m2": 5500,
                 "address": _("Calle 35 # 198 F"),
@@ -689,7 +569,6 @@ def predio_detail(request, slug):
     if p is None:
         raise Http404(__("Predio no encontrado"))
 
-    # ----- Precio total (traducción en tiempo real => "__") -----
     if p.get("price_mxn"):
         label_price = pgettext("price label", "Precio")
         amount = f"{p['price_mxn']:,.0f}"
@@ -701,13 +580,11 @@ def predio_detail(request, slug):
     else:
         price_text = None
 
-    # ----- Precio por m² -----
     if p.get("price_m2"):
         price_m2_str = __("$%(amount)s m²") % {"amount": f"{p['price_m2']:,.0f}"}
     else:
         price_m2_str = None
 
-    # ----- Facts (dt / dd) -----
     facts = [
         {"dt": p.get("address"), "dd": p.get("propiedad_tipo")},
         {"dt": price_m2_str, "dd": __("Precio por m²")},
@@ -716,24 +593,20 @@ def predio_detail(request, slug):
     ]
     facts = [f for f in facts if f["dt"] and f["dd"]]
 
-    # ----- Contexto para el template -----
     ctx = {
         "title": p["title"],
         "municipio": dev.get("municipio"),
         "superficie_m2": p.get("superficie_m2"),
         "hero_src": p.get("hero"),
-        # navegación
         "back_urlname": dev.get("back_urlname"),
         "prev_slug": prev_p["slug"] if prev_p else None,
         "prev_label": prev_p["title"] if prev_p else None,
         "next_slug": next_p["slug"] if next_p else None,
         "next_label": next_p["title"] if next_p else None,
-        # info
         "price_text": price_text,
         "facts": facts,
         "features": p.get("features"),
         "map_url": p.get("map_url"),
-        # subgalería y banda
         "subgallery": p.get("subgallery"),
         "band_theme": "band--gold",
         "location_blurb": p.get("location_blurb"),

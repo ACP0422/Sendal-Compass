@@ -270,10 +270,6 @@ msgstr "Features:"
 msgid "Ubicación Google Maps"
 msgstr "Google Maps location"
 
-#: principal/templates/pages/contacto.html:4
-msgid "Contacto – Sendal"
-msgstr "Contact – Sendal"
-
 #: principal/templates/pages/index.html:XX
 msgid ""
 "IMAGINA TU FUTURO <br>EN YUCATÁN"
@@ -1526,7 +1522,7 @@ msgid "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en 
 msgstr "Project to invest in land extensions in coveted Tulum in the state of Quintana Roo, Mexico."
 
 msgid "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
-msgstr "Residential development with a hacienda-style façade, surrounded by agave landscapes."
+msgstr "Residential development with a hacienda-style facade, surrounded by agave landscapes."
 
 msgid "Proyecto Hacienda Residencial Mayahuel"
 msgstr "Hacienda Residencial Mayahuel Project"
@@ -1549,4 +1545,24 @@ msgstr "Valladolid Single-family Home"
 msgid "Hacienda Residencial Mayahuel"
 msgstr "Mayahuel Residential Hacienda"
 
+#: principal/templates/pages/contacto.html:4
+msgid "Inmobiliaria Sendal - Contacto"
+msgstr "Sendal Real Estate - Contact"
 
+msgid "Inmobiliaria Sendal - Inicio"
+msgstr "Sendal Real Estate - Home"
+
+msgid "Inmobiliaria Sendal - Valladolid"
+msgstr "Sendal Real Estate - Valladolid"
+
+msgid "Inmobiliaria Sendal - Predio"
+msgstr "Sendal Real Estate - Plot"
+
+msgid "Inmobiliaria Sendal - Casa habitación"
+msgstr "Sendal Real Estate - Single-family home"
+
+msgid "Inmobiliaria Sendal - Hacienda Residencial"
+msgstr "Sendal Real Estate - Residential Hacienda"
+
+msgid "Inmobiliaria Sendal - Tulum"
+msgstr "Sendal Real Estate - Tulum"

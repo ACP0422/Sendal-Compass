@@ -1,4 +1,3 @@
-# principal/forms.py
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
@@ -53,7 +52,7 @@ def _clean_email_robust(raw: str) -> str:
             raise ValidationError(
                 _("El dominio del correo no tiene registros de correo válidos.")
             )
-        # fallback genérico
+
         raise ValidationError(
             _("Escribe un correo válido (ejemplo: nombre@dominio.com).")
         )
@@ -70,10 +69,6 @@ def _clean_email_robust(raw: str) -> str:
     return email_norm
 
 
-# =========================
-#   FORMULARIO DE CONTACTO
-#   (NO MODIFICAR)
-# =========================
 class ContactForm(forms.Form):
     nombre = forms.CharField(
         min_length=2,
@@ -111,10 +106,8 @@ class ContactForm(forms.Form):
         widget=forms.Textarea(attrs={"rows": 5}),
     )
 
-    # Honeypot (campo oculto en el HTML)
     website = forms.CharField(required=False)
 
-    # --------- Limpiadores ---------
     def clean_website(self):
         v = (self.cleaned_data.get("website") or "").strip()
         if v:
@@ -140,7 +133,6 @@ class ContactForm(forms.Form):
             )
         except EmailNotValidError as e:
             msg = str(e)
-            # Mensajes personalizados en español
             if "The domain name" in msg and "does not exist" in msg:
                 raise ValidationError(
                     _("El dominio del correo no existe. Verifica tu dirección.")
@@ -153,7 +145,6 @@ class ContactForm(forms.Form):
                 raise ValidationError(
                     _("El dominio del correo no tiene registros de correo válidos.")
                 )
-            # fallback
             raise ValidationError(_("Correo no válido. Verifica tu dirección."))
 
         # E-mail normalizado
@@ -174,22 +165,6 @@ class ContactForm(forms.Form):
         return email_norm
 
 
-# =========================
-#   FORMULARIO DEL INDEX
-# =========================
-# forms.py (reemplaza SOLAMENTE esta clase)
-from django import forms
-from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
-from django.utils.translation import gettext as _
-
-# Reutiliza los mismos helpers/sets que ya tienes arriba en el archivo:
-# - only_letters_validator
-# - DISPOSABLE_DOMAINS
-# - ROLE_PREFIXES
-from email_validator import validate_email, EmailNotValidError
-
-# Si no lo tienes definido aún:
 ONLY_LETTERS_RE = r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s\-]{2,60}$"
 only_letters_validator = RegexValidator(
     regex=ONLY_LETTERS_RE,
@@ -263,10 +238,8 @@ class CotizaHomeForm(forms.Form):
         error_messages={"required": _("Escribe la ubicación.")},
     )
 
-    # Honeypot
     website = forms.CharField(required=False, widget=forms.HiddenInput())
 
-    # --- Normalizaciones ligeras ---
     def clean_website(self):
         if (self.cleaned_data.get("website") or "").strip():
             raise ValidationError(_("Solicitud no válida."))
@@ -294,7 +267,6 @@ class CotizaHomeForm(forms.Form):
             )
         return s
 
-    # --- Email: sintaxis + deliverability + dominios desechables/roles ---
     def clean_email(self):
         raw = (self.cleaned_data.get("email") or "").strip()
         try:
@@ -309,7 +281,6 @@ class CotizaHomeForm(forms.Form):
                 raise ValidationError(
                     _("El dominio no tiene registros de correo válidos (MX/AAAA).")
                 )
-            # fallback genérico
             raise ValidationError(
                 _("Escribe un correo válido, por ejemplo nombre@dominio.com.")
             )

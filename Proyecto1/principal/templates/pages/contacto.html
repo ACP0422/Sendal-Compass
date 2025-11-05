@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static i18n %}
 
-{% block title %}{% trans "Contacto – Sendal" %}{% endblock %}
+{% block title %}{% trans "Inmobiliaria Sendal - Contacto" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'styles/contacto.css' %}">
@@ -146,7 +146,6 @@
     const form = document.querySelector('.contact-form');
     if (!form) return;
 
-    // ——— Cadenas traducibles (no alteran tu flujo) ———
     const L = {
       REQUIRED: "{{ _('Completa este campo') }}",
       BAD_EMAIL: "{{ _('Escribe un correo válido, por ejemplo nombre@dominio.com') }}",
@@ -160,13 +159,11 @@
     const fields = Array.from(form.querySelectorAll('input, textarea'))
       .filter(el => el.type !== 'hidden' && el.name !== 'website');
 
-    // —— helper para ubicar el <div class="field-error"> hermano ——
     function errorBox(el) {
       const sib = el.nextElementSibling;
       return sib && sib.classList.contains('field-error') ? sib : null;
     }
 
-    // —— mapea HTML5 Validity a nuestras traducciones ——
     function translatedMessage(el) {
       const v = el.validity || {};
       if (v.valueMissing) return L.REQUIRED;
@@ -178,7 +175,6 @@
       return el.validationMessage || L.PATTERN;
     }
 
-    // ——— Mostrar/Ocultar error sin cambiar tu UX ———
     function showError(el) {
       const box = errorBox(el);
       if (!box) return;
@@ -195,7 +191,6 @@
       }
     }
 
-    // ——— Submit: marca como “tocado”, muestra errores y enfoca el primero ———
     form.addEventListener('submit', function (e) {
       if (!form.checkValidity()) {
         e.preventDefault();
@@ -207,13 +202,11 @@
       if (btn) { btn.disabled = true; btn.textContent = L.SENDING; }
     });
 
-    // ——— Si el usuario corrige tras el submit, actualiza el mensaje ———
     fields.forEach(el => {
       el.addEventListener('input', () => { if (el.dataset.touched === '1') showError(el); });
       el.addEventListener('blur',  () => { if (el.dataset.touched === '1') showError(el); });
     });
 
-    // ===== Sanitizar nombre/apellido (igual que ya hacías) =====
     const onlyLetters = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]/g;
     const onlyLettersHyphen = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s-]/g;
 
@@ -231,7 +224,6 @@
     if (nm) sanitize(nm, onlyLetters);
     if (ap) sanitize(ap, onlyLettersHyphen);
 
-    // ===== Marcar errores del servidor si ya llegaron pintados =====
     let serverErrors = false;
     form.querySelectorAll('.field-error').forEach(box => {
       if (!box.textContent.trim()) return;
@@ -244,7 +236,6 @@
     });
     if (serverErrors) form.setAttribute('data-server-error', '1');
 
-    // ===== Auto-ocultar flashes (se mantiene igual) =====
     function autoHide(root) {
       const flashes = root.querySelectorAll(
         '.form-alert, .messages li, .alert, .alert-success, .alert-error,' +
@@ -277,11 +268,4 @@
     window.addEventListener('pageshow', () => autoHide(document));
   });
 </script>
-
-
-  
-  
-  
-
-
 {% endblock %}

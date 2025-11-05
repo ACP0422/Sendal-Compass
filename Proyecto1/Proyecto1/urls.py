@@ -4,13 +4,11 @@ from principal import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# ⬇️ Handlers de error (se usan cuando DEBUG=False)
-from django.conf.urls import handler404, handler500
+# Handlers de error (se usan cuando DEBUG=False)
 
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
-    # path('admin/', admin.site.urls),
     path("", views.index, name="index"),
     path("contacto/", views.contacto, name="contacto"),
     path("cotiza/", views.cotiza, name="cotiza"),

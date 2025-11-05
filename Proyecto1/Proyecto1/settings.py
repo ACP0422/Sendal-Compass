@@ -9,20 +9,21 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")  # <— carga tu .env en la raíz del proyecto
+load_dotenv(BASE_DIR / ".env")
 
 
-# === Config desde .env ===
-# Si en .env faltara algún valor, usamos defaults razonables.
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-please-change-me")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") if h.strip()]
+ALLOWED_HOSTS = [
+    h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") if h.strip()
+]
 
 # === Email SMTP (Hostinger) ===
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -38,7 +39,8 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 CONTACT_RECIPIENTS = [
-    e.strip() for e in os.getenv("CONTACT_RECIPIENTS", DEFAULT_FROM_EMAIL or "").split(",")
+    e.strip()
+    for e in os.getenv("CONTACT_RECIPIENTS", DEFAULT_FROM_EMAIL or "").split(",")
     if e.strip()
 ]
 
@@ -47,79 +49,74 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-LOTS_SHEET_URL     = os.getenv("LOTS_SHEET_URL", "")
-LOTS_SHEET_FORMAT  = os.getenv("LOTS_SHEET_FORMAT", "xlsx") 
+LOTS_SHEET_URL = os.getenv("LOTS_SHEET_URL", "")
+LOTS_SHEET_FORMAT = os.getenv("LOTS_SHEET_FORMAT", "xlsx")
 LOTS_SHEET_TIMEOUT = int(os.getenv("LOTS_SHEET_TIMEOUT", "15"))
 
 
 GHL_INBOUND_WEBHOOK_URL = os.getenv("GHL_INBOUND_WEBHOOK_URL", "")
-GHL_WEBHOOK_SECRET      = os.getenv("GHL_WEBHOOK_SECRET", "")
-HOLD_TTL_MINUTES        = int(os.getenv("HOLD_TTL_MINUTES", "45"))
+GHL_WEBHOOK_SECRET = os.getenv("GHL_WEBHOOK_SECRET", "")
+HOLD_TTL_MINUTES = int(os.getenv("HOLD_TTL_MINUTES", "45"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',  
-    'principal',
-    'ghl_connector',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "principal",
+    "ghl_connector",
 ]
 
-# Add WhiteNoise to middleware (add this to your existing MIDDLEWARE)
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',   # <-- IMPORTANTE: después de SessionMiddleware
-    'django.middleware.common.CommonMiddleware',  # <-- y antes de CommonMiddleware
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'Proyecto1.urls'
+ROOT_URLCONF = "Proyecto1.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        "DIRS": [BASE_DIR / "templates"], 
-        'APP_DIRS': True,
-        'OPTIONS': {
-            "builtins": ["django.templatetags.i18n"],  
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "builtins": ["django.templatetags.i18n"],
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'Proyecto1.wsgi.application'
+WSGI_APPLICATION = "Proyecto1.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -129,16 +126,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -146,36 +143,33 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = "es"
 
-TIME_ZONE = 'America/Merida'
+TIME_ZONE = "America/Merida"
 
 USE_I18N = True
 
 USE_TZ = True
 
-# Idiomas disponibles en el sitio
 LANGUAGES = [
-    ('es', _('Español')),
-    ('en', _('Inglés')),
+    ("es", _("Español")),
+    ("en", _("Inglés")),
 ]
 
-# Dónde se guardan los .po/.mo
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',
+    BASE_DIR / "locale",
 ]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# Static files configuration
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
