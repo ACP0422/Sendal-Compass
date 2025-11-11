@@ -125,16 +125,16 @@
 <path id="MZ04-L055" d="M797 232H730V255H797V232Z" fill="#A3FFB8"/>
 <path id="MZ04-L054" d="M797 209H730V232H797V209Z" fill="#A3FFB8"/>
 <path id="MZ04-L053" d="M797 186H730V209H797V186Z" fill="#A3FFB8"/>
-<path id="MZ04-L052" d="M797 163H730V186H797V163Z" fill="#A3FFB8"/>
-<path id="MZ04-L051" d="M864 410V379H797V402.377L864 410Z" fill="#A3FFB8"/>
-<path id="MZ04-L050" d="M864 355H797V379H864V355Z" fill="#A3FFB8"/>
-<path id="MZ04-L049" d="M864 331H797V355H864V331Z" fill="#A3FFB8"/>
-<path id="MZ04-L048" d="M864 307H797V331H864V307Z" fill="#A3FFB8"/>
-<path id="MZ04-L047" d="M864 283H797V307H864V283Z" fill="#A3FFB8"/>
-<path id="MZ04-L046" d="M864 259H797V283H864V259Z" fill="#A3FFB8"/>
-<path id="MZ04-L045" d="M864 235H797V259H864V235Z" fill="#A3FFB8"/>
-<path id="MZ04-L044" d="M864 212H797V236H864V212Z" fill="#A3FFB8"/>
-<path id="MZ04-L043" d="M864 190H797V214H864V190Z" fill="#A3FFB8"/>
+<path id="MZ04-L0" d="M797 163H730V186H797V163Z" fill="#A3FFB8"/>
+<path id="MZ04-L009" d="M864 410V379H797V402.377L864 410Z" fill="#A3FFB8"/>
+<path id="MZ04-L008" d="M864 355H797V379H864V355Z" fill="#A3FFB8"/>
+<path id="MZ04-L007" d="M864 331H797V355H864V331Z" fill="#A3FFB8"/>
+<path id="MZ04-L006" d="M864 307H797V331H864V307Z" fill="#A3FFB8"/>
+<path id="MZ04-L005" d="M864 283H797V307H864V283Z" fill="#A3FFB8"/>
+<path id="MZ04-L004" d="M864 259H797V283H864V259Z" fill="#A3FFB8"/>
+<path id="MZ04-L003" d="M864 235H797V259H864V235Z" fill="#A3FFB8"/>
+<path id="MZ04-L002" d="M864 212H797V236H864V212Z" fill="#A3FFB8"/>
+<path id="MZ04-L001" d="M864 190H797V214H864V190Z" fill="#A3FFB8"/>
 </g>
 <g id="MZ-03">
 <path id="MZ03-L081" d="M647 360V384.5L612.5 383L580 384.5V360H647Z" fill="#A3FFB8"/>
@@ -233,253 +233,267 @@
     <button id="reset">⟳</button>
   </div>
 
-  <script src="https://unpkg.com/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
-  <script>
-    /* =========================
-     *  Utilidades (CSRF + helper)
-     * ========================= */
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-    const CSRF = () => ({ 'X-CSRFToken': getCookie('csrftoken') });
-  
-    const isAdmin = new URL(location.href).searchParams.get('admin') === '1';
-  
-    // Config “sutil”: proyectos y etapas visibles del lado del front
-    const PROJECTS = {
-      komchen: { label: 'Komchén', stages: [] },                 // sin etapas
-      hacienda:{ label: 'Hacienda', stages: ['Etapa 1'] }        // solo Etapa 1 habilitada
-    };
-  
-    // Mapea ids de lote válidos (MZxx-Lxxx)
-    const LOT_ID_RE = /^MZ\d{2}-L\d{3}$/i;
-  
-    /* =========================
-     *  Pan & Zoom
-     * ========================= */
-    const pz = svgPanZoom('#hacienda-svg', {
-      zoomEnabled: true, controlIconsEnabled: false,
-      fit: true, center: true,
-      minZoom: 0.5, maxZoom: 20, zoomScaleSensitivity: 0.3,
-    });
-    document.getElementById('zoom-in').onclick  = () => pz.zoomIn();
-    document.getElementById('zoom-out').onclick = () => pz.zoomOut();
-    document.getElementById('reset').onclick    = () => { pz.reset(); pz.fit(); pz.center(); };
-    window.addEventListener('resize', () => { pz.resize(); pz.fit(); pz.center(); });
-  
-    /* =========================
-     *  Marcar lotes clickables
-     * ========================= */
-    const svgEl = document.getElementById('hacienda-svg');
-    svgEl.querySelectorAll('path[id]').forEach(el => {
-      if (LOT_ID_RE.test(el.id)) el.classList.add('lot');
-    });
-  
-    /* =========================
-     *  UI mínima para ADMIN
-     * ========================= */
-    function ensureAdminModal() {
-      if (document.getElementById('lot-admin-modal')) return;
-      const modal = document.createElement('div');
-      modal.id = 'lot-admin-modal';
-      modal.innerHTML = `
-        <style>
-          #lot-admin-modal { position: fixed; inset: 0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.45); z-index: 9999; }
-          #lot-admin-card  { width: min(520px, 92vw); background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 10px 30px rgba(0,0,0,.2); font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
-          #lot-admin-card h3 { margin: 0 0 10px; font-size: 18px; }
-          #lot-admin-card form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
-          #lot-admin-card label { font-size: 12px; color: #555; }
-          #lot-admin-card input, #lot-admin-card select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
-          #lot-admin-actions { margin-top: 12px; display:flex; gap: 8px; justify-content:flex-end; }
-          #lot-admin-actions button { padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; }
-          #lot-admin-actions button.primary { border-color:#0a8; background:#0a8; color:#fff; }
-        </style>
-        <div id="lot-admin-modal" role="dialog" aria-modal="true"></div>
-        <div id="lot-admin-card">
-          <h3>Registrar/actualizar lote en CRM</h3>
-          <form id="lot-admin-form">
-            <div>
-              <label>Proyecto</label>
-              <select name="project" id="lot-project"></select>
-            </div>
-            <div>
-              <label>Etapa</label>
-              <select name="stage" id="lot-stage"></select>
-            </div>
-  
-            <div>
-              <label>ID Lote</label>
-              <input name="lot_id" id="lot-id" placeholder="MZ07-L021" required />
-            </div>
-            <div>
-              <label>Estado</label>
-              <select name="status" id="lot-status">
-                <option value="available">Disponible</option>
-                <option value="reserved">Apartado/Reservado</option>
-                <option value="sold">Vendido</option>
-              </select>
-            </div>
-  
-            <div>
-              <label>Área (m²)</label>
-              <input type="number" step="0.01" name="area_m2" id="lot-area" />
-            </div>
-            <div>
-              <label>Precio total (MXN)</label>
-              <input type="number" step="0.01" name="price_total" id="lot-price" />
-            </div>
-  
-            <div style="grid-column:1 / -1">
-              <label>Imagen (URL)</label>
-              <input name="image_url" id="lot-img" placeholder="https://..." />
-            </div>
-          </form>
-          <div id="lot-admin-actions">
-            <button type="button" id="lot-cancel">Cancelar</button>
-            <button type="button" class="primary" id="lot-save">Guardar</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-      modal.prepend(modal.lastElementChild); // overlay atrás
-  
-      // Rellenar selects
-      const selProject = modal.querySelector('#lot-project');
-      const selStage   = modal.querySelector('#lot-stage');
-  
-      for (const key of Object.keys(PROJECTS)) {
-        const opt = document.createElement('option');
-        opt.value = key; opt.textContent = PROJECTS[key].label;
-        selProject.appendChild(opt);
-      }
-      function rebuildStages() {
-        const p = selProject.value;
-        selStage.innerHTML = '';
-        const stages = PROJECTS[p].stages;
-        if (!stages || stages.length === 0) {
-          const opt = document.createElement('option');
-          opt.value = ''; opt.textContent = '—';
-          selStage.appendChild(opt);
-        } else {
-          stages.forEach(s => {
-            const opt = document.createElement('option');
-            opt.value = s; opt.textContent = s;
-            selStage.appendChild(opt);
-          });
-        }
-      }
-      selProject.addEventListener('change', rebuildStages);
-      rebuildStages();
-  
-      // Eventos
-      modal.querySelector('#lot-cancel').onclick = () => { modal.style.display = 'none'; };
-      modal.querySelector('#lot-save').onclick = async () => {
-        const f = modal.querySelector('#lot-admin-form');
-        const payload = {
-          project:   f.project.value,
-          stage:     f.stage.value || null,
-          lot_id:    f.lot_id.value.trim(),
-          status:    f.status.value,
-          area_m2:   f.area_m2.value ? Number(f.area_m2.value) : null,
-          price_total: f.price_total.value ? Number(f.price_total.value) : null,
-          image_url: f.image_url.value.trim() || null
-        };
-        if (!LOT_ID_RE.test(payload.lot_id)) {
-          alert('ID de lote inválido. Ejemplo: MZ07-L021'); return;
-        }
-        try {
-          const res = await fetch('/api/lot/upsert/', {
-            method: 'POST',
-            headers: { ...CSRF() },
-            credentials: 'same-origin',
-            body: (() => {
-              const fd = new FormData();
-              Object.entries(payload).forEach(([k,v]) => fd.append(k, v ?? ''));
-              return fd;
-            })()
-          });
-          const json = await res.json().catch(() => ({}));
-          if (res.ok) {
-            alert('✅ Lote guardado/actualizado en CRM');
-            modal.style.display = 'none';
-          } else {
-            console.error(json);
-            alert('⚠️ Error al guardar el lote.');
-          }
-        } catch (err) {
-          console.error(err);
-          alert('❌ No se pudo conectar con el servidor.');
-        }
-      };
-  
-      // Exponer método para abrir con datos
-      modal.openFor = (lotId, projectKey='hacienda') => {
-        selProject.value = projectKey;
-        rebuildStages();
-        modal.querySelector('#lot-id').value = lotId || '';
-        modal.querySelector('#lot-status').value = 'available';
-        modal.querySelector('#lot-area').value = '';
-        modal.querySelector('#lot-price').value = '';
-        modal.querySelector('#lot-img').value = '';
-        modal.style.display = 'flex';
-      };
-    }
-  
-    /* =========================
-     *  Flujo USUARIO (lead)
-     * ========================= */
-    async function enviarLead(lotId) {
-      const fd = new FormData();
-      fd.append('lot_id', lotId);
-      fd.append('name', 'Visitante Web');           // sustituye por tu formulario real
-      fd.append('email','lead@sendal.mx');
-  
-      try {
-        const res  = await fetch('/api/lead/', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: { ...CSRF() },   // si tu vista está csrf_exempt, puedes omitirlo
-          body: fd
-        });
-        const json = await res.json();
-        if (res.ok) {
-          alert(`✅ Lote ${lotId} enviado al CRM`);
-        } else {
-          console.error(json);
-          alert('⚠️ Error al registrar el lead.');
-        }
-      } catch (e) {
-        console.error(e);
-        alert('❌ No se pudo conectar con el servidor.');
-      }
-    }
-  
-    /* =========================
-     *  Click en el SVG
-     * ========================= */
-    if (isAdmin) ensureAdminModal();
-  
-    svgEl.addEventListener('click', (e) => {
-      const t = e.target;
-      if (!t.classList?.contains('lot')) return;
-  
-      svgEl.querySelectorAll('.lot.selected').forEach(n => n.classList.remove('selected'));
-      t.classList.add('selected');
-  
-      const lotId = t.id;
-  
-      if (isAdmin) {
-        // Admin: abrir modal para capturar metadata del lote
-        document.getElementById('lot-admin-modal').openFor(lotId, 'hacienda');
-      } else {
-        // Usuario: crear/actualizar lead en CRM
-        enviarLead(lotId);
-      }
-    });
-  </script>
-  
+<!-- librería de pan-zoom (deja esta línea antes de tu script) -->
+<script src="https://unpkg.com/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+<script>
+/* -----------------------------
+ * Utilidades básicas
+ * ----------------------------- */
+function getCookie(name){const v=`; ${document.cookie}`;const p=v.split(`; ${name}=`);if(p.length===2)return p.pop().split(';').shift();}
+const CSRF    = () => ({ 'X-CSRFToken': getCookie('csrftoken') });
+const isAdmin = new URL(location.href).searchParams.get('admin') === '1';
+const LOT_ID_RE = /^MZ\d{2}-L\d{3}$/i;
+
+/* -----------------------------
+ * Pan & Zoom
+ * ----------------------------- */
+const pz = svgPanZoom('#hacienda-svg', {
+  zoomEnabled:true, controlIconsEnabled:false, fit:true, center:true,
+  minZoom:0.5, maxZoom:20, zoomScaleSensitivity:.3
+});
+document.getElementById('zoom-in').onclick  = () => pz.zoomIn();
+document.getElementById('zoom-out').onclick = () => pz.zoomOut();
+document.getElementById('reset').onclick    = () => { pz.reset(); pz.fit(); pz.center(); };
+addEventListener('resize', () => { pz.resize(); pz.fit(); pz.center(); });
+
+/* -----------------------------
+ * Marcar lotes clicables
+ * ----------------------------- */
+const svgEl = document.getElementById('hacienda-svg');
+svgEl.querySelectorAll('path[id]').forEach(el => {
+  if (LOT_ID_RE.test(el.id)) el.classList.add('lot');
+});
+
+/* -----------------------------
+ * Panel lateral (viewer)
+ * ----------------------------- */
+function ensureViewer(){
+  if (document.getElementById('lot-viewer')) return;
+  const v = document.createElement('aside');
+  v.id = 'lot-viewer';
+  v.innerHTML = `
+    <style>
+      #lot-viewer{position:fixed;top:0;right:0;bottom:0;width:min(380px,90vw);
+        background:#fff;border-left:1px solid #e5e5e5;box-shadow:-8px 0 24px rgba(0,0,0,.08);
+        transform:translateX(105%);transition:transform .25s ease;z-index:9998;display:flex;flex-direction:column}
+      #lot-viewer.open{transform:translateX(0)}
+      #lotv-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #eee}
+      #lotv-title{font-weight:700}
+      #lotv-close{appearance:none;border:1px solid #ddd;background:#fafafa;border-radius:8px;padding:6px 10px;cursor:pointer}
+      #lotv-body{padding:12px 16px;overflow:auto}
+      #lotv-body dl{margin:0}
+      #lotv-body dt{font-size:.82rem;color:#666;margin-top:10px}
+      #lotv-body dd{margin:2px 0 8px;font-weight:600}
+      #lotv-extra{margin-top:8px;border-top:1px dashed #e4e4e4;padding-top:8px}
+      .lot.selected{stroke:#0a84ff;stroke-width:2;filter:brightness(1.05)}
+      .kv-row{display:grid;grid-template-columns:1fr auto;gap:6px;padding:6px 0}
+      .kv-row .k{color:#666}
+      .kv-row .v{font-weight:600}
+    </style>
+    <div id="lotv-head">
+      <div id="lotv-title">—</div>
+      <button id="lotv-close">Cerrar</button>
+    </div>
+    <div id="lotv-body">
+      <dl id="lotv-main">
+        <dt>Código</dt><dd id="lotv-code">—</dd>
+        <dt>Estado</dt><dd id="lotv-status">—</dd>
+        <dt>Precio total (MXN)</dt><dd id="lotv-total">—</dd>
+      </dl>
+      <div id="lotv-extra">
+        <dt style="color:#888;font-weight:700">Campos adicionales</dt>
+        <div id="lotv-kv"></div>
+      </div>
+    </div>`;
+  document.body.appendChild(v);
+  v.querySelector('#lotv-close').onclick = () => v.classList.remove('open');
+}
+ensureViewer();
+
+/* -----------------------------
+ * Cargar datos de /api/lots/ (1 sola vez)
+ * ----------------------------- */
+let LOTS_INDEX = null;
+
+async function loadLots(){
+  if (LOTS_INDEX) return LOTS_INDEX;
+  const res  = await fetch('/api/lots/', { credentials:'same-origin' });
+  const data = await res.json();
+  const items = (data.items || data || []);
+  LOTS_INDEX = new Map();
+  for (const it of items){
+    const cf = it.customFields || it.customfields || {};
+    const lotId = (it.name || cf.lot_id || cf.codigo || '').toString().trim();
+    if (LOT_ID_RE.test(lotId)) LOTS_INDEX.set(lotId, { ...it, customFields: cf });
+  }
+  return LOTS_INDEX;
+}
+
+/* -----------------------------
+ * Etiquetas amigables para customFields
+ * (puedes agregar/editar sin tocar lógica)
+ * ----------------------------- */
+const CF_LABELS = {
+  // IDs largos (ejemplos de tu instancia)
+  "WsuFeYWAl97hwKGCY5Vj": "Código",
+  "MANmcJVjPiz0uBtCswUi": "Proyecto",
+  "7d0qBsGiv1G3T5qOUj1B": "Manzana",
+  "IIqAas5DwSqRgEWIFhHt": "Área total (m²)",
+  "IETYqhhdidL1gXagEeMQ": "Precio total (MXN)",
+  "88JKyJjACAbQiVdPnrF6": "Precio m² (MXN)",
+  "MwaBss3oDm6BKmD7QW0T": "Estado",
+  "8BJkYJjACAbQiVdPnrF6": "Porcentaje de enganche",
+  "X1kWLMDpDaxkfXW98RHV": "Porcentaje de enganche",
+  "BKKZifqsTaokXyz707iv": "Monto de apartado (MXN)",
+  "0EkDyYSOt4t9oD3jPeef": "Días límite de apartado",
+  "y3abg8BBl6i93Mop4TXk": "Imagen de lote",
+  "3zfKmcTNjTscP1Y3KbLp": "Dimensiones del lote (frente, largo, fondo)",
+  "iOme9wTVbAPX48TpsFFR": "Meses de financiamiento",
+  "PMtcOa7frfBCo187VRvK": "Porcentaje de liquidación",
+  "fz26j93UOZVT5CDrcgvn": "Porcentaje de financiamiento",
+  "QqOHGq3VWKY1DPJjZZrB": "Monto de enganche (MXN)",
+  "u76bHu22UvRPfdSzP0zn": "Monto de financiamiento (MXN)",
+  "ogLKR8JUkvA4Deoe3TfD": "Monto de mensualidad (MXN)",
+  "FoafnsOVS7i1qzei3Ar7": "Monto de liquidación (MXN)"
+};
+
+/* Campos que deben ocultarse totalmente en UI */
+const CF_HIDE = new Set([
+  "XZqq60dhvH4PRTKvJZP3",
+  "XZqq60dhwH4PRTkVzJP3"
+]);
+
+
+/* Heurística de nombres por si un ID no está en CF_LABELS */
+function friendlyKey(k, v){
+  if (CF_LABELS[k]) return CF_LABELS[k];
+  const s = String(v ?? '').toLowerCase();
+  if (/^mz\d{2}-l\d{3}$/i.test(String(v))) return "Código";
+  if (/(hacienda|residencial|proyecto)/i.test(s)) return "Proyecto";
+  if (/^manzana\s*\d+/i.test(s)) return "Manzana";
+  if (/(disponible|vendido|apartado|open|closed)/i.test(s)) return "Estado";
+  if (/m²|m2/.test(s)) return "Superficie (m²)";
+  if (/https?:\/\/drive\.google\.com/.test(String(v))) return "Imagen de lote";
+  if (/x/.test(s) && /m\b/.test(s)) return "Dimensiones";
+  return k; // fallback
+}
+
+/* -----------------------------
+ * Helpers de formateo
+ * ----------------------------- */
+const fmtMoney = n => (n==null || isNaN(n)) ? '—' :
+  Number(n).toLocaleString('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0});
+const fmtText  = v => (v==null || v==='') ? '—' : String(v);
+
+/* -----------------------------
+ * Mostrar info del lote
+ * ----------------------------- */
+async function showLot(lotId){
+  const idx = await loadLots();
+  const rec = idx.get(lotId);
+  const viewer = document.getElementById('lot-viewer');
+
+  if (!rec){
+    viewer.querySelector('#lotv-title').textContent = lotId + ' — sin datos';
+    viewer.querySelector('#lotv-code').textContent  = lotId;
+    viewer.querySelector('#lotv-status').textContent= '—';
+    viewer.querySelector('#lotv-total').textContent = '—';
+    viewer.querySelector('#lotv-kv').innerHTML = '<p style="color:#888">Este lote no está en /api/lots/.</p>';
+    viewer.classList.add('open');
+    return;
+  }
+
+  const cf = rec.customFields || {};
+  viewer.querySelector('#lotv-title').textContent = `${lotId} — ${(rec.status || '—').toString().toUpperCase()}`;
+  viewer.querySelector('#lotv-code').textContent  = lotId;
+  viewer.querySelector('#lotv-status').textContent= (rec.status || '—');
+  viewer.querySelector('#lotv-total').textContent = fmtMoney(rec.monetaryValue);
+
+  // “Campos adicionales” con etiquetas amigables
+  const kv = viewer.querySelector('#lotv-kv');
+  kv.innerHTML = '';
+  const shownMain = new Set(["Código","Estado","Precio total (MXN)"]);
+
+  const rows = [];
+  for (const [k, raw] of Object.entries(cf)){
+    // 🔴 Si el campo está oculto → se omite totalmente
+    if (CF_HIDE.has(k)) continue;
+    const label = friendlyKey(k, raw);
+    if (shownMain.has(label)) continue; // evita repetir lo ya mostrado arriba
+
+    let valueNode;
+if (typeof raw === 'number') {
+  valueNode = document.createElement('span');
+
+  // dinero
+  if (/(mxn|\$|precio)/i.test(label)) {
+    valueNode.textContent = fmtMoney(raw);
+
+  // porcentaje
+  } else if (/(porcentaje|%|tasa|pct)/i.test(label)) {
+    valueNode.textContent = raw.toLocaleString('es-MX') + '%';
+
+  // número normal
+  } else {
+    valueNode.textContent = raw.toLocaleString('es-MX');
+  }
+
+} else if (/^https?:\/\//.test(String(raw))) {
+  valueNode = document.createElement('a');
+  valueNode.href = String(raw);
+  valueNode.target = '_blank';
+  valueNode.rel = 'noopener';
+  valueNode.textContent = 'Abrir enlace';
+
+} else {
+  valueNode = document.createElement('span');
+  valueNode.textContent = fmtText(raw);
+}
+
+
+    const row = document.createElement('div');
+    row.className = 'kv-row';
+    const kEl = document.createElement('div'); kEl.className = 'k'; kEl.textContent = label;
+    const vEl = document.createElement('div'); vEl.className = 'v'; vEl.appendChild(valueNode);
+    row.appendChild(kEl); row.appendChild(vEl);
+    rows.push(row);
+  }
+  if (rows.length === 0){
+    kv.innerHTML = '<p style="color:#888">Sin campos adicionales.</p>';
+  } else {
+    const frag = document.createDocumentFragment();
+    rows.forEach(r => frag.appendChild(r));
+    kv.appendChild(frag);
+  }
+
+  viewer.classList.add('open');
+}
+
+/* -----------------------------
+ * Click en SVG
+ * ----------------------------- */
+if (isAdmin) {
+  // Si tienes un modal admin propio, lo conservamos.
+}
+
+svgEl.addEventListener('click', (e) => {
+  const t = e.target;
+  if (!t.classList?.contains('lot')) return;
+
+  // Marcar selección visual
+  svgEl.querySelectorAll('.lot.selected').forEach(n => n.classList.remove('selected'));
+  t.classList.add('selected');
+
+  const lotId = t.id;
+
+  if (isAdmin && typeof document.getElementById('lot-admin-modal')?.openFor === 'function') {
+    document.getElementById('lot-admin-modal').openFor(lotId, 'hacienda');
+  } else {
+    showLot(lotId);
+  }
+});
+</script>
+
 
 
 </body>
