@@ -20,6 +20,34 @@ from django.utils.translation import gettext as __
 import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from pathlib import Path
+
+
+import requests
+import os
+
+
+def send_quote_to_ghl(data):
+    url = "https://services.leadconnectorhq.com/opportunities/upsert"
+    headers = {
+        "Authorization": f"Bearer {os.environ['GHL_ACCESS_TOKEN']}",
+        "Version": "2021-07-28",
+        "Content-Type": "application/json",
+    }
+
+    body = {
+        "locationId": os.environ["GHL_LOCATION_ID"],
+        "pipelineId": os.environ["GHL_PIPELINE_ID"],
+        "stageId": os.environ["GHL_STAGE_ID"],
+        "contactId": data["contactId"],
+        "name": f"Cotización {data['id_lote']}",
+        "status": "open",
+        "monetaryValue": data["precio_total"],
+        "customFields": data["customFields"],
+    }
+
+    response = requests.post(url, json=body, headers=headers)
+    return response.json()
 
 
 def render_error(request, code, title, message):
@@ -175,7 +203,7 @@ COTIZADORES = {
         "map_img": "resources/images/places/Komchén/masterplan.png",
         "btn": "btn-komchen",
         "otros": ["hacienda"],
-        "show_in_index": True,
+        "show_in_index": False,
     },
     "hacienda": {
         "label": _("Hacienda Residencial"),
@@ -343,11 +371,7 @@ def cotiza(request):
 
     data = form.cleaned_data
 
-    # ----------------------------
-    # Destinatarios y remitente seguros
-    # ----------------------------
     recipients = []
-    # Acepta cualquiera de tus keys de settings
     for name in ("CONTACT_EMAILS", "CONTACT_RECIPIENTS"):
         val = getattr(settings, name, None)
         if isinstance(val, (list, tuple)):
@@ -362,7 +386,6 @@ def cotiza(request):
         recipients = [fallback]
 
     if not recipients:
-        # Evitamos 500 por mala configuración
         messages.error(
             request, _("No hay destinatarios configurados para recibir la cotización.")
         )
@@ -372,7 +395,6 @@ def cotiza(request):
         settings, "EMAIL_HOST_USER", ""
     )
     if not from_addr:
-        # Último recurso: usa el primer destinatario
         from_addr = recipients[0]
 
     subject = _("Nueva solicitud de cotización — {n} {a}").format(
@@ -391,8 +413,8 @@ def cotiza(request):
             subject=subject,
             body=body,
             from_email=from_addr,
-            to=recipients,  # destinatarios
-            reply_to=[data["email"]],  # así puedes responder al usuario
+            to=recipients,
+            reply_to=[data["email"]],
         )
         msg.send(fail_silently=False)
     except Exception as e:
@@ -430,9 +452,9 @@ def contacto(request):
                 EmailMessage(
                     subject=subject,
                     body=body,
-                    from_email=from_email,  # remitente de tu dominio
+                    from_email=from_email,
                     to=to_emails,
-                    reply_to=[data["email"]],  # responde directo al usuario
+                    reply_to=[data["email"]],
                 ).send(fail_silently=False)
 
             except BadHeaderError:
@@ -441,18 +463,15 @@ def contacto(request):
                 )
                 return render(request, "pages/contacto.html", {"form": form})
             except Exception:
-                # No exponemos detalles técnicos al usuario
                 messages.error(
                     request, _("No pudimos enviar tu mensaje. Inténtalo más tarde.")
                 )
                 return render(request, "pages/contacto.html", {"form": form})
 
             messages.success(request, _("¡Gracias! Recibimos tu mensaje."))
-            return redirect("contacto")  # PRG: evita reenvío al refrescar
-        # Form inválido: volvemos a pintar con errores de campo, sin mensaje global extra
+            return redirect("contacto")
         return render(request, "pages/contacto.html", {"form": form})
 
-    # GET
     form = ContactForm()
     return render(request, "pages/contacto.html", {"form": form})
 
@@ -624,3 +643,77 @@ def predio_compat(request, slug):
     if slug.startswith("predio"):
         return redirect("predio-detail", slug=slug, permanent=True)
     raise Http404()
+
+
+# COTIZADOR
+def komchen_svg_view(request):
+    # 1) lee el SVG (guardado en static/maps/komchen.svg)
+    svg_path = Path(settings.BASE_DIR) / "static" / "maps" / "komchen.svg"
+    svg_markup = svg_path.read_text(encoding="utf-8")
+
+    # 2) estados (CRM → fallback Excel)
+    lot_states = _fetch_states_from_crm("komchen")
+
+    ctx = {
+        "svg_markup": svg_markup,
+        "lot_states_json": json.dumps(lot_states),
+    }
+    return render(request, "komchen.html", ctx)
+
+
+def hacienda_svg_view(request):
+
+    svg_path = Path(settings.BASE_DIR) / "static" / "maps" / "hacienda.svg"
+    svg_markup = svg_path.read_text(encoding="utf-8")
+
+    # 2) estados (CRM → fallback Excel)
+    lot_states = _fetch_states_from_crm("hacienda")
+
+    ctx = {
+        "svg_markup": svg_markup,
+        "lot_states_json": json.dumps(lot_states),
+    }
+    return render(request, "hacienda.html", ctx)
+
+
+def cotizador_detail(request, slug: str):
+    """
+    Vista del cotizador por proyecto.
+    Ahora solamente redirige a la página SVG correspondiente.
+    """
+    # ¿tenemos ruta SVG para este proyecto?
+    svg_urlname = SVG_ROUTES.get(slug)
+    if not svg_urlname:
+        # Si aún no existe el SVG de ese proyecto, puedes:
+        # - mandar 404
+        # - o redirigir al índice del cotizador
+        raise Http404("Proyecto sin vista SVG configurada")
+        # return redirect("cotizador")
+
+    return redirect(svg_urlname)
+
+
+def _fetch_states_from_crm(dev_slug: str) -> dict[str, str]:
+    """
+    Devuelve { 'L-001': 'available'|'reserved'|'sold', ... } desde el CRM.
+    Por ahora, hacemos fallback al Excel con tu util load_states().
+    """
+    try:
+        states_by_dev = load_states(
+            force_reload=False
+        )  # {'komchen': {1:'disponible', ...}}
+    except Exception:
+        states_by_dev = {}
+
+    raw = states_by_dev.get(dev_slug, {}) or {}  # {1:'vendido', ...}
+    out: dict[str, str] = {}
+    for num, st in raw.items():
+        s = (st or "").lower()
+        if "vend" in s:
+            css = "sold"
+        elif "apart" in s or "reserv" in s:
+            css = "reserved"
+        else:
+            css = "available"
+        out[f"L-{int(num):03d}"] = css
+    return out

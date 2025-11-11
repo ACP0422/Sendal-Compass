@@ -622,12 +622,10 @@ font-size: 20px;
 
   width: calc(100% - 32px);
   
-  /* pegado al bottom */
-  margin: 3px auto 0; /* estaba 14px — lo bajamos */
-  transform: translateY(8px); /* empuja hacia abajo dentro del mapa */
+  margin: 3px auto 0; 
+  transform: translateY(8px); 
 }
 
-/* móvil */
 @media (max-width:768px){
   .explora__legend-box{
     width: calc(100% - 24px);

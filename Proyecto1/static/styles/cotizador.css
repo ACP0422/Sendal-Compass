@@ -519,3 +519,54 @@
   border-radius:14px; background:#f4efe7;
   box-shadow:0 2px 0 rgba(0,0,0,.08);
 }
+
+
+
+
+
+
+
+/* Ocultos */
+[hidden]{ display:none !important; }
+
+/* =====================================================================
+   OVERRIDES MOBILE-FIRST SOLO PARA EL COTIZADOR PRINCIPAL (quote--home)
+   ===================================================================== */
+
+/* ——— Base móvil (siempre 1 columna, sin importar cols-2/cols-3) ——— */
+.quote--home .hero img{ height: clamp(180px, 48vw, 360px); }
+.quote--home .banner-inner{
+  padding: clamp(16px, 4vw, 32px) var(--gutter) clamp(20px, 4vw, 32px);
+}
+.quote--home .title{ font-size: clamp(26px, 6.2vw, 42px); margin: 4px 0 12px; }
+.quote--home .kicker{ font-size: clamp(15px, 3.6vw, 18px); }
+
+/* ⚠️ Forzamos 1 columna también si el contenedor trae cols-2/cols-3 */
+.quote--home .actions,
+.quote--home .actions.cols-1,
+.quote--home .actions.cols-2,
+.quote--home .actions.cols-3{
+  grid-template-columns: 1fr;
+  gap: clamp(12px, 3vw, 20px);
+  width: 100%;
+  max-width: 960px;
+  margin: 18px auto 22px;
+  padding: 0 var(--gutter);
+}
+
+/* ——— Escala a 2 columnas cuando hay espacio (y solo si corresponde) ——— */
+@media (min-width: 640px){
+  .quote--home .actions.cols-2{
+    grid-template-columns: repeat(2, minmax(220px,1fr));
+  }
+}
+
+/* ——— Escala a 3 columnas para pantallas grandes (si corresponde) ——— */
+@media (min-width: 1024px){
+  .quote--home .title{ font-size: clamp(32px, 3.8vw, 50px); }
+  .quote--home .hero img{ height: clamp(280px, 36vw, 420px); }
+  .quote--home .actions.cols-3{
+    grid-template-columns: repeat(3, minmax(220px,1fr));
+  }
+}
+

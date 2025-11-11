@@ -173,3 +173,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+GHL_API_BASE = os.getenv("GHL_API_BASE", "https://services.leadconnectorhq.com")
+GHL_API_VERSION = os.getenv("GHL_API_VERSION", "2021-07-28")
+
+GHL_LOCATION_ID = os.getenv("GHL_LOCATION_ID", "")
+GHL_PIPELINE_INVENTARIO = os.getenv("GHL_PIPELINE_INVENTARIO", "")
+GHL_STAGE_INVENTARIO = os.getenv("GHL_STAGE_INVENTARIO", "")
+GHL_CONTACTO_INVENTARIO_ID = os.getenv("GHL_CONTACTO_INVENTARIO_ID", "")
+GHL_ACCESS_TOKEN = os.getenv("GHL_ACCESS_TOKEN", "")
