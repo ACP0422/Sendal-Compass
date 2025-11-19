@@ -31,6 +31,7 @@ urlpatterns = [
     ),
     # path("proyectos/komchen/", views.komchen, name="komchen"),
     path("api/", include("ghl_connector.urls")),
+    path("api/quote-lot/", views.quote_lot, name="quote_lot"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler400 = "principal.views.error_400"
 handler403 = "principal.views.error_403"

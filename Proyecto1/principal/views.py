@@ -26,6 +26,105 @@ from pathlib import Path
 import requests
 import os
 
+# NUEVO
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.conf import settings
+from ghl_connector import services
+
+
+def _extract_contact_id(contact):
+    """
+    Normaliza las distintas formas en que puede venir el contacto desde la API de GHL
+    y devuelve siempre el contact_id. Si no lo encuentra, lanza KeyError('id').
+    """
+    if not contact:
+        raise ValueError("No se recibió información de contacto desde GHL")
+
+    # Caso 1: dict plano con 'id'
+    if isinstance(contact, dict) and "id" in contact:
+        return contact["id"]
+
+    # Caso 2: { "contact": { "id": ... } }
+    if isinstance(contact, dict) and isinstance(contact.get("contact"), dict):
+        inner = contact["contact"]
+        if "id" in inner:
+            return inner["id"]
+
+    # Caso 3: { "contacts": [ { "id": ... }, ... ] }
+    if isinstance(contact, dict) and isinstance(contact.get("contacts"), list):
+        lista = contact["contacts"]
+        if lista and isinstance(lista[0], dict) and "id" in lista[0]:
+            return lista[0]["id"]
+
+    # Si llega aquí, no encontramos el id
+    raise KeyError("id")
+
+
+@require_POST
+def quote_lot(request):
+    """
+    Recibe datos del cliente + lot_id desde el formulario del panel
+    y crea una oportunidad en el pipeline de Ventas.
+    """
+
+    # 1) Datos del formulario (aceptamos español o inglés)
+    lot_id = request.POST.get("lot_id")
+
+    first_name = request.POST.get("first_name") or request.POST.get("nombre")
+    last_name = request.POST.get("last_name") or request.POST.get("apellido")
+    email = request.POST.get("email") or request.POST.get("correo")
+    phone = request.POST.get("phone") or request.POST.get("telefono")
+
+    if not (lot_id and first_name and last_name and (email or phone)):
+        return JsonResponse({"ok": False, "error": "Faltan datos"}, status=400)
+
+    # 2) Obtener los datos completos del lote desde tu API de inventario
+    #    (la misma que usa el mapa: /api/lots/?lot_id=MZ04-L002, por ejemplo)
+    lots_api_url = request.build_absolute_uri("/api/lots/")
+    try:
+        r = requests.get(lots_api_url, params={"lot_id": lot_id}, timeout=10)
+        data = r.json()
+    except Exception as e:
+        return JsonResponse(
+            {"ok": False, "error": f"Error obteniendo lote: {e}"}, status=500
+        )
+
+    # Suponiendo que la API devuelve {"items":[ {...}, ... ]}
+    items = (data or {}).get("items") or []
+    lot_data = items[0] if items else None
+    if not lot_data:
+        return JsonResponse({"ok": False, "error": "Lote no encontrado"}, status=404)
+
+    location_id = settings.GHL_LOCATION_ID
+    pipeline_id = settings.GHL_PIPELINE_VENTAS_ID
+    pipeline_stage_id = settings.GHL_PIPELINE_VENTAS_STAGE_INICIAL_ID
+
+    try:
+        # 3) Contacto (persona)
+        contact = services.get_or_create_contact(
+            location_id=location_id,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone=phone,
+        )
+        contact_id = _extract_contact_id(contact)
+
+        # 4) Oportunidad en Ventas ligada a ese contacto + ese lote
+        opp = services.upsert_sales_opportunity(
+            location_id=location_id,
+            pipeline_id=pipeline_id,
+            pipeline_stage_id=pipeline_stage_id,
+            contact_id=contact_id,
+            lot_data=lot_data,
+            client_name=f"{first_name} {last_name}",
+        )
+    except Exception as e:
+        return JsonResponse({"ok": False, "error": str(e)}, status=500)
+
+    return JsonResponse({"ok": True, "opportunityId": opp.get("id")})
+
 
 def send_quote_to_ghl(data):
     url = "https://services.leadconnectorhq.com/opportunities/upsert"
@@ -508,7 +607,7 @@ PREDIO_REGISTRY = {
                 "address": _("Calle 35 # 198 F"),
                 "propiedad_tipo": _("Propiedad Privada"),
                 "colonia": _("Centro"),
-                "map_url": "#",
+                "map_url": "https://www.google.com/maps?daddr=20.693193,-88.200813&saddr",
                 "features": [
                     _("Barda Perimetral"),
                     _("Puerta de Acceso"),
@@ -542,7 +641,7 @@ PREDIO_REGISTRY = {
                 "address": _("Calle 39 #205 C"),
                 "propiedad_tipo": _("Propiedad Privada"),
                 "colonia": _("Centro"),
-                "map_url": "#",
+                "map_url": "https://www.google.com/maps/dir//20.68804,-88.199226/@20.6880204,-88.2816277,29286m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D",
                 "features": [
                     _("Construcción 321 m²"),
                     _("2 niveles"),

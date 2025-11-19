@@ -60,6 +60,321 @@
       box-shadow: 0 1px 6px rgba(0,0,0,.15);
     }
     .controls button:hover { background: #f5f5f5; }
+
+  /*nuevo*/
+  /* ================== SENDAL – PANEL LOTE (SOLO CSS) ================== */
+/* Paleta con fallbacks (si ya tienes tokens, se respetan) */
+:root{
+  --sendal-bg: var(--bg-cream, #fff);
+  --sendal-ink: var(--ink, #1e1f1d);
+  --sendal-muted: var(--muted, #6a7178);
+  --sendal-line: var(--line, #e6e7ea);
+  --sendal-accent: var(--brand, #0a8);
+  --sendal-accent-2: var(--accent, #2f4f4f);   /* sobrio */
+}
+
+/* Contenedor del panel */
+aside, #lot-panel, .lot-panel{
+  background: var(--sendal-bg);
+  color: var(--sendal-ink);
+  border-left: 1px solid var(--sendal-line);
+  box-shadow: -4px 0 18px rgba(0,0,0,.06);
+  padding: clamp(18px, 2.4vw, 26px);
+  min-width: min(40ch, 40vw);
+  max-height: 100vh;
+  overflow:auto;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* Cabecera: código + estado */
+aside h1, #lot-panel h1, .lot-panel h1,
+aside h2, #lot-panel h2, .lot-panel h2{
+  margin: 0 0 10px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: var(--sendal-ink);
+}
+.badge, [data-badge], .status{
+  display:inline-block;
+  padding:.3rem .6rem; margin-left:.5rem;
+  border:1px solid color-mix(in srgb, var(--sendal-accent), #000 18%);
+  color: var(--sendal-accent);
+  background: transparent;
+  border-radius:999px;
+  font: 600 11.5px/1 system-ui;
+  text-transform: uppercase; letter-spacing:.45px;
+}
+.status--sold{ color:#b91c1c; border-color: color-mix(in srgb, #b91c1c, #000 18%); }
+.status--reserved{ color: var(--sendal-accent-2); border-color: color-mix(in srgb, var(--sendal-accent-2), #000 18%); }
+
+/* Separadores y títulos de sección */
+.section-title{
+  margin: 18px 0 8px;
+  color: var(--sendal-muted);
+  font: 600 12px/1.2 system-ui;
+  text-transform: uppercase; letter-spacing:.5px;
+}
+hr{ border:0; border-top:1px solid var(--sendal-line); margin:16px 0; }
+
+/* Precio / cifras clave destacadas */
+.price-lg{
+  display:block;
+  margin: 2px 0 12px;
+  font-size: clamp(19px, 3.2vw, 26px);
+  font-weight: 700;
+}
+
+/* Definiciones en 2 columnas: etiqueta (izq), valor (der) */
+aside dl, #lot-panel dl, .lot-panel dl{
+  display:grid;
+  grid-template-columns: 1.05fr 1.25fr;
+  gap:.55rem 1rem;
+  align-items:start;
+  margin:0 0 .25rem;
+}
+dl dt{ color: var(--sendal-muted); font:500 13.5px/1.35 system-ui; }
+dl dd{ margin:0; color: var(--sendal-ink); font:520 14.5px/1.35 system-ui; }
+dl .full{ grid-column: 1 / -1; }
+
+/* Tablas (si usas <table>) */
+aside table, #lot-panel table, .lot-panel table{
+  width:100%; border-collapse:separate; border-spacing:0; margin:.25rem 0 0;
+  font-size:14px;
+}
+table th, table td{ padding:.6rem .75rem; border-bottom:1px solid var(--sendal-line); }
+table th{ color: var(--sendal-muted); font-weight:600; width:42%; }
+table tr:last-child td{ border-bottom:0; }
+
+/* Enlaces */
+a{ color: var(--sendal-accent-2); text-decoration:none; font-weight:520; }
+a:hover{ text-decoration:underline; }
+a[target="_blank"]::after{ content:"↗"; margin-left:.35rem; font-size:.9em; opacity:.85; }
+
+/* ================== FORM: 4 CAMPOS APILADOS ================== */
+aside form, #lot-panel form, .lot-panel form{
+  display:grid;
+  grid-template-columns: 1fr;  /* apilado siempre en panel estrecho */
+  gap:.7rem;
+  margin-top: 12px;
+}
+
+/* Si tu HTML usa envoltorios tipo .row, no rompe layout */
+aside form .row, #lot-panel form .row, .lot-panel form .row{ display: contents; }
+
+/* Campos con alto contraste y borde definido */
+aside input[type="text"],
+aside input[type="email"],
+aside input[type="tel"],
+aside input[type="number"],
+aside select,
+aside textarea,
+#lot-panel input[type="text"],
+#lot-panel input[type="email"],
+#lot-panel input[type="tel"],
+#lot-panel input[type="number"],
+#lot-panel select,
+#lot-panel textarea,
+.lot-panel input[type="text"],
+.lot-panel input[type="email"],
+.lot-panel input[type="tel"],
+.lot-panel input[type="number"],
+.lot-panel select,
+.lot-panel textarea{
+  width:100%;
+  min-height:44px;
+  border:1px solid #d0d5dd;            /* más visible que #ececec */
+  border-radius:12px;
+  padding:12px 14px;
+  background:#fff;
+  color:var(--sendal-ink);
+  font:500 14px/1.2 system-ui;
+  outline:none;
+  transition:border-color .15s, box-shadow .15s, background-color .15s;
+}
+::placeholder{ color: color-mix(in srgb, var(--sendal-muted), #fff 20%); }
+
+/* Focus sobrio (gris/verde), sin azul del navegador */
+aside input:focus, #lot-panel input:focus, .lot-panel input:focus,
+aside select:focus, #lot-panel select:focus, .lot-panel select:focus,
+aside textarea:focus, #lot-panel textarea:focus, .lot-panel textarea:focus{
+  border-color: color-mix(in srgb, var(--sendal-accent), #000 22%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sendal-accent), transparent 82%);
+}
+
+/* Etiquetas del form (si existen como <label>) */
+aside label, #lot-panel label, .lot-panel label{
+  font:600 13px/1.2 system-ui;
+  color:var(--sendal-ink);
+  margin-bottom:.25rem;
+}
+
+/* Botón enviar */
+aside .btn, #lot-panel .btn, .lot-panel .btn,
+aside .button, #lot-panel .button, .lot-panel .button,
+aside button[type="submit"], #lot-panel button[type="submit"], .lot-panel button[type="submit"]{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.85rem 1rem;
+  border-radius:12px;
+  border:1px solid color-mix(in srgb, var(--sendal-accent), #000 12%);
+  background: var(--sendal-accent);
+  color:#fff; font-weight:700; letter-spacing:.2px; cursor:pointer;
+}
+aside .btn:disabled, #lot-panel .btn:disabled, .lot-panel .btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+/* Scrollbar sutil */
+aside::-webkit-scrollbar, #lot-panel::-webkit-scrollbar, .lot-panel::-webkit-scrollbar{ width:10px; }
+aside::-webkit-scrollbar-thumb, #lot-panel::-webkit-scrollbar-thumb, .lot-panel::-webkit-scrollbar-thumb{
+  background: color-mix(in srgb, var(--sendal-muted), transparent 70%);
+  border-radius:999px;
+}
+
+/* ====== PANEL LOTE – versión compacta/pro ====== */
+:root{
+  --ink: var(--ink, #1f2522);
+  --muted: var(--muted, #66707a);
+  --line: var(--line, #E6E8EB);
+  --bg: var(--bg-cream, #FFFFFF);
+  --accent: var(--brand, #0a8);
+}
+
+aside, #lot-panel, .lot-panel{
+  background: var(--bg);
+  color: var(--ink);
+  border-left: 1px solid var(--line);
+  box-shadow: -4px 0 16px rgba(0,0,0,.05);
+  padding: 16px 18px;                /* ← más compacto */
+  min-width: min(40ch, 40vw);
+  max-height: 100vh;
+  overflow:auto;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Título y separadores sobrios */
+aside h1, #lot-panel h1, .lot-panel h1{
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: .2px;
+}
+.section-title{
+  margin: 14px 0 6px;
+  color: var(--muted);
+  font: 600 11px/1.2 system-ui;
+  text-transform: uppercase;
+  letter-spacing: .45px;
+}
+hr{ border:0; border-top:1px solid var(--line); margin: 14px 0; }
+
+/* ===== Datos del lote en “tabla” compacta ===== */
+aside dl, #lot-panel dl, .lot-panel dl{
+  display: grid;
+  grid-template-columns: 1fr auto;   /* etiqueta izq, valor der */
+  gap: 0 12px;
+  margin: 4px 0 0;
+}
+dl dt, dl dd{
+  padding: 7px 0;                    /* ← menos margen vertical */
+  border-bottom: 1px solid var(--line);
+}
+dl dt{
+  color: var(--muted);
+  font: 500 13px/1.25 system-ui;
+}
+dl dd{
+  margin: 0;
+  text-align: right;                 /* valores alineados a la derecha */
+  color: var(--ink);
+  font: 600 14px/1.25 system-ui;     /* un poco más fuerte que la etiqueta */
+}
+dl .full{ grid-column: 1 / -1; }
+
+/* Enlaces sutiles y profesionales */
+a{ color: #106f86; text-decoration: none; font-weight: 550; }
+a:hover{ text-decoration: underline; }
+a[target="_blank"]::after{ content:"↗"; margin-left:.3rem; font-size:.9em; opacity:.85; }
+
+/* ===== FORM – 4 campos apilados, sin “colchón” extra ===== */
+aside form, #lot-panel form, .lot-panel form{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;                          /* ← menos separación entre campos */
+  margin-top: 10px;
+}
+aside form .row, #lot-panel form .row, .lot-panel form .row{ display: contents; }
+
+aside label, #lot-panel label, .lot-panel label{
+  font: 600 12.5px/1.15 system-ui;
+  color: var(--ink);
+  margin-bottom: 4px;                /* compacto */
+}
+
+/* Campos: más delgados, lectura clara */
+aside input[type="text"],
+aside input[type="email"],
+aside input[type="tel"],
+aside input[type="number"],
+aside select,
+aside textarea,
+#lot-panel input[type="text"],
+#lot-panel input[type="email"],
+#lot-panel input[type="tel"],
+#lot-panel input[type="number"],
+#lot-panel select,
+#lot-panel textarea,
+.lot-panel input[type="text"],
+.lot-panel input[type="email"],
+.lot-panel input[type="tel"],
+.lot-panel input[type="number"],
+.lot-panel select,
+.lot-panel textarea{
+  width: 100%;
+  min-height: 38px;                  /* ← menos alto */
+  border: 1px solid #D0D5DD;         /* contraste suficiente */
+  border-radius: 10px;               /* menos redondo */
+  padding: 8px 10px;                 /* ← menos padding */
+  background: #fff;
+  color: var(--ink);
+  font: 500 14px/1.2 system-ui;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+::placeholder{ color: #9AA3AD; }
+
+aside input:focus, #lot-panel input:focus, .lot-panel input:focus,
+aside select:focus, #lot-panel select:focus, .lot-panel select:focus,
+aside textarea:focus, #lot-panel textarea:focus, .lot-panel textarea:focus{
+  border-color: color-mix(in srgb, var(--accent), #000 22%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent), transparent 82%);
+}
+
+/* Botón sobrio y compacto */
+aside button[type="submit"], #lot-panel button[type="submit"], .lot-panel button[type="submit"],
+aside .btn, #lot-panel .btn, .lot-panel .btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .7rem .9rem;              /* ← menos alto */
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent), #000 15%);
+  background: #655D49;
+  color: #fff; font-weight: 700; letter-spacing: .2px;
+}
+
+/* Scrollbar sutil */
+aside::-webkit-scrollbar, #lot-panel::-webkit-scrollbar, .lot-panel::-webkit-scrollbar{ width: 10px; }
+aside::-webkit-scrollbar-thumb, #lot-panel::-webkit-scrollbar-thumb, .lot-panel::-webkit-scrollbar-thumb{
+  background: #C9D1D9; border-radius: 999px;
+}
+
+/* ===== Opcional: resaltar “bloque financiero” (sin tocar HTML)
+   Hace una franja suave desde el primer “Meses de financiación” en adelante.
+   Si cambia el orden, quita esta sección. ===== */
+aside dl > dt:nth-of-type(n+6),
+aside dl > dd:nth-of-type(n+6){
+  background: linear-gradient(to right, rgba(10,136,128,.04), rgba(10,136,128,0)) ;
+}
+
+
   </style>
 </head>
 <body>
@@ -116,16 +431,16 @@
 <path id="MZ05-L027" d="M1014 212H947V238H1014V212Z" fill="#A3FFB8"/>
 </g>
 <g id="MZ-04">
-<path id="MZ04-L061" d="M730 372H797V402L730 394.5V372Z" fill="#A3FFB8"/>
-<path id="MZ04-L060" d="M797 348H730V372H797V348Z" fill="#A3FFB8"/>
-<path id="MZ04-L059" d="M797 325H730V348H797V325Z" fill="#A3FFB8"/>
-<path id="MZ04-L058" d="M797 302H730V325H797V302Z" fill="#A3FFB8"/>
-<path id="MZ04-L057" d="M797 278H730V302H797V278Z" fill="#A3FFB8"/>
-<path id="MZ04-L056" d="M797 255H730V278H797V255Z" fill="#A3FFB8"/>
-<path id="MZ04-L055" d="M797 232H730V255H797V232Z" fill="#A3FFB8"/>
-<path id="MZ04-L054" d="M797 209H730V232H797V209Z" fill="#A3FFB8"/>
-<path id="MZ04-L053" d="M797 186H730V209H797V186Z" fill="#A3FFB8"/>
-<path id="MZ04-L0" d="M797 163H730V186H797V163Z" fill="#A3FFB8"/>
+<path id="MZ04-L019" d="M730 372H797V402L730 394.5V372Z" fill="#A3FFB8"/>
+<path id="MZ04-L018" d="M797 348H730V372H797V348Z" fill="#A3FFB8"/>
+<path id="MZ04-L017" d="M797 325H730V348H797V325Z" fill="#A3FFB8"/>
+<path id="MZ04-L016" d="M797 302H730V325H797V302Z" fill="#A3FFB8"/>
+<path id="MZ04-L015" d="M797 278H730V302H797V278Z" fill="#A3FFB8"/>
+<path id="MZ04-L014" d="M797 255H730V278H797V255Z" fill="#A3FFB8"/>
+<path id="MZ04-L013" d="M797 232H730V255H797V232Z" fill="#A3FFB8"/>
+<path id="MZ04-L012" d="M797 209H730V232H797V209Z" fill="#A3FFB8"/>
+<path id="MZ04-L011" d="M797 186H730V209H797V186Z" fill="#A3FFB8"/>
+<path id="MZ04-L010" d="M797 163H730V186H797V163Z" fill="#A3FFB8"/>
 <path id="MZ04-L009" d="M864 410V379H797V402.377L864 410Z" fill="#A3FFB8"/>
 <path id="MZ04-L008" d="M864 355H797V379H864V355Z" fill="#A3FFB8"/>
 <path id="MZ04-L007" d="M864 331H797V355H864V331Z" fill="#A3FFB8"/>
@@ -289,7 +604,226 @@ function ensureViewer(){
       .kv-row{display:grid;grid-template-columns:1fr auto;gap:6px;padding:6px 0}
       .kv-row .k{color:#666}
       .kv-row .v{font-weight:600}
+
+      /* ======== SENDAL — Panel de lote (aplica a #lot-viewer actual) ======== */
+:root{
+  --ink: var(--ink, #222);
+  --muted: var(--muted, #6b7280);
+  --line: var(--line, #e6e7ea);
+  --bg: var(--bg-cream, #fff);
+  --accent: var(--brand, #0aa07a);
+  --accent-ink: #1f3b37;
+}
+
+#lot-viewer{
+  position:fixed; inset:0 0 0 auto; width:min(390px,90vw);
+  background:var(--bg); color:var(--ink);
+  border-left:1px solid var(--line);
+  box-shadow:-8px 0 24px rgba(0,0,0,.08);
+  transform:translateX(105%); transition:transform .25s ease;
+  z-index:9998; display:flex; flex-direction:column;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  font-variant-numeric:tabular-nums slashed-zero;
+}
+#lot-viewer.open{ transform:translateX(0) }
+
+#lotv-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; border-bottom:1px solid var(--line);
+}
+#lotv-title{ font-weight:800; font-size:18px; letter-spacing:.2px }
+#lotv-close{
+  appearance:none; border:1px solid #d0d5dd; background:#fafafa;
+  border-radius:10px; padding:6px 10px; cursor:pointer; font-weight:600;
+}
+
+#lotv-body{ padding:12px 16px; overflow:auto }
+
+/* ——— Subtítulos de sección (usa <dt> “Campos adicionales” que ya tienes) ——— */
+#lotv-body .section-title,
+#lotv-extra > dt{
+  display:block; margin:14px 0 8px;
+  color:var(--accent-ink); font:700 12px/1.2 system-ui;
+  text-transform:uppercase; letter-spacing:.5px;
+}
+#lotv-body hr{ border:0; border-top:1px solid var(--line); margin:12px 0 }
+
+
+
+/* ——— Key–Value grid (#lotv-kv) como “tabla” 2 columnas ——— */
+#lotv-kv{ margin-top:4px }
+#lotv-kv .kv-row{
+  display:grid; grid-template-columns: 1fr auto;
+  gap:0 12px; padding:7px 0; border-bottom:1px solid var(--line);
+}
+#lotv-kv .kv-row .k{ color:var(--muted); font:500 13px/1.25 system-ui }
+#lotv-kv .kv-row .v{ text-align:right; font:600 14px/1.25 system-ui }
+
+/* Zebra suave */
+#lotv-kv .kv-row:nth-child(odd){
+  background:linear-gradient(to right, rgba(250,247,242,.6), transparent);
+}
+
+/* Bloque financiero resaltado a partir de “Meses de financiamiento”
+   (visual; no cambia orden). Si el índice cambia, no pasa nada. */
+#lotv-kv .kv-row:nth-child(n+8){
+  background:linear-gradient(to right, rgba(10,160,122,.06), rgba(10,160,122,0));
+}
+#lotv-kv .kv-row:nth-child(8){ border-top:1px solid color-mix(in srgb, var(--accent), #000 15%) }
+
+/* Enlaces sobrios */
+#lotv-body a{ color:var(--accent-ink); font-weight:600; text-decoration:none }
+#lotv-body a:hover{ text-decoration:underline }
+#lotv-body a[target="_blank"]::after{ content:"↗"; margin-left:.3rem; font-size:.9em; opacity:.85 }
+
+/* ——— Form: 4 campos apilados compactos ——— */
+.lotv-form{ display:grid; grid-template-columns:1fr; gap:8px; margin-top:12px }
+.lotv-form-title{ font:700 12px/1.2 system-ui; color:var(--accent-ink); text-transform:uppercase; letter-spacing:.45px }
+
+.lotv-field{ display:flex; flex-direction:column }
+.lotv-field > span{ font:600 12.5px/1.15 system-ui; color:var(--ink); margin-bottom:4px }
+
+.lotv-field input[type="text"],
+.lotv-field input[type="email"],
+.lotv-field input[type="tel"],
+.lotv-field input[type="number"]{
+  width:95%; min-height:25px; border:1px solid #d0d5dd; border-radius:10px;
+  padding:8px 10px; background:#fff; color:var(--ink); font:500 14px/1.2 system-ui;
+  outline:none; transition:border-color .15s, box-shadow .15s;
+}
+.lotv-field input:focus{
+  border-color:color-mix(in srgb, #E0E0E0, #000 22%);
+  box-shadow:0 0 0 2px color-mix(in srgb, #E0E0E0, transparent 82%);
+}
+.lotv-error{ min-height:0.9em; color:#b42318; font:600 11.5px/1.2 system-ui }
+
+.lotv-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.7rem .9rem; border-radius:10px;
+  border:1px solid color-mix(in srgb, #655D49, #000 15%);
+  background:#655D49; color:#fff; font-weight:800; letter-spacing:.2px; cursor:pointer;
+}
+
+.lotv-btn:hover{
+  background:#534C3C;
+}
+
+
+/* Scrollbar sutil */
+#lotv-body::-webkit-scrollbar{ width:10px }
+#lotv-body::-webkit-scrollbar-thumb{ background:#c9d1d9; border-radius:999px }
+
+
+/* ===== Tabla de Financiamiento – clara y profesional ===== */
+#lot-viewer .section-title + table.fin-table{ margin-top:.35rem }
+
+#lot-viewer table.fin-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  border:1px solid var(--line, #e6e7ea);
+  border-radius:12px;
+  overflow:hidden;           /* redondeo visible */
+  background:#fff;
+  font-size:14px;
+  border-color: #FCBB99;
+}
+
+#lot-viewer table.fin-table thead th{
+  background: #FCBB99;
+  color: #41070A;
+  font: 700 12px/1.2 system-ui;
+  text-transform: uppercase;
+  letter-spacing:.45px;
+  padding:.7rem .9rem;
+  border-bottom:1px solid var(--line, #e6e7ea);
+}
+#lot-viewer table.fin-table thead th:first-child{ text-align:left; width:54% }
+#lot-viewer table.fin-table thead th:last-child{ text-align:right; }
+
+#lot-viewer table.fin-table tbody td{
+  padding: .8rem .9rem;
+  vertical-align: middle;
+}
+#lot-viewer table.fin-table tbody tr + tr td{
+  border-top:1px solid var(--line, #e6e7ea);
+}
+
+/* Bloque izquierdo: concepto + porcentaje/meses grande */
+#lot-viewer .fin-left .k{
+  color: var(--muted, #6a7178);
+  font: 600 13px/1.2 system-ui;
+  margin-bottom:.25rem;
+}
+#lot-viewer .fin-left .v{
+color: #41070A;
+  font: 800 18px/1.15 system-ui;   /* % ó meses */
+}
+
+/* Bloque derecho: etiqueta pequeña + monto fuerte alineado a la derecha */
+#lot-viewer .fin-right{
+  text-align: right;
+  
+}
+#lot-viewer .fin-right .k{
+  color: var(--muted, #6a7178);
+  font: 600 12.5px/1.15 system-ui;
+  margin-bottom:.2rem;
+  
+}
+#lot-viewer .fin-right .v{
+  font: 800 18px/1.15 system-ui;   /* $ monto */
+  color: #41070A;
+}
+
+/* Sutil hover (opcional) */
+#lot-viewer table.fin-table tbody tr:hover{
+  background: linear-gradient(to right, rgba(252, 187, 153, 0.10), transparent);
+}
+
+
+/* Imagen de lote dentro del panel */
+.kv-row.kv-row--image{
+  grid-template-columns: 1fr;
+}
+
+.kv-row.kv-row--image .k{
+  font-size: .78rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.kv-row.kv-row--image .v{
+  grid-column: 1 / -1;
+}
+
+.kv-row.kv-row--image img{
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  display: block;
+}
+
+
+      #lotv-body .lotv-img{
+        width: 100%;
+        max-height: 220px;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+        box-shadow: 0 6px 18px rgba(0,0,0,.12);
+        margin: 8px 0 4px;
+      }
+
+      #lotv-main {
+        color: #41070A;
+
+      }
+
     </style>
+    
     <div id="lotv-head">
       <div id="lotv-title">—</div>
       <button id="lotv-close">Cerrar</button>
@@ -297,13 +831,58 @@ function ensureViewer(){
     <div id="lotv-body">
       <dl id="lotv-main">
         <dt>Código</dt><dd id="lotv-code">—</dd>
-        <dt>Estado</dt><dd id="lotv-status">—</dd>
+      <dt>Estado</dt><dd id="lotv-status">—</dd>
         <dt>Precio total (MXN)</dt><dd id="lotv-total">—</dd>
       </dl>
       <div id="lotv-extra">
         <dt style="color:#888;font-weight:700">Campos adicionales</dt>
         <div id="lotv-kv"></div>
       </div>
+
+      <form id="lotv-quote"
+      class="lotv-form"
+      novalidate
+      data-url="{% url 'quote_lot' %}">
+
+
+
+
+  <div class="lotv-form-title">¿Te interesa este lote? Cotízalo</div>
+
+  <div class="lotv-fields">
+
+  <input type="hidden" id="lotv-lot-id" name="lot_id">
+
+<label class="lotv-field">
+  <span>Nombre</span>
+  <input type="text" name="first_name" required autocomplete="given-name">
+  <small class="lotv-error"></small>
+</label>
+
+<label class="lotv-field">
+  <span>Apellido</span>
+  <input type="text" name="last_name" required autocomplete="family-name">
+  <small class="lotv-error"></small>
+</label>
+
+<label class="lotv-field">
+  <span>Correo</span>
+  <input type="email" name="email" required autocomplete="email">
+  <small class="lotv-error"></small>
+</label>
+
+<label class="lotv-field">
+  <span>Teléfono</span>
+  <input type="tel" name="phone" required autocomplete="tel">
+  <small class="lotv-error"></small>
+</label>
+
+
+
+  <button type="submit" class="lotv-btn">Solicitar cotización</button>
+  <div id="lotv-quote-msg" class="lotv-msg" role="status" aria-live="polite"></div>
+</form>
+
     </div>`;
   document.body.appendChild(v);
   v.querySelector('#lotv-close').onclick = () => v.classList.remove('open');
@@ -339,23 +918,63 @@ const CF_LABELS = {
   "MANmcJVjPiz0uBtCswUi": "Proyecto",
   "7d0qBsGiv1G3T5qOUj1B": "Manzana",
   "IIqAas5DwSqRgEWIFhHt": "Área total (m²)",
-  "IETYqhhdidL1gXagEeMQ": "Precio total (MXN)",
   "88JKyJjACAbQiVdPnrF6": "Precio m² (MXN)",
+  "IETYqhhdidL1gXagEeMQ": "Precio total (MXN)",
+
   "MwaBss3oDm6BKmD7QW0T": "Estado",
-  "8BJkYJjACAbQiVdPnrF6": "Porcentaje de enganche",
+ 
   "X1kWLMDpDaxkfXW98RHV": "Porcentaje de enganche",
+  "QqOHGq3VWKY1DPJjZZrB": "Monto de enganche (MXN)",
+
   "BKKZifqsTaokXyz707iv": "Monto de apartado (MXN)",
   "0EkDyYSOt4t9oD3jPeef": "Días límite de apartado",
-  "y3abg8BBl6i93Mop4TXk": "Imagen de lote",
+
   "3zfKmcTNjTscP1Y3KbLp": "Dimensiones del lote (frente, largo, fondo)",
-  "iOme9wTVbAPX48TpsFFR": "Meses de financiamiento",
+  "y3abg8BBl6i93Mop4TXk": "Imagen de lote",
+
+
   "PMtcOa7frfBCo187VRvK": "Porcentaje de liquidación",
+  "FoafnsOVS7i1qzei3Ar7": "Monto de liquidación (MXN)",
+
   "fz26j93UOZVT5CDrcgvn": "Porcentaje de financiamiento",
-  "QqOHGq3VWKY1DPJjZZrB": "Monto de enganche (MXN)",
   "u76bHu22UvRPfdSzP0zn": "Monto de financiamiento (MXN)",
-  "ogLKR8JUkvA4Deoe3TfD": "Monto de mensualidad (MXN)",
-  "FoafnsOVS7i1qzei3Ar7": "Monto de liquidación (MXN)"
+
+  "iOme9wTVbAPX48TpsFFR": "Meses de financiamiento",
+  "ogLKR8JUkvA4Deoe3TfD": "Monto de mensualidad (MXN)"
+  
 };
+
+const STATE_CF_ID = "MwaBss3oDm6BKmD7QW0T"; // tu CF "Estado"
+
+// Mapea el status técnico de GHL a español (por si no viene el CF)
+function mapRecStatusToEs(s) {
+  const t = String(s || "").toLowerCase();
+  if (t === "open") return "Disponible";
+  if (t === "reserved" || t === "apartar" || t === "hold") return "Apartado";
+  if (t === "won" || t === "sold" || t === "closed") return "Vendido";
+  return "—";
+}
+
+// Orden deseado por etiqueta amigable (coinciden con tu tabla)
+const CF_ORDER_LABELS = [
+  "Código", "Estado", 
+  "Proyecto", "Manzana", 
+  "Área total (m²)",  "Precio m² (MXN)", "Precio total (MXN)",
+  "Dimensiones del lote (frente, largo, fondo)", "Imagen de lote",
+  "Porcentaje de enganche", "Monto de enganche (MXN)",
+  "Porcentaje de financiamiento", "Monto de financiamiento (MXN)",
+  "Porcentaje de liquidación", "Monto de liquidación (MXN)",
+  "Meses de financiamiento", "Monto de mensualidad (MXN)",
+  "Monto de apartado (MXN)", "Días límite de apartado"
+];
+
+// (Opcional) puntos de corte para subtítulos visuales
+const CF_SECTION_BREAKS = {
+  "Área total (m²)": "Datos generales",
+  "Dimensiones del lote (frente, largo, fondo)": "Dimensiones",
+  "Porcentaje de enganche": "Financiamiento"
+};
+
 
 /* Campos que deben ocultarse totalmente en UI */
 const CF_HIDE = new Set([
@@ -371,12 +990,16 @@ function friendlyKey(k, v){
   if (/^mz\d{2}-l\d{3}$/i.test(String(v))) return "Código";
   if (/(hacienda|residencial|proyecto)/i.test(s)) return "Proyecto";
   if (/^manzana\s*\d+/i.test(s)) return "Manzana";
-  if (/(disponible|vendido|apartado|open|closed)/i.test(s)) return "Estado";
+  if (/^(disponible|available|open)$/.test(s)) return 'Disponible';
+  if (/^(apartado|reservado|hold|reserved|booked|pending|in[-\s]?progress)$/.test(s)) return 'Apartado';
+  if (/^(vendido|sold|won|closed[-\s]?won)$/.test(s)) return 'Vendido';
   if (/m²|m2/.test(s)) return "Superficie (m²)";
   if (/https?:\/\/drive\.google\.com/.test(String(v))) return "Imagen de lote";
   if (/x/.test(s) && /m\b/.test(s)) return "Dimensiones";
   return k; // fallback
 }
+
+
 
 /* -----------------------------
  * Helpers de formateo
@@ -385,10 +1008,78 @@ const fmtMoney = n => (n==null || isNaN(n)) ? '—' :
   Number(n).toLocaleString('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0});
 const fmtText  = v => (v==null || v==='') ? '—' : String(v);
 
+// Pares que van en la tabla de "Financiamiento" (en orden)
+const FINANCE_PAIRS = [
+  ["Porcentaje de enganche",       "Monto de enganche (MXN)"],
+  ["Porcentaje de financiamiento", "Monto de financiamiento (MXN)"],
+  ["Porcentaje de liquidación",    "Monto de liquidación (MXN)"],
+  ["Meses de financiamiento",      "Monto de mensualidad (MXN)"],
+];
+
+
+
+function drivePreviewUrl(url) {
+  const s = String(url);
+
+  // 1) Si ya es una URL de drive.usercontent.google.com, la usamos tal cual
+  try {
+    const u = new URL(s);
+    if (u.hostname === 'drive.usercontent.google.com') {
+      return s;
+    }
+  } catch (e) {
+    // si no es URL absoluta, seguimos abajo
+  }
+
+  // 2) Para enlaces típicos de drive.google.com
+  const m = s.match(
+    /(?:file\/d\/|open\?id=|uc\?id=|view\?id=)([a-zA-Z0-9_-]{10,})/
+  );
+
+  if (!m) return s; // si no es de Drive, regresamos la URL original
+
+  const id = m[1];
+  return `https://drive.google.com/uc?export=view&id=${id}`;
+}
+
+
+
+// Crea el bloque visual de la imagen del lote
+function makeLotImageNode(label, raw, lotId) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'lot-image-block';
+
+  const fig = document.createElement('figure');
+  fig.className = 'lot-image-figure';
+
+  const img = document.createElement('img');
+  img.src = drivePreviewUrl(raw);
+  img.alt = `Imagen del lote ${lotId}`;
+  img.loading = 'lazy';
+
+  // Si falla la carga, quitamos la imagen y dejamos solo el link
+  img.onerror = () => {
+    fig.remove();
+  };
+
+  fig.appendChild(img);
+  wrapper.appendChild(fig);
+
+  const link = document.createElement('a');
+  link.href = String(raw);
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.className = 'lot-image-link';
+  link.textContent = `Abrir imagen del lote ${lotId} en pestaña`;
+
+  wrapper.appendChild(link);
+  return wrapper;
+}
+
 /* -----------------------------
- * Mostrar info del lote
+ * Mostrar info del lote (ordenado + secciones + imagen de lote)
  * ----------------------------- */
-async function showLot(lotId){
+ async function showLot(lotId){
   const idx = await loadLots();
   const rec = idx.get(lotId);
   const viewer = document.getElementById('lot-viewer');
@@ -403,71 +1094,247 @@ async function showLot(lotId){
     return;
   }
 
+   const lotIdInput = document.getElementById('lotv-lot-id');
+  if (lotIdInput) {
+    lotIdInput.value = lotId;
+  }
+
+
+  const CF_ORDER_LABELS = [
+    "Código", "Estado",
+    "Proyecto", "Manzana",
+    "Área total (m²)",  "Precio m² (MXN)", "Precio total (MXN)",
+    "Dimensiones del lote (frente, largo, fondo)", "Imagen de lote",
+    "Porcentaje de enganche", "Monto de enganche (MXN)",
+    "Porcentaje de financiamiento", "Monto de financiamiento (MXN)",
+    "Porcentaje de liquidación", "Monto de liquidación (MXN)",
+    "Meses de financiamiento", "Monto de mensualidad (MXN)",
+    "Monto de apartado (MXN)", "Días límite de apartado"
+  ];
+
   const cf = rec.customFields || {};
-  viewer.querySelector('#lotv-title').textContent = `${lotId} — ${(rec.status || '—').toString().toUpperCase()}`;
-  viewer.querySelector('#lotv-code').textContent  = lotId;
-  viewer.querySelector('#lotv-status').textContent= (rec.status || '—');
-  viewer.querySelector('#lotv-total').textContent = fmtMoney(rec.monetaryValue);
+
+  // Estado: preferimos el custom field "Estado"; si no, rec.status
+  const estadoDesdeCF =
+    (typeof STATE_CF_ID !== "undefined" && cf[STATE_CF_ID] != null)
+      ? cf[STATE_CF_ID]
+      : Object.entries(cf).find(([k]) => CF_LABELS[k] === "Estado")?.[1];
+
+  const estadoHumano = (estadoDesdeCF && String(estadoDesdeCF).trim())
+    ? String(estadoDesdeCF).trim()
+    : (typeof mapRecStatusToEs === "function"
+        ? mapRecStatusToEs(rec.status)
+        : (rec.status || "—"));
+
+  viewer.querySelector('#lotv-title').textContent =
+    `${lotId} — ${String(estadoHumano || "—").toUpperCase()}`;
+  viewer.querySelector('#lotv-code').textContent   = lotId;
+  viewer.querySelector('#lotv-status').textContent = estadoHumano || "—";
+  viewer.querySelector('#lotv-total').textContent  = fmtMoney(rec.monetaryValue);
 
   // “Campos adicionales” con etiquetas amigables
   const kv = viewer.querySelector('#lotv-kv');
   kv.innerHTML = '';
+
   const shownMain = new Set(["Código","Estado","Precio total (MXN)"]);
 
-  const rows = [];
+  // Normalizamos a objetos { key,label,raw }
+  const items = [];
   for (const [k, raw] of Object.entries(cf)){
-    // 🔴 Si el campo está oculto → se omite totalmente
     if (CF_HIDE.has(k)) continue;
     const label = friendlyKey(k, raw);
-    if (shownMain.has(label)) continue; // evita repetir lo ya mostrado arriba
+    if (shownMain.has(label)) continue;
+    items.push({ key:k, label, raw });
+  }
 
-    let valueNode;
-if (typeof raw === 'number') {
-  valueNode = document.createElement('span');
+  // Orden por CF_ORDER_LABELS (lo desconocido al final)
+  const idxOf = (lab) => {
+    const i = CF_ORDER_LABELS.indexOf(lab);
+    return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+  };
+  items.sort((a, b) => idxOf(a.label) - idxOf(b.label));
 
-  // dinero
-  if (/(mxn|\$|precio)/i.test(label)) {
-    valueNode.textContent = fmtMoney(raw);
+   // Convierte links de Google Drive a URL de imagen embebible
+   const drivePreviewUrl = (url) => {
+    if (!/drive\.google\.com/.test(url)) return url;
+    const m =
+      url.match(/\/d\/([^/]+)/) ||        // .../d/FILE_ID/...
+      url.match(/[?&]id=([^&]+)/);        // ?id=FILE_ID
+    if (!m) return url;
+    return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+  };
 
-  // porcentaje
-  } else if (/(porcentaje|%|tasa|pct)/i.test(label)) {
-    valueNode.textContent = raw.toLocaleString('es-MX') + '%';
+  // Helper de valor (respeta $ / % / links e imagen de lote)
+  const makeValueNode = (label, raw, lotId) => {
+  const asString = String(raw ?? '');
 
-  // número normal
+  // 👉 Caso especial: Imagen de lote -> mostrar <img> directamente
+  if (label === "Imagen de lote" && /^https?:\/\//.test(asString)) {
+    const img = document.createElement('img');
+    img.src = drivePreviewUrl(asString);
+    img.alt = lotId ? `Imagen del lote ${lotId}` : 'Imagen del lote';
+    img.className = 'lotv-img';
+    img.loading = 'lazy';
+    img.style.maxWidth = '100%';
+    img.style.display = 'block';
+    img.style.borderRadius = '12px';
+    return img;
+  }
+
+  let node;
+  if (typeof raw === 'number') {
+    node = document.createElement('span');
+    if (/(mxn|\$|precio)/i.test(label)) {
+      node.textContent = fmtMoney(raw);
+    } else if (/(porcentaje|%|tasa|pct)/i.test(label)) {
+      node.textContent = raw.toLocaleString('es-MX') + '%';
+    } else {
+      node.textContent = raw.toLocaleString('es-MX');
+    }
   } else {
-    valueNode.textContent = raw.toLocaleString('es-MX');
+    node = document.createElement('span');
+    node.textContent = fmtText(raw);
   }
-
-} else if (/^https?:\/\//.test(String(raw))) {
-  valueNode = document.createElement('a');
-  valueNode.href = String(raw);
-  valueNode.target = '_blank';
-  valueNode.rel = 'noopener';
-  valueNode.textContent = 'Abrir enlace';
-
-} else {
-  valueNode = document.createElement('span');
-  valueNode.textContent = fmtText(raw);
-}
+  return node;
+};
 
 
-    const row = document.createElement('div');
-    row.className = 'kv-row';
-    const kEl = document.createElement('div'); kEl.className = 'k'; kEl.textContent = label;
-    const vEl = document.createElement('div'); vEl.className = 'v'; vEl.appendChild(valueNode);
-    row.appendChild(kEl); row.appendChild(vEl);
-    rows.push(row);
-  }
-  if (rows.length === 0){
+
+
+  if (items.length === 0){
     kv.innerHTML = '<p style="color:#888">Sin campos adicionales.</p>';
   } else {
     const frag = document.createDocumentFragment();
-    rows.forEach(r => frag.appendChild(r));
+
+    const insertSection = (txt) => {
+      const t = document.createElement('div');
+      t.className = 'section-title';
+      t.textContent = txt;
+      frag.appendChild(t);
+    };
+
+    // Mapa label -> valor (para la tabla de financiamiento que ya tienes)
+    const byLabel = new Map(items.map(it => [it.label, it.raw]));
+
+    const financeLabelsFlat = new Set(FINANCE_PAIRS.flat());
+    let pusoGenerales = false, pusoDimensiones = false;
+
+    // 1) Campos normales (no de financiamiento)
+    for (const it of items) {
+      if (financeLabelsFlat.has(it.label)) continue;
+
+      if (!pusoGenerales &&
+          (it.label === "Área total (m²)" || it.label === "Precio m² (MXN)")) {
+        insertSection("Datos generales"); pusoGenerales = true;
+      }
+      if (!pusoDimensiones && it.label.startsWith("Dimensiones del lote")) {
+        insertSection("Dimensiones"); pusoDimensiones = true;
+      }
+
+      const row = document.createElement('div');
+      row.className = 'kv-row';
+
+      // Si es imagen de lote, marcamos la fila para que sea full-width
+      if (/imagen de lote/i.test(it.label)) {
+        row.classList.add('kv-row--image');
+      }
+
+      const kEl = document.createElement('div');
+      kEl.className = 'k';
+      kEl.textContent = it.label;
+
+      const vEl = document.createElement('div');
+      vEl.className = 'v';
+      vEl.appendChild(makeValueNode(it.label, it.raw, lotId));
+
+      row.appendChild(kEl);
+      row.appendChild(vEl);
+      frag.appendChild(row);
+    }
+
+    // 2) Tabla de financiamiento (reutiliza FINANCE_PAIRS y makeValueNode)
+    const hasAnyFinance =
+      FINANCE_PAIRS.some(([l1, l2]) => byLabel.has(l1) || byLabel.has(l2));
+
+    if (hasAnyFinance) {
+      insertSection("Financiamiento");
+
+      const table = document.createElement('table');
+      table.className = 'fin-table';
+
+      const thead = document.createElement('thead');
+      thead.innerHTML = `
+        <tr>
+          <th style="width:52%">Concepto</th>
+          <th>Monto</th>
+        </tr>`;
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+
+      for (const [leftLabel, rightLabel] of FINANCE_PAIRS) {
+        const leftVal  = byLabel.get(leftLabel);
+        const rightVal = byLabel.get(rightLabel);
+        if (leftVal === undefined && rightVal === undefined) continue;
+
+        const tr = document.createElement('tr');
+
+        const tdL = document.createElement('td');
+        const wrapL = document.createElement('div');
+        wrapL.className = 'fin-left';
+        const titL = document.createElement('div');
+        titL.className = 'k';
+        titL.textContent = leftLabel;
+        const valL = document.createElement('div');
+        valL.className = 'v';
+        if (leftVal === undefined) {
+          valL.textContent = '—';
+        } else if (typeof leftVal === 'number' &&
+                   /(porcentaje|%|tasa|pct)/i.test(leftLabel)) {
+          valL.textContent = leftVal.toLocaleString('es-MX') + '%';
+        } else {
+          valL.appendChild(makeValueNode(leftLabel, leftVal));
+        }
+        wrapL.appendChild(titL);
+        wrapL.appendChild(valL);
+        tdL.appendChild(wrapL);
+
+        const tdR = document.createElement('td');
+        const wrapR = document.createElement('div');
+        wrapR.className = 'fin-right';
+        const titR = document.createElement('div');
+        titR.className = 'k';
+        titR.textContent = rightLabel;
+        const valR = document.createElement('div');
+        valR.className = 'v';
+        if (rightVal === undefined) {
+          valR.textContent = '—';
+        } else if (typeof rightVal === 'number' &&
+                   /(mxn|\$|precio|monto)/i.test(rightLabel)) {
+          valR.textContent = fmtMoney(rightVal);
+        } else {
+          valR.appendChild(makeValueNode(rightLabel, rightVal));
+        }
+        wrapR.appendChild(titR);
+        wrapR.appendChild(valR);
+        tdR.appendChild(wrapR);
+
+        tr.appendChild(tdL);
+        tr.appendChild(tdR);
+        tbody.appendChild(tr);
+      }
+
+      table.appendChild(tbody);
+      frag.appendChild(table);
+    }
+
     kv.appendChild(frag);
   }
 
   viewer.classList.add('open');
 }
+
+
 
 /* -----------------------------
  * Click en SVG
@@ -494,6 +1361,69 @@ svgEl.addEventListener('click', (e) => {
 });
 </script>
 
+
+
+
+<script>
+  (function () {
+    const form = document.getElementById("lotv-quote");
+    const msgBox = document.getElementById("lotv-quote-msg");
+  
+    if (!form) return;
+  
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+  
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      msgBox.textContent = "";
+      msgBox.classList.remove("is-error", "is-success");
+  
+      const lotId = document.getElementById("lotv-lot-id")?.value;
+      if (!lotId) {
+        msgBox.textContent = "Selecciona un lote antes de cotizar.";
+        msgBox.classList.add("is-error");
+        return;
+      }
+  
+      const formData = new FormData(form);
+      
+      try {
+        const resp = await fetch(form.dataset.url, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken") || "",
+          },
+          body: formData,
+        });
+  
+        const data = await resp.json();
+  
+        if (!resp.ok || !data.ok) {
+          msgBox.textContent =
+            data.error || "No se pudo enviar la cotización. Intenta de nuevo.";
+          msgBox.classList.add("is-error");
+          return;
+        }
+  
+        msgBox.textContent =
+          "¡Listo! Tu cotización se ha enviado. Un asesor te contactará pronto.";
+        msgBox.classList.add("is-success");
+        form.reset();
+      } catch (err) {
+        console.error(err);
+        msgBox.textContent =
+          "Ocurrió un error inesperado. Intenta nuevamente más tarde.";
+        msgBox.classList.add("is-error");
+      }
+    });
+  })();
+</script>
+
+  
 
 
 </body>
