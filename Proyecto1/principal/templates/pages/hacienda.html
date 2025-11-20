@@ -151,50 +151,54 @@
     <h2>{% trans "Explora y Elige" %}</h2>
 
     <div class="map-container">
-      <div class="map-actions">
-        <a class="cta contact-cta" href="{% url 'contacto' %}">{% trans "Contáctanos" %}</a>
-      </div>
     
       <figure class="explora__plan">
+        <div class="map-actions">
+          <a class="cta contact-cta" href="{% url 'cotizador' %}">{% trans "Cotizador" %}</a>
+        </div>
         <img class="fluid"
-             src="{% static 'maps/mapa-hacienda-residencial.svg' %}"
+             src="{% static 'maps/prueba.svg' %}"
              alt="{% trans 'Masterplan Hacienda Residencial' %}">
       </figure>
-    
-<div class="explora__legend-box">
-  <div class="explora__labels">
-    <span class="tag tag-hold">{% trans "Próximamente" %}</span>
-    <span class="tag tag-ok">{% trans "Disponible" %}</span>
-  </div>
 
-  <ul class="explora__legend legend--centered">
-    <li>
-      <img src="{% static 'resources/images/icons/Group_A.svg' %}" alt="">
-      {% trans "Entrada" %}
-    </li>
-    <li>
-      <img src="{% static 'resources/images/icons/Group_B.svg' %}" alt="">
-      {% trans "Siembra de agave" %}
-    </li>
-    <li>
-      <img src="{% static 'resources/images/icons/Group_C.svg' %}" alt="">
-      {% trans "Zona comercial" %}
-    </li>
-    <li>
-      <img src="{% static 'resources/images/icons/Group_D.svg' %}" alt="">
-      {% trans "Amenidades" %}
-    </li>
-    <li>
-      <img src="{% static 'resources/images/icons/Group_E.svg' %}" alt="">
-      {% trans "Periférico Valladolid" %}
-    </li>
-  </ul>
-  
-</div>
+
+      <div class="explora__legend-box">
+        <div class="explora__labels">
+          <span class="tag tag-hold">{% trans "Próximamente" %}</span>
+          <span class="tag tag-ok">{% trans "Disponible" %}</span>
+        </div>
+    
+        <ul class="explora__legend legend--centered">
+          <li>
+            <img src="{% static 'resources/images/icons/Group_A.svg' %}" alt="">
+            {% trans "Entrada" %}
+          </li>
+          <li>
+            <img src="{% static 'resources/images/icons/Group_B.svg' %}" alt="">
+            {% trans "Siembra de agave" %}
+          </li>
+          <li>
+            <img src="{% static 'resources/images/icons/Group_C.svg' %}" alt="">
+            {% trans "Zona comercial" %}
+          </li>
+          <li>
+            <img src="{% static 'resources/images/icons/Group_D.svg' %}" alt="">
+            {% trans "Amenidades" %}
+          </li>
+          <li>
+            <img src="{% static 'resources/images/icons/Group_E.svg' %}" alt="">
+            {% trans "Periférico Valladolid" %}
+          </li>
+        </ul>
+        
+      </div>
+
 
     </div>
+
     
-        <div class="duo-grid">
+    
+    <div class="duo-grid">
       <article class="card card--brown">
         <h3 class="card__title">{% trans "¿Dónde está ubicado?" %}</h3>
         <p class="card__text">
@@ -210,6 +214,7 @@
              alt="{% trans 'Mapa de ubicación' %}">
       </figure>
     </div>
+
   </div>
 </section>
 

@@ -351,11 +351,6 @@
   color: #1a1a1a; pointer-events: none;
 }
 
-/* Colores por estado */
-.lot-dot[data-status="apartado"]   .lot-dot__pill{ background:#FFF36B; }
-.lot-dot[data-status="disponible"] .lot-dot__pill{ background:#CFE6A6; }
-.lot-dot[data-status="vendido"]    .lot-dot__pill{ background:#BDBDBD; }
-
 /* Tooltip */
 .lot-dot__tip{
   position:absolute; top:-32px; left:50%; transform:translateX(-50%);

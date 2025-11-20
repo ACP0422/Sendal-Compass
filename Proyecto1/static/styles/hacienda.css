@@ -68,22 +68,16 @@
   row-gap: 12px;
 }
 
-.map-container{
-  background:url("/static/resources/images/cotizador/Pasto_MapaValladolid.jpeg") center 22%/cover no-repeat;
-  
-  border-radius: 12px;
-  padding-block: 12px;
-}
+
 
 .explora__chips{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:0; }
 
 .chip{ display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; font-size:14px; background:#eee; }
-.chip-hold{ background:#F5F49A; } .chip-ok{ background:#CFE8A6; } .chip-sold{ background:#C7C7C7; }
 
 .cta{ display:inline-block; padding:8px 14px; border-radius:999px; background:#4B0E0E; color:#fff; text-decoration:none; }
 
 .explora__plan{ margin:0; }
-.explora__plan img{ display:block; width:100%; height:auto; object-fit:contain; border-radius:10px; }
+.explora__plan img{ display:block; width:100%; height:auto; object-fit:contain;}
 
 .explora__legend{
   display:flex; flex-wrap:wrap; gap:18px 24px;
@@ -125,7 +119,7 @@
 
   .gallery-grid{ grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
-  .explora__plan img{ max-height: 480px; border-radius: 12px; }
+  .explora__plan img{ max-height: 480px;  }
   .explora__legend img{ width:32px; height:32px; }
 }
 
@@ -293,7 +287,7 @@ object-fit:cover; border-radius:8px; display:block; }
 }
 
 /* ============ Explora (mobile-first) ============ */
-.explora{ margin-top: 18px; background:#f4b56a55; border-radius:14px; padding:16px; }
+.explora{ margin-top: 18px; background:#f4b56a55; padding:16px; }
 .exp-chips{
 display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin: 6px 0 10px;
 }
@@ -302,9 +296,7 @@ display:inline-flex; align-items:center; gap:6px;
 padding:8px 12px; border-radius:999px; font-weight:700; font-size:13px; text-decoration:none;
 border:0; cursor:pointer;
 }
-.chip-hold{ background:#efe96a; }
-.chip-ok{ background:#cde7a3; }
-.chip-sold{ background:#bfbfbf; color:#222; }
+
 .chip-cta{ background:#4a0f0f; color:#fff; }
 
 .plan img{
@@ -352,7 +344,7 @@ width:100%; height: clamp(200px, 50vw, 320px); border-radius:12px; object-fit:co
 /* ============ Desktop (≥1025) ============ */
 @media (min-width:1025px){
 .explora{
-  padding: 22px; border-radius: 16px;
+  padding: 22px; 
 }
 .exp-chips{ justify-content:flex-start; gap:14px; }
 
@@ -384,7 +376,6 @@ margin-right: calc(-1 * var(--gutter));
 width: 100vw;
 
 background:#E1A740;   /* tu color de fondo */
-border-radius: 0;      /* que no se vea como tarjeta */
 padding: 28px var(--gutter);
 }
 
@@ -417,16 +408,14 @@ margin: 0 0 10px;
 display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom: 12px;
 }
 .chip{ display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; font-size:14px; background:#eee; }
-.chip-hold{ background:#F5F49A; }
-.chip-ok{ background:#CFE8A6; }
-.chip-sold{ background:#C7C7C7; }
+
 .cta{ display:inline-block; padding:8px 14px; border-radius:999px; background:#4B0E0E; color:#fff; text-decoration:none; }
 
 .fluid{ width:100%; height:auto; display:block; }
 
 /* masterplan */
 .explora__plan{ margin: 8px 0 8px; }
-.explora__plan img{ border-radius:10px; }
+
 
 /* leyenda */
 .explora__legend{
@@ -438,13 +427,12 @@ align-items:center;
 
 /* card + mapa */
 .explora__grid{ display:grid; grid-template-columns: 1fr; gap:14px; margin-top: 14px; }
-.explora__card{
-background:var(--color-brown); color:#fff; border-radius:12px; padding:18px;
-}
+
+
 .explora__card h3{ margin:0 0 8px; }
 .explora__card p{ margin:0 0 12px; }
 
-.explora__map img{ border-radius:12px; }
+
 
 /* ===== Tablet ===== */
 @media (min-width:768px) and (max-width:1024px){
@@ -456,15 +444,12 @@ background:var(--color-brown); color:#fff; border-radius:12px; padding:18px;
 /* ===== Desktop ===== */
 @media (min-width:1025px){
 .explora__inner{ padding: 34px var(--gutter) 36px; }
-.explora__plan img{ border-radius:12px; }
+
 .explora__grid{ grid-template-columns: .90fr 1.1fr; gap: 22px; align-items:start; }
 }
 
 
-.map-container{
-border-radius: 24px;
-padding: 30px 0;
-}
+
 
 /* Estirar los ítems de la grilla */
 @media (min-width:768px){
@@ -477,7 +462,7 @@ padding: 30px 0;
 /* iPad */
 .explora__map{ height: 360px; }         /* misma altura para ambos */
 .explora__map img{
-  width:100%; height:100%; object-fit:cover; border-radius:12px;
+  width:100%; height:100%; object-fit:cover;
 }
 .explora__card{
   display:flex; flex-direction:column; justify-content:center;
@@ -588,8 +573,8 @@ font-size: 20px;
   border:2px solid currentColor;
 }
 
-.tag-hold{ color:#070707; border-color:#070707; background:#E8E9EB; }
-.tag-ok{ color: #507255; border-color:#507255; background:#A3FFB8; }
+.tag-hold{ color:#070707; border-color:#070707; background:#B2B2B2; }
+.tag-ok{ color: black; border-color:black; background:#AEDA95; }
 
 /* Leyenda centrada */
 .explora__legend.legend--centered{
@@ -609,9 +594,6 @@ font-size: 20px;
 }
 
 
-
-
-
 .explora__legend-box{
   background: rgba(255,255,255,0.78);
   backdrop-filter: blur(10px);
@@ -620,10 +602,10 @@ font-size: 20px;
   border-radius: 14px;
   box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 
-  width: calc(100% - 32px);
+  width: 100%;
   
-  margin: 3px auto 0; 
-  transform: translateY(8px); 
+  
+ 
 }
 
 @media (max-width:768px){

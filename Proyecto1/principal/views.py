@@ -90,9 +90,19 @@ def quote_lot(request):
             {"ok": False, "error": f"Error obteniendo lote: {e}"}, status=500
         )
 
-    # Suponiendo que la API devuelve {"items":[ {...}, ... ]}
+        # Suponiendo que la API devuelve {"items":[ {...}, ... ]}
     items = (data or {}).get("items") or []
-    lot_data = items[0] if items else None
+
+    # Buscar el lote correcto por su custom field de lot_id
+    LOT_ID_CF_ID = "WsuFeYWAl97hwKGYC5Vj"  # id del CF "id_lote" en GHL
+
+    lot_data = None
+    for rec in items:
+        cf = rec.get("customFields") or rec.get("customfields") or {}
+        if str(cf.get(LOT_ID_CF_ID)).strip() == str(lot_id).strip():
+            lot_data = rec
+            break
+
     if not lot_data:
         return JsonResponse({"ok": False, "error": "Lote no encontrado"}, status=404)
 
