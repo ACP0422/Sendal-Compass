@@ -73,7 +73,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "principal",
-    "ghl_connector",
 ]
 
 MIDDLEWARE = [
@@ -169,34 +168,5 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-GHL_API_BASE = os.getenv("GHL_API_BASE", "https://services.leadconnectorhq.com")
-GHL_API_VERSION = os.getenv("GHL_API_VERSION", "2021-07-28")
-
-GHL_LOCATION_ID = os.getenv("GHL_LOCATION_ID", "")
-GHL_PIPELINE_INVENTARIO = os.getenv("GHL_PIPELINE_INVENTARIO", "")
-GHL_STAGE_INVENTARIO = os.getenv("GHL_STAGE_INVENTARIO", "")
-GHL_CONTACTO_INVENTARIO_ID = os.getenv("GHL_CONTACTO_INVENTARIO_ID", "")
 
 
-GHL_CLIENT_ID = os.getenv("GHL_CLIENT_ID")
-GHL_CLIENT_SECRET = os.getenv("GHL_CLIENT_SECRET")
-GHL_REFRESH_TOKEN = os.getenv("GHL_REFRESH_TOKEN")
-GHL_ACCESS_TOKEN = os.getenv("GHL_ACCESS_TOKEN")
-GHL_TOKEN_URL = os.getenv(
-    "GHL_TOKEN_URL", "https://services.leadconnectorhq.com/oauth/token"
-)
-
-GHL_PIPELINE_VENTAS_ID = os.getenv("GHL_PIPELINE_VENTAS_ID")
-GHL_PIPELINE_VENTAS_STAGE_INICIAL_ID = os.getenv("GHL_PIPELINE_VENTAS_STAGE_INICIAL_ID")
-
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "unique-snowflake",
-    }
-}

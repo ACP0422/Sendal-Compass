@@ -12,10 +12,10 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("contacto/", views.contacto, name="contacto"),
     path("cotiza/", views.cotiza, name="cotiza"),
-    path("cotizador/", views.cotizador_index, name="cotizador"),
-    path("cotizador/<slug:slug>/", views.cotizador_detail, name="cotizador-detail"),
+    #path("cotizador/", views.cotizador_index, name="cotizador"),
+    #path("cotizador/<slug:slug>/", views.cotizador_detail, name="cotizador-detail"),
     # path("komchen-svg/", views.komchen_svg_view, name="komchen-svg"),
-    path("hacienda-svg/", views.hacienda_svg_view, name="hacienda-svg"),
+    #path("hacienda-svg/", views.hacienda_svg_view, name="hacienda-svg"),
     path("proyectos/valladolid/", views.valladolid, name="valladolid"),
     path("proyectos/tulum/", views.tulum, name="tulum"),
     path("proyectos/valladolid/hacienda/", views.hacienda, name="hacienda"),
@@ -30,8 +30,6 @@ urlpatterns = [
         name="valladolid-compat",
     ),
     # path("proyectos/komchen/", views.komchen, name="komchen"),
-    path("api/", include("ghl_connector.urls")),
-    path("api/quote-lot/", views.quote_lot, name="quote_lot"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler400 = "principal.views.error_400"
 handler403 = "principal.views.error_403"
