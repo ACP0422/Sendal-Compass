@@ -464,7 +464,6 @@ def index(request):
     ctx.setdefault("form", CotizaHomeForm())
     return render(request, "pages/index.html", ctx)
 
-
 def cotiza(request):
     """
     Procesa el formulario del home.
@@ -480,6 +479,9 @@ def cotiza(request):
 
     data = form.cleaned_data
 
+    # -----------------------------
+    # 1) Envío de correo (lo que ya tenías)
+    # -----------------------------
     recipients = []
     for name in ("CONTACT_EMAILS", "CONTACT_RECIPIENTS"):
         val = getattr(settings, name, None)
@@ -531,8 +533,57 @@ def cotiza(request):
         messages.error(request, _("No pudimos enviar tu mensaje. Intenta más tarde."))
         return render(request, "pages/index.html", _ctx_index(form), status=500)
 
+        # -----------------------------
+        # 2) Enviar lead a GHL (contacto + nota)
+        # -----------------------------
+        # --- Enviar lead a GHL ---
+    try:
+        location_id = settings.GHL_LOCATION_ID
+        pipeline_id = settings.GHL_PIPELINE_VENTAS_ID
+        pipeline_stage_id = settings.GHL_PIPELINE_VENTAS_STAGE_INICIAL_ID
+
+        # 1) Contacto
+        contact = services.get_or_create_contact(
+            location_id=location_id,
+            first_name=data["nombre"],
+            last_name=data["apellido"],
+            email=data["email"],
+            phone=data["telefono"],
+        )
+        contact_id = _extract_contact_id(contact)
+
+        # 2) Nota del contacto
+        note_body = (
+            "Formulario: Cotiza tu propiedad (home)\n\n"
+            f"Nombre: {data['nombre']} {data['apellido']}\n"
+            f"Email: {data['email']}\n"
+            f"Teléfono: {data['telefono']}\n"
+            f"Tipo: {data['tipo']}\n"
+            f"Ubicación: {data['ubicacion']}\n"
+        )
+
+        services.create_contact_note(
+            contact_id=contact_id,
+            body=note_body
+        )
+
+        # 3) Crear oportunidad en pipeline
+        title = f"Web – Solicitud de Cotización – {data['nombre']} {data['apellido']}"
+        services.create_simple_opportunity(
+            location_id=location_id,
+            pipeline_id=pipeline_id,
+            pipeline_stage_id=pipeline_stage_id,
+            contact_id=contact_id,
+            title=title,
+        )
+
+    except Exception as e:
+        logger.exception("Error creando lead /cotiza en GHL: %s", e)
+
+
     messages.success(request, _("¡Gracias! Nos pondremos en contacto contigo pronto."))
     return redirect(reverse("index") + "#cotiza")
+
 
 
 def contacto(request):
@@ -541,6 +592,7 @@ def contacto(request):
         if form.is_valid():
             data = form.cleaned_data
 
+            # 1) Envío del correo (como ya lo tenías)
             subject = _("Nueva solicitud de cotización — {n} {a}").format(
                 n=data["nombre"], a=data["apellido"]
             )
@@ -577,12 +629,63 @@ def contacto(request):
                 )
                 return render(request, "pages/contacto.html", {"form": form})
 
+            # 2) Enviar lead a GHL (contacto + nota)
+                        # --- Enviar lead a GHL ---
+                        # 2) Enviar lead a GHL (contacto + nota)
+            try:
+                location_id = settings.GHL_LOCATION_ID
+                pipeline_id = settings.GHL_PIPELINE_VENTAS_ID
+                pipeline_stage_id = settings.GHL_PIPELINE_VENTAS_STAGE_INICIAL_ID
+
+                contact = services.get_or_create_contact(
+                    location_id=location_id,
+                    first_name=data["nombre"],
+                    last_name=data["apellido"],
+                    email=data["email"],
+                    phone=None,  # este form no pide teléfono
+                )
+                contact_id = _extract_contact_id(contact)
+
+                # Nota con el mensaje
+                note_body = (
+                    "Formulario: Contacto (página de contacto)\n\n"
+                    f"Nombre: {data['nombre']} {data['apellido']}\n"
+                    f"Email: {data['email']}\n\n"
+                    f"Mensaje:\n{data.get('mensaje', '(sin mensaje)')}\n"
+                )
+
+                services.create_contact_note(
+                contact_id=contact_id,
+                body=note_body
+            )
+
+
+                # Oportunidad en Ventas
+                title = (
+                    f"Web – Mensaje desde Contacto – "
+                    f"{data['nombre']} {data['apellido']}"
+                )
+                services.create_simple_opportunity(
+                    location_id=location_id,
+                    pipeline_id=pipeline_id,
+                    pipeline_stage_id=pipeline_stage_id,
+                    contact_id=contact_id,
+                    title=title,
+                )
+
+            except Exception as e:
+                logger.exception("Error creando lead /contacto en GHL: %s", e)
+
+
+
             messages.success(request, _("¡Gracias! Recibimos tu mensaje."))
             return redirect("contacto")
+
         return render(request, "pages/contacto.html", {"form": form})
 
     form = ContactForm()
     return render(request, "pages/contacto.html", {"form": form})
+
 
 
 def valladolid(request):

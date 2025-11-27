@@ -203,23 +203,48 @@ def upsert_sales_opportunity(
 
     def val(key: str, cf_id: str | None = None, default=None):
         """
-        Devuelve primero lot_data[key] si existe,
-        si no, intenta customFields[cf_id],
-        y si nada, devuelve default.
+        Obtiene un valor del lote de la forma más robusta posible:
+
+        1) lot_data[key] si existe.
+        2) customFields:
+           - si es dict: por id o por nombre.
+           - si es lista: busca item con id/customFieldId == cf_id.
         """
-        if (
-            isinstance(lot_data, dict)
-            and key in lot_data
-            and lot_data[key]
-            not in (
-                None,
-                "",
-            )
-        ):
-            return lot_data[key]
-        if cf_id and cf_id in cf and cf[cf_id] not in (None, ""):
-            return cf[cf_id]
+
+        # 1) Top-level: lot_data["proyecto"], lot_data["manzana"], etc.
+        if isinstance(lot_data, dict):
+            v = lot_data.get(key)
+            if v not in (None, "", []):
+                return v
+
+        # 2) customFields por id (cuando usamos los IDs de CF)
+        if cf_id:
+            # a) customFields como dict: {cf_id: valor} o {cf_id: {fieldValue: ...}}
+            if isinstance(cf, dict):
+                v = cf.get(cf_id)
+                if isinstance(v, dict):
+                    v = v.get("fieldValue") or v.get("value")
+                if v not in (None, "", []):
+                    return v
+
+            # b) customFields como lista: [{"id": cf_id, "fieldValue": ...}, ...]
+            if isinstance(cf, list):
+                for item in cf:
+                    if not isinstance(item, dict):
+                        continue
+                    if item.get("id") == cf_id or item.get("customFieldId") == cf_id:
+                        v = item.get("fieldValue") or item.get("value")
+                        if v not in (None, "", []):
+                            return v
+
+        # 3) customFields por nombre de campo (por si vienen como {"proyecto": "...", ...})
+        if isinstance(cf, dict):
+            v = cf.get(key)
+            if v not in (None, "", []):
+                return v
+
         return default
+
 
     # Identificadores importantes
     lot_id_val = val("lot_id", "WsuFeYWAl97hwKGYC5Vj", lot_data.get("name"))
@@ -326,3 +351,63 @@ def upsert_sales_opportunity(
     if status not in (200, 201):
         raise Exception(f"Error upsert oportunidad ventas: {status} {data}")
     return data
+
+
+def create_simple_opportunity(
+    location_id: str,
+    pipeline_id: str,
+    pipeline_stage_id: str,
+    contact_id: str,
+    title: str,
+    value: float | None = None,
+    status: str = "open",
+):
+    """
+    Crea una oportunidad sencilla en el pipeline de Ventas,
+    sin datos de lote. Útil para formularios genéricos (home, contacto, etc.).
+    """
+    payload = {
+        "locationId": location_id,
+        "pipelineId": pipeline_id,
+        "pipelineStageId": pipeline_stage_id,
+        "contactId": contact_id,
+        "name": title,
+        "status": status,
+    }
+    if value is not None:
+        payload["opportunityValue"] = value
+
+    status_code, data = _ghl_request("POST", "/opportunities/", json=payload)
+
+    if status_code not in (200, 201):
+        raise Exception(f"Error creando oportunidad simple: {status_code} {data}")
+
+    return data
+
+
+
+def create_contact_note(contact_id: str, body: str):
+    """
+    Crea una nota en un contacto existente en GHL.
+    Ruta:
+        POST /contacts/{contact_id}/notes
+    """
+    url = f"{BASE_URL}/contacts/{contact_id}/notes"
+
+    payload = {
+        "body": body
+    }
+
+    resp = requests.post(
+        url,
+        json=payload,
+        headers=get_headers()
+    )
+
+    if resp.status_code not in (200, 201):
+        raise Exception(
+            f"Error creando nota en contacto: {resp.status_code} {resp.text}"
+        )
+
+    return resp.json()
+
