@@ -1525,7 +1525,10 @@ msgid "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes 
 msgstr "Residential development with a hacienda-style facade, surrounded by agave landscapes."
 
 msgid "Proyecto Hacienda Residencial Mayahuel"
-msgstr "Hacienda Residencial Mayahuel Project"
+msgstr "Residential Hacienda - Mayahuel Project"
+
+msgid "Canchas"
+msgstr "Courts"
 
 msgid "Predios"
 msgstr "Plots"
