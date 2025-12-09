@@ -5,7 +5,7 @@ body{line-height:1.35;color:var(--color-ink-dark)}
   min-height:calc(100vh - var(--nav-h));
   padding-top:var(--nav-h);
   color:var(--white);
-  background:url("/static/resources/images/home/hero.jpg") center 22%/cover no-repeat
+  background:url("/static/resources/images/home/hero-2.jpg") center 22%/cover no-repeat
 }
 .hero::after{
   content:"";
