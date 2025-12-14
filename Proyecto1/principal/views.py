@@ -262,7 +262,7 @@ def _proyectos():
             "ubicacion": "valladolid",
             "nombre": "Valladolid",
             "url_name": "valladolid",
-            "img": static("resources/images/places/Valladolid/Valladolid.png"),
+            "img": static("resources/images/places/Valladolid/Valladolid.jpg"),
             "descripcion": _(
                 "Ciudad en crecimiento con alto potencial turístico e inmobiliario."
             ),
@@ -311,7 +311,7 @@ def _proyectos():
             "ubicacion": "valladolid",
             "nombre": _("Hacienda Residencial Mayahuel"),
             "url_name": "predio-detail",
-            "img": static("resources/images/places/Valladolid/hacienda/hero.png"),
+            "img": static("resources/images/places/Valladolid/hacienda/hero.jpg"),
             "descripcion": _(
                 "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
             ),

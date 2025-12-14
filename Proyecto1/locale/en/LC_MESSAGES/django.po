@@ -1539,6 +1539,12 @@ msgstr "Tularum Project"
 msgid "Tipo"
 msgstr "Type"
 
+msgid "Colonia:"
+msgstr "Neighborhood:"
+
+msgid "Municipio:"
+msgstr "Municipality:"
+
 msgid "Predio Valladolid"
 msgstr "Valladolid Plot"
 
