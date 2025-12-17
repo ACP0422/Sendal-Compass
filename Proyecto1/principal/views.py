@@ -27,27 +27,6 @@ import requests
 import os
 
 
-def send_quote_to_ghl(data):
-    url = "https://services.leadconnectorhq.com/opportunities/upsert"
-    headers = {
-        "Authorization": f"Bearer {os.environ['GHL_ACCESS_TOKEN']}",
-        "Version": "2021-07-28",
-        "Content-Type": "application/json",
-    }
-
-    body = {
-        "locationId": os.environ["GHL_LOCATION_ID"],
-        "pipelineId": os.environ["GHL_PIPELINE_ID"],
-        "stageId": os.environ["GHL_STAGE_ID"],
-        "contactId": data["contactId"],
-        "name": f"Cotización {data['id_lote']}",
-        "status": "open",
-        "monetaryValue": data["precio_total"],
-        "customFields": data["customFields"],
-    }
-
-    response = requests.post(url, json=body, headers=headers)
-    return response.json()
 
 
 def render_error(request, code, title, message):
@@ -103,91 +82,15 @@ SVG_ROUTES = {
     "hacienda": "hacienda-svg",
 }
 
-
-def cotizador_detail(request, slug: str):
-    """
-    Vista del cotizador por proyecto.
-    Ahora solamente redirige a la página SVG correspondiente.
-    """
-    svg_urlname = SVG_ROUTES.get(slug)
-    if not svg_urlname:
-        raise Http404("Proyecto sin vista SVG configurada")
-        # return redirect("cotizador")
-
-    return redirect(svg_urlname)
+def cotizador(request):
+    return redirect("hacienda-svg")
 
 
-@csrf_exempt
-def create_lead(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        lot_id = data.get("lotId")
-        source = data.get("source", "web")
+from django.views.decorators.http import require_GET
+from django.core.cache import cache
+import openpyxl
+from pathlib import Path
 
-        # Token de GHL (recuerda que expira cada día)
-        token = "TU_ACCESS_TOKEN"
-
-        # Endpoint de GHL (ejemplo: crear contacto)
-        ghl_url = "https://services.leadconnectorhq.com/contacts/"
-
-        payload = {
-            "firstName": "Cotizador",
-            "lastName": f"Lote {lot_id}",
-            "email": "contacto@sendal.mx",
-            "phone": "9990000000",
-            "customField": f"Lote seleccionado {lot_id}",
-            "source": source,
-        }
-
-        headers = {
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        }
-
-        response = requests.post(ghl_url, headers=headers, json=payload)
-        return JsonResponse(response.json(), safe=False)
-
-    return JsonResponse({"error": "Invalid request"}, status=400)
-
-
-def drive_urls(url: str) -> tuple[str | None, str | None]:
-    """
-    Recibe un vínculo de Drive y regresa:
-      (primary_uc, fallback_lh3)
-    - primary_uc  -> https://drive.google.com/uc?export=view&id=... [&resourcekey=...]
-    - fallback_lh3-> https://lh3.googleusercontent.com/d/...
-    Devuelve (None, None) si no parece de Drive.
-    """
-    if not url:
-        return None, None
-
-    p = urlparse(url)
-    host = p.netloc
-    if "drive.google.com" not in host and "docs.google.com" not in host:
-        return None, None
-
-    qs = parse_qs(p.query)
-    file_id = None
-    # /file/d/<ID>/...
-    m = re.search(r"/file/d/([^/]+)", p.path)
-    if m:
-        file_id = m.group(1)
-    # ?id=<ID>
-    if not file_id and "id" in qs and qs["id"]:
-        file_id = qs["id"][0]
-
-    if not file_id:
-        return None, None
-
-    resourcekey = (qs.get("resourcekey") or [None])[0]
-
-    primary = f"https://drive.google.com/uc?export=view&id={file_id}"
-    if resourcekey:
-        primary += f"&resourcekey={resourcekey}"
-
-    fallback = f"https://lh3.googleusercontent.com/d/{file_id}"
-    return primary, fallback
 
 
 # ===== Config global (cotizador) =====
@@ -219,40 +122,6 @@ COTIZADORES = {
 INDEX_ORDER = ["komchen", "hacienda"]
 
 
-def _href_to_detail(slug: str) -> str:
-    return reverse("cotizador-detail", args=[slug])
-
-
-def cotizador_index(request):
-    slugs = [s for s in INDEX_ORDER if COTIZADORES.get(s, {}).get("show_in_index")] or [
-        s for s, cfg in COTIZADORES.items() if cfg.get("show_in_index")
-    ]
-    items = [
-        {
-            "label": COTIZADORES[s]["label"],
-            "href": _href_to_detail(s),
-            "btn": COTIZADORES[s]["btn"],
-        }
-        for s in slugs
-    ]
-    grid_cols = min(3, max(1, len(items)))
-    ctx = {
-        "page_title": _("Cotizador"),
-        "hero_img": HERO_IMG,
-        "kicker": KICKER,
-        "heading": _("Cotizador"),
-        "variant": "",
-        "show_toggle": False,
-        "actions": items,
-        "actions_hidden": False,
-        "grid_cols": grid_cols,
-        "map_img": None,
-        "title_style": "",
-    }
-    return render(request, "pages/cotizador_base.html", ctx)
-
-
-logger = logging.getLogger(__name__)
 
 
 def _proyectos():
@@ -645,75 +514,150 @@ def predio_compat(request, slug):
     raise Http404()
 
 
-# COTIZADOR
-def komchen_svg_view(request):
-    # 1) lee el SVG (guardado en static/maps/komchen.svg)
-    svg_path = Path(settings.BASE_DIR) / "static" / "maps" / "komchen.svg"
-    svg_markup = svg_path.read_text(encoding="utf-8")
 
-    # 2) estados (CRM → fallback Excel)
-    lot_states = _fetch_states_from_crm("komchen")
+import re
+from pathlib import Path
 
-    ctx = {
-        "svg_markup": svg_markup,
-        "lot_states_json": json.dumps(lot_states),
-    }
-    return render(request, "komchen.html", ctx)
+from django.conf import settings
+from django.core.cache import cache
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.http import require_GET
+
+import openpyxl
+
+
+# ✅ 1) apunta al Excel real
+INVENTORY_PATH = Path(settings.BASE_DIR) / "principal" / "data" / "inventory.xlsx"
+
+LOT_RE = re.compile(r"^MZ(?P<mz>\d{2})-L(?P<lot>\d{1,3})$", re.I)
+
+def normalize_lot_id(raw: str) -> str | None:
+    """
+    Acepta:
+      MZ04-L2
+      MZ04-L02
+      MZ04-L002
+    Devuelve SIEMPRE (UI):
+      MZ04-L02  (2 dígitos)
+    """
+    if not raw:
+        return None
+    s = str(raw).strip().upper()
+    m = LOT_RE.match(s)
+    if not m:
+        return None
+    mz = int(m.group("mz"))
+    lot = int(m.group("lot"))
+    return f"MZ{mz:02d}-L{lot:02d}"
+
+
+def _load_inventory_rows(force_reload: bool = False) -> list[dict]:
+    cache_key = "inventory_rows_excel_v1"
+    if not force_reload:
+        cached = cache.get(cache_key)
+        if cached:
+            return cached
+
+    if not INVENTORY_PATH.exists():
+        # 👈 si aquí cae, tu ruta está mal o no copiaste el excel a esa carpeta
+        return []
+
+    wb = openpyxl.load_workbook(INVENTORY_PATH, data_only=True)
+    ws = wb[wb.sheetnames[0]]
+
+    headers = [c.value for c in next(ws.iter_rows(min_row=1, max_row=1))]
+    out = []
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not any(row):
+            continue
+        d = dict(zip(headers, row))
+        # dentro de _load_inventory_rows, donde haces "d['id_lote']=..."
+        raw_id = str(d.get("id_lote", "")).strip().upper()
+        d["id_lote"] = normalize_lot_id(raw_id) or raw_id
+        out.append(d)
+
+    cache.set(cache_key, out, 60)
+    return out
+
+
+def _find_lot(lot_id: str) -> dict | None:
+    wanted = normalize_lot_id(lot_id)
+    if not wanted:
+        return None
+
+    for d in _load_inventory_rows():
+        excel_norm = normalize_lot_id(d.get("id_lote"))
+        if excel_norm == wanted:
+            dd = dict(d)
+            dd["id_lote"] = wanted  # ✅ siempre regresa con 2 dígitos
+            return dd
+    return None
+
+
+from django.views.decorators.http import require_GET
+from django.http import JsonResponse
+
+@require_GET
+def api_lotes(request):
+    rows = _load_inventory_rows()
+
+    payload = []
+    for r in rows:
+        lot_id = normalize_lot_id(r.get("id_lote")) or str(r.get("id_lote") or "").strip().upper()
+
+        payload.append({
+            # compatibilidad (muchos front-ends esperan "id")
+            "id": lot_id,
+            "code": lot_id,
+
+            # tu campo real
+            "id_lote": lot_id,
+
+            # lo mínimo para pintar el mapa / resumen
+            "estado_lote": r.get("estado_lote"),
+            "precio_total": r.get("precio_total"),
+            "superficie_m2": r.get("superficie_m2"),
+
+            # opcional (si tu panel lo usa sin llamar detail)
+            "precio_m2": r.get("precio_m2"),
+            "proyecto": r.get("proyecto"),
+            "manzana": r.get("manzana"),
+        })
+
+    # compatibilidad: algunos JS buscan data.items o data.lots
+    return JsonResponse({"results": payload, "items": payload, "lots": payload})
+
+
+
+@require_GET
+def api_lote_detail(request, lot_id: str):
+    d = _find_lot(lot_id)
+    if not d:
+        return JsonResponse({"error": "Lote no encontrado"}, status=404)
+    return JsonResponse({"result": d})
 
 
 def hacienda_svg_view(request):
-
     svg_path = Path(settings.BASE_DIR) / "static" / "maps" / "hacienda.svg"
     svg_markup = svg_path.read_text(encoding="utf-8")
 
-    # 2) estados (CRM → fallback Excel)
-    lot_states = _fetch_states_from_crm("hacienda")
-
-    ctx = {
-        "svg_markup": svg_markup,
-        "lot_states_json": json.dumps(lot_states),
-    }
-    return render(request, "hacienda.html", ctx)
-
-
-def cotizador_detail(request, slug: str):
-    """
-    Vista del cotizador por proyecto.
-    Ahora solamente redirige a la página SVG correspondiente.
-    """
-    # ¿tenemos ruta SVG para este proyecto?
-    svg_urlname = SVG_ROUTES.get(slug)
-    if not svg_urlname:
-        # Si aún no existe el SVG de ese proyecto, puedes:
-        # - mandar 404
-        # - o redirigir al índice del cotizador
-        raise Http404("Proyecto sin vista SVG configurada")
-        # return redirect("cotizador")
-
-    return redirect(svg_urlname)
-
-
-def _fetch_states_from_crm(dev_slug: str) -> dict[str, str]:
-    """
-    Devuelve { 'L-001': 'available'|'reserved'|'sold', ... } desde el CRM.
-    Por ahora, hacemos fallback al Excel con tu util load_states().
-    """
-    try:
-        states_by_dev = load_states(
-            force_reload=False
-        )  # {'komchen': {1:'disponible', ...}}
-    except Exception:
-        states_by_dev = {}
-
-    raw = states_by_dev.get(dev_slug, {}) or {}  # {1:'vendido', ...}
-    out: dict[str, str] = {}
-    for num, st in raw.items():
-        s = (st or "").lower()
+    # ✅ (opcional) estados desde EXCEL (sin CRM):
+    states = {}
+    for r in _load_inventory_rows():
+        rid = normalize_lot_id(r.get("id_lote"))
+        if not rid:
+            continue
+        s = (r.get("estado_lote") or "").lower()
         if "vend" in s:
-            css = "sold"
+            states[rid] = "sold"
         elif "apart" in s or "reserv" in s:
-            css = "reserved"
+            states[rid] = "reserved"
         else:
-            css = "available"
-        out[f"L-{int(num):03d}"] = css
-    return out
+            states[rid] = "available"
+
+    return render(request, "hacienda.html", {
+        "svg_markup": svg_markup,
+        "lot_states_json": JsonResponse(states).content.decode("utf-8"),
+    })
+
