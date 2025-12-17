@@ -2,6 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext as _
+import re
+
 
 # pip install email-validator dnspython
 from email_validator import validate_email, EmailNotValidError
@@ -297,3 +299,110 @@ class CotizaHomeForm(forms.Form):
             raise ValidationError(_("Usa un correo personal (no cuentas genéricas)."))
 
         return email_norm
+
+
+class CotizaLoteForm(forms.Form):
+    nombre = forms.CharField(
+        max_length=60,
+        required=True,
+        validators=[only_letters_validator],
+        error_messages={
+            "required": _("Escribe tu nombre."),
+            "max_length": _("El nombre es muy largo."),
+        },
+    )
+    apellido = forms.CharField(
+        max_length=60,
+        required=True,
+        validators=[only_letters_validator],
+        error_messages={
+            "required": _("Escribe tu apellido."),
+            "max_length": _("El apellido es muy largo."),
+        },
+    )
+
+    email = forms.EmailField(
+        max_length=254,
+        required=True,
+        error_messages={
+            "required": _("Escribe tu correo."),
+            "invalid": _("Escribe un correo válido."),
+            "max_length": _("El correo es demasiado largo."),
+        },
+    )
+
+    telefono = forms.CharField(
+        max_length=30,
+        required=True,
+        error_messages={"required": _("Escribe tu teléfono.")},
+    )
+
+    id_lote = forms.CharField(
+        max_length=30,
+        required=True,
+        error_messages={"required": _("No se detectó el lote seleccionado.")},
+    )
+
+    website = forms.CharField(required=False)
+
+    def clean_website(self):
+        if (self.cleaned_data.get("website") or "").strip():
+            raise ValidationError(_("Solicitud no válida."))
+        return ""
+
+    def clean_nombre(self):
+        return _collapse_spaces(self.cleaned_data.get("nombre"))
+
+    def clean_apellido(self):
+        return _collapse_spaces(self.cleaned_data.get("apellido"))
+
+    # MISMA VALIDACIÓN que ya usas (10–15 dígitos)
+    def clean_telefono(self):
+        s = (self.cleaned_data.get("telefono") or "").strip()
+        digits = sum(ch.isdigit() for ch in s)
+        if digits < 10 or digits > 15:
+            raise ValidationError(
+                _("Ingresa un teléfono válido (10–15 dígitos, con o sin +).")
+            )
+        return s
+
+    # MISMA VALIDACIÓN de email que ya usas (email-validator + dominios)
+    def clean_email(self):
+        raw = (self.cleaned_data.get("email") or "").strip()
+        try:
+            v = validate_email(raw, check_deliverability=True)
+        except EmailNotValidError as e:
+            msg = str(e)
+            if "The domain name" in msg and "does not exist" in msg:
+                raise ValidationError(
+                    _("El dominio del correo no existe. Verifica tu dirección.")
+                )
+            if "address is not valid" in msg:
+                raise ValidationError(
+                    _("Escribe un correo válido (ejemplo: nombre@dominio.com).")
+                )
+            if "There is no DNS record" in msg:
+                raise ValidationError(
+                    _("El dominio del correo no tiene registros de correo válidos.")
+                )
+            raise ValidationError(_("Correo no válido. Verifica tu dirección."))
+
+        email_norm = v.email
+        local = (v.local_part or "").lower()
+        domain = (v.domain or "").lower()
+
+        if domain in DISPOSABLE_DOMAINS:
+            raise ValidationError(
+                _("Usa un correo personal o empresarial (no temporal).")
+            )
+        if local in ROLE_PREFIXES:
+            raise ValidationError(_("Usa un correo personal (no cuentas genéricas)."))
+
+        return email_norm
+
+    def clean_id_lote(self):
+        v = (self.cleaned_data.get("id_lote") or "").strip().upper()
+        # Formato típico: MZ04-L03 (sin romper si luego agregas otros)
+        if not re.match(r"^[A-Z0-9]{1,10}(?:-[A-Z0-9]{1,10})?$", v):
+            raise ValidationError(_("El ID del lote no es válido."))
+        return v

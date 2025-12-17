@@ -10,7 +10,7 @@ from django.utils.translation import pgettext
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from .forms import ContactForm, CotizaHomeForm
+from .forms import ContactForm, CotizaHomeForm, CotizaLoteForm
 import logging
 from django.core.mail import EmailMessage, BadHeaderError
 from django.utils.translation import (
@@ -138,19 +138,7 @@ def _proyectos():
             "tipos": [],
             "activo": True,
         },
-        {
-            "slug": None,
-            "ubicacion": "tulum",
-            "nombre": _("Tularum"),
-            "url_name": None,
-            "external_url": "https://tularum.com",
-            "img": static("resources/images/places/Tulum/tularum.png"),
-            "descripcion": _(
-                "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
-            ),
-            "tipos": ["tularum"],
-            "activo": True,
-        },
+    
         {
             "slug": "predio",
             "ubicacion": "valladolid",
@@ -172,7 +160,7 @@ def _proyectos():
             "descripcion": _(
                 "Destino icónico con gran plusvalía, naturaleza y proyección internacional."
             ),
-            "tipos": [],
+            "tipos": ["tularum"],
             "activo": True,
         },
         {
@@ -638,11 +626,26 @@ def api_lote_detail(request, lot_id: str):
     return JsonResponse({"result": d})
 
 
+from pathlib import Path
+
+from django.conf import settings
+from django.contrib import messages
+from django.core.mail import BadHeaderError, EmailMessage
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
+
+
+import json
+from pathlib import Path
+from django.conf import settings
+from django.shortcuts import render
+
 def hacienda_svg_view(request):
     svg_path = Path(settings.BASE_DIR) / "static" / "maps" / "hacienda.svg"
     svg_markup = svg_path.read_text(encoding="utf-8")
 
-    # ✅ (opcional) estados desde EXCEL (sin CRM):
+    # ✅ estados desde EXCEL (sin CRM)
     states = {}
     for r in _load_inventory_rows():
         rid = normalize_lot_id(r.get("id_lote"))
@@ -658,6 +661,50 @@ def hacienda_svg_view(request):
 
     return render(request, "hacienda.html", {
         "svg_markup": svg_markup,
-        "lot_states_json": JsonResponse(states).content.decode("utf-8"),
+        "lot_states_json": json.dumps(states, ensure_ascii=False),
     })
 
+
+
+from django.views.decorators.http import require_POST
+
+@require_POST
+def cotiza_lote(request):
+    form = CotizaLoteForm(request.POST)
+    if not form.is_valid():
+        return JsonResponse({"ok": False, "errors": form.errors}, status=400)
+
+    data = form.cleaned_data
+
+    subject = _("Solicitud de cotización — {lot} — {n} {a}").format(
+        lot=data["id_lote"],
+        n=data["nombre"],
+        a=data["apellido"],
+    )
+
+    body = (
+        f"Lote: {data['id_lote']}\n"
+        f"Nombre: {data['nombre']} {data['apellido']}\n"
+        f"Teléfono: {data['telefono']}\n"
+        f"Email: {data['email']}\n"
+    )
+
+    to_emails = getattr(settings, "CONTACT_EMAILS", ["contacto@inmobiliariasendal.mx"])
+    from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "no-reply@inmobiliariasendal.mx")
+
+    try:
+        EmailMessage(
+            subject=subject,
+            body=body,
+            from_email=from_email,
+            to=to_emails,
+            reply_to=[data["email"]],
+        ).send(fail_silently=False)
+    except Exception as e:
+        logger.exception("Error enviando /cotiza-lote: %s", e)
+        return JsonResponse(
+            {"ok": False, "message": _("No pudimos enviar tu mensaje. Intenta más tarde.")},
+            status=500,
+        )
+
+    return JsonResponse({"ok": True})

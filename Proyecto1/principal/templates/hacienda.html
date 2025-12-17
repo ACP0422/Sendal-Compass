@@ -1,3 +1,4 @@
+<title>Cotizador - Hacienda Residencial</title>
 {% extends "base.html" %}
 {% load static i18n %}
 
@@ -6,12 +7,26 @@
 {% endblock %}
 
 {% block content %}
-<div class="cotizador">
+<div class="cotizador is-panel-closed" id="cotizador">
+
   <section class="cotizador-map">
     <div class="map-wrap" id="mapWrap">
       {{ svg_markup|safe }}
     </div>
   </section>
+
+  <div class="map-legend" aria-label="Leyenda del mapa">
+  <div class="legend-inner">
+    <div class="legend-item"><span class="legend-badge">A</span><span class="legend-text">Entrada</span></div>
+    <div class="legend-item"><span class="legend-badge">B</span><span class="legend-text">Siembra de agave</span></div>
+    <div class="legend-item"><span class="legend-badge">C</span><span class="legend-text">Zona comercial</span></div>
+    <div class="legend-item"><span class="legend-badge">D</span><span class="legend-text">Piscina</span></div>
+    <div class="legend-item"><span class="legend-badge">E</span><span class="legend-text">Periférico Valladolid</span></div>
+    <div class="legend-item"><span class="legend-badge">F</span><span class="legend-text">Canchas</span></div>
+    <div class="legend-item"><span class="legend-badge">G</span><span class="legend-text">Casa Club</span></div>
+  </div>
+</div>
+
 
   <aside class="cotizador-panel">
     <div class="panel-head">
@@ -55,14 +70,58 @@
 
       <h4>{% trans "Financiamiento" %}</h4>
       <table class="fin">
-        <thead><tr><th>{% trans "Concepto" %}</th><th>{% trans "Monto" %}</th></tr></thead>
+        <thead><tr><th>{% trans "Concepto" %}</th><th>{% trans "Monto (MXN)" %}</th></tr></thead>
         <tbody>
-          <tr><td>{% trans "Enganche" %}</td><td id="finEnganche">—</td></tr>
-          <tr><td>{% trans "Financiamiento" %}</td><td id="finFin">—</td></tr>
-          <tr><td>{% trans "Mensualidad" %}</td><td id="finMens">—</td></tr>
-          <tr><td>{% trans "Liquidación" %}</td><td id="finLiq">—</td></tr>
+          <tr><td>{% trans "Enganche (20%)" %}</td><td id="finEnganche">—</td></tr>
+          <tr><td>{% trans "Financiamiento (70%)" %}</td><td id="finFin">—</td></tr>
+          <tr><td>{% trans "Mensualidad (48 meses)" %}</td><td id="finMens">—</td></tr>
+          <tr><td>{% trans "Liquidación (30%)" %}</td><td id="finLiq">—</td></tr>
         </tbody>
       </table>
+      <h4>{% trans "¿Te interesa este lote? Cotízalo" %}</h4>
+
+  <div id="quoteToast" class="toast" role="status" aria-live="polite" hidden>
+    <span id="quoteToastMsg"></span>
+  </div>
+
+
+
+
+<form id="quoteForm" class="quote-form" method="POST" action="/api/cotiza-lote/">
+  {% csrf_token %}
+  <input type="hidden" id="quoteLotCode" name="id_lote">
+
+  <div class="quote-row">
+    <div class="quote-field">
+      <label>Nombre</label>
+      <input id="quoteName" type="text" name="nombre" required>
+      <small class="field-error" data-err="nombre"></small>
+    </div>
+
+    <div class="quote-field">
+      <label>Apellido</label>
+      <input id="quoteLastName" type="text" name="apellido" required>
+      <small class="field-error" data-err="apellido"></small>
+    </div>
+  </div>
+
+  <div class="quote-field">
+    <label>Correo</label>
+    <input type="email" name="email" required>
+    <small class="field-error" data-err="email"></small>
+  </div>
+
+  <div class="quote-field">
+    <label>Teléfono</label>
+    <input id="quotePhone" type="tel" name="telefono" required inputmode="numeric" autocomplete="tel">
+    <small class="field-error" data-err="telefono"></small>
+  </div>
+
+  <button id="quoteBtn" type="submit" class="quote-btn">Solicitar cotización</button>
+</form>
+
+
+
     </div>
   </aside>
 </div>
@@ -73,5 +132,6 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'vendors/svg-pan-zoom.min.js' %}"></script>
 <script src="{% static 'scripts/cotizador.js' %}"></script>
 {% endblock %}

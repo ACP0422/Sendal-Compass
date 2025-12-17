@@ -21,7 +21,7 @@ urlpatterns = [
     path("api/lotes/", views.api_lotes, name="api-lotes"),
     path("api/lots/", views.api_lotes, name="api-lots"),          # ✅ alias (tu UI lo pide)
     path("api/lote/<str:lot_id>/", views.api_lote_detail, name="api-lote-detail"),
-
+    path("api/cotiza-lote/", views.cotiza_lote, name="cotiza_lote"),
 
 
 
