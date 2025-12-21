@@ -88,7 +88,7 @@ def cotizador(request):
 
 from django.views.decorators.http import require_GET
 from django.core.cache import cache
-import openpyxl
+
 from pathlib import Path
 
 
@@ -512,11 +512,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-import openpyxl
+
 
 
 # ✅ 1) apunta al Excel real
-INVENTORY_PATH = Path(settings.BASE_DIR) / "principal" / "data" / "inventory.xlsx"
 
 LOT_RE = re.compile(r"^MZ(?P<mz>\d{2})-L(?P<lot>\d{1,3})$", re.I)
 
@@ -540,90 +539,71 @@ def normalize_lot_id(raw: str) -> str | None:
     return f"MZ{mz:02d}-L{lot:02d}"
 
 
-def _load_inventory_rows(force_reload: bool = False) -> list[dict]:
-    cache_key = "inventory_rows_excel_v1"
-    if not force_reload:
-        cached = cache.get(cache_key)
-        if cached:
-            return cached
-
-    if not INVENTORY_PATH.exists():
-        # 👈 si aquí cae, tu ruta está mal o no copiaste el excel a esa carpeta
-        return []
-
-    wb = openpyxl.load_workbook(INVENTORY_PATH, data_only=True)
-    ws = wb[wb.sheetnames[0]]
-
-    headers = [c.value for c in next(ws.iter_rows(min_row=1, max_row=1))]
-    out = []
-    for row in ws.iter_rows(min_row=2, values_only=True):
-        if not any(row):
-            continue
-        d = dict(zip(headers, row))
-        # dentro de _load_inventory_rows, donde haces "d['id_lote']=..."
-        raw_id = str(d.get("id_lote", "")).strip().upper()
-        d["id_lote"] = normalize_lot_id(raw_id) or raw_id
-        out.append(d)
-
-    cache.set(cache_key, out, 60)
-    return out
 
 
-def _find_lot(lot_id: str) -> dict | None:
-    wanted = normalize_lot_id(lot_id)
-    if not wanted:
-        return None
 
-    for d in _load_inventory_rows():
-        excel_norm = normalize_lot_id(d.get("id_lote"))
-        if excel_norm == wanted:
-            dd = dict(d)
-            dd["id_lote"] = wanted  # ✅ siempre regresa con 2 dígitos
-            return dd
-    return None
 
+    
 
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
+from principal.models import Lot
+from .views import normalize_lot_id  # o utils.py si lo mueves
 
 @require_GET
 def api_lotes(request):
-    rows = _load_inventory_rows()
+    qs = Lot.objects.all()
 
     payload = []
-    for r in rows:
-        lot_id = normalize_lot_id(r.get("id_lote")) or str(r.get("id_lote") or "").strip().upper()
+    for r in qs:
+        lot_id = normalize_lot_id(r.id_lote) or (r.id_lote or "").strip().upper()
 
         payload.append({
-            # compatibilidad (muchos front-ends esperan "id")
             "id": lot_id,
             "code": lot_id,
-
-            # tu campo real
             "id_lote": lot_id,
 
-            # lo mínimo para pintar el mapa / resumen
-            "estado_lote": r.get("estado_lote"),
-            "precio_total": r.get("precio_total"),
-            "superficie_m2": r.get("superficie_m2"),
+            "estado_lote": r.estado_lote,
+            "precio_total": r.precio_total,
+            "superficie_m2": r.superficie_m2,
 
-            # opcional (si tu panel lo usa sin llamar detail)
-            "precio_m2": r.get("precio_m2"),
-            "proyecto": r.get("proyecto"),
-            "manzana": r.get("manzana"),
+            "precio_m2": r.precio_m2,
+            "proyecto": r.proyecto,
+            "manzana": r.manzana,
         })
 
-    # compatibilidad: algunos JS buscan data.items o data.lots
     return JsonResponse({"results": payload, "items": payload, "lots": payload})
-
-
 
 @require_GET
 def api_lote_detail(request, lot_id: str):
-    d = _find_lot(lot_id)
-    if not d:
+    wanted = normalize_lot_id(lot_id)
+    if not wanted:
         return JsonResponse({"error": "Lote no encontrado"}, status=404)
+
+    lot = Lot.objects.filter(id_lote=wanted).first()
+    if not lot:
+        return JsonResponse({"error": "Lote no encontrado"}, status=404)
+
+    d = {
+        "id_lote": wanted,
+        "estado_lote": lot.estado_lote,
+        "precio_total": lot.precio_total,
+        "precio_m2": lot.precio_m2,
+        "superficie_m2": lot.superficie_m2,
+        "proyecto": lot.proyecto,
+        "manzana": lot.manzana,
+        "medidas_lotes": lot.medidas_lotes,
+        "cantidad_de_apartado": lot.cantidad_de_apartado,
+        "dias_limite_apartado": lot.dias_limite_apartado,
+        "cantidad_enganche": lot.cantidad_enganche,
+        "cantidad_financiamiento": lot.cantidad_financiamiento,
+        "pago_mensualidad": lot.pago_mensualidad,
+        "cantidad_liquidacion": lot.cantidad_liquidacion,
+        "url_imagen_lote": lot.url_imagen_lote,
+    }
     return JsonResponse({"result": d})
+
+
 
 
 from pathlib import Path
@@ -635,23 +615,23 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 
-
 import json
-from pathlib import Path
-from django.conf import settings
 from django.shortcuts import render
+from django.conf import settings
+from pathlib import Path
+from principal.models import Lot
 
 def hacienda_svg_view(request):
     svg_path = Path(settings.BASE_DIR) / "static" / "maps" / "hacienda.svg"
     svg_markup = svg_path.read_text(encoding="utf-8")
 
-    # ✅ estados desde EXCEL (sin CRM)
     states = {}
-    for r in _load_inventory_rows():
-        rid = normalize_lot_id(r.get("id_lote"))
+    for lot in Lot.objects.only("id_lote", "estado_lote"):
+        rid = normalize_lot_id(lot.id_lote)
         if not rid:
             continue
-        s = (r.get("estado_lote") or "").lower()
+
+        s = (lot.estado_lote or "").lower()
         if "vend" in s:
             states[rid] = "sold"
         elif "apart" in s or "reserv" in s:
@@ -663,6 +643,7 @@ def hacienda_svg_view(request):
         "svg_markup": svg_markup,
         "lot_states_json": json.dumps(states, ensure_ascii=False),
     })
+
 
 
 

@@ -10,7 +10,15 @@
 <div class="cotizador is-panel-closed" id="cotizador">
 
   <section class="cotizador-map">
+    
     <div class="map-wrap" id="mapWrap">
+
+    
+      <div id="lotBadge" class="lot-badge" hidden>
+        <span id="lotBadgeText"></span>
+      </div>
+
+
       {{ svg_markup|safe }}
     </div>
   </section>
@@ -39,7 +47,7 @@
         <div class="kv"><span>{% trans "Código" %}</span><b id="kvCodigo">—</b></div>
         <div class="kv"><span>{% trans "Precio total (MXN)" %}</span><b id="kvPrecio">—</b></div>
       </div>
-
+      
       <h4>{% trans "Campos adicionales" %}</h4>
       <div class="kvs">
         <div class="kv"><span>{% trans "Proyecto" %}</span><b id="kvProyecto">—</b></div>

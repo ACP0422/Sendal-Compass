@@ -42,10 +42,11 @@
     
 
     <div class="nav-right">
-      <a href="https://wa.me/529993976683?text={{ 'Hola, me gustaría saber más sobre los proyectos de Sendal.'|urlencode }}"
+      <!-- <a href="https://wa.me/529993976683?text={{ 'Hola, me gustaría saber más sobre los proyectos de Sendal.'|urlencode }}"
          class="phone" aria-label="{% trans 'Escríbenos por WhatsApp' %}" target="_blank" rel="noopener">
         <img src="{% static 'resources/images/general/telefono.png' %}" alt="{% trans 'WhatsApp' %}">
       </a>
+      -->
 
       {% load i18n %}
       {% get_current_language as LANGUAGE_CODE %}
@@ -109,18 +110,46 @@
   {% block extra_js %}{% endblock %}
 
   <script>
-    // Toggle del menú móvil
-    (function(){
-      const btn = document.querySelector('.hamburger');
-      const menu = document.getElementById('mobileMenu');
-      if(!btn || !menu) return;
-      btn.addEventListener('click', () => {
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        menu.hidden = open;
-        document.body.classList.toggle('no-scroll', !open);
-      });
-    })();
-  </script>
+  (function () {
+    const btn = document.querySelector(".hamburger");
+    const menu = document.getElementById("mobileMenu");
+    if (!btn || !menu) return;
+
+    const closeMenu = () => {
+      btn.setAttribute("aria-expanded", "false");
+      menu.hidden = true;
+      document.body.classList.remove("no-scroll");
+    };
+
+    const openMenu = () => {
+      btn.setAttribute("aria-expanded", "true");
+      menu.hidden = false;
+      document.body.classList.add("no-scroll");
+    };
+
+    // Toggle
+    btn.addEventListener("click", () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      if (open) closeMenu();
+      else openMenu();
+    });
+
+    // ✅ Cerrar al hacer scroll / wheel / touch
+    const closeOnMove = () => {
+      if (btn.getAttribute("aria-expanded") === "true") closeMenu();
+    };
+
+    window.addEventListener("scroll", closeOnMove, { passive: true });
+    window.addEventListener("wheel", closeOnMove, { passive: true });
+    window.addEventListener("touchmove", closeOnMove, { passive: true });
+
+    // (Opcional pero recomendado) cerrar al dar click en un link del menú
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", closeMenu);
+    });
+  })();
+</script>
+
+
 </body>
 </html>

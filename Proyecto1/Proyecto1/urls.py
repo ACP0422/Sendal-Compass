@@ -13,23 +13,15 @@ urlpatterns = [
     path("contacto/", views.contacto, name="contacto"),
     path("cotiza/", views.cotiza, name="cotiza"),
 
-   # Cotizador
+ 
     path("cotizador/", views.cotizador, name="cotizador"),
-    path("hacienda-svg/", views.hacienda_svg_view, name="hacienda-svg"),
+    path("cotizador-hacienda/", views.hacienda_svg_view, name="hacienda-svg"),
 
-    # API (Excel)
-    path("api/lotes/", views.api_lotes, name="api-lotes"),
-    path("api/lots/", views.api_lotes, name="api-lots"),          # ✅ alias (tu UI lo pide)
+         
     path("api/lote/<str:lot_id>/", views.api_lote_detail, name="api-lote-detail"),
     path("api/cotiza-lote/", views.cotiza_lote, name="cotiza_lote"),
 
 
-
-
-    #path("cotizador/", views.cotizador_index, name="cotizador"),
-    #path("cotizador/<slug:slug>/", views.cotizador_detail, name="cotizador-detail"),
-    # path("komchen-svg/", views.komchen_svg_view, name="komchen-svg"),
-    #path("hacienda-svg/", views.hacienda_svg_view, name="hacienda-svg"),
     path("proyectos/valladolid/", views.valladolid, name="valladolid"),
     path("proyectos/tulum/", views.tulum, name="tulum"),
     path("proyectos/valladolid/hacienda/", views.hacienda, name="hacienda"),
@@ -43,7 +35,6 @@ urlpatterns = [
         views.predio_compat,
         name="valladolid-compat",
     ),
-    # path("proyectos/komchen/", views.komchen, name="komchen"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler400 = "principal.views.error_400"
 handler403 = "principal.views.error_403"

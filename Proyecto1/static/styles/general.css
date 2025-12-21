@@ -425,3 +425,28 @@ button[disabled], .btn-primary[disabled]{opacity:.6;cursor:not-allowed;filter:gr
     gap: 30px;
   }
 }
+
+
+
+
+
+/* ===== NAVBAR FIJA (solo desktop) ===== */
+@media (min-width: 900px){
+  .navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+
+    /* importante: que no sea transparente */
+    background: #f6f0e6; /* pon el color exacto de tu header si usas otro */
+  }
+
+  /* para que el contenido no quede escondido debajo del header */
+  main{
+    padding-top: var(--nav-h, 84px);
+  }
+}
+
+
