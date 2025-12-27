@@ -537,11 +537,8 @@ msgstr "email@janesfakedomain.net"
 msgid "Escribe un correo válido, por ejemplo nombre@dominio.com"
 msgstr "Enter a valid email address, for example name@domain.com"
 
-#: principal/templates/pages/contacto.html:93
-#, fuzzy
-#| msgid "Tipo de propiedad"
 msgid "ID / Clave de la propiedad"
-msgstr "Property type"
+msgstr "ID / Property code"
 
 #: principal/templates/pages/contacto.html:98
 msgid "Ej. MZ04-L01, PR-01, CS-01, etc."
@@ -1544,6 +1541,9 @@ msgstr "New quote request — {n} {a}"
 
 msgid "Apartado"
 msgstr "Reserved"
+
+
+
 
 msgid "Vendido"
 msgstr "Sold"
