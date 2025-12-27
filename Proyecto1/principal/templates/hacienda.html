@@ -1,5 +1,6 @@
-<title>Cotizador - Hacienda Residencial</title>
 {% extends "base.html" %}
+{% block title %}{% trans "Cotizador - Hacienda Residencial" %}{% endblock %}
+
 {% load static i18n %}
 
 {% block extra_css %}
@@ -23,17 +24,71 @@
     </div>
   </section>
 
-  <div class="map-legend" aria-label="Leyenda del mapa">
-  <div class="legend-inner">
-    <div class="legend-item"><span class="legend-badge">A</span><span class="legend-text">Entrada</span></div>
-    <div class="legend-item"><span class="legend-badge">B</span><span class="legend-text">Siembra de agave</span></div>
-    <div class="legend-item"><span class="legend-badge">C</span><span class="legend-text">Zona comercial</span></div>
-    <div class="legend-item"><span class="legend-badge">D</span><span class="legend-text">Piscina</span></div>
-    <div class="legend-item"><span class="legend-badge">E</span><span class="legend-text">Periférico Valladolid</span></div>
-    <div class="legend-item"><span class="legend-badge">F</span><span class="legend-text">Canchas</span></div>
-    <div class="legend-item"><span class="legend-badge">G</span><span class="legend-text">Casa Club</span></div>
+<div class="map-legend" aria-label="{% trans 'Leyenda del mapa' %}">
+  <!-- Banda 1: puntos del mapa (A–G) -->
+  <div class="legend-inner legend-inner-main">
+    <div class="map-legend-label">
+      {% trans "LEYENDA" %}
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">A</span>
+      <span class="legend-text">{% trans "Entrada" %}</span>
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">B</span>
+      <span class="legend-text">{% trans "Siembra de agave" %}</span>
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">C</span>
+      <span class="legend-text">{% trans "Zona comercial" %}</span>
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">D</span>
+      <span class="legend-text">{% trans "Piscina" %}</span>
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">E</span>
+      <span class="legend-text">{% trans "Periférico Valladolid" %}</span>
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">F</span>
+      <span class="legend-text">{% trans "Canchas" %}</span>
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-badge">G</span>
+      <span class="legend-text">{% trans "Casa Club" %}</span>
+    </div>
+  </div>
+
+  <!-- Banda 2: estados de lotes (solo mobile/tablet) -->
+  <div class="legend-inner legend-inner-states">
+    <div class="legend-state">
+      <span class="legend-color sold"></span>
+      <span class="legend-text">{% trans "Vendido" %}</span>
+    </div>
+    <div class="legend-state">
+      <span class="legend-color hold"></span>
+      <span class="legend-text">{% trans "Apartado" %}</span>
+    </div>
+    <div class="legend-state">
+      <span class="legend-color available"></span>
+      <span class="legend-text">{% trans "Disponible" %}</span>
+    </div>
+    <div class="legend-state">
+      <span class="legend-color soon"></span>
+      <span class="legend-text">{% trans "Próximamente" %}</span>
+    </div>
   </div>
 </div>
+
+
 
 
   <aside class="cotizador-panel">
@@ -95,38 +150,39 @@
 
 
 
-
 <form id="quoteForm" class="quote-form" method="POST" action="/api/cotiza-lote/">
   {% csrf_token %}
   <input type="hidden" id="quoteLotCode" name="id_lote">
 
   <div class="quote-row">
     <div class="quote-field">
-      <label>Nombre</label>
+      <label>{% trans "Nombre" %}</label>
       <input id="quoteName" type="text" name="nombre" required>
       <small class="field-error" data-err="nombre"></small>
     </div>
 
     <div class="quote-field">
-      <label>Apellido</label>
+      <label>{% trans "Apellido" %}</label>
       <input id="quoteLastName" type="text" name="apellido" required>
       <small class="field-error" data-err="apellido"></small>
     </div>
   </div>
 
   <div class="quote-field">
-    <label>Correo</label>
+    <label>{% trans "Correo" %}</label>
     <input type="email" name="email" required>
     <small class="field-error" data-err="email"></small>
   </div>
 
   <div class="quote-field">
-    <label>Teléfono</label>
+    <label>{% trans "Teléfono" %}</label>
     <input id="quotePhone" type="tel" name="telefono" required inputmode="numeric" autocomplete="tel">
     <small class="field-error" data-err="telefono"></small>
   </div>
 
-  <button id="quoteBtn" type="submit" class="quote-btn">Solicitar cotización</button>
+  <button id="quoteBtn" type="submit" class="quote-btn">
+    {% trans "Solicitar cotización" %}
+  </button>
 </form>
 
 
@@ -137,10 +193,28 @@
 
 <script>
   window.LOT_STATES = {{ lot_states_json|safe }};
+
+  // Labels de estado (para tooltip / badge)
+  window.LOT_STATE_LABELS = {
+    vendido: "{% trans 'VENDIDO' %}",
+    apartado: "{% trans 'APARTADO' %}",
+    proximamente: "{% trans 'PRÓXIMAMENTE' %}",
+    disponible: "{% trans 'DISPONIBLE' %}",
+  };
+
+  // Mensajes para el toast cuando el lote no está disponible
+  window.LOT_STATE_TOAST = {
+    vendido: "{% trans 'Este lote está vendido.' %}",
+    apartado: "{% trans 'Este lote está apartado.' %}",
+    proximamente: "{% trans 'Este lote pertenece a la etapa PRÓXIMAMENTE.' %}",
+    disponible: "{% trans 'Este lote está disponible.' %}",
+  };
 </script>
+
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% url 'javascript-catalog' %}"></script>
 <script src="{% static 'vendors/svg-pan-zoom.min.js' %}"></script>
 <script src="{% static 'scripts/cotizador.js' %}"></script>
 {% endblock %}

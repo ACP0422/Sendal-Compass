@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   // =========================
   // Helpers
@@ -188,33 +189,59 @@ function getStageIdFromLot(el) {
 
   function stateLabel(estadoRaw) {
     const s = String(estadoRaw || "").toLowerCase().trim();
-    if (s === "vendido") return "VENDIDO";
-    if (s === "apartado") return "APARTADO";
-    if (s === "proximamente") return "PRÓXIMAMENTE";
-    return ""; // disponible u otro
+    const labels = window.LOT_STATE_LABELS || {};
+    return labels[s] || labels.disponible || "";
   }
+  
 
   function applyLotState(el, estadoRaw) {
     if (!el) return;
+  
     const estado = String(estadoRaw || "").toLowerCase().trim();
     el.dataset.estado = estado;
-
-    el.classList.remove("lot-status-vendido", "lot-status-apartado", "lot-status-disponible", "lot-status-proximamente");
-
-    if (estado === "vendido") el.classList.add("lot-status-vendido");
-    else if (estado === "apartado") el.classList.add("lot-status-apartado");
-    else if (estado === "proximamente") el.classList.add("lot-status-proximamente");
-    else el.classList.add("lot-status-disponible");
-
+  
+    // Limpia clases anteriores
+    el.classList.remove(
+      "lot-status-vendido",
+      "lot-status-apartado",
+      "lot-status-disponible",
+      "lot-status-proximamente"
+    );
+  
+    // Aplica clase de color según estado
+    if (estado === "vendido") {
+      el.classList.add("lot-status-vendido");
+    } else if (estado === "apartado") {
+      el.classList.add("lot-status-apartado");
+    } else if (estado === "proximamente") {
+      el.classList.add("lot-status-proximamente");
+    } else {
+      // cualquier otro => disponible
+      el.classList.add("lot-status-disponible");
+    }
+  
+    // Tooltip (title) a partir del mapa de labels traducibles
     const label = stateLabel(estado);
     if (label) {
-      el.style.cursor = "not-allowed";
       el.setAttribute("title", label);
     } else {
-      el.style.cursor = "pointer";
       el.removeAttribute("title");
     }
+  
+    // 🔑 Cursor solo bloqueado para NO disponibles
+    const isNoDisponible =
+      estado === "vendido" ||
+      estado === "apartado" ||
+      estado === "proximamente";
+  
+    if (isNoDisponible) {
+      el.style.cursor = "not-allowed";
+    } else {
+      // disponibles y otros: se pueden clicar
+      el.style.cursor = "pointer";
+    }
   }
+  
 
   const lotBadge = document.getElementById("lotBadge");
 const lotBadgeText = document.getElementById("lotBadgeText");
@@ -361,15 +388,11 @@ function hideLotBadge() {
   
       if (estado !== "vendido" && estado !== "apartado" && estado !== "proximamente")
         return;
-  
-      const label =
-        estado === "vendido"
-          ? "VENDIDO"
-          : estado === "apartado"
-          ? "APARTADO"
-          : "PRÓXIMAMENTE";
-  
+      
+      const label = stateLabel(estado);   // 👈 usa el mapa traducible
+      
       showLotBadge(label, estado, e.clientX, e.clientY);
+      
     });
   
     el.addEventListener("mousemove", (e) => {
@@ -385,15 +408,11 @@ function hideLotBadge() {
   
       if (estado !== "vendido" && estado !== "apartado" && estado !== "proximamente")
         return;
-  
-      const label =
-        estado === "vendido"
-          ? "VENDIDO"
-          : estado === "apartado"
-          ? "APARTADO"
-          : "PRÓXIMAMENTE";
-  
+      
+      const label = stateLabel(estado);   // 👈 usa el mapa traducible
+      
       showLotBadge(label, estado, e.clientX, e.clientY);
+      
     });
   
     el.addEventListener("mouseleave", () => {
@@ -414,12 +433,25 @@ function hideLotBadge() {
       });
   
       stageEl.addEventListener("mousemove", (e) => {
-        showLotBadge("PRÓXIMAMENTE", "proximamente", e.clientX, e.clientY);
+        // badge
+        showLotBadge(
+          stateLabel("proximamente"),
+          "proximamente",
+          e.clientX,
+          e.clientY
+        );
+      
+        // 👇 cursor prohibido
+        mapWrap.style.cursor = "not-allowed";
       });
-  
-      stageEl.addEventListener("mouseleave", () => {
+      
+      stageEl.addEventListener("mouseleave", (e) => {
         hideLotBadge();
+      
+        // 👇 restaurar
+        mapWrap.style.cursor = "default";
       });
+      
     });
   }
   
@@ -447,6 +479,14 @@ function hideLotBadge() {
     await Promise.all(workers);
   })();
 
+
+  function stateToast(estadoRaw) {
+    const s = String(estadoRaw || "").toLowerCase().trim();
+    const messages = window.LOT_STATE_TOAST || {};
+    return messages[s] || messages.disponible || "";
+  }
+  
+
   // Click en lote
   lotEls.forEach((el) => {
     el.addEventListener("click", async (e) => {
@@ -460,7 +500,7 @@ function hideLotBadge() {
 
       // Si ya sabemos que NO está disponible => bloquear panel
       if (estado === "vendido" || estado === "apartado" || estado === "proximamente") {
-        showToast(`Este lote está ${stateLabel(estado).toLowerCase()}.`, false);
+        showToast(stateToast(estado), false);
         return;
       }
 
@@ -473,7 +513,7 @@ function hideLotBadge() {
       applyLotState(el, estadoNow);
 
       if (estadoNow === "vendido" || estadoNow === "apartado" || estadoNow === "proximamente") {
-        showToast(`Este lote está ${stateLabel(estadoNow).toLowerCase()}.`, false);
+        showToast(stateToast(estadoNow), false);
         return;
       }
 
@@ -533,6 +573,52 @@ const form = document.getElementById("quoteForm");
 const btn = document.getElementById("quoteBtn");
 const lotCodeInput = document.getElementById("quoteLotCode");
 
+// =========================
+// Validaciones frontend básicas
+// =========================
+if (form) {
+  // --- Nombre y apellido: solo letras, espacios y guiones ---
+  const onlyLettersRe = /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s-]/g;
+
+  const nameInputs = [
+    document.getElementById("quoteName"),
+    document.getElementById("quoteLastName"),
+  ].filter(Boolean);
+
+  nameInputs.forEach((el) => {
+    // Elimina números y símbolos al vuelo
+    el.addEventListener("input", () => {
+      el.value = el.value
+        .replace(onlyLettersRe, "")   // quita lo que no sea letra/espacio/guion
+        .replace(/\s{2,}/g, " ");     // comprime espacios
+    });
+
+    // Limpia espacios al final
+    el.addEventListener("blur", () => {
+      el.value = el.value.trim();
+    });
+  });
+
+  // --- Teléfono: no permitir letras ---
+  const phoneInput =
+    document.getElementById("quotePhone") ||
+    form.querySelector('input[name="telefono"]');
+
+  if (phoneInput) {
+    phoneInput.setAttribute("inputmode", "tel");
+
+    phoneInput.addEventListener("input", () => {
+      // Solo dígitos y símbolos típicos de teléfono; sin letras
+      phoneInput.value = phoneInput.value.replace(/[^0-9+\s\-()]/g, "");
+    });
+
+    phoneInput.addEventListener("blur", () => {
+      phoneInput.value = phoneInput.value.trim();
+    });
+  }
+}
+
+
 if (form && btn) {
   form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
@@ -591,21 +677,27 @@ if (form && btn) {
           data?.errors?.apellido?.[0] ||
           data?.errors?.id_lote?.[0] ||
           data?.message ||
-          "Revisa los campos marcados en rojo.";
+          gettext("Revisa los campos marcados en rojo.");  // 👈 aquí
 
         showToast(first, false);
         return;
       }
 
-      // 7) ÉXITO
-      showToast("¡Gracias! Nos pondremos en contacto contigo pronto.", true);
+      // 7) Éxito
+      showToast(
+        gettext("¡Gracias! Nos pondremos en contacto contigo pronto."), // 👈 aquí
+        true
+      );
 
-      // Dejar el formulario limpio, pero mantener el id_lote por si quieres
-      form.reset();
-      if (lotInput) lotInput.value = lot;
+     // Dejar el formulario limpio, pero mantener el id_lote por si quieres
+    form.reset();
+    if (lotInput) lotInput.value = lot;
     } catch (err) {
       // Error de red u otro
-      showToast("No se pudo enviar tu solicitud. Inténtalo de nuevo.", false);
+      showToast(
+        gettext("No se pudo enviar tu solicitud. Inténtalo de nuevo."), // 👈 aquí
+        false
+      );
     } finally {
       // 8) Restaurar botón
       btn.textContent = prevText;

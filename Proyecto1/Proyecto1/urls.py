@@ -3,6 +3,8 @@ from django.urls import path, include
 from principal import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.i18n import JavaScriptCatalog  
+
 
 # Handlers de error (se usan cuando DEBUG=False)
 
@@ -17,7 +19,7 @@ urlpatterns = [
     path("cotizador/", views.cotizador, name="cotizador"),
     path("cotizador-hacienda/", views.hacienda_svg_view, name="hacienda-svg"),
 
-         
+    path('api/lotes/', views.api_lotes, name='api_lotes'),
     path("api/lote/<str:lot_id>/", views.api_lote_detail, name="api-lote-detail"),
     path("api/cotiza-lote/", views.cotiza_lote, name="cotiza_lote"),
 
@@ -35,6 +37,8 @@ urlpatterns = [
         views.predio_compat,
         name="valladolid-compat",
     ),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler400 = "principal.views.error_400"
 handler403 = "principal.views.error_403"

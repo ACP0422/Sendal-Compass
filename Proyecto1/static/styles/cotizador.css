@@ -278,9 +278,7 @@ svg .lot-hover{
   backdrop-filter: blur(6px);
 }
 
-/* Etiqueta "Leyenda" */
-.map-legend .legend-inner::before{
-  content: "Leyenda";
+.map-legend-label{
   position: absolute;
   top: -12px;
   left: 24px;
@@ -295,6 +293,7 @@ svg .lot-hover{
   border: 1px solid rgba(0,0,0,.06);
   color: #7b5a36;
 }
+
 
 /* Cada item */
 .legend-item{
@@ -335,6 +334,7 @@ svg .lot-hover{
   border: 2px solid #d6a44a;
   background: #f1c26b;
   color: #4b1f1f;
+  flex-shrink: 0;
 }
 
 .legend-text{
@@ -572,25 +572,14 @@ body.modal-open{
     min-height: 260px;
   }
 
-  .map-legend .legend-inner{
-    width: 100%;
-    box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 16px;
-    justify-items: start;
-    padding: 16px 14px 14px;
-  }
+  
 
   .legend-item{
     font-size: 13px;
     white-space: normal;  /* que ya se pueda partir */
   }
 
-  .map-legend .legend-inner .legend-item:last-child{
-    grid-column: 1 / -1;
-    justify-self: center;
-  }
+  
 
   .quote-form{
     padding: 12px 10px 14px;
@@ -636,31 +625,112 @@ body.modal-open{
 
 
 
-/* =========================
-   LEYENDA ESPECIAL PARA TABLET
-   (entre 600px y 1024px de ancho)
-========================= */
+/* ===== Estados de lote en la leyenda ===== */
 
 
-/* =========================
-   LEYENDA ESPECIAL PARA TABLET
-   (entre 600px y 1024px de ancho)
-========================= */
-@media (min-width: 600px) and (max-width: 1024px){
-  .map-legend .legend-inner{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+.legend-color{
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,.15);
+  display: inline-block;
+}
+
+/* Tus colores */
+.legend-color.sold{      background:#F44E4E; }
+.legend-color.hold{      background:#FFC35C; }
+.legend-color.available{ background:#AEDA95; }
+.legend-color.soon{      background:#B2B2B2; }
+
+
+.map-legend{
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;       /* 👈 apila bandas */
+  align-items: center;
+  gap: 8px;                     /* espacio entre banda 1 y 2 */
+}
+
+
+
+/* ===== Overrides leyenda A–G + estados (desktop / tablet / mobile) ===== */
+
+/* Mobile + tablet: estilo de la segunda banda (estados) */
+@media (max-width: 1024px){
+  .map-legend .legend-inner-states{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px 24px;
-    justify-items: start;
+
+    width: 100%;
+    max-width: 1180px;
+    box-sizing: border-box;
+
+    background: rgba(255,255,255,.96);
+    border-radius: 18px;
+    padding: 10px 20px;
+
+    border: 1px solid rgba(0,0,0,.04);
+    box-shadow: 0 6px 14px rgba(0,0,0,.06);
+    backdrop-filter: blur(6px);
+  }
+}
+
+/* Desktop: ocultar completamente la banda de estados */
+@media (min-width: 1025px){
+  .map-legend .legend-inner-states{
+    display: none !important;
+  }
+}
+
+/* Tablet (768–1024): G alineada con el resto (sin centrado raro) */
+@media (min-width: 768px) and (max-width: 1024px){
+  .map-legend .legend-inner-main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px 30px;
   }
 
-  .legend-item{
-    white-space: normal;
-  }
-
-  /* 👇 Último ítem debajo de la 2ª columna, alineado a la izquierda de esa columna */
-  .map-legend .legend-inner .legend-item:last-child{
-    grid-column: 2 / 3;
+  .map-legend .legend-inner-main .legend-item:last-child{
+    grid-column: auto;
     justify-self: flex-start;
   }
 }
+
+/* Mobile (<768): más espacio vertical entre items y estados */
+@media (max-width: 767px){
+  /* banda A–G en grid, con un poco más de aire vertical */
+  .map-legend .legend-inner-main{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+    justify-items: start;
+  }
+
+  .map-legend .legend-inner-main .legend-item{
+    margin-bottom: 2px;
+  }
+
+  /* más espacio entre Sold / Reserved / Available / Coming soon */
+  .map-legend .legend-inner-states{
+    gap: 12px 28px;
+  }
+}
+
+
+
+@media (max-width: 767px){
+  /* Segunda banda (estados) en 2 columnas */
+  .map-legend .legend-inner-states{
+    display: grid;                         /* en vez de flex */
+    grid-template-columns: repeat(2, 1fr); /* 👈 2 columnas */
+    gap: 10px 24px;
+    justify-items: start;
+  }
+}
+
+
