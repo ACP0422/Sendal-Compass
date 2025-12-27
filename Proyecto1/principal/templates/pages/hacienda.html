@@ -19,7 +19,7 @@
     <h1 class="title">{% trans "Hacienda Residencial" %}</h1>
     <p class="meta">
       {% trans "Valladolid, Yucatán" %}<br>
-      {% blocktrans with val="109,344" %}Superficie: {{ val }} m²{% endblocktrans %}
+      {% blocktrans %}110 lotes residenciales{% endblocktrans %}
     </p> 
 
     <nav class="nav-arrows">
@@ -33,19 +33,7 @@
   </figure>
 
   <section class="intro">
-    <div class="pitch">
-      <h4>{% trans "Vive el lujo de lo natural." %}</h4>
-
-      <div class="facts">
-        <div><strong>$900m²</strong><span>{% trans "Precio más bajo" %}</span></div>
-        <div><strong>110 {% trans "Terrenos" %}</strong><span>{% trans "Con 550m²" %}</span></div>
-        <div><strong>{% trans "Tribu Easter" %}</strong><span>{% trans "Mayores de 50 años" %}</span></div>
-
-        <div><strong>{% trans "Ubicación" %}</strong><span>{% trans "Sobre periférico" %}</span></div>
-        <div><strong>24,048.39m²</strong><span>{% trans "Vialidades" %}</span></div>
-        <div><strong>1,207.17m²</strong><span>{% trans "Áreas verdes" %}</span></div>
-      </div>
-    </div>
+    
 
     <div class="desc">
       <p>{% blocktrans trimmed %}
@@ -56,6 +44,20 @@
       {% endblocktrans %}</p>
 
       <a class="btn map" href="https://www.google.com/maps/place/20°42'51.9%22N+88°10'08.5%22W/@20.7144167,-88.1690278,915m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d20.7144167!4d-88.1690278?entry=ttu&g_ep=EgoyMDI1MDkyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">{% trans "Ubicación Google Maps" %}</a>
+    </div>
+
+    <div class="pitch">
+      <h4><strong>{% trans "Vive el lujo de lo natural." %}</strong></h4>
+
+      <div class="facts">
+        <div><strong>$900m²</strong><span>{% trans "Precio más bajo" %}</span></div>
+        <div><strong>110 {% trans "Terrenos" %}</strong><span>{% trans "Con 550m²" %}</span></div>
+        <div><strong>{% trans "Tribu Easter" %}</strong><span>{% trans "Mayores de 50 años" %}</span></div>
+
+        <div><strong>{% trans "Ubicación" %}</strong><span>{% trans "Sobre periférico" %}</span></div>
+        <div><strong>24,048.39m²</strong><span>{% trans "Vialidades" %}</span></div>
+        <div><strong>1,207.17m²</strong><span>{% trans "Áreas verdes" %}</span></div>
+      </div>
     </div>
   </section>
 

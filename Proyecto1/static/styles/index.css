@@ -1,12 +1,28 @@
-body{line-height:1.35;color:var(--color-ink-dark)}
-
-.hero{
-  position:relative;
-  min-height:calc(100vh - var(--nav-h));
-  padding-top:var(--nav-h);
-  color:var(--white);
-  background:url("/static/resources/images/home/hero-2.jpg") center 22%/cover no-repeat
+@media (min-width: 900px){
+  body.home main{
+    padding-top: 0 !important;   
+  }
 }
+
+body{
+  line-height: 1.35;
+  color: var(--color-ink-dark);
+}
+
+/* HERO */
+.hero{
+  position: relative;
+
+  /* Hero a pantalla completa */
+  min-height: 100vh;
+
+  /* Empuja el contenido para que no lo tape la navbar fija */
+  padding-top: var(--nav-h);
+
+  color: var(--white);
+  background: url("/static/resources/images/home/hero-2.jpg") center 22% / cover no-repeat;
+}
+
 .hero::after{
   content:"";
   position:absolute;
@@ -270,6 +286,7 @@ body{line-height:1.35;color:var(--color-ink-dark)}
 
   .projects-title{font-size:2rem;margin-bottom:.75rem}
   .projects-grid{grid-template-columns:repeat(2,1fr);gap:1.375rem}
+
 }
 
 @media (min-width:64rem){
@@ -327,6 +344,11 @@ body{line-height:1.35;color:var(--color-ink-dark)}
 
 @media (max-width:47.99rem){
   .blurb{text-align:center;font-size:.875rem}
+
+  .hero-head{
+    margin-top: 40px;
+  }
+
 }
 
 .project-card img{
@@ -360,6 +382,17 @@ body{line-height:1.35;color:var(--color-ink-dark)}
   .filters{
     grid-template-columns: 1fr;   /* antes eran 2 columnas */
     gap: .75rem;                  /* separación vertical cómoda */
-    border-radius: 1.5rem;        /* un poco menos “ovalado” en mobile (opcional) */
+    border-radius: 1.5rem;        
   }
+}
+
+
+
+
+
+/* Segundo filtro deshabilitado (hasta elegir ubicación) */
+.filters .select select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f4efe4; /* un beige clarito acorde a tu paleta */
 }

@@ -88,6 +88,21 @@
         {% if form.email.errors %}{{ form.email.errors.0 }}{% endif %}
       </div>
       </label>
+
+      <label>
+  <span>{% trans "ID / Clave de la propiedad" %}</span>
+  <input
+    type="text"
+    name="propiedad_id"
+    value="{{ form.propiedad_id.value|default_if_none:'' }}"
+    placeholder="{% trans 'Ej. MZ04-L01, PR-01, CS-01, etc.' %}"
+    maxlength="80">
+
+  <div class="field-error" aria-live="polite">
+    {% if form.propiedad_id.errors %}{{ form.propiedad_id.errors.0 }}{% endif %}
+  </div>
+</label>
+
       
       <label>
         <span>{% trans "Mensaje" %}</span>

@@ -248,9 +248,25 @@
 };
 
 
-    // Renderiza las options del segundo select según ubicación
-    function renderTipoOptions(ubic) {
+   // Renderiza las options del segundo select según ubicación
+function renderTipoOptions(ubic) {
   selectTipo.innerHTML = '';
+
+  // 🔒 SIN ubicación -> bloquear select y mostrar mensaje claro
+  if (!ubic) {
+    const opt = document.createElement('option');
+    opt.value = '';
+    opt.disabled = true;
+    opt.selected = true;
+    opt.textContent = "{{ _('Selecciona primero una ubicación') }}";
+    selectTipo.appendChild(opt);
+
+    selectTipo.disabled = true;   // deshabilitado => gris / no clickeable
+    return;
+  }
+
+  // ✅ CON ubicación -> habilitar select y cargar tipos
+  selectTipo.disabled = false;
 
   // Placeholder oculto
   const hidden = document.createElement('option');
@@ -258,32 +274,19 @@
   hidden.hidden = true;
   hidden.disabled = true;
   hidden.selected = true;
-  hidden.textContent = "{{ _('Tipo') }}"; 
+  hidden.textContent = "{{ _('Tipo de propiedad') }}";
   selectTipo.appendChild(hidden);
 
   // "Todos"
-  const optAll = document.createElement('option');
-  optAll.value = '';
-  optAll.textContent = "{{ _('Todos los tipos') }}";
-  selectTipo.appendChild(optAll);
+ // "Todos"
+const optAll = document.createElement('option');
+// usamos un valor especial para distinguirlo del placeholder
+optAll.value = '__all';
+optAll.textContent = "{{ _('Todos los tipos') }}";
+selectTipo.appendChild(optAll);
 
-  // Caso 1: NO hay ubicación seleccionada → mostrar todas las opciones de ambos lugares
-  if (!ubic) {
-    [
-    { value: 'hacienda', label: "{{ _('Proyecto Hacienda Residencial Mayahuel') }}" },
-  { value: 'predios', label: "{{ _('Predios') }}" },
-  { value: 'casa', label: "{{ _('Casa habitación') }}" },
-  { value: 'tularum', label: "{{ _('Proyecto Tularum') }}" },
-    ].forEach(o => {
-      const op = document.createElement('option');
-      op.value = o.value;
-      op.textContent = o.label;
-      selectTipo.appendChild(op);
-    });
-    return; // terminamos aquí
-  }
 
-  // Caso 2: hay ubicación → solo opciones de esa ubicación
+  // Opciones específicas de la ubicación
   (OPTIONS[ubic] || []).forEach(o => {
     const op = document.createElement('option');
     op.value = o.value;
@@ -293,23 +296,48 @@
 }
 
 
-    function aplicarFiltros() {
-      const ubicacion = (selectUbicacion?.value || '').trim().toLowerCase();
-      const tipoSel   = (selectTipo?.value || '').trim().toLowerCase();
 
-      cards.forEach(card => {
-        const cardUbic = (card.dataset.ubicacion || '').toLowerCase();
-        // data-tipos = "hacienda,predios,casa"  (coma-separado)
-        const tipos = (card.dataset.tipos || '')
-          .split(',')
-          .map(s => s.trim().toLowerCase())
-          .filter(Boolean);
+  function aplicarFiltros() {
+  const ubicacion = (selectUbicacion?.value || '').trim().toLowerCase();
+  const tipoSel   = (selectTipo?.value || '').trim().toLowerCase();
 
-        const matchUbic = !ubicacion || cardUbic === ubicacion;
-        const matchTipo = !tipoSel   || tipos.includes(tipoSel);
-        card.style.display = (matchUbic && matchTipo) ? '' : 'none';
-      });
+  cards.forEach(card => {
+    const cardUbic = (card.dataset.ubicacion || '').toLowerCase();
+    const tipos = (card.dataset.tipos || '')
+      .split(',')
+      .map(s => s.trim().toLowerCase())
+      .filter(Boolean);      // [] para ciudades, ['hacienda']… para proyectos
+
+    const tieneTipos = tipos.length > 0;
+    let show = false;
+
+    if (!ubicacion) {
+      // Sin ubicación seleccionada → solo ciudades (Valladolid, Tulum)
+      show = !tieneTipos;
+    } else if (!tipoSel) {
+      // Ubicación sola → solo la ciudad de esa ubicación
+      show = (cardUbic === ubicacion && !tieneTipos);
+    } else if (tipoSel === '__all') {
+      // Ubicación + "Todos los tipos" → SOLO proyectos de esa ubicación (sin la ciudad)
+      show = (cardUbic === ubicacion && tieneTipos);
+    } else {
+      // Ubicación + tipo específico → SOLO proyectos de ese tipo (sin la ciudad)
+      show = (
+        cardUbic === ubicacion &&
+        tieneTipos &&
+        tipos.includes(tipoSel)
+      );
     }
+
+    card.style.display = show ? '' : 'none';
+  });
+}
+
+
+
+
+
+
 
     // Cuando cambia la ubicación, rehace las options del tipo y filtra
     selectUbicacion?.addEventListener('change', () => {
@@ -319,7 +347,24 @@
     });
 
     // Cambios en tipo: solo filtra
-    selectTipo?.addEventListener('change', aplicarFiltros);
+    // Cambios en tipo: SOLO permite si ya hay ubicación
+// Cambios en tipo: SOLO si ya hay ubicación específica
+selectTipo?.addEventListener('change', () => {
+  const ubicVal = (selectUbicacion?.value || '').trim().toLowerCase();
+  const tipoVal = (selectTipo?.value || '').trim().toLowerCase();
+
+  // Si intenta elegir tipo sin haber elegido Tulum/Valladolid,
+  // o está en "Todas las ubicaciones" (value = '')
+  if (tipoVal && !ubicVal) {
+    // regresar al placeholder "Tipo de propiedad"
+    selectTipo.selectedIndex = 0;
+    return;
+  }
+
+  aplicarFiltros();
+});
+
+
 
     // Inicial
     renderTipoOptions((selectUbicacion?.value || '').toLowerCase());

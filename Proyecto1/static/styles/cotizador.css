@@ -1,13 +1,12 @@
 /* =========================
    LAYOUT COTIZADOR
 ========================= */
+
 .cotizador{
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 24px;
-  align-items: stretch;
-  padding: 16px;
+  max-width: 1200px;        /* ancho máximo del bloque */
+  margin: 40px auto 48px;   /* centrado */
+  padding: 0 16px 20px;     /* respirito lateral para mobile */
 }
 
 .cotizador-map{
@@ -18,56 +17,56 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 16px;
 }
 
-.map-wrap{
-
-  position: relative;
-
-  background-image: url("/static/resources/images/cotizador/Pasto_MapaValladolid.jpeg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-
-  background-color: #fffaf2;
-
-
-  width: 100%;
-  height: 70vh;
-  min-height: 520px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.map-wrap svg{
-  width: 97%;
-  height: 100%;
-}
-
-/* Panel overlay (no empuja al mapa) */
+/* Panel como POPUP centrado en desktop */
 .cotizador-panel{
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: min(420px, calc(100% - 40px));
-  max-height: calc(70vh - 40px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -48%);  /* un poquito más abajo del centro */
+
+  width: min(520px, 100% - 40px);
+  max-height: 70vh;
   overflow: auto;
-  z-index: 20;
+
+  z-index: 9001;
   background: #fff;
   border-radius: 12px;
   border: 1px solid #eee;
+  box-shadow: 0 16px 40px rgba(0,0,0,.25);
+
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition: opacity .15s ease, visibility .15s ease;
+  transition: opacity .18s ease, visibility .18s ease, transform .18s ease;
 }
 
+/* cuando esté cerrado, que desaparezca */
 .cotizador.is-panel-closed .cotizador-panel{
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  display: none;
+}
+
+/* Fondo oscuro cuando el panel está abierto */
+.cotizador::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9000;
+  transition: opacity .18s ease;
+}
+
+/* Cuando el panel está abierto, muestra el fondo */
+.cotizador:not(.is-panel-closed)::before{
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .panel-head{
@@ -85,11 +84,20 @@
 }
 
 .panel-close{
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 6px 10px;
-  background: #fff;
+  background: transparent;
+  border: 1px solid #D1815B;
+  color: #D1815B;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.panel-close:hover{
+  background: #E99A75;
+  color: #fff;
+  border-color: #E99A75;
 }
 
 .panel-body{
@@ -99,6 +107,7 @@
 /* =========================
    PANEL: KV + SECCIONES
 ========================= */
+
 .kvs{
   display: grid;
   gap: 10px;
@@ -164,6 +173,7 @@ h4{
 /* =========================
    MAPA: SELECCIÓN / TEXTOS
 ========================= */
+
 /* Solo borde del lote seleccionado */
 .lot-selected{
   stroke: #1db954;
@@ -178,8 +188,9 @@ h4{
 }
 
 /* =========================
-   HOVER LOTES (FIX PROXIMAMENTE)
+   HOVER LOTES (incluye Próximamente)
 ========================= */
+
 svg .lot-hover{
   transition: filter 0.18s ease, opacity 0.18s ease;
 }
@@ -187,35 +198,34 @@ svg .lot-hover{
 .lot-status-vendido:hover{ filter: brightness(0.85);}
 .lot-status-apartado:hover{ filter: brightness(0.85); }
 .lot-status-disponible:hover{ filter: brightness(0.85); }
-
-
-
+.lot-status-proximamente:hover{
+  filter: brightness(0.85);
+}
 
 /* =========================
    ESTADOS DE LOTE
 ========================= */
-.lot-status-vendido{ fill: #F44E4E !important; }
-.lot-status-apartado{ fill: #FFC35C !important; }
+
+.lot-status-vendido{      fill: #F44E4E !important; }
+.lot-status-apartado{     fill: #FFC35C !important; }
+.lot-status-proximamente{ fill: #B2B2B2 !important; }
 
 /* =========================
    TOOLTIP / BADGE (si lo usas con JS)
 ========================= */
+
 .lot-badge{
-  position: fixed;
-  z-index: 99999;
-  pointer-events: none;
-  transform: translate(-50%, -130%);
-  padding: 8px 12px;
+  font-size: 12px;
+  padding: 8px 10px;
   border-radius: 999px;
   font-weight: 800;
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: #1f1f1f;
-  background: rgba(255,255,255,.92);
-  border: 1px solid rgba(0,0,0,.10);
-  box-shadow: 0 10px 24px rgba(0,0,0,.18);
-  backdrop-filter: blur(8px);
+  letter-spacing: 0.1em;
+  border: 2px solid;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -130%);
+  text-transform: uppercase; 
 }
 
 .lot-badge.is-vendido{
@@ -230,44 +240,87 @@ svg .lot-hover{
   color: #6a3c00;
 }
 
+.lot-badge.is-proximamente{
+  background: #f3f3f3;
+  border-color: #cfc9c2;
+  color: #5a554e;
+}
+
 /* =========================
-   LEYENDA (3 filas, 2 columnas)
-   + más padding a bordes
-   + menos gap
+   LEYENDA TIPO BANDA
 ========================= */
 
 .map-legend{
   width: 100%;
-  height: 100%;             
+  margin-top: 18px;
   display: flex;
-  justify-content: center;   
-  align-items: center;       
-  padding: 16px;
-}
-
-.map-legend .legend-inner{
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 14px 26px;
-  padding: 20px 26px;
-  width: fit-content;        
-  border-radius: 18px;
-  background: rgba(255,255,255,0.75);
-  border: 1px solid rgba(0,0,0,0.06);
-  backdrop-filter: blur(6px);
-}
-
-.legend-item:last-child{
-  grid-column: 1 / -1;
   justify-content: center;
 }
 
+.map-legend .legend-inner{
+  position: relative;
 
-.legend-item{
+  width: 100%;
+  max-width: 1180px;        
+  box-sizing: border-box;
+
   display: flex;
   align-items: center;
-  gap: 12px;
-  white-space: nowrap;
+  justify-content: space-evenly;
+  gap: 24px;
+  
+  background: rgba(255,255,255,.96);
+  border-radius: 18px;
+  padding: 18px 28px;
+
+  border: 1px solid rgba(0,0,0,.04);
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+  backdrop-filter: blur(6px);
+}
+
+/* Etiqueta "Leyenda" */
+.map-legend .legend-inner::before{
+  content: "Leyenda";
+  position: absolute;
+  top: -12px;
+  left: 24px;
+
+  padding: 3px 10px;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+
+  background: #fff7e9;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.06);
+  color: #7b5a36;
+}
+
+/* Cada item */
+.legend-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  white-space: nowrap;   /* desktop: no se parte el texto */
+}
+
+/* Desktop: el último igual que los demás */
+.map-legend .legend-inner .legend-item:last-child{
+  grid-column: auto;
+  justify-self: auto;
+}
+
+/* Ajustes en pantallas muy pequeñas */
+@media (max-width: 430px){
+  .map-legend .legend-inner{
+    padding: 14px 12px;
+    gap: 8px 10px;
+  }
+
+  .legend-item{
+    font-size: 13px;
+  }
 }
 
 .legend-badge{
@@ -290,11 +343,10 @@ svg .lot-hover{
   color: #4b1f1f;
 }
 
-
-
 /* =========================
    FORM COTIZACIÓN
 ========================= */
+
 .quote-form{
   margin-top: 12px;
   padding: 14px;
@@ -306,7 +358,7 @@ svg .lot-hover{
 
 .quote-row{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;   /* desktop: 2 columnas */
   gap: 10px;
 }
 
@@ -375,6 +427,7 @@ svg .lot-hover{
 /* =========================
    TOAST (éxito/error)
 ========================= */
+
 .toast{
   position: fixed;
   top: 18px;
@@ -397,143 +450,99 @@ svg .lot-hover{
   color: #1c5b34;
 }
 
-/* errores visuales en inputs */
-.quote-field input.is-invalid{
-  border-color: #e06a4f !important;
-  box-shadow: 0 0 0 2px rgba(224, 106, 79, .18) !important;
-  background: #fff;
-}
+/* =========================
+   MENSAJES DE FORM / ERRORES
+========================= */
 
-.field-error{
-  display: none;
-  margin-top: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #e06a4f;
+.messages{margin:8px 0 14px;display:grid;gap:10px}
+.msg{padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.35}
+.msg.success{background:#e9f6ee;color:#1f5d2e;border:1px solid #b8e1c3}
+.msg.error{background:#fdecea;color:#7b241c;border:1px solid #f5c6c1}
+.msg.info{background:#fff7e6;color:#6c4a0b;border:1px solid #f1d6a8}
+
+.is-invalid{
+  border-color:#d07653 !important;
+  box-shadow:0 0 0 3px rgba(198,40,40,.12);
+  outline:none;
 }
-.field-error.show{ display: block; }
 
 /* =========================
-   RESPONSIVE
+   MAP WRAP / FONDO
 ========================= */
-@media (max-width: 980px){
+
+.map-wrap{
+  position: relative;
+
+  background-image: url("/static/resources/images/cotizador/Pasto_MapaValladolid.jpeg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: #fffaf2;
+
+  width: 100%;
+  height: min(80vh, 500px);
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.map-wrap svg{
+  width: 100%;
+  height: 100%;
+}
+
+/* Cuando el popup está abierto, bloquea el scroll del body */
+body.modal-open{
+  overflow: hidden;
+}
+
+/* =========================
+   RESPONSIVE: TABLET / MOBILE
+========================= */
+
+/* Tablet y pantallas medianas */
+@media (max-width: 1024px){
   .cotizador{
-    grid-template-columns: 1fr;
-    gap: 16px;
+    margin: 28px auto 36px;
+    padding: 0 12px 18px;
   }
 
   .map-wrap{
     height: 60vh;
-    min-height: 420px;
+    min-height: 320px;
   }
 
-  .cotizador-panel{
-    position: static;
-    width: 100%;
-    max-height: none;
-  }
-}
-
-@media (max-width: 480px){
-  .quote-row{ grid-template-columns: 1fr; }
-}
-
-
-
-/* BOTÓN CERRAR */
-.panel-close {
-  background: transparent;
-  border: 1px solid #D1815B;
-  color: #D1815B;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
-}
-
-.panel-close:hover {
-  background: #E99A75;
-  color: #fff;
-  border-color: #E99A75;
-}
-
-
-/* =========================
-   MOBILE CLEAN LAYOUT
-========================= */
-@media (max-width: 980px){
-
-  .cotizador{
-    display: block;
-    padding: 8px;
-    min-height: calc(100vh - 80px);
-  }
-
-  /* Mapa sin huecos raros */
-  .cotizador-map{
-    margin: 0;
-  }
-
-  .map-wrap{
-    height: 64vh;
-    min-height: 420px;
-    border-radius: 16px;
-    background: #fff;
-    overflow: hidden;
-  }
-
-  /* Que el SVG se vea centrado y más cómodo en touch */
-  .map-wrap svg{
-    width: 100%;
-    height: 100%;
-    display: block;
-    touch-action: manipulation;
-  }
-
-  /* Badge "PRÓXIMAMENTE" más discreto */
-  .stage-badge{
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    padding: 8px 14px;
-    border-radius: 999px;
-  }
-
-  /* Leyenda compacta (no caja gigante) */
   .map-legend{
-    padding: 10px 0 0;
+    margin-top: 14px;
   }
 
   .map-legend .legend-inner{
-    padding: 10px 12px;
-    border-radius: 14px;
-    gap: 10px 14px;
+    max-width: 100%;
+    padding: 16px 20px;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .legend-item{
-    gap: 10px;
+  .map-legend .legend-inner::before{
+    left: 20px;
   }
 
-  .legend-badge{
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
-  }
-
-  .legend-text{
-    font-size: 13px;
-  }
-
-  
-
-  .panel-head{
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 2;
-    border-bottom: 1px solid rgba(0,0,0,.06);
+  /* Panel como hoja desde abajo, ocupa todo el ancho */
+  .cotizador-panel{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    margin: 0;
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,.25);
+    transform: translate(0,0); /* ya no centrado */
   }
 
   .panel-head h3{
@@ -541,80 +550,117 @@ svg .lot-hover{
   }
 
   .panel-body{
-    max-height: calc(74vh - 58px);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 14px;
+    max-height: calc(80vh - 60px); /* resto para cabecera */
+    overflow-y: auto;
   }
 
-  /* Form en 1 columna */
+  /* Form en 1 columna en tablet más angosta */
   .quote-row{
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 420px){
-  .map-wrap{
-    height: 60vh;
-    min-height: 360px;
+/* Móviles <= 768px */
+@media (max-width: 768px){
+  .cotizador{
+    margin: 24px auto 32px;
+    padding: 0 10px 16px;
   }
-  .legend-text{
+
+  .map-wrap{
+    height: 55vh;
+    min-height: 260px;
+  }
+
+  .map-legend .legend-inner{
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    justify-items: start;
+    padding: 16px 14px 14px;
+  }
+
+  .legend-item{
+    font-size: 13px;
+    white-space: normal;  /* que ya se pueda partir */
+  }
+
+  .map-legend .legend-inner .legend-item:last-child{
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .quote-form{
+    padding: 12px 10px 14px;
+  }
+
+  .toast{
+    top: 12px;
+    right: 12px;
+    max-width: 90%;
     font-size: 12px;
   }
 }
 
+/* Móviles muy pequeños */
+@media (max-width: 480px){
+  .panel-head{
+    padding: 10px 12px;
+  }
 
+  .panel-head h3{
+    font-size: 14px;
+  }
 
-.stage-tag{
-  position: fixed;
-  z-index: 9999;
-  padding: 10px 18px;
-  border-radius: 999px;
-  background: #f7f1df;
-  border: 2px solid #d8c39a;
-  color: #7a4e1f;
-  font-weight: 800;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  box-shadow: 0 10px 22px rgba(0,0,0,.14);
-  pointer-events: none;
-  transform: translate(-50%, -120%);
+  .panel-body{
+    padding: 10px 12px 12px;
+  }
+
+  .kv{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .map-legend .legend-inner::before{
+    left: 16px;
+    font-size: 10px;
+  }
+
+  .quote-btn{
+    height: 40px;
+    font-size: 13px;
+  }
 }
 
 
 
+/* =========================
+   LEYENDA ESPECIAL PARA TABLET
+   (entre 600px y 1024px de ancho)
+========================= */
 
 
+/* =========================
+   LEYENDA ESPECIAL PARA TABLET
+   (entre 600px y 1024px de ancho)
+========================= */
+@media (min-width: 600px) and (max-width: 1024px){
+  .map-legend .legend-inner{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 24px;
+    justify-items: start;
+  }
 
+  .legend-item{
+    white-space: normal;
+  }
 
-
-/* Badge flotante estados */
-.lot-badge{
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: 14px;
-  background: #f6f0de;
-  border: 2px solid #d7c39a;
-  color: #6b4a2e;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-}
-
-.lot-badge.vendido{
-  background: #ffe8e8;
-  border-color: #f0b0b0;
-  color: #7a1f1f;
-}
-
-.lot-badge.apartado{
-  background: #fff3d8;
-  border-color: #f0d09a;
-  color: #7a4b10;
-}
-
-.lot-badge.proximamente{
-  background: #eeeeee;
-  border-color: #cfcfcf;
-  color: #4b4b4b;
+  /* 👇 Último ítem debajo de la 2ª columna, alineado a la izquierda de esa columna */
+  .map-legend .legend-inner .legend-item:last-child{
+    grid-column: 2 / 3;
+    justify-self: flex-start;
+  }
 }

@@ -19,17 +19,18 @@
   {% if features %}
     <aside class="features">
       <h3>{% trans "Características:" %}</h3>
+
       <ul>
         {% for it in features %}
           <li>{{ it }}</li>
         {% endfor %}
       </ul>
 
-      {% if map_url %}
-        <a class="btn map" href="{{ map_url }}" target="_blank" rel="noopener">
-          {% trans "Ubicación Google Maps" %}
-        </a>
-      {% endif %}
+      <a class="btn map" href="{% url 'contacto' %}">
+        {% trans "Contáctanos" %}
+      </a>
     </aside>
   {% endif %}
+
+   
 </section>

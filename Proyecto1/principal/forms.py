@@ -102,6 +102,13 @@ class ContactForm(forms.Form):
             "max_length": _("El correo es demasiado largo."),
         },
     )
+
+    propiedad_id = forms.CharField(
+    required=False,
+    max_length=80,
+    label="ID / Clave de la propiedad"
+    )
+
     mensaje = forms.CharField(
         required=False,
         strip=True,

@@ -29,31 +29,37 @@ document.addEventListener("DOMContentLoaded", () => {
     return null;
   }
 
-  // =========================
-  // Toast (usa tu HTML: #quoteToast y #quoteToastMsg)
-  // =========================
-  let toastTimer = null;
+// Toast (usa tu HTML: #quoteToast y #quoteToastMsg)
+// =========================
+let toastTimer = null;
 
-  function showToast(msg, ok = false) {
-    const toast = document.getElementById("quoteToast");
-    const span = document.getElementById("quoteToastMsg");
-    if (!toast || !span) return;
+function showToast(msg, ok = false) {
+  const box = document.getElementById("quoteMsgBox");
+  if (!box) return;
 
-    span.textContent = msg || "";
-    toast.hidden = false;
+  box.textContent = msg || "";
 
-    toast.classList.toggle("is-success", !!ok);
-    toast.classList.toggle("is-error", !ok);
+  box.className = "msg";
 
-    // por si tu CSS no maneja hidden/display:
-    toast.style.display = "block";
-
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      toast.hidden = true;
-      toast.style.display = "none";
-    }, 4200);
+  if (ok) {
+    box.classList.add("success");
+  } else {
+    box.classList.add("info");
   }
+
+  box.style.display = "block";
+
+  if (window.toastTimer) clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+    box.style.display = "none";
+  }, 4500);
+}
+
+
+
+
+
 
   // =========================
   // Errores en campos (pinta inputs)
@@ -91,14 +97,36 @@ document.addEventListener("DOMContentLoaded", () => {
   function openPanel() {
     const root = document.getElementById("cotizador");
     if (!root) return;
+  
+    // 🔄 limpiar mensaje anterior (proximamente / errores, etc.)
+    const box = document.getElementById("quoteMsgBox");
+    if (box) {
+      box.style.display = "none";
+      box.textContent = "";
+      box.className = "msg"; // deja solo la clase base
+    }
+    if (window.toastTimer) {
+      clearTimeout(window.toastTimer);
+      window.toastTimer = null;
+    }
+  
     root.classList.remove("is-panel-closed");
+  
+    // 🔒 bloquear scroll del fondo
+    document.body.classList.add("modal-open");
   }
-
+  
+  
   function closePanel() {
     const root = document.getElementById("cotizador");
     if (!root) return;
+  
     root.classList.add("is-panel-closed");
+  
+    // 🔓 permitir scroll otra vez
+    document.body.classList.remove("modal-open");
   }
+  
 
   // Si tienes botón "Cerrar"
   const closeBtn = document.getElementById("panelClose");
@@ -143,6 +171,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initPanZoom();
 
+  // Etapas completas "PRÓXIMAMENTE" (todas menos MZ-04)
+const PROX_STAGE_IDS = ["MZ-01", "MZ-02", "MZ-03", "MZ-05", "MZ-06", "MZ-07"];
+
+function getStageIdFromLot(el) {
+  if (!el) return null;
+  const g = el.closest('g[id^="MZ-"]');
+  return g ? g.id : null;
+}
+
+
   // =========================
   // Lotes: estado -> color/clase, bloquear click y tooltip
   // =========================
@@ -152,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const s = String(estadoRaw || "").toLowerCase().trim();
     if (s === "vendido") return "VENDIDO";
     if (s === "apartado") return "APARTADO";
+    if (s === "proximamente") return "PRÓXIMAMENTE";
     return ""; // disponible u otro
   }
 
@@ -160,10 +199,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const estado = String(estadoRaw || "").toLowerCase().trim();
     el.dataset.estado = estado;
 
-    el.classList.remove("lot-status-vendido", "lot-status-apartado", "lot-status-disponible");
+    el.classList.remove("lot-status-vendido", "lot-status-apartado", "lot-status-disponible", "lot-status-proximamente");
 
     if (estado === "vendido") el.classList.add("lot-status-vendido");
     else if (estado === "apartado") el.classList.add("lot-status-apartado");
+    else if (estado === "proximamente") el.classList.add("lot-status-proximamente");
     else el.classList.add("lot-status-disponible");
 
     const label = stateLabel(estado);
@@ -185,9 +225,10 @@ function showLotBadge(label, estado, clientX, clientY) {
   lotBadgeText.textContent = label;
   lotBadge.hidden = false;
 
-  lotBadge.classList.remove("is-vendido", "is-apartado");
+  lotBadge.classList.remove("is-vendido", "is-apartado", "is-proximamente");
   if (estado === "vendido") lotBadge.classList.add("is-vendido");
   if (estado === "apartado") lotBadge.classList.add("is-apartado");
+  if (estado === "proximamente") lotBadge.classList.add("is-proximamente");
 
   lotBadge.style.left = `${clientX}px`;
   lotBadge.style.top = `${clientY}px`;
@@ -304,15 +345,30 @@ function hideLotBadge() {
 
   const lotEls = getLotElements();
   lotEls.forEach((el) => el.classList.add("lot-hover"));
+  
   lotEls.forEach((el) => {
     el.addEventListener("mouseenter", (e) => {
       const id = normalizeLotId(el.id);
       if (!id) return;
   
       const estado = lotStateById.get(id);
-      if (estado !== "vendido" && estado !== "apartado") return;
   
-      const label = estado === "vendido" ? "VENDIDO" : "APARTADO";
+      // 👉 si es proximamente y NO es MZ-04 → NO mostrar por lote
+      if (estado === "proximamente") {
+        const stageId = getStageIdFromLot(el);
+        if (stageId !== "MZ-04") return;
+      }
+  
+      if (estado !== "vendido" && estado !== "apartado" && estado !== "proximamente")
+        return;
+  
+      const label =
+        estado === "vendido"
+          ? "VENDIDO"
+          : estado === "apartado"
+          ? "APARTADO"
+          : "PRÓXIMAMENTE";
+  
       showLotBadge(label, estado, e.clientX, e.clientY);
     });
   
@@ -321,33 +377,53 @@ function hideLotBadge() {
       if (!id) return;
   
       const estado = lotStateById.get(id);
-      if (estado !== "vendido" && estado !== "apartado") return;
   
-      const label = estado === "vendido" ? "VENDIDO" : "APARTADO";
+      if (estado === "proximamente") {
+        const stageId = getStageIdFromLot(el);
+        if (stageId !== "MZ-04") return;
+      }
+  
+      if (estado !== "vendido" && estado !== "apartado" && estado !== "proximamente")
+        return;
+  
+      const label =
+        estado === "vendido"
+          ? "VENDIDO"
+          : estado === "apartado"
+          ? "APARTADO"
+          : "PRÓXIMAMENTE";
+  
       showLotBadge(label, estado, e.clientX, e.clientY);
     });
   
     el.addEventListener("mouseleave", () => {
       hideLotBadge();
     });
-  
-    el.addEventListener("click", async (e) => {
-      e.preventDefault();
-  
-      const id = normalizeLotId(el.id);
-      if (!id) return;
-  
-      const estado = lotStateById.get(id);
-  
-      if (estado === "vendido" || estado === "apartado") {
-        showToast(`Este lote está ${estado}.`, false);
-        return;
-      }
-  
-      // ... tu lógica normal de cargar panel SOLO si disponible
-    });
   });
+
   
+  function setupProximamenteStages() {
+    if (!lotBadge || !lotBadgeText) return;
+  
+    PROX_STAGE_IDS.forEach((stageId) => {
+      const stageEl = document.getElementById(stageId);
+      if (!stageEl) return;
+  
+      stageEl.addEventListener("mouseenter", (e) => {
+        showLotBadge("PRÓXIMAMENTE", "proximamente", e.clientX, e.clientY);
+      });
+  
+      stageEl.addEventListener("mousemove", (e) => {
+        showLotBadge("PRÓXIMAMENTE", "proximamente", e.clientX, e.clientY);
+      });
+  
+      stageEl.addEventListener("mouseleave", () => {
+        hideLotBadge();
+      });
+    });
+  }
+  
+
 
   // Prefetch estados (son pocos lotes; esto permite tooltip sin click)
   (async () => {
@@ -383,7 +459,7 @@ function hideLotBadge() {
       const estado = lotStateById.get(id);
 
       // Si ya sabemos que NO está disponible => bloquear panel
-      if (estado === "vendido" || estado === "apartado") {
+      if (estado === "vendido" || estado === "apartado" || estado === "proximamente") {
         showToast(`Este lote está ${stateLabel(estado).toLowerCase()}.`, false);
         return;
       }
@@ -396,7 +472,7 @@ function hideLotBadge() {
       lotStateById.set(id, estadoNow);
       applyLotState(el, estadoNow);
 
-      if (estadoNow === "vendido" || estadoNow === "apartado") {
+      if (estadoNow === "vendido" || estadoNow === "apartado" || estadoNow === "proximamente") {
         showToast(`Este lote está ${stateLabel(estadoNow).toLowerCase()}.`, false);
         return;
       }
@@ -411,115 +487,131 @@ function hideLotBadge() {
     });
   });
 
+  setupProximamenteStages(); 
+
   // =========================
-  // Form Cotización (AJAX)
-  // =========================
-  const form = document.getElementById("quoteForm");
-  const btn = document.getElementById("quoteBtn");
+// Form Cotización (AJAX)
+// =========================
 
-  const phone =
-    document.getElementById("quotePhone") ||
-    (form ? form.querySelector('input[name="telefono"]') : null);
 
-  const nameInput =
-    document.getElementById("quoteName") ||
-    (form ? form.querySelector('input[name="nombre"]') : null);
 
-  const lastNameInput =
-    document.getElementById("quoteLastName") ||
-    (form ? form.querySelector('input[name="apellido"]') : null);
 
-  // Tel: bloquear letras (deja dígitos, espacios, +, -, (, ))
-  if (phone) {
-    phone.setAttribute("inputmode", "tel");
-    phone.addEventListener("input", () => {
-      phone.value = phone.value.replace(/[^\d+\-\s()]/g, "");
-    });
-  }
+// Limpia mensajes de error debajo de inputs
+function clearFieldErrors(form) {
+  form.querySelectorAll(".field-error").forEach((el) => {
+    el.textContent = "";
+    el.classList.remove("show");
+  });
 
-  // Nombre/Apellido: bloquear números (deja letras, acentos, espacios, ', -)
-  const cleanName = (v) =>
-    String(v || "")
-      .replace(/[0-9]/g, "")
-      .replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s'\-]/g, "");
+  form.querySelectorAll(".quote-field input").forEach((inp) => {
+    inp.classList.remove("is-invalid");
+  });
+}
 
-  if (nameInput) {
-    nameInput.addEventListener("input", () => {
-      nameInput.value = cleanName(nameInput.value);
-    });
-  }
+// Pone mensajes de error en los campos
+function applyFieldErrors(form, errors) {
+  if (!errors) return;
 
-  if (lastNameInput) {
-    lastNameInput.addEventListener("input", () => {
-      lastNameInput.value = cleanName(lastNameInput.value);
-    });
-  }
+  Object.entries(errors).forEach(([field, msgs]) => {
+    const msg = Array.isArray(msgs) ? msgs[0] : String(msgs);
 
-  if (form && btn) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      clearFieldErrors(form);
+    const input = form.querySelector(`[name="${field}"]`);
+    if (input) {
+      input.classList.add("is-invalid");
+    }
 
-      const lotInput =
-        document.getElementById("quoteLotCode") ||
-        document.getElementById("quoteLotId") ||
-        form.querySelector('input[name="id_lote"]');
+    const err = form.querySelector(`.field-error[data-err="${field}"]`);
+    if (err) {
+      err.textContent = msg;
+      err.classList.add("show");
+    }
+  });
+}
 
-      const lot = lotInput?.value?.trim();
-      if (!lot) {
-        showToast("Primero selecciona un lote.", false);
+// Elementos del formulario
+const form = document.getElementById("quoteForm");
+const btn = document.getElementById("quoteBtn");
+const lotCodeInput = document.getElementById("quoteLotCode");
+
+if (form && btn) {
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    clearFieldErrors(form);
+
+    // 1) Validar que haya lote seleccionado
+    const lotInput =
+      lotCodeInput ||
+      form.querySelector("#quoteLotId") ||
+      form.querySelector('input[name="id_lote"]');
+
+    const lot = (lotInput?.value || "").trim();
+    if (!lot) {
+      showToast("Primero selecciona un lote.", false);
+      return;
+    }
+
+    // 2) Tomar CSRF del input hidden de Django
+    const csrfInput = form.querySelector('input[name="csrfmiddlewaretoken"]');
+    const csrfToken = csrfInput ? csrfInput.value : null;
+
+    // 3) Armar FormData
+    const fd = new FormData(form);
+
+    // 4) Deshabilitar botón y mostrar "Enviando..."
+    const prevText = btn.textContent;
+    btn.textContent = "Enviando...";
+    btn.disabled = true;
+
+    try {
+      // 5) Enviar fetch con CSRF
+      const res = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          ...(csrfToken ? { "X-CSRFToken": csrfToken } : {}),
+        },
+        body: fd,
+      });
+
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (_) {
+        data = {};
+      }
+
+      // 6) Si hay error (HTTP o de validación)
+      if (!res.ok || data.errors) {
+        applyFieldErrors(form, data.errors || {});
+
+        const first =
+          data?.errors?.telefono?.[0] ||
+          data?.errors?.email?.[0] ||
+          data?.errors?.nombre?.[0] ||
+          data?.errors?.apellido?.[0] ||
+          data?.errors?.id_lote?.[0] ||
+          data?.message ||
+          "Revisa los campos marcados en rojo.";
+
+        showToast(first, false);
         return;
       }
 
-      const csrf = form.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
-      const fd = new FormData(form);
+      // 7) ÉXITO
+      showToast("¡Gracias! Nos pondremos en contacto contigo pronto.", true);
 
-      const prevText = btn.textContent;
-      btn.textContent = "Enviando...";
-      btn.disabled = true;
+      // Dejar el formulario limpio, pero mantener el id_lote por si quieres
+      form.reset();
+      if (lotInput) lotInput.value = lot;
+    } catch (err) {
+      // Error de red u otro
+      showToast("No se pudo enviar tu solicitud. Inténtalo de nuevo.", false);
+    } finally {
+      // 8) Restaurar botón
+      btn.textContent = prevText;
+      btn.disabled = false;
+    }
+  });
+}
 
-      try {
-        const res = await fetch(form.action, {
-          method: "POST",
-          headers: {
-            "X-CSRFToken": csrf,
-            "X-Requested-With": "XMLHttpRequest",
-          },
-          body: fd,
-        });
-
-        let data = {};
-        try {
-          data = await res.json();
-        } catch (_) {
-          data = {};
-        }
-
-        if (!res.ok) {
-          const first =
-            data?.errors?.telefono?.[0] ||
-            data?.errors?.email?.[0] ||
-            data?.errors?.id_lote?.[0] ||
-            data?.message ||
-            "Revisa los campos marcados.";
-
-          applyFieldErrors(form, data.errors);
-          showToast(first, false);
-          return;
-        }
-
-        showToast("¡Gracias! Nos pondremos en contacto contigo pronto.", true);
-
-        form.reset();
-        // conservar lote
-        if (lotInput) lotInput.value = lot;
-
-      } catch (err) {
-        showToast("No pudimos enviar tu solicitud. Intenta más tarde.", false);
-      } finally {
-        btn.textContent = prevText;
-        btn.disabled = false;
-      }
-    });
-  }
 });

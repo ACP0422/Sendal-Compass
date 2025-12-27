@@ -1,13 +1,21 @@
 /* Hacienda Valladolid (layout específico) */
 
 .intro{ display:grid; gap:14px; margin-top:6px; }
-.pitch h4{ color: var(--color-brown); margin: 0 0 6px; }
+
+.pitch h4{color: rgba(143, 86, 0, 1);}
+
+  
+  .btn.map{
+  display:inline-block; background: var(--color-gold); color:var(--color-ink-dark);
+  border-radius:40px; padding:8px 14px; font-weight:700; text-decoration:none;
+  }
+
+
 
 .facts{ grid-template-columns: 1fr 1fr; gap: 8px 14px; }
 .facts div{ padding: 8px 10px; }
 .facts strong{ display:block; font-weight:800; color:var(--color-brown); }
 
-.desc p{ margin:6px 0 10px; text-align:justify; color:#000; }
 .btn.map{ background:var(--color-gold); color:var(--color-ink-dark); border-radius:40px; padding:8px 14px; font-weight:700; text-decoration:none; }
 
 /* ===== Amenidades (imágenes + lista) ===== */
@@ -110,7 +118,7 @@
 }
 
 @media (min-width:1025px){
-  .intro{ grid-template-columns: 1.2fr .8fr; gap:24px; margin-top:14px; }
+  .intro{ grid-template-columns: .8fr 1.2fr; gap:24px; margin-top:14px; }
   .facts{ grid-template-columns: repeat(3,1fr); gap:14px 18px; }
   .facts div{ padding:10px 12px; }
 
@@ -243,7 +251,7 @@ object-fit:cover; border-radius:8px; display:block; }
 .hero img{ height: min(36vw, 360px); }
 
 .intro{
-  grid-template-columns: 1.15fr .85fr; gap: 18px; align-items: start;
+  grid-template-columns: .85fr 1.15fr; gap: 18px; align-items: start;
 }
 .facts{ grid-template-columns: repeat(3, 1fr); gap: 12px 16px; }
 .desc p{ margin-top: 0; }
@@ -313,7 +321,7 @@ object-fit:cover; border-radius:12px; display:block;
 }
 
 .plan-legend{
-display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; 
 justify-items:center; margin:10px 0 2px;
 }
 .legend-item{ display:flex; gap:10px; align-items:center; font-weight:700; color:#3B0C0C; }
@@ -632,5 +640,24 @@ font-size: 20px;
     padding: 14px 12px;
     margin-top: 4px;
     transform: translateY(6px);
+  }
+}
+
+
+
+
+
+/* ===== Leyenda alineada en MOBILE ===== */
+@media (max-width: 768px){
+
+  /* deja de centrar la leyenda */
+  .explora__legend.legend--centered{
+    justify-content: flex-start;
+  }
+
+  /* que cada ítem fluya mejor */
+  .explora__legend li{
+    width: 100%;
+    justify-content: flex-start;
   }
 }

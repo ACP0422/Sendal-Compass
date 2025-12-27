@@ -138,7 +138,19 @@ def _proyectos():
             "tipos": [],
             "activo": True,
         },
-    
+        {
+            "slug": None,
+            "ubicacion": "tulum",
+            "nombre": _("Tularum"),
+            "url_name": None,
+            "external_url": "https://tularum.com",
+            "img": static("resources/images/places/Tulum/tularum.png"),
+            "descripcion": _(
+                "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
+            ),
+            "tipos": ["tularum"],
+            "activo": True,
+        },
         {
             "slug": "predio",
             "ubicacion": "valladolid",
@@ -160,7 +172,7 @@ def _proyectos():
             "descripcion": _(
                 "Destino icónico con gran plusvalía, naturaleza y proyección internacional."
             ),
-            "tipos": ["tularum"],
+            "tipos": [],
             "activo": True,
         },
         {
@@ -292,9 +304,14 @@ def contacto(request):
             subject = _("Nueva solicitud de cotización — {n} {a}").format(
                 n=data["nombre"], a=data["apellido"]
             )
+
+            
+            prop = data.get("propiedad_id") or "—"
+            
             body = (
                 f"Nombre: {data['nombre']} {data['apellido']}\n"
                 f"Email: {data['email']}\n"
+                f"ID / Clave de la propiedad: {prop}\n"
                 f"Mensaje:\n{data.get('mensaje', '(sin mensaje)')}\n"
             )
 

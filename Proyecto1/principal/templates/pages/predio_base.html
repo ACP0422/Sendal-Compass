@@ -13,10 +13,8 @@
 {% block content %}
 <main class="predio container">
   {% include "componentes/predio/_head.html" %}
-  {% include "componentes/predio/_hero.html" %}
-  {% include "componentes/predio/_info.html" %}
 
-  {# Subgalería (opcional) #}
+   {# Subgalería (opcional) #}
   {% if subgallery %}
     <section class="subgallery">
       {% for g in subgallery %}
@@ -27,6 +25,10 @@
       {% endfor %}
     </section>
   {% endif %}
+
+  {% include "componentes/predio/_info.html" %}
+
+ 
 
   {% include "componentes/predio/_band_duo.html" %}
 </main>
