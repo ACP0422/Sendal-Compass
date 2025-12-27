@@ -734,3 +734,6 @@ body.modal-open{
 }
 
 
+.cotizador-map svg {
+  touch-action: none;
+}

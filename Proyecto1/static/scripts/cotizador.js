@@ -153,7 +153,7 @@ function showToast(msg, ok = false) {
   function initPanZoom() {
     const svg = getSvgEl();
     if (!svg || typeof window.svgPanZoom !== "function") return;
-
+  
     panZoomInstance = window.svgPanZoom(svg, {
       controlIconsEnabled: true,
       zoomEnabled: true,
@@ -164,11 +164,23 @@ function showToast(msg, ok = false) {
       maxZoom: 30,
       zoomScaleSensitivity: 0.25,
       dblClickZoomEnabled: false,
+      mouseWheelZoomEnabled: true,     // scroll en desktop
+      preventMouseEventsDefault: true, // que la lib controle los gestos
     });
-
+  
+    // 👉 Esto es clave para que el pinch funcione bien en móviles
+    svg.addEventListener(
+      "touchmove",
+      function (e) {
+        e.preventDefault();            // evita que el navegador haga scroll
+      },
+      { passive: false }
+    );
+  
     refitMap();
     window.addEventListener("resize", refitMap, { passive: true });
   }
+  
 
   initPanZoom();
 
@@ -487,10 +499,12 @@ function hideLotBadge() {
   }
   
 
-  // Click en lote
-  lotEls.forEach((el) => {
-    el.addEventListener("click", async (e) => {
+   // Click / tap en lote (desktop + móvil + tableta)
+   lotEls.forEach((el) => {
+    const handleLotTap = async (e) => {
+      // para que en móvil no haga zoom raro ni pase el evento al pan/zoom
       e.preventDefault();
+      e.stopPropagation();
 
       const id = normalizeLotId(el.id);
       if (!id) return;
@@ -522,10 +536,25 @@ function hideLotBadge() {
       openPanel();
 
       // Selección visual
-      document.querySelectorAll(".lot-selected").forEach((n) => n.classList.remove("lot-selected"));
+      document
+        .querySelectorAll(".lot-selected")
+        .forEach((n) => n.classList.remove("lot-selected"));
       el.classList.add("lot-selected");
-    });
+    };
+
+    // Desktop
+    el.addEventListener("click", handleLotTap);
+
+    // Móvil / tableta
+    el.addEventListener(
+      "touchend",
+      (e) => {
+        handleLotTap(e);
+      },
+      { passive: false }
+    );
   });
+
 
   setupProximamenteStages(); 
 
