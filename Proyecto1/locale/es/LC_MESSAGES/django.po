@@ -1344,9 +1344,6 @@ msgstr ""
 msgid "Uso de Suelo Comercial"
 msgstr ""
 
-#: principal/views.py:558 principal/views.py:594
-msgid "A 2 calles de Catedral"
-msgstr ""
 
 #: principal/views.py:563 principal/views.py:599
 msgid "Vista fachada"

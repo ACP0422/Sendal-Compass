@@ -734,6 +734,14 @@ body.modal-open{
 }
 
 
-.cotizador-map svg {
-  touch-action: none;
+
+/* En mobile / tablet permitimos los gestos (pinch-zoom con los dedos) */
+@media (max-width: 1024px){
+  .cotizador-map svg{
+    touch-action: auto;   /* deja que el navegador maneje el pinch */
+  }
 }
+
+
+
+  

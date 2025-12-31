@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sendal Website\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-27 13:41-0600\n"
+"POT-Creation-Date: 2025-12-30 19:45-0600\n"
 "PO-Revision-Date: 2025-09-22 16:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
@@ -17,10 +17,6 @@ msgstr ""
 #: Proyecto1/settings.py:154
 msgid "Español"
 msgstr "Spanish"
-
-msgid "LEYENDA"
-msgstr "LEGEND"
-
 
 #: Proyecto1/settings.py:155
 msgid "Inglés"
@@ -101,21 +97,21 @@ msgstr "Invalid request."
 msgid "Correo no válido. Verifica tu dirección."
 msgstr "Invalid email. Check your address."
 
-#: principal/forms.py:202 principal/templates/hacienda.html:135
+#: principal/forms.py:202 principal/templates/hacienda.html:159
 #: principal/templates/pages/contacto.html:48
 #: principal/templates/pages/index.html:140
 msgid "Nombre"
 msgstr "First name"
 
-#: principal/forms.py:212 principal/templates/hacienda.html:141
+#: principal/forms.py:212 principal/templates/hacienda.html:165
 #: principal/templates/pages/contacto.html:60
 #: principal/templates/pages/index.html:150
 msgid "Apellido"
 msgstr "Last name"
 
 #: principal/forms.py:222 principal/templates/pages/index.html:161
-#: principal/templates/pages/tulum.html:84
-#: principal/templates/pages/valladolid.html:139
+#: principal/templates/pages/tulum.html:82
+#: principal/templates/pages/valladolid.html:137
 msgid "Correo electrónico"
 msgstr "Email"
 
@@ -216,8 +212,8 @@ msgstr "Quote Tool"
 msgid "Escríbenos por WhatsApp"
 msgstr "Write to us on WhatsApp"
 
-#: principal/templates/base.html:47 principal/templates/pages/tulum.html:81
-#: principal/templates/pages/valladolid.html:136
+#: principal/templates/base.html:47 principal/templates/pages/tulum.html:79
+#: principal/templates/pages/valladolid.html:134
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
@@ -249,7 +245,6 @@ msgstr "Where is it located?"
 
 #: principal/templates/componentes/predio/_band_duo.html:9
 #: principal/views.py:161 principal/views.py:197 principal/views.py:405
-#: principal/views.py:441
 msgid ""
 "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, "
 "Yucatán."
@@ -297,183 +292,205 @@ msgstr "Contact us"
 
 #: principal/templates/hacienda.html:2
 msgid "Cotizador - Hacienda Residencial"
-msgstr "Quote Tool — Residential Hacienda"
+msgstr "Quote Tool — Hacienda Residential"
 
 #: principal/templates/hacienda.html:27
 msgid "Leyenda del mapa"
 msgstr "Map legend"
 
+#: principal/templates/hacienda.html:31
+msgid "LEYENDA"
+msgstr "LEGEND"
+
 # Leyendas (A–E)
-#: principal/templates/hacienda.html:32
+#: principal/templates/hacienda.html:36
 #: principal/templates/pages/hacienda.html:176
 msgid "Entrada"
 msgstr "Entrance"
 
-#: principal/templates/hacienda.html:37
+#: principal/templates/hacienda.html:41
 #: principal/templates/pages/hacienda.html:180
 msgid "Siembra de agave"
 msgstr "Agave plantation"
 
-#: principal/templates/hacienda.html:42
+#: principal/templates/hacienda.html:46
 #: principal/templates/pages/hacienda.html:184
 msgid "Zona comercial"
 msgstr "Commercial zone"
 
-#: principal/templates/hacienda.html:47
+#: principal/templates/hacienda.html:51
 #: principal/templates/pages/hacienda.html:69
 #: principal/templates/pages/hacienda.html:188
 msgid "Piscina"
 msgstr "Pool"
 
-#: principal/templates/hacienda.html:52
+#: principal/templates/hacienda.html:56
 #: principal/templates/pages/hacienda.html:192
 msgid "Periférico Valladolid"
 msgstr "Valladolid Ring Road"
 
-#: principal/templates/hacienda.html:57
+#: principal/templates/hacienda.html:61
 #: principal/templates/pages/hacienda.html:196
 msgid "Canchas"
 msgstr "Courts"
 
-#: principal/templates/hacienda.html:62
+#: principal/templates/hacienda.html:66
 #: principal/templates/pages/hacienda.html:73
 #: principal/templates/pages/hacienda.html:97
 #: principal/templates/pages/hacienda.html:200
 msgid "Casa Club"
 msgstr "Clubhouse"
 
-#: principal/templates/hacienda.html:73
+#: principal/templates/hacienda.html:74
+msgid "Vendido"
+msgstr "Sold"
+
+#: principal/templates/hacienda.html:78
+msgid "Apartado"
+msgstr "Reserved"
+
+#: principal/templates/hacienda.html:82
+#: principal/templates/pages/hacienda.html:170
+msgid "Disponible"
+msgstr "Available"
+
+#: principal/templates/hacienda.html:86
+#: principal/templates/pages/hacienda.html:169
+msgid "Próximamente"
+msgstr "Coming soon"
+
+#: principal/templates/hacienda.html:97
 msgid "Cerrar"
 msgstr "Close"
 
-#: principal/templates/hacienda.html:78
+#: principal/templates/hacienda.html:102
 msgid "Código"
 msgstr "Code"
 
-#: principal/templates/hacienda.html:79
+#: principal/templates/hacienda.html:103
 msgid "Precio total (MXN)"
 msgstr "Total price (MXN)"
 
-#: principal/templates/hacienda.html:82
+#: principal/templates/hacienda.html:106
 msgid "Campos adicionales"
 msgstr "Additional fields"
 
-#: principal/templates/hacienda.html:84
+#: principal/templates/hacienda.html:108
 msgid "Proyecto"
 msgstr "Project"
 
-#: principal/templates/hacienda.html:85
+#: principal/templates/hacienda.html:109
 msgid "Manzana"
 msgstr "Block"
 
-#: principal/templates/hacienda.html:88
+#: principal/templates/hacienda.html:112
 msgid "Datos generales"
 msgstr "General information"
 
-#: principal/templates/hacienda.html:90
+#: principal/templates/hacienda.html:114
 msgid "Área total (m²)"
 msgstr "Total area (m²)"
 
-#: principal/templates/hacienda.html:91
+#: principal/templates/hacienda.html:115
 msgid "Precio m² (MXN)"
 msgstr "Price per m² (MXN)"
 
-#: principal/templates/hacienda.html:94
+#: principal/templates/hacienda.html:118
 msgid "Dimensiones"
 msgstr "Dimensions"
 
-#: principal/templates/hacienda.html:96
+#: principal/templates/hacienda.html:120
 msgid "Dimensiones del lote (frente, largo, fondo)"
 msgstr "Lot dimensions (front, length, depth)"
 
-#: principal/templates/hacienda.html:100
+#: principal/templates/hacienda.html:124
 msgid "Imagen de lote"
 msgstr "Lot image"
 
-#: principal/templates/hacienda.html:106
+#: principal/templates/hacienda.html:130
 msgid "Monto de apartado (MXN)"
 msgstr "Reservation amount (MXN)"
 
-#: principal/templates/hacienda.html:107
+#: principal/templates/hacienda.html:131
 msgid "Días límite de apartado"
 msgstr "Reservation deadline (days)"
 
-#: principal/templates/hacienda.html:110
+#: principal/templates/hacienda.html:134
 msgid "Financiamiento"
 msgstr "Financing"
 
-#: principal/templates/hacienda.html:112
+#: principal/templates/hacienda.html:136
 msgid "Concepto"
 msgstr "Concept"
 
-#: principal/templates/hacienda.html:112
+#: principal/templates/hacienda.html:136
 msgid "Monto (MXN)"
 msgstr "Amount (MXN)"
 
-#: principal/templates/hacienda.html:114
+#: principal/templates/hacienda.html:138
 #, python-format
 msgid "Enganche (20%%)"
 msgstr "Down payment (20%%)"
 
-#: principal/templates/hacienda.html:115
+#: principal/templates/hacienda.html:139
 #, python-format
 msgid "Financiamiento (70%%)"
 msgstr "Financing (70%%)"
 
-#: principal/templates/hacienda.html:116
+#: principal/templates/hacienda.html:140
 msgid "Mensualidad (48 meses)"
 msgstr "Monthly payment (48 months)"
 
-#: principal/templates/hacienda.html:117
+#: principal/templates/hacienda.html:141
 #, python-format
 msgid "Liquidación (30%%)"
 msgstr "Final payment (30%%)"
 
-#: principal/templates/hacienda.html:120
+#: principal/templates/hacienda.html:144
 msgid "¿Te interesa este lote? Cotízalo"
 msgstr "Interested in this lot? Get a quote"
 
-#: principal/templates/hacienda.html:148
+#: principal/templates/hacienda.html:172
 msgid "Correo"
 msgstr "Email"
 
-#: principal/templates/hacienda.html:154
+#: principal/templates/hacienda.html:178
 msgid "Teléfono"
 msgstr "Phone"
 
-#: principal/templates/hacienda.html:160
+#: principal/templates/hacienda.html:184
 msgid "Solicitar cotización"
 msgstr "Request a quote"
 
-#: principal/templates/hacienda.html:175
+#: principal/templates/hacienda.html:199
 msgid "VENDIDO"
 msgstr "SOLD"
 
-#: principal/templates/hacienda.html:176
+#: principal/templates/hacienda.html:200
 msgid "APARTADO"
 msgstr "ON HOLD"
 
-#: principal/templates/hacienda.html:177
+#: principal/templates/hacienda.html:201
 msgid "PRÓXIMAMENTE"
 msgstr "COMING SOON"
 
-#: principal/templates/hacienda.html:178
+#: principal/templates/hacienda.html:202
 msgid "DISPONIBLE"
 msgstr "AVAILABLE"
 
-#: principal/templates/hacienda.html:183
+#: principal/templates/hacienda.html:207
 msgid "Este lote está vendido."
 msgstr "This lot is sold."
 
-#: principal/templates/hacienda.html:184
+#: principal/templates/hacienda.html:208
 msgid "Este lote está apartado."
 msgstr "This lot is on hold."
 
-#: principal/templates/hacienda.html:185
+#: principal/templates/hacienda.html:209
 msgid "Este lote pertenece a la etapa PRÓXIMAMENTE."
 msgstr "This lot belongs to the COMING SOON stage."
 
-#: principal/templates/hacienda.html:186
+#: principal/templates/hacienda.html:210
 msgid "Este lote está disponible."
 msgstr "This lot is available."
 
@@ -537,6 +554,7 @@ msgstr "email@janesfakedomain.net"
 msgid "Escribe un correo válido, por ejemplo nombre@dominio.com"
 msgstr "Enter a valid email address, for example name@domain.com"
 
+#: principal/templates/pages/contacto.html:93
 msgid "ID / Clave de la propiedad"
 msgstr "ID / Property code"
 
@@ -614,13 +632,13 @@ msgstr "Sending…"
 
 #: principal/templates/pages/hacienda.html:4
 msgid "Inmobiliaria Sendal - Hacienda Residencial"
-msgstr "Sendal Real Estate - Residential Hacienda"
+msgstr "Sendal Real Estate - Hacienda Residential"
 
 #: principal/templates/pages/hacienda.html:19
-#: principal/templates/pages/valladolid.html:37 principal/views.py:112
-#: principal/views.py:113
+#: principal/templates/pages/valladolid.html:35 principal/views.py:112
+#: principal/views.py:113 principal/views.py:181
 msgid "Hacienda Residencial"
-msgstr "Residential Hacienda"
+msgstr "Hacienda Residential"
 
 #: principal/templates/pages/hacienda.html:21 principal/views.py:372
 msgid "Valladolid, Yucatán"
@@ -769,12 +787,12 @@ msgid "Galería de imágenes"
 msgstr "Image gallery"
 
 #: principal/templates/pages/hacienda.html:124
-#: principal/templates/pages/valladolid.html:112
+#: principal/templates/pages/valladolid.html:110
 msgid "Anterior"
 msgstr "Previous"
 
 #: principal/templates/pages/hacienda.html:125
-#: principal/templates/pages/valladolid.html:113
+#: principal/templates/pages/valladolid.html:111
 msgid "Siguiente"
 msgstr "Next"
 
@@ -802,23 +820,14 @@ msgstr "Choose your lot"
 
 #: principal/templates/pages/hacienda.html:163
 msgid "Masterplan Hacienda Residencial"
-msgstr "Residential Hacienda master plan"
-
-#: principal/templates/pages/hacienda.html:169
-msgid "Próximamente"
-msgstr "Coming soon"
-
-#: principal/templates/pages/hacienda.html:170
-msgid "Disponible"
-msgstr "Available"
+msgstr "Hacienda Residential master plan"
 
 #: principal/templates/pages/hacienda.html:215
 msgid ""
 "Las Haciendas Residenciales se ubican a entrada de Valladolid sobre el "
 "periférico."
 msgstr ""
-"The Residential Hacienda properties are located at the entrance to "
-"Valladolid along the ring road."
+"The residential haciendas are located at the entrance to Valladolid, along the ring road."
 
 #: principal/templates/pages/hacienda.html:257
 msgid "Ir a la imagen"
@@ -1002,16 +1011,13 @@ msgstr "Enter at least %s digits (include country code)."
 msgid "Campo inválido"
 msgstr "Invalid field"
 
-#: principal/templates/pages/index.html:241
-msgid "Proyecto Hacienda Residencial Mayahuel"
-msgstr "Residential Hacienda - Mayahuel Project"
 
 #: principal/templates/pages/index.html:242
 msgid "Predios"
 msgstr "Plots"
 
 #: principal/templates/pages/index.html:243
-#: principal/templates/pages/valladolid.html:58 principal/views.py:410
+#: principal/templates/pages/valladolid.html:56 principal/views.py:410
 msgid "Casa habitación"
 msgstr "Single-family home"
 
@@ -1035,35 +1041,26 @@ msgstr "Sendal Real Estate - Tulum"
 msgid "TULUM"
 msgstr "TULUM"
 
-#: principal/templates/pages/tulum.html:19
-msgid ""
-"El corazón de la Riviera Maya, aquí las aguas color turquesa del mar Caribe "
-"atraen al turismo nacional y extranjero con su estilo ecochic, su cultura "
-"ancestral, conexión con sus zonas arqueológicas, místicos cenotes, y su "
-"vibrante vida nocturna."
-msgstr ""
-"The heart of the Riviera Maya, where the turquoise waters of the Caribbean "
-"Sea attract local and international visitors with an eco-chic vibe, "
-"ancestral culture, nearby archaeological sites, mystical cenotes, and a "
-"vibrant nightlife."
+msgid "Precio por m²"
+msgstr "Price per m²"
 
-#: principal/templates/pages/tulum.html:30
+#: principal/templates/pages/tulum.html:28
 msgid "Vista de la costa y ruinas de Tulum"
 msgstr "View of Tulum’s coastline and ruins"
 
-#: principal/templates/pages/tulum.html:35 principal/views.py:144
+#: principal/templates/pages/tulum.html:33 principal/views.py:144
 msgid "Tularum"
 msgstr "Tularum"
 
-#: principal/templates/pages/tulum.html:36
+#: principal/templates/pages/tulum.html:34
 msgid "Quintana Roo, México"
 msgstr "Quintana Roo, Mexico"
 
-#: principal/templates/pages/tulum.html:40
+#: principal/templates/pages/tulum.html:38
 msgid "Entrada del desarrollo Tularum"
 msgstr "Entrance to the Tularum development"
 
-#: principal/templates/pages/tulum.html:45
+#: principal/templates/pages/tulum.html:43
 msgid ""
 "Tularum ofrece una gran oportunidad para adquirir un patrimonio en armonía "
 "con el ecosistema en un exclusivo destino. Su fase de preventa con precios "
@@ -1077,15 +1074,15 @@ msgstr ""
 "today, and in a couple of years see it double in value as access roads and "
 "services are completed and appreciation continues to grow."
 
-#: principal/templates/pages/tulum.html:54
+#: principal/templates/pages/tulum.html:52
 msgid "Conoce más de TULARUM aquí:"
 msgstr "Learn more about TULARUM here:"
 
-#: principal/templates/pages/tulum.html:66
+#: principal/templates/pages/tulum.html:64
 msgid "Invierte con certeza,<br>crece con Sendal."
 msgstr "Invest with confidence,<br>grow with Sendal."
 
-#: principal/templates/pages/tulum.html:69
+#: principal/templates/pages/tulum.html:67
 msgid ""
 "Creamos oportunidades reales, sin comprometer calidad, diseño ni servicio. "
 "Contáctanos y te enviaremos toda la información que necesitas sobre el "
@@ -1095,8 +1092,8 @@ msgstr ""
 "service. Contact us and we’ll send you all the information you need about "
 "the project you like."
 
-#: principal/templates/pages/tulum.html:91
-#: principal/templates/pages/valladolid.html:146
+#: principal/templates/pages/tulum.html:89
+#: principal/templates/pages/valladolid.html:144
 msgid "Agente de ventas"
 msgstr "Sales agent"
 
@@ -1104,109 +1101,102 @@ msgstr "Sales agent"
 msgid "Inmobiliaria Sendal - Valladolid"
 msgstr "Sendal Real Estate - Valladolid"
 
-#: principal/templates/pages/valladolid.html:18
-msgid "Pueblo mágico con gran crecimiento turístico y urbano."
-msgstr "A Pueblo Mágico with strong tourism and urban growth."
 
-#: principal/templates/pages/valladolid.html:19
-msgid "Es una zona estratégica para invertir en tierra con alta plusvalía."
-msgstr "A strategic area to invest in land with high appreciation."
-
-#: principal/templates/pages/valladolid.html:27
+#: principal/templates/pages/valladolid.html:25
 #, fuzzy
 #| msgid "Valladolid, Yucatán"
 msgid "Iglesia Valladolid, Yucatán"
 msgstr "Valladolid, Yucatán"
 
-#: principal/templates/pages/valladolid.html:32
+#: principal/templates/pages/valladolid.html:30
 msgid "Propiedades en Valladolid"
 msgstr "Properties in Valladolid"
 
-#: principal/templates/pages/valladolid.html:35
+#: principal/templates/pages/valladolid.html:33
 msgid "Entrada estilo hacienda"
 msgstr "Hacienda-style entrance"
 
-#: principal/templates/pages/valladolid.html:38
+#: principal/templates/pages/valladolid.html:36
 msgid "Lotes residenciales"
 msgstr "Residential lots"
 
-#: principal/templates/pages/valladolid.html:40
-#: principal/templates/pages/valladolid.html:51
-#: principal/templates/pages/valladolid.html:62
+#: principal/templates/pages/valladolid.html:38
+#: principal/templates/pages/valladolid.html:49
+#: principal/templates/pages/valladolid.html:60
 msgid "Ver más"
 msgstr "See more"
 
-#: principal/templates/pages/valladolid.html:45
+#: principal/templates/pages/valladolid.html:43
 msgid "Predio vallado en Valladolid"
 msgstr "Fenced plot in Valladolid"
 
-#: principal/templates/pages/valladolid.html:47 principal/views.py:376
+#: principal/templates/pages/valladolid.html:45 principal/views.py:376
 msgid "Predio"
 msgstr "Plot"
 
-#: principal/templates/pages/valladolid.html:48
-#: principal/templates/pages/valladolid.html:59 principal/views.py:383
+#: principal/templates/pages/valladolid.html:46
+#: principal/templates/pages/valladolid.html:57 principal/views.py:383
 #: principal/views.py:417
 msgid "Propiedad Privada"
 msgstr "Private Property"
 
-#: principal/templates/pages/valladolid.html:56
+#: principal/templates/pages/valladolid.html:54
 msgid "Edificio de esquina en Valladolid"
 msgstr "Corner building in Valladolid"
 
-#: principal/templates/pages/valladolid.html:69
+#: principal/templates/pages/valladolid.html:67
 msgid "Cubrimos todos tus requerimientos"
 msgstr "We cover all your needs"
 
+#: principal/templates/pages/valladolid.html:72
 #: principal/templates/pages/valladolid.html:74
-#: principal/templates/pages/valladolid.html:76
 msgid "Análisis de plusvalía"
 msgstr "Appreciation analysis"
 
-#: principal/templates/pages/valladolid.html:77
+#: principal/templates/pages/valladolid.html:75
 msgid "Detectamos dónde tu inversión crece más."
 msgstr "We identify where your investment grows the most."
 
+#: principal/templates/pages/valladolid.html:80
 #: principal/templates/pages/valladolid.html:82
-#: principal/templates/pages/valladolid.html:84
 msgid "Asesoría legal y financiera"
 msgstr "Legal and financial advisory"
 
-#: principal/templates/pages/valladolid.html:85
+#: principal/templates/pages/valladolid.html:83
 msgid "Todo claro, seguro y en regla."
 msgstr "Everything clear, secure, and compliant."
 
+#: principal/templates/pages/valladolid.html:88
 #: principal/templates/pages/valladolid.html:90
-#: principal/templates/pages/valladolid.html:92
 msgid "Acompañamiento"
 msgstr "Guidance"
 
-#: principal/templates/pages/valladolid.html:93
+#: principal/templates/pages/valladolid.html:91
 msgid "Te guiamos de principio a fin."
 msgstr "We guide you from start to finish."
 
+#: principal/templates/pages/valladolid.html:96
 #: principal/templates/pages/valladolid.html:98
-#: principal/templates/pages/valladolid.html:100
 msgid "Recomendaciones a futuro"
 msgstr "Future recommendations"
 
-#: principal/templates/pages/valladolid.html:101
+#: principal/templates/pages/valladolid.html:99
 msgid "Pensamos en hoy y en lo que viene."
 msgstr "We think about today and what’s next."
 
-#: principal/templates/pages/valladolid.html:107
+#: principal/templates/pages/valladolid.html:105
 msgid "Servicios"
 msgstr "Services"
 
-#: principal/templates/pages/valladolid.html:115
+#: principal/templates/pages/valladolid.html:113
 msgid "Indicadores"
 msgstr "Indicators"
 
-#: principal/templates/pages/valladolid.html:124
+#: principal/templates/pages/valladolid.html:122
 msgid "¿Quieres más información?"
 msgstr "Want more information?"
 
-#: principal/templates/pages/valladolid.html:126
+#: principal/templates/pages/valladolid.html:124
 msgid ""
 "Contáctanos y te enviaremos toda la información que necesitas sobre el "
 "proyecto de tu agrado."
@@ -1281,10 +1271,6 @@ msgstr ""
 "An iconic destination with strong appreciation, nature, and international "
 "appeal."
 
-#: principal/views.py:181
-msgid "Hacienda Residencial Mayahuel"
-msgstr "Mayahuel Residential Hacienda"
-
 #: principal/views.py:185
 msgid ""
 "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de "
@@ -1328,7 +1314,10 @@ msgstr "Thank you! We have received your message."
 
 #: principal/views.py:382
 msgid "Calle 35 # 198 F"
-msgstr "Street 39 #205 C"
+msgstr "Street 35 #198 F"
+
+msgid "Calle 38 #205 C"
+msgstr "Street 38 #205 C"
 
 #: principal/views.py:384 principal/views.py:418
 msgid "Centro"
@@ -1347,7 +1336,7 @@ msgid "Uso de Suelo Comercial"
 msgstr "Commercial Land Use"
 
 #: principal/views.py:390 principal/views.py:426
-msgid "A 2 calles de Catedral"
+msgid "A 2 calles de la Catedral"
 msgstr "Two blocks from the Cathedral"
 
 # Subgalería (captions/alt)
@@ -1367,10 +1356,6 @@ msgstr "Satellite view"
 msgid "Vista Satelital"
 msgstr "Satellite View"
 
-#: principal/views.py:416
-msgid "Calle 39 #205 C"
-msgstr "Street 39 #205 C"
-
 #: principal/views.py:421
 msgid "Construcción 321 m²"
 msgstr "Construction 321 m²"
@@ -1378,6 +1363,28 @@ msgstr "Construction 321 m²"
 #: principal/views.py:422
 msgid "2 niveles"
 msgstr "2 floors"
+
+#: principal/templates/componentes/predio/_band_duo.html:9
+#: principal/views.py:161 principal/views.py:197 principal/views.py:405
+msgid ""
+"Ubicada en la C.38 a pocas calles del Hotel Palacio Cantón en Valladolid, "
+"Yucatán."
+msgstr ""
+"Located on C.38 a few blocks from the Palacio Cantón Hotel in Valladolid, "
+"Yucatán."
+
+#: templates/...
+msgid "Pueblo Mágico con un crecimiento turístico y urbano sólido; una ubicación que permite consolidar patrimonio mediante la compra de terrenos en una de las regiones con mayor desarrollo del estado."
+msgstr "A \"Pueblo Mágico\" with strong tourism and urban growth; a location that allows you to build long-term wealth by purchasing land in one of the fastest-growing regions in the state."
+
+
+#: templates/...
+msgid "Una de las zonas con mayor atractivo turístico del Caribe mexicano, donde adquirir una propiedad significa asegurar valor, alta demanda y plusvalía en un entorno natural privilegiado."
+msgstr "One of the most attractive tourist areas in the Mexican Caribbean, where purchasing property means securing value, high demand, and appreciation in a privileged natural environment."
+
+#: templates/...
+msgid "Proyecto Hacienda Residencial"
+msgstr "Hacienda Residential Project"
 
 #: principal/views.py:466
 msgctxt "price label"
@@ -1389,6 +1396,24 @@ msgstr "Price"
 #| msgid "Nueva solicitud de cotización — {n} {a}"
 msgid "Solicitud de cotización — {lot} — {n} {a}"
 msgstr "New quote request — {n} {a}"
+
+#~ msgid ""
+#~ "El corazón de la Riviera Maya, aquí las aguas color turquesa del mar "
+#~ "Caribe atraen al turismo nacional y extranjero con su estilo ecochic, su "
+#~ "cultura ancestral, conexión con sus zonas arqueológicas, místicos "
+#~ "cenotes, y su vibrante vida nocturna."
+#~ msgstr ""
+#~ "The heart of the Riviera Maya, where the turquoise waters of the "
+#~ "Caribbean Sea attract local and international visitors with an eco-chic "
+#~ "vibe, ancestral culture, nearby archaeological sites, mystical cenotes, "
+#~ "and a vibrant nightlife."
+
+#~ msgid "Pueblo mágico con gran crecimiento turístico y urbano."
+#~ msgstr "A Pueblo Mágico with strong tourism and urban growth."
+
+#~ msgid "Es una zona estratégica para invertir en tierra con alta plusvalía."
+#~ msgstr "A strategic area to invest in land with high appreciation."
+
 
 #~ msgid "Lote"
 #~ msgstr "Lot"
@@ -1538,15 +1563,6 @@ msgstr "New quote request — {n} {a}"
 
 #~ msgid "Paginación"
 #~ msgstr "Pagination"
-
-msgid "Apartado"
-msgstr "Reserved"
-
-
-
-
-msgid "Vendido"
-msgstr "Sold"
 
 #~ msgid "Masterplan"
 #~ msgstr "Master plan"

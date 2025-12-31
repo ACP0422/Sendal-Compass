@@ -141,10 +141,9 @@ def _proyectos():
         {
             "slug": None,
             "ubicacion": "tulum",
-            "nombre": _("Tularum"),
             "url_name": None,
             "external_url": "https://tularum.com",
-            "img": static("resources/images/places/Tulum/tularum.png"),
+            "img": static("resources/images/home/tularum-filtro.png"),
             "descripcion": _(
                 "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
             ),
@@ -154,9 +153,8 @@ def _proyectos():
         {
             "slug": "predio",
             "ubicacion": "valladolid",
-            "nombre": _("Predio Valladolid"),
             "url_name": "predio-detail",
-            "img": static("resources/images/places/Valladolid/predio1/fachada.png"),
+            "img": static("resources/images/home/predio-filtro.png"),
             "descripcion": _(
                 "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
             ),
@@ -178,9 +176,8 @@ def _proyectos():
         {
             "slug": "hacienda",
             "ubicacion": "valladolid",
-            "nombre": _("Hacienda Residencial Mayahuel"),
             "url_name": "predio-detail",
-            "img": static("resources/images/places/Valladolid/hacienda/hero.jpg"),
+            "img": static("resources/images/home/hacienda-filtro.png"),
             "descripcion": _(
                 "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
             ),
@@ -190,11 +187,10 @@ def _proyectos():
         {
             "slug": "casa-habitacion",
             "ubicacion": "valladolid",
-            "nombre": _("Casa habitación Valladolid"),
             "url_name": "predio-detail",
-            "img": static("resources/images/places/Valladolid/predio2/fachada.png"),
+            "img": static("resources/images/home/casa-hab-filtro.png"),
             "descripcion": _(
-                "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
+                "Ubicada en la C.38 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
             ),
             "tipos": ["casa"],
             "activo": True,
@@ -387,7 +383,7 @@ PREDIO_REGISTRY = {
                     _("Barda Perimetral"),
                     _("Puerta de Acceso"),
                     _("Uso de Suelo Comercial"),
-                    _("A 2 calles de Catedral"),
+                    _("A 2 calles de la Catedral"),
                 ],
                 "subgallery": [
                     {
@@ -413,7 +409,7 @@ PREDIO_REGISTRY = {
                 "map_img": "resources/images/places/Valladolid/predio2/mapa.png",
                 "price_mxn": 3_644_550,
                 "price_m2": 7000,
-                "address": _("Calle 39 #205 C"),
+                "address": _("Calle 38 #205 C"),
                 "propiedad_tipo": _("Propiedad Privada"),
                 "colonia": _("Centro"),
                 "map_url": "https://www.google.com/maps/dir//20.68804,-88.199226/@21.0098422,-89.6157462,3653m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D",
@@ -423,7 +419,7 @@ PREDIO_REGISTRY = {
                     _("Barda Perimetral"),
                     _("Puerta de Acceso"),
                     _("Uso de Suelo Comercial"),
-                    _("A 2 calles de Catedral"),
+                    _("A 2 calles de la Catedral"),
                 ],
                 "subgallery": [
                     {
@@ -438,7 +434,7 @@ PREDIO_REGISTRY = {
                     },
                 ],
                 "location_blurb": _(
-                    "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
+                    "Ubicado en la C.38 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
                 ),
             },
         ],
