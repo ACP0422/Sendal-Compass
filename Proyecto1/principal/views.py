@@ -143,7 +143,7 @@ def _proyectos():
             "ubicacion": "tulum",
             "url_name": None,
             "external_url": "https://tularum.com",
-            "img": static("resources/images/home/tularum-filtro.png"),
+            "img": static("resources/images/home/tularum-filtro.jpg"),
             "descripcion": _(
                 "Proyecto para invertir en extensiones de tierra en el codiciado Tulum en el estado de Quintana Roo, México."
             ),
@@ -154,7 +154,7 @@ def _proyectos():
             "slug": "predio",
             "ubicacion": "valladolid",
             "url_name": "predio-detail",
-            "img": static("resources/images/home/predio-filtro.png"),
+            "img": static("resources/images/home/predio-filtro.jpg"),
             "descripcion": _(
                 "Ubicado en la C.35 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
             ),
@@ -177,7 +177,7 @@ def _proyectos():
             "slug": "hacienda",
             "ubicacion": "valladolid",
             "url_name": "predio-detail",
-            "img": static("resources/images/home/hacienda-filtro.png"),
+            "img": static("resources/images/home/hacienda-filtro.jpg"),
             "descripcion": _(
                 "Desarrollo residencial con fachada estilo hacienda y rodeado de paisajes de agave."
             ),
@@ -188,7 +188,7 @@ def _proyectos():
             "slug": "casa-habitacion",
             "ubicacion": "valladolid",
             "url_name": "predio-detail",
-            "img": static("resources/images/home/casa-hab-filtro.png"),
+            "img": static("resources/images/home/casa-hab-filtro.jpg"),
             "descripcion": _(
                 "Ubicada en la C.38 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
             ),
