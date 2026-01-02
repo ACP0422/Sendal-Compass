@@ -434,7 +434,7 @@ PREDIO_REGISTRY = {
                     },
                 ],
                 "location_blurb": _(
-                    "Ubicado en la C.38 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
+                    "Ubicada en la C.38 a pocas calles del Hotel Palacio Cantón en Valladolid, Yucatán."
                 ),
             },
         ],

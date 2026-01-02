@@ -2,14 +2,35 @@
   class="project-card"
   data-ubicacion="{{ proyecto.ubicacion|lower }}"
   data-tipos="{{ proyecto.tipos|join:','|lower }}">
-  {% if proyecto.external_url %}
-<a href="{{ proyecto.external_url }}" target="_blank" rel="noopener noreferrer">
-{% else %}
-<a href="{% if proyecto.slug %}{% url proyecto.url_name slug=proyecto.slug %}{% else %}{% url proyecto.url_name %}{% endif %}">
-{% endif %}
-    <img src="{{ proyecto.img }}" alt="{{ proyecto.nombre }}">
-    <h3>{{ proyecto.nombre }}</h3>
-</a>
 
-  {% if proyecto.descripcion %}<p>{{ proyecto.descripcion }}</p>{% endif %}
+  {% if proyecto.external_url %}
+    <a class="project-link"
+       href="{{ proyecto.external_url }}"
+       target="_blank"
+       rel="noopener noreferrer">
+  {% else %}
+    <a class="project-link"
+       href="{% if proyecto.slug %}
+              {% url proyecto.url_name slug=proyecto.slug %}
+            {% else %}
+              {% url proyecto.url_name %}
+            {% endif %}">
+  {% endif %}
+
+      <div class="project-thumb">
+        <img src="{{ proyecto.img }}" alt="{{ proyecto.nombre }}">
+
+        {% if proyecto.tipos %}
+          <span class="more"><strong>{% trans "Conoce más" %}</strong></span>
+        {% endif %}
+      </div>
+    </a>
+
+  {% if proyecto.nombre %}
+    <h3>{{ proyecto.nombre }}</h3>
+  {% endif %}
+
+  {% if proyecto.descripcion %}
+    <p>{{ proyecto.descripcion }}</p>
+  {% endif %}
 </article>

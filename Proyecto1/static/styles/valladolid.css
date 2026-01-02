@@ -40,12 +40,36 @@
 .listing article img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:12px; display:block; }
 .listing h3{ font-size:16px; font-weight:700; color:var(--color-brown); }
 .listing p{ font-size:14px; color:#41070A; opacity:.9; }
-.listing .more{ margin-top:4px; display:inline-block; font-size:12px; color:var(--color-brown); background:var(--color-gold); border-radius:8px; padding:8px; text-decoration:none; border:1px solid rgba(0,0,0,.06); box-shadow:var(--shadow); }
 
-.listing .more:hover {
-  background: #EFAC2E;
+/* Contenedor de imagen + botón */
+.listing-thumb{
+  position: relative;
+}
+/* Botón “Conoce más” sobre la imagen (estilo Sendal) */
+.listing .more{
+  position:absolute;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+
+  display:inline-block;
+  padding:12px 30px;
+  font-size:14px;
+  font-weight:600;
+  line-height:1;
+
+  background:#F7D9A1;              /* beige Sendal */
+  color:#3B0C0C;                    /* café oscuro Sendal */
+  border-radius:12px;               /* esquinas muy redondeadas */
+  text-decoration:none;
+  border:2px solid #fff;
+  box-shadow:0 10px 22px rgba(0,0,0,.20);
 }
 
+.listing .more:hover{
+  background:#E9BD68;               /* dorado al hover */
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
 
 /* Servicios (desktop: grid) */
 .services-cover{ background:var(--color-gold); padding:48px var(--gutter); }

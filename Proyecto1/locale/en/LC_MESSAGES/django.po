@@ -1126,6 +1126,11 @@ msgstr "Residential lots"
 msgid "Ver más"
 msgstr "See more"
 
+#: templates/...
+msgid "Conoce más"
+msgstr "Learn more"
+
+
 #: principal/templates/pages/valladolid.html:43
 msgid "Predio vallado en Valladolid"
 msgstr "Fenced plot in Valladolid"

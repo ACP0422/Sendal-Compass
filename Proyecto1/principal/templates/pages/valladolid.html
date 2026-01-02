@@ -28,38 +28,51 @@
 
   <!-- ===== LISTADO ===== -->
   <section class="listing" aria-label="{% trans 'Propiedades en Valladolid' %}">
-    <article>
+  <!-- HACIENDA RESIDENCIAL -->
+  <article>
+    <div class="listing-thumb">
       <img src="{% static 'resources/images/places/Valladolid/hacienda.jpg' %}"
            alt="{% trans 'Entrada estilo hacienda' %}">
-      <header>
-        <h3>{% trans "Hacienda Residencial" %}</h3>
-        <p>{% trans "Lotes residenciales" %}</p>
-      </header>
-      <a class="more" href="{% url 'hacienda' %}">{% trans "Ver más" %}</a>
-    </article>
+      <a class="more" href="{% url 'hacienda' %}">{% trans "Conoce más" %}</a>
+    </div>
 
-    <article>
+    <header>
+      <h3>{% trans "Hacienda Residencial" %}</h3>
+      <p>{% trans "Lotes residenciales" %}</p>
+    </header>
+  </article>
+
+  <!-- PREDIO -->
+  <article>
+    <div class="listing-thumb">
       <img src="{% static 'resources/images/places/Valladolid/predio.jpg' %}"
            alt="{% trans 'Predio vallado en Valladolid' %}">
-      <header>
-        <h3>{% trans "Predio" %}</h3>
-        <p>{% trans "Propiedad Privada" %}</p>
-      </header>
       {# RUTA CORRECTA: usa el name 'predio-detail' y el slug #}
-      <a class="more" href="{% url 'predio-detail' 'predio' %}">{% trans "Ver más" %}</a>
-    </article>
+      <a class="more" href="{% url 'predio-detail' 'predio' %}">{% trans "Conoce más" %}</a>
+    </div>
 
-    <article>
+    <header>
+      <h3>{% trans "Predio" %}</h3>
+      <p>{% trans "Propiedad Privada" %}</p>
+    </header>
+  </article>
+
+  <!-- CASA HABITACIÓN -->
+  <article>
+    <div class="listing-thumb">
       <img src="{% static 'resources/images/places/Valladolid/casa-hab.jpg' %}"
            alt="{% trans 'Edificio de esquina en Valladolid' %}">
-      <header>
-        <h3>{% trans "Casa habitación" %}</h3>
-        <p>{% trans "Propiedad Privada" %}</p>
-      </header>
       {# RUTA CORRECTA: usa el name 'predio-detail' y el slug #}
-      <a class="more" href="{% url 'predio-detail' 'casa-habitacion' %}">{% trans "Ver más" %}</a>
-    </article>
-  </section>
+      <a class="more" href="{% url 'predio-detail' 'casa-habitacion' %}">{% trans "Conoce más" %}</a>
+    </div>
+
+    <header>
+      <h3>{% trans "Casa habitación" %}</h3>
+      <p>{% trans "Propiedad Privada" %}</p>
+    </header>
+  </article>
+</section>
+
 </main>
 
 <!-- ===== SERVICIOS ===== -->

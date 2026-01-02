@@ -396,3 +396,48 @@ body{
   cursor: not-allowed;
   background-color: #f4efe4; /* un beige clarito acorde a tu paleta */
 }
+
+
+
+
+/* ===============================
+   Botón “Conoce más” — tarjetas del filtro
+   (Hacienda, Predio, Casa, Tularum)
+================================= */
+
+/* Contenedor de la imagen en las tarjetas del filtro */
+.projects-grid .project-thumb{
+  position: relative;
+}
+
+/* Botón “Conoce más” sobre la imagen (estilo Sendal) */
+.projects-grid .project-thumb .more{
+  position:absolute;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+
+  display:inline-block;
+  padding:12px 30px;
+  font-size:14px;
+  font-weight:600;
+  line-height:1;
+
+  background:#F7D9A1;
+  color:#3B0C0C;
+  border-radius:12px;
+  text-decoration:none;
+  border:2px solid #fff;
+  box-shadow:0 10px 22px rgba(0,0,0,.20);
+}
+
+/* Hover cuando pasas el mouse por la tarjeta */
+.projects-grid .project-card:hover .more{
+  background:#E9BD68;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
+
+/* Para que el <a> abarque la imagen completa */
+.project-link{
+  display:block;
+}
