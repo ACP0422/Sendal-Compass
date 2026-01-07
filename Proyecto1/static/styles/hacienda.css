@@ -661,3 +661,23 @@ font-size: 20px;
     justify-content: flex-start;
   }
 }
+
+
+
+/* Ajustar plano + botón SOLO en mobile */
+@media (max-width: 768px){
+
+  /* el botón sigue flotando arriba */
+  .map-actions{
+    position: absolute;
+    top: 160px;        /* súbelo/bájalo aquí */
+    right: 40px;
+    padding: 0;
+  }
+
+  /* bajamos SOLO la imagen */
+  .explora__plan img{
+    margin-top: 60px;     /* ← mueve el plano hacia abajo */
+  }
+}
+

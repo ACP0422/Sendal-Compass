@@ -527,10 +527,8 @@ from django.views.decorators.http import require_GET
 
 
 
-
-# ✅ 1) apunta al Excel real
-
 LOT_RE = re.compile(r"^MZ(?P<mz>\d{2})-L(?P<lot>\d{1,3})$", re.I)
+
 
 def normalize_lot_id(raw: str) -> str | None:
     """
@@ -538,7 +536,7 @@ def normalize_lot_id(raw: str) -> str | None:
       MZ04-L2
       MZ04-L02
       MZ04-L002
-    Devuelve SIEMPRE (UI):
+    Devuelve SIEMPRE:
       MZ04-L02  (2 dígitos)
     """
     if not raw:
@@ -575,11 +573,9 @@ def api_lotes(request):
             "id": lot_id,
             "code": lot_id,
             "id_lote": lot_id,
-
             "estado_lote": r.estado_lote,
             "precio_total": r.precio_total,
             "superficie_m2": r.superficie_m2,
-
             "precio_m2": r.precio_m2,
             "proyecto": r.proyecto,
             "manzana": r.manzana,
@@ -587,35 +583,32 @@ def api_lotes(request):
 
     return JsonResponse({"results": payload, "items": payload, "lots": payload})
 
-@require_GET
-def api_lote_detail(request, lot_id: str):
-    wanted = normalize_lot_id(lot_id)
-    if not wanted:
-        return JsonResponse({"error": "Lote no encontrado"}, status=404)
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from principal.models import Lot
 
-    lot = Lot.objects.filter(id_lote=wanted).first()
-    if not lot:
-        return JsonResponse({"error": "Lote no encontrado"}, status=404)
+def api_lote_detail(request, lot_id: str):
+    lot = get_object_or_404(Lot, id_lote=lot_id)
 
     d = {
-        "id_lote": wanted,
+        "id_lote": lot.id_lote,
         "estado_lote": lot.estado_lote,
-        "precio_total": lot.precio_total,
-        "precio_m2": lot.precio_m2,
-        "superficie_m2": lot.superficie_m2,
+        "precio_total": str(lot.precio_total),
+        "precio_m2": str(lot.precio_m2),
+        "superficie_m2": str(lot.superficie_m2),
         "proyecto": lot.proyecto,
         "manzana": lot.manzana,
         "medidas_lotes": lot.medidas_lotes,
-        "cantidad_de_apartado": lot.cantidad_de_apartado,
+        "cantidad_de_apartado": str(lot.cantidad_de_apartado),
         "dias_limite_apartado": lot.dias_limite_apartado,
-        "cantidad_enganche": lot.cantidad_enganche,
-        "cantidad_financiamiento": lot.cantidad_financiamiento,
-        "pago_mensualidad": lot.pago_mensualidad,
-        "cantidad_liquidacion": lot.cantidad_liquidacion,
+        "cantidad_enganche": str(lot.cantidad_enganche),
+        "cantidad_financiamiento": str(lot.cantidad_financiamiento),
+        "pago_mensualidad": str(lot.pago_mensualidad),
+        "cantidad_liquidacion": str(lot.cantidad_liquidacion),
         "url_imagen_lote": lot.url_imagen_lote,
     }
-    return JsonResponse({"result": d})
 
+    return JsonResponse({"result": d})
 
 
 
@@ -656,6 +649,7 @@ def hacienda_svg_view(request):
         "svg_markup": svg_markup,
         "lot_states_json": json.dumps(states, ensure_ascii=False),
     })
+
 
 
 

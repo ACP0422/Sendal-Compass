@@ -156,12 +156,22 @@
     
       <figure class="explora__plan">
         <div class="map-actions">
-          <a class="cta contact-cta" href="{% url 'cotizador' %}">{% trans "Escoge tu lote" %}</a>
+          <a class="cta contact-cta" href="{% url 'cotizador' %}">
+            {% trans "Escoge tu lote" %}
+          </a>
         </div>
-        <img class="fluid"
-             src="{% static 'maps/hacienda.svg' %}"
-             alt="{% trans 'Masterplan Hacienda Residencial' %}">
+    
+        <a href="{% url 'cotizador' %}" class="map-link">
+          <picture>
+            <source media="(max-width: 768px)"
+                    srcset="{% static 'maps/zoom.svg' %}">
+            <img class="fluid"
+                 src="{% static 'maps/hacienda.svg' %}"
+                 alt="{% trans 'Masterplan Hacienda Residencial' %}">
+          </picture>
+        </a>
       </figure>
+      
 
 
       <div class="explora__legend-box">

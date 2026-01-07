@@ -114,8 +114,15 @@ WSGI_APPLICATION = "Proyecto1.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "u397199582_sendal_db",
+        "USER": "u397199582_admin_user",
+        "PASSWORD": "tZ88m&Ymdf@2H4N",
+        "HOST": "srv739.hstgr.io",     # host de MySQL que te da Hostinger
+        "PORT": "3306",
+        "OPTIONS": {
+            "charset": "utf8mb4",
+        },
     }
 }
 
